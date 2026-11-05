@@ -31,13 +31,16 @@ tuning touches evaluation data.
 ## PURE - PRD-style source documents
 
 - https://zenodo.org/records/7118517 - 79 public requirements documents,
-  34,268 sentences (PDFs, 19 also in XML).
-- License: CC-BY 4.0, with the curator's own caveat: documents were
-  gathered from web sources and the curator is not aware of license or
-  IP claims on the requirements; copyright risk was minimized by using
-  non-recent data and sampling. Treat provenance per document as
-  "public web document", credit the dataset, and drop any document the
-  curator removes.
+  34,268 sentences (PDFs; the record advertises 19 in XML but the zip contains 18 - discrepancy recorded by the freeze).
+- License: the Zenodo record metadata says CC-BY 4.0, but the license
+  file header inside the artifact asserts CC-BY-SA 3.0. The stricter
+  in-artifact terms govern our use: CC-BY-SA 3.0, attribution recorded
+  in data/frozen/. Curator's own caveat stands: documents were gathered
+  from web sources and the curator is not aware of license or IP claims
+  on the requirements; copyright risk was minimized by using non-recent
+  data and sampling. Treat provenance per document as "public web
+  document", credit the dataset, and drop any document the curator
+  removes.
 
 ## KEPs / Rust RFCs / PEPs - PRD-to-spec pair candidates
 
