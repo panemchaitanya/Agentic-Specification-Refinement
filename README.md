@@ -55,6 +55,21 @@ export GEMINI_MODEL=gemini-3.1-flash-lite   # optional override
 streamlit run app.py
 ```
 
+### Using the app
+
+The app is a three-step wizard:
+
+1. **Describe** - paste a PRD (or load a bundled sample) and analyse it.
+2. **Review & answer** - inspect the draft FRs with their PRD traces and
+   the critic findings (each finding shows the PRD sentence that caused
+   it and why it matters). Only unresolved gaps become questions;
+   unanswered questions enter the spec as open items.
+3. **Specification** - the final trace-linked spec, grouped into FRs and
+   NFR categories, downloadable as JSON or Markdown.
+
+Without a GEMINI_API_KEY the app runs the labelled demo mode used for
+development and tests.
+
 ## Test
 
 ```bash
