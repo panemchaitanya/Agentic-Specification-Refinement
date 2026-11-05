@@ -14,6 +14,8 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 from specpipe.llm import GeminiLLM, MockLLM, LLMError  # noqa: E402
 from specpipe.pipeline import analyze, finalize  # noqa: E402
 
+MAX_LLM_RUNS_PER_SESSION = 10  # abuse guard for the shared free-tier key on a public URL
+
 st.set_page_config(page_title="ReqHQ - Spec Refinement", page_icon="📋",
                    layout="centered")
 
@@ -66,9 +68,19 @@ def screen_input():
     prd = st.text_area("Product description (PRD)", value=default, height=180,
                        placeholder="Paste or write the product description...")
     title = st.text_input("Product name", value="Untitled product")
+    if mode == "Gemini":
+        used = st.session_state.setdefault("llm_runs", 0)
+        st.caption(f"Real-model runs this session: {used}/{MAX_LLM_RUNS_PER_SESSION} "
+                   "(cap protects the free API quota on a public link)")
     if st.button("Analyze", type="primary", disabled=not prd.strip()):
+        if mode == "Gemini" and st.session_state.llm_runs >= MAX_LLM_RUNS_PER_SESSION:
+            st.error("Session run limit reached. This caps use of the shared free API "
+                     "key on the public demo. Run locally with your own key for more.")
+            st.stop()
         with st.spinner("Drafting requirements and running the three critics..."):
             result = analyze(prd, llm)
+        if mode == "Gemini":
+            st.session_state.llm_runs += 1
         st.session_state.update(title=title, prd=prd, **result)
         go("questions")
 
