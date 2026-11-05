@@ -1,0 +1,64 @@
+"""Loaders and validators for ground-truth and match-verdict files.
+
+File formats are fixed here so the datasets lane and the two human
+extractors know exactly what to produce. Both files are JSON; see
+docs/evaluation.md for the full format description and the freeze rules.
+
+Gold file (one per PRD item, produced by the datasets lane from the two
+independent extractions + adjudication, with Cohen's kappa reported in its
+own provenance block):
+{
+  "item_id": "kep-NNNN",
+  "prd_path": "data/frozen/test/kep-NNNN.prd.txt",
+  "implied_categories": ["security", "performance"],
+  "gold_requirements": [{"id": "G1", "kind": "FR|security|...", "text": "..."}],
+  "provenance": {"extractor_agreement_kappa": 0.0, "freeze_id": "..."}
+}
+
+Verdict file (one per scored run, produced by the rubric process):
+{
+  "item_id": "kep-NNNN", "run_id": "...",
+  "matches": [["G1", "NFR-2"], ...],
+  "audited": false
+}
+"""
+from __future__ import annotations
+
+import json
+
+from specpipe.schemas import NFR_CATEGORIES
+
+_KINDS = set(NFR_CATEGORIES) | {"FR"}
+
+
+def load_gold(path: str) -> dict:
+    with open(path, encoding="utf-8") as fh:
+        gold = json.load(fh)
+    for key in ("item_id", "gold_requirements", "implied_categories"):
+        if key not in gold:
+            raise ValueError(f"gold file {path} missing {key!r}")
+    ids = set()
+    for r in gold["gold_requirements"]:
+        if r.get("kind") not in _KINDS:
+            raise ValueError(f"gold {gold['item_id']}: bad kind {r.get('kind')!r}")
+        if not str(r.get("text", "")).strip():
+            raise ValueError(f"gold {gold['item_id']}: empty text on {r.get('id')!r}")
+        if r["id"] in ids:
+            raise ValueError(f"gold {gold['item_id']}: duplicate id {r['id']!r}")
+        ids.add(r["id"])
+    bad = set(gold["implied_categories"]) - set(NFR_CATEGORIES)
+    if bad:
+        raise ValueError(f"gold {gold['item_id']}: unknown categories {sorted(bad)}")
+    return gold
+
+
+def load_verdicts(path: str) -> dict:
+    with open(path, encoding="utf-8") as fh:
+        v = json.load(fh)
+    for key in ("item_id", "run_id", "matches"):
+        if key not in v:
+            raise ValueError(f"verdict file {path} missing {key!r}")
+    for pair in v["matches"]:
+        if not (isinstance(pair, list) and len(pair) == 2):
+            raise ValueError(f"verdict {v['item_id']}: bad match pair {pair!r}")
+    return v

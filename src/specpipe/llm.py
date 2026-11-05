@@ -24,6 +24,9 @@ class GeminiLLM:
         self.model = model or os.environ.get("GEMINI_MODEL", DEFAULT_MODEL)
         if not self.api_key:
             raise LLMError("GEMINI_API_KEY is not set")
+        # Populated from each API response's usageMetadata (H2 token cost);
+        # None until the first successful call. Read, don't mutate.
+        self.last_usage: dict | None = None
 
     def complete(self, system: str, user: str, temperature: float = 0.2) -> str:
         url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
@@ -41,6 +44,7 @@ class GeminiLLM:
         if resp.status_code != 200:
             raise LLMError(f"Gemini HTTP {resp.status_code}: {resp.text[:300]}")
         data = resp.json()
+        self.last_usage = data.get("usageMetadata")
         try:
             return data["candidates"][0]["content"]["parts"][0]["text"]
         except (KeyError, IndexError) as exc:
@@ -63,6 +67,8 @@ class MockLLM:
     Replies are rule-based on the system-prompt role marker; output quality
     is not representative of a real model and is never used in evaluation.
     """
+
+    last_usage = None  # no token usage in the deterministic mock
 
     def complete(self, system: str, user: str, temperature: float = 0.2) -> str:
         if "ROLE: orchestrator" in system:

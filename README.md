@@ -73,6 +73,8 @@ src/specpipe/
   gapcheck.py           dedupe, escalation rule, targeted questions (cap 5)
   pipeline.py           analyze() + finalize(): deterministic trace-linked composition
 data/sample_prds/       demo inputs
+eval/                   evaluation harness: baselines B1-B4, oracle, scoring, run logs
+docs/evaluation.md      fixed evaluation protocol (readouts, rubric, data discipline)
 docs/datasets.md        dataset qualification: licenses, label gap, open checks
 docs/compute.md         training feasibility: verified free compute options
 tests/                  offline unit tests (MockLLM)
@@ -94,8 +96,9 @@ critics disagree (`conflict`). Vague wording the critic can fix itself
   asking the human to review everything, using at least 50% fewer
   questions.
 
-No evaluation results are claimed yet; this repo currently contains the
-implementation the evaluation will run on.
+No evaluation results are claimed yet. The evaluation harness exists
+and is smoke-tested on synthetic inputs only (plumbing, not evidence);
+frozen splits, gold extraction and real runs are pending.
 
 ## Deploy
 
