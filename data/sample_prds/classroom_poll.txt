@@ -1,0 +1,3 @@
+Teachers can create a poll with up to 4 options and share a join code.
+Students join with the code and vote once. Teachers see results live.
+The app should handle a full classroom.
