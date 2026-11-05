@@ -372,13 +372,27 @@ def test_load_gold_accepts_frozen():
 
 
 def test_load_gold_rejects_skeleton_status():
-    bad = {**_GOLD, "provenance": {"status": "SKELETON"}}
-    for payload in (bad, {**_GOLD, "gold_requirements": []}):
+    # the datasets lane's real marker is a full descriptive sentence
+    real_skeleton = ("SKELETON - not gold until two-extractor pass + "
+                     "adjudication + kappa are recorded")
+    for status in (real_skeleton, "SKELETON", "PARTIAL", "unknown-future"):
         try:
-            load_gold(_write(payload))
+            load_gold(_write({**_GOLD, "provenance": {"status": status}}))
         except ValueError:
             continue
+        raise AssertionError(f"expected ValueError for status {status!r}")
+    # empty requirements rejected regardless of status
+    try:
+        load_gold(_write({**_GOLD, "gold_requirements": []}))
+    except ValueError:
+        pass
+    else:
         raise AssertionError("expected ValueError")
+    # descriptive FROZEN strings and absent status both load
+    load_gold(_write({**_GOLD, "provenance": {
+        "status": "FROZEN - two-extractor pass + adjudication complete"}}))
+    no_prov = {k: v for k, v in _GOLD.items() if k != "provenance"}
+    load_gold(_write(no_prov))
 
 
 def test_load_gold_rejects_bad_kind_and_dup_ids():

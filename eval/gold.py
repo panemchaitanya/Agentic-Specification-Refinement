@@ -19,8 +19,11 @@ gold JSON alongside as <item>.gold.json:
 }
 
 Fail-closed rules: an empty gold_requirements list is rejected (a skeleton
-must never be consumed as gold), and provenance.status == "SKELETON" is
-rejected outright. Only extracted, adjudicated gold loads.
+must never be consumed as gold), and when provenance.status is present it
+must start with "FROZEN" - anything else ("SKELETON - ...", partial, or
+any future non-frozen marker) is rejected. Whitelist, not blacklist, so
+unknown future statuses fail closed. Only extracted, adjudicated, frozen
+gold loads.
 
 Verdict file (one per scored item+run, produced by the rubric process):
 {
@@ -48,10 +51,11 @@ def load_gold(path: str) -> dict:
         if key not in gold:
             raise ValueError(f"gold file {path} missing {key!r}")
     status = (gold.get("provenance") or {}).get("status")
-    if status == "SKELETON":
+    if status is not None and not str(status).startswith("FROZEN"):
         raise ValueError(
-            f"gold file {path} is a SKELETON (provenance.status) - not "
-            "extracted gold; refusing to consume it in a run")
+            f"gold file {path} has provenance.status {status!r} - only "
+            "'FROZEN...' statuses may be consumed in a run; refusing to "
+            "load (fail-closed whitelist)")
     if not gold["gold_requirements"]:
         raise ValueError(
             f"gold file {path} has an empty gold_requirements list - an "
