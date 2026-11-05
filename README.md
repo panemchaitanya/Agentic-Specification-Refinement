@@ -67,3 +67,10 @@ critics disagree (`conflict`). Vague wording the critic can fix itself
 
 No evaluation results are claimed yet; this repo currently contains the
 implementation the evaluation will run on.
+
+## Deploy
+
+Any host that can run `streamlit run app.py` works. The app reads `GEMINI_API_KEY` from the environment or from `.streamlit/secrets.toml`; without it, it runs in the labelled demo mode.
+
+- Generic container/VM (e.g. Render): build `pip install -r requirements.txt`, start `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0`.
+- Streamlit Community Cloud: main file path `app.py`, set `GEMINI_API_KEY` in the app's Secrets.
