@@ -6,14 +6,21 @@ docs/evaluation.md for the full format description and the freeze rules.
 
 Gold file (one per PRD item, produced by the datasets lane from the two
 independent extractions + adjudication, with Cohen's kappa reported in its
-own provenance block):
+own provenance block). Freeze layout (agreed with the datasets lane):
+data/frozen/pairs/{dev,test}/<item>.prd.txt + <item>.spec.txt, with the
+gold JSON alongside as <item>.gold.json:
 {
   "item_id": "kep-NNNN",
-  "prd_path": "data/frozen/test/kep-NNNN.prd.txt",
+  "prd_path": "data/frozen/pairs/test/kep-NNNN.prd.txt",
   "implied_categories": ["security", "performance"],
   "gold_requirements": [{"id": "G1", "kind": "FR|security|...", "text": "..."}],
-  "provenance": {"extractor_agreement_kappa": 0.0, "freeze_id": "..."}
+  "provenance": {"extractor_agreement_kappa": 0.0, "freeze_id": "...",
+                 "status": "FROZEN"}
 }
+
+Fail-closed rules: an empty gold_requirements list is rejected (a skeleton
+must never be consumed as gold), and provenance.status == "SKELETON" is
+rejected outright. Only extracted, adjudicated gold loads.
 
 Verdict file (one per scored item+run, produced by the rubric process):
 {
@@ -40,6 +47,15 @@ def load_gold(path: str) -> dict:
     for key in ("item_id", "gold_requirements", "implied_categories"):
         if key not in gold:
             raise ValueError(f"gold file {path} missing {key!r}")
+    status = (gold.get("provenance") or {}).get("status")
+    if status == "SKELETON":
+        raise ValueError(
+            f"gold file {path} is a SKELETON (provenance.status) - not "
+            "extracted gold; refusing to consume it in a run")
+    if not gold["gold_requirements"]:
+        raise ValueError(
+            f"gold file {path} has an empty gold_requirements list - an "
+            "unfilled skeleton is not valid gold")
     ids = set()
     for r in gold["gold_requirements"]:
         if r.get("kind") not in _KINDS:

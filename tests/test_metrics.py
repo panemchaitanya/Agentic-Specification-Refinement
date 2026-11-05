@@ -345,3 +345,66 @@ def test_finding_trace_verbatim_rate():
     assert finding_trace_verbatim_rate([_Finding("Store user data")],
                                        "We store user data.") == 0.0
     assert finding_trace_verbatim_rate([], "p") is None
+
+
+# --- eval/gold.py -----------------------------------------------------------
+
+import json as _json
+import tempfile as _tempfile
+
+from eval.gold import load_gold, load_verdicts
+
+
+def _write(payload):
+    fh = _tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
+    _json.dump(payload, fh)
+    fh.close()
+    return fh.name
+
+
+_GOLD = {"item_id": "x", "implied_categories": ["security"],
+         "gold_requirements": [{"id": "G1", "kind": "security", "text": "t"}],
+         "provenance": {"status": "FROZEN"}}
+
+
+def test_load_gold_accepts_frozen():
+    assert load_gold(_write(_GOLD))["item_id"] == "x"
+
+
+def test_load_gold_rejects_skeleton_status():
+    bad = {**_GOLD, "provenance": {"status": "SKELETON"}}
+    for payload in (bad, {**_GOLD, "gold_requirements": []}):
+        try:
+            load_gold(_write(payload))
+        except ValueError:
+            continue
+        raise AssertionError("expected ValueError")
+
+
+def test_load_gold_rejects_bad_kind_and_dup_ids():
+    try:
+        load_gold(_write({**_GOLD, "gold_requirements": [
+            {"id": "G1", "kind": "weird", "text": "t"}]}))
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("expected ValueError")
+    try:
+        load_gold(_write({**_GOLD, "gold_requirements": [
+            {"id": "G1", "kind": "FR", "text": "a"},
+            {"id": "G1", "kind": "FR", "text": "b"}]}))
+    except ValueError:
+        return
+    raise AssertionError("expected ValueError")
+
+
+def test_load_verdicts_requires_match_pairs():
+    ok = _write({"item_id": "x", "run_id": "r", "pred_ids": ["P1"],
+                 "matches": [["G1", "P1"]]})
+    assert load_verdicts(ok)["item_id"] == "x"
+    try:
+        load_verdicts(_write({"item_id": "x", "run_id": "r",
+                              "matches": [["G1"]]}))
+    except ValueError:
+        return
+    raise AssertionError("expected ValueError")
