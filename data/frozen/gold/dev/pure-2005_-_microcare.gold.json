@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2005_-_microcare",
+  "prd_path": "data/raw/pure/extracted/2005 - microcare.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "116bea5470a773e4b5917e2e27b06a8df8c7e8da9f336752b4423b09c36471f0",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

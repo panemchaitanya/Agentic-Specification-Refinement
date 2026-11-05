@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2002_-_sce_api",
+  "prd_path": "data/raw/pure/extracted/2002 - sce api.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "23135280b5f7c78215f551fb3d46161f70fcb278f6f979e3fc484aacdfd2709c",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

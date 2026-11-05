@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2004_-_e-procurement",
+  "prd_path": "data/raw/pure/extracted/2004 - e-procurement.rtf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "8066f6302bae1f98826b68f36d7142a4fc28bda51bc25446de23a62764bc6bab",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

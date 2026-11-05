@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2005_-_phin",
+  "prd_path": "data/raw/pure/extracted/2005 - phin.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "a6ebe829f3843915fca0d99fb7e126398702f81de452e92d68ceddcf42eaee01",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

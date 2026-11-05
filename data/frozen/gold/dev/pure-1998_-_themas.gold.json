@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-1998_-_themas",
+  "prd_path": "data/raw/pure/extracted/1998 - themas.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "414fc8c90aa3d3184b94aa776ef8303ba3ab5a189ef468758dc6666b281a0742",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "dataset": "PROMISE NFR",
+  "source": {
+    "zenodo_record": "https://zenodo.org/records/268542",
+    "doi": "10.5281/zenodo.268542",
+    "tera_promise": "https://openscience.us/repo/requirements/requirements-other/nfr.html",
+    "license_record_metadata": "CC-BY-4.0",
+    "license_file_header": "CC-BY-SA-3.0 (stricter; governs derived files)",
+    "attribution": "Cleland-Huang, Mazrouee, Liguo, Port (2007), PROMISE NFR dataset"
+  },
+  "raw_tar_sha256": "28f9328ce72f1c54f09b8dd45573eb811b7a78959b5bf290561cbad1d5adb0b5",
+  "frozen_at": "2026-11-05T20:41:30.103145+00:00",
+  "frozen_by": "training/prepare_promise.py",
+  "split_rule": {
+    "unit": "project (ProjectID attribute, 15 projects)",
+    "rule": "projects sorted by sha256('promise-nfr-<id>'), taken until >= 25% of rows and >= 3 projects are in test",
+    "test_projects": [
+      1,
+      3,
+      4,
+      7
+    ],
+    "dev_projects": [
+      2,
+      5,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "stats": {
+    "rows_parsed": 625,
+    "parse_errors": 0,
+    "within_project_duplicates_removed": 3,
+    "cross_project_duplicate_texts": 0,
+    "rows_dev": 437,
+    "rows_test": 185,
+    "label_distribution_dev": {
+      "A": 18,
+      "F": 147,
+      "FT": 10,
+      "L": 6,
+      "LF": 35,
+      "MN": 17,
+      "O": 46,
+      "PE": 45,
+      "PO": 1,
+      "SC": 17,
+      "SE": 43,
+      "US": 52
+    },
+    "label_distribution_test": {
+      "A": 3,
+      "F": 106,
+      "L": 7,
+      "LF": 3,
+      "O": 16,
+      "PE": 8,
+      "SC": 4,
+      "SE": 23,
+      "US": 15
+    },
+    "taxonomy_mapping": {
+      "SE": "security",
+      "PE": "performance",
+      "SC": "scalability",
+      "A": "reliability",
+      "FT": "reliability",
+      "US": "usability",
+      "L": "other",
+      "LF": "other",
+      "MN": "other",
+      "O": "other",
+      "PO": "other",
+      "F": "FR"
+    },
+    "coverage_caveat": {
+      "classes_missing_from_test": [
+        "FT",
+        "MN",
+        "PO"
+      ],
+      "classes_missing_from_dev": [],
+      "note": "Deterministic project split; rare classes (FT/MN/PO have <= 13 rows total) may miss a split. Final evaluation must report per-class support."
+    }
+  },
+  "files": {
+    "dev": {
+      "sha256": "20eac7f8ce71234ffed5ca51cf2099e308be3d126a18215828a4828f4712fdec",
+      "bytes": 54980
+    },
+    "test": {
+      "sha256": "d64dd85d938029492b3769fbb567ed712520de0f976329f1b67d533afa7d52d7",
+      "bytes": 27604
+    }
+  },
+  "discipline": "test.csv is frozen: no experiments, prompt tuning or pilots until the final Stage 4 evaluation."
+}

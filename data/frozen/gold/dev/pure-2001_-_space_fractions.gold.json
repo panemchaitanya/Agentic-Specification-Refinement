@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2001_-_space_fractions",
+  "prd_path": "data/raw/pure/extracted/2001 - space fractions.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "3b2daaee1b3e30340222a0f1aae833a1a549dba3e2b22edee5d30199d332b7e3",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

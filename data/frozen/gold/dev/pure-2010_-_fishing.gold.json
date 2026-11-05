@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2010_-_fishing",
+  "prd_path": "data/raw/pure/extracted/2010 - fishing.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "bce302c57b65f2dd3e0ad25f5bf07293b95c1ffb071c60617ad9220cd64d9080",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

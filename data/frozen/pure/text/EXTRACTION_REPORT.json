@@ -1,0 +1,641 @@
+{
+  "created_by": "training/extract_pure_text.py",
+  "created_at": "2026-11-05T20:59:30.249268+00:00",
+  "ok": 79,
+  "failed": 0,
+  "note": "Failed documents are excluded from labelling/eval until extraction is fixed; they are never hand-filled.",
+  "documents": [
+    {
+      "document": "0000 - cctns.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 42036,
+      "text_sha256": "5a7bf370a5bbc5572d5ed312e443c8b0f16b94b48c2645781a473dd1d802e99b"
+    },
+    {
+      "document": "0000 - gamma j.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 54980,
+      "text_sha256": "3354f8341b79e633c4f09c42a8dddf6664323e793be0ae8c19b91ac26393169d"
+    },
+    {
+      "document": "0000 - inventory.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 37251,
+      "text_sha256": "bdeb177c584a0b3d41cc9156f94fdb1f11c204982e947b7ffa5f87fee611caeb"
+    },
+    {
+      "document": "1995 - gemini.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 169971,
+      "text_sha256": "4d0f2c3d3234b9d60d4550b5c4597337d425cdbfb8cc6b9c5022970e2c321106"
+    },
+    {
+      "document": "1998 - themas.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 71863,
+      "text_sha256": "40a4928a2f2327c51f3d000977436301c43af445472c6bdbd575d5983118a30e"
+    },
+    {
+      "document": "1999 - dii.htm",
+      "split": "dev",
+      "format": "htm",
+      "status": "ok",
+      "chars": 33197,
+      "text_sha256": "602d52f8d1efeeabd9ec18a1989a0b327c2be0b2c17446ecdec1b6f55630db9d"
+    },
+    {
+      "document": "1999 - multi-mahjong.html",
+      "split": "dev",
+      "format": "html",
+      "status": "ok",
+      "chars": 39729,
+      "text_sha256": "1762bd8db7d857ef3cfc083d97ac133f94ed79fc38c3d2350b7281ee838e1130"
+    },
+    {
+      "document": "1999 - tcs.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 430959,
+      "text_sha256": "f02f41266aa7e2f9d662b4b9d157297921a2b145e0a324cb984b4213edd659d6"
+    },
+    {
+      "document": "2000 - nasa x38.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 318068,
+      "text_sha256": "1f175b8dc0b9a20716613789b677d8a77fea620808dc523f43611c2286c22bca"
+    },
+    {
+      "document": "2001 - beyond.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 88836,
+      "text_sha256": "14fae15df3fbc834d5c34050fd641e0467e852923f57169eb61c9c0b82999d31"
+    },
+    {
+      "document": "2001 - ctc network.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 63986,
+      "text_sha256": "cd27542e854ac411e7ba81747ef9b3fc6236fe2d6d237a55351fabf8e4023054"
+    },
+    {
+      "document": "2001 - elsfork.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 169135,
+      "text_sha256": "bd2fe35d2b19a67e622a649a2f6daf5642f4374aae1cc7b88f95c5003fd174f4"
+    },
+    {
+      "document": "2001 - esa.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 55622,
+      "text_sha256": "36ea4c711dc9c9c962d9d60a3b051cd4aa7182696c5959157cbed886b54a9a32"
+    },
+    {
+      "document": "2001 - hats.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 191119,
+      "text_sha256": "507948bc5aae32d1dc45d61146e78bbf9a85fedb6ad7bc374e55e43be9674cfe"
+    },
+    {
+      "document": "2001 - libra.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 35199,
+      "text_sha256": "4e5612d813984a17403806535d4737ee6aef9dc7d08b79baac1989ae6baa9ded"
+    },
+    {
+      "document": "2001 - npac.doc",
+      "split": "test",
+      "format": "doc",
+      "status": "ok",
+      "chars": 569939,
+      "text_sha256": "e5ae9e2099d7e333c07ea1cb9ebc71c8a7b6dcd93c0f9e467cdc92408ac38339"
+    },
+    {
+      "document": "2001 - space fractions.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 22492,
+      "text_sha256": "edb0284c832fc15f22caa4fdb6d2c81ae6e1bae1f88f8b91eaa6b9d08aef1575"
+    },
+    {
+      "document": "2001 - telescope.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 350897,
+      "text_sha256": "90a4eb20762bd069e301b576f77ecdeb3ca771540ba17e43d6a4ca26ad47d12c"
+    },
+    {
+      "document": "2002 - evla back.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 51553,
+      "text_sha256": "4396e3aec5d0a6c57dc691c16c2442d6bb2ae270c695e2c51d1166840976d898"
+    },
+    {
+      "document": "2002 - evla corr.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 43967,
+      "text_sha256": "01b5561310d326027efcc839afca25ef87aa4377ee4f6721356313611d1a5e9d"
+    },
+    {
+      "document": "2002 - sce api.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 270382,
+      "text_sha256": "6e7bc97ff87cc06e29252ff83ad8db7a1f345a0725bbed32cbc0520371f5c2ab"
+    },
+    {
+      "document": "2003 - agentmom.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 15728,
+      "text_sha256": "d6400e332882226e7d52e0200af3932b03d8e2a24041501fbed414d8d055ea6d"
+    },
+    {
+      "document": "2003 - pnnl.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 456178,
+      "text_sha256": "37691bab022014413a010bae97a63b303a3d75d850ed8611a3d1dfc6e633f4c0"
+    },
+    {
+      "document": "2003 - qheadache.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 19947,
+      "text_sha256": "2443d9a7e005f551613d77a6bc83badca9988036859de1800190fa8bd80443d2"
+    },
+    {
+      "document": "2003 - tachonet.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 129909,
+      "text_sha256": "ccd02bad95a1b28d25e2d53db948daaf6da377866707c3b42ef2859741d3be82"
+    },
+    {
+      "document": "2004 - colorcast.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 33426,
+      "text_sha256": "245635335f3edc18088fff31834d417188416c6c721e77051a0e52afd8e25725"
+    },
+    {
+      "document": "2004 - e-procurement.rtf",
+      "split": "dev",
+      "format": "rtf",
+      "status": "ok",
+      "chars": 52299,
+      "text_sha256": "21de720c7978b665a195258989f10d93ce799e721740766370de77b7fe7fa6df"
+    },
+    {
+      "document": "2004 - grid bgc.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 56429,
+      "text_sha256": "0d38898e5bfa0d74e931331e6f02471c6e557d7e4f2fa927ee2d93ea56657aba"
+    },
+    {
+      "document": "2004 - ijis.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 61702,
+      "text_sha256": "cde247efb7beb93effb7e0fb8ceff0f54059f21ee97945045e8dbc48b09d73df"
+    },
+    {
+      "document": "2004 - jse.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 81444,
+      "text_sha256": "2786d30c2d707de3b4341a8643c608be33435227dd8a79942be1cb005500422d"
+    },
+    {
+      "document": "2004 - philips.doc",
+      "split": "test",
+      "format": "doc",
+      "status": "ok",
+      "chars": 17923,
+      "text_sha256": "06d93ac1c6a1e53b8bed6079a979e6b1335fa60a7526d30300e4c0778245ae75"
+    },
+    {
+      "document": "2004 - rlcs.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 188267,
+      "text_sha256": "04fed9e0e32db9c403bdddb95a29d5cbb6ca70c548274b903f589e6d9417ca0f"
+    },
+    {
+      "document": "2004 - sprat.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 63599,
+      "text_sha256": "92a0dcb659a6f059a22fd51421c4fb9f68290d74a3c8f5045a99d049ffa76a2c"
+    },
+    {
+      "document": "2004 - watcom gui.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 98165,
+      "text_sha256": "e1fce61f3638ed9d6768682e74c3dd9e45f30dcf24572ac2150b74c4be7a713e"
+    },
+    {
+      "document": "2004 - watcom.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 125275,
+      "text_sha256": "fe6cda2428c419d56217518e62e9118af5c50a5808b43f167eca419be8435e38"
+    },
+    {
+      "document": "2005 - clarus high.doc",
+      "split": "test",
+      "format": "doc",
+      "status": "ok",
+      "chars": 102252,
+      "text_sha256": "ff726fbebb0f19c8d100b612d87790b8b33412f0cef99bffdf9ee8f7457ec276"
+    },
+    {
+      "document": "2005 - clarus low.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 253837,
+      "text_sha256": "8cee518843d9110d2b3cfb6d9bc26c029f6a642e5a9310f3aa5bfbf3266ec9ad"
+    },
+    {
+      "document": "2005 - grid 3D.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 22754,
+      "text_sha256": "3492b8d6a73d23af5f5fe6cf818e48fc6b8bcd48d0b73b7b4692d37277e0b2ca"
+    },
+    {
+      "document": "2005 - microcare.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 53963,
+      "text_sha256": "5514feb0a8ef3d9d4746f0a8faf6465d6d44daa66f14d213ffba332230b77c5c"
+    },
+    {
+      "document": "2005 - nenios.html",
+      "split": "dev",
+      "format": "html",
+      "status": "ok",
+      "chars": 18233,
+      "text_sha256": "faba66bbec0b903b01a9da9aee5f7450e879f88b439f18bfe4ea5773f0baf73c"
+    },
+    {
+      "document": "2005 - phin.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 50387,
+      "text_sha256": "b6a713cc0e0e468d9faa08f96a046b8e4a1a3f76038ca84a29a7eafd5728ca78"
+    },
+    {
+      "document": "2005 - pontis.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 187502,
+      "text_sha256": "c75b605199dc84d9bef2c5fe491f5712988f75bad710702fe98b293b9412cc20"
+    },
+    {
+      "document": "2005 - triangle.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 42880,
+      "text_sha256": "116a3ee22990f984b673535c0994286f43f286de78c9ea7adcb7077d6b592241"
+    },
+    {
+      "document": "2005 - znix.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 32933,
+      "text_sha256": "5c261d6c798255efc5391d0d7e3b152033b1cc2d3c3727bb2b16ca3532a674c6"
+    },
+    {
+      "document": "2006 - eirene sys 15.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 270943,
+      "text_sha256": "38c6eb2030cfa8aaaefd3c5eebf477d3d214c75dbd36035effcf0b9a4be1221c"
+    },
+    {
+      "document": "2006 - stewards.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 97821,
+      "text_sha256": "fdc44b9cde372b11b9a58311060c7d657cf075a3a00cc2cd6a1a7b0a00e5d65b"
+    },
+    {
+      "document": "2007 - central trading system.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 24430,
+      "text_sha256": "e2a14df03228b8e1ff95fd090111bcc1f44132bc14aae045dba0bbdb56e01f3e"
+    },
+    {
+      "document": "2007 - e-store.doc",
+      "split": "test",
+      "format": "doc",
+      "status": "ok",
+      "chars": 19884,
+      "text_sha256": "0ad7d93b02ee4c6ada1e49f810f5857816284d30144ca41ae207c98c1de35dca"
+    },
+    {
+      "document": "2007 - eirene fun 7.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 174121,
+      "text_sha256": "41b315d1f01d05b0e0a502ea6ed0e2db7abb6475d67847fba6896047c411d019"
+    },
+    {
+      "document": "2007 - ertms.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 81874,
+      "text_sha256": "bc03ddcb8fbd9ce94c21e5bc3b7dde754f43f8d95b422b5162c55a7e222c562a"
+    },
+    {
+      "document": "2007 - get real 0.2.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 22330,
+      "text_sha256": "3749862011a2f1fd43737bee88f1bab5488239216fdc0f4c28deb5ca68892289"
+    },
+    {
+      "document": "2007 - mdot.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 192686,
+      "text_sha256": "34e712d1f7db84fc46dcb42f6625cdf0c956a51a26fe374ec92ea049ba0364df"
+    },
+    {
+      "document": "2007 - nde.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 285105,
+      "text_sha256": "ce305b4381fcdd11285b664d7385b93da1ff0872389544f2b75f5a0ec797bda6"
+    },
+    {
+      "document": "2007 - nlm.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 144921,
+      "text_sha256": "1799749a882af3bccab8c9341278d3d2775cebbba279c3397e2757df095e1c2e"
+    },
+    {
+      "document": "2007 - puget sound.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 37182,
+      "text_sha256": "7e0d85a375b8d0bce19baad5216522b88564df04915d33a348358775935c04c1"
+    },
+    {
+      "document": "2007 - water use.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 119392,
+      "text_sha256": "d286bdd1a2d64b44890466dd768648aa8e5ff66ed902cbb834f6ba59623d33b8"
+    },
+    {
+      "document": "2008 - caiso.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 25323,
+      "text_sha256": "ff72240d3c4f53fb7c293479e7de032f6b23012824e434ce6b12bcea278895ed"
+    },
+    {
+      "document": "2008 - keepass.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 59241,
+      "text_sha256": "163f0707d3df4ef3812c01557c0bcf421bcb5a1c6a0cf3d454631f3e9c342848"
+    },
+    {
+      "document": "2008 - peering.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 48343,
+      "text_sha256": "b68959ea9a0f3b136e7e5ca640b2e213c9c08bcf949edba14203e39b7e36d4d7"
+    },
+    {
+      "document": "2008 - viper.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 129999,
+      "text_sha256": "959abaf8902ba5f31f85b51355b2eccdc224cb551b855685e218d5e2297e0bed"
+    },
+    {
+      "document": "2008 - virtual ed.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 69612,
+      "text_sha256": "c159e65a3bad135dec348f9783f18432cebf5eaabe2f1bcc8c8e070e84c1130e"
+    },
+    {
+      "document": "2008 - vub.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 56811,
+      "text_sha256": "e8e7211575b4384d834472fb1f031296eaaee528f0aed6e6c1bf7afe71b41b7c"
+    },
+    {
+      "document": "2009 - email.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 41198,
+      "text_sha256": "e9a03c17dc157a5d87c25bff437c88d0772237a5e90365fc0a3eeabd758638c9"
+    },
+    {
+      "document": "2009 - gaia.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 36448,
+      "text_sha256": "b7eb57450a3427556fd63d1507b159873df82873a281f64bcdbd9e86f85b50f1"
+    },
+    {
+      "document": "2009 - inventory 2.0.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 129114,
+      "text_sha256": "a09e242fe5b0ee06fe308919676c8af5fc12c3be226293afaabe3996bd08a3d8"
+    },
+    {
+      "document": "2009 - library.doc",
+      "split": "test",
+      "format": "doc",
+      "status": "ok",
+      "chars": 36024,
+      "text_sha256": "bff3d2ca2e0d40b5cf3293a64b8fbe7f311802e84f27334348df623d54e5089a"
+    },
+    {
+      "document": "2009 - library.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 39560,
+      "text_sha256": "9e632f6b6a24c6ea071104be138a21dc5f9c6907d764f3b2a77f4a9e8beb49c9"
+    },
+    {
+      "document": "2009 - model manager.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 28050,
+      "text_sha256": "94016e9c26986fd9927a2fee9f311cde364272fe9202042ddf1e8ec5aede4382"
+    },
+    {
+      "document": "2009 - peazip.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 63131,
+      "text_sha256": "a56c006b2ee4e6ccb9e27106c3c2e7dac9ba4b2fe635a778a163434cff8b40b1"
+    },
+    {
+      "document": "2009 - peppol.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 426111,
+      "text_sha256": "1406705df119ee33287e68056c813d5d4038c9d7b646d665a7ed90f5a6cf6c04"
+    },
+    {
+      "document": "2009 - video search.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 23569,
+      "text_sha256": "e6882a37ffa7209eace51e9d3e8b91c38efcff8221874dc04958640d93bb94cc"
+    },
+    {
+      "document": "2009 - warc III.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 30220,
+      "text_sha256": "0a0cf4c4ea02454e405794f3b690b26595e8658ba290cece68ab54dafe30e26d"
+    },
+    {
+      "document": "2010 - blit draft.pdf",
+      "split": "test",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 20957,
+      "text_sha256": "1b55706fef250a164dd9c143031b1b16d857a99cff411779952115b17939cb66"
+    },
+    {
+      "document": "2010 - fishing.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 192875,
+      "text_sha256": "c2643b4fd620720d634c14716165ff43e369b98b5e2ee2a2d5fa4287c6502092"
+    },
+    {
+      "document": "2010 - gparted.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 46232,
+      "text_sha256": "0d387cea8266181661b32697c769acf659983f81e952f8a23ac027278b494e58"
+    },
+    {
+      "document": "2010 - home 1.3.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 33475,
+      "text_sha256": "0c80160df1ae81c0768a6424343cfbef8a38b944375b2c30b91d6a1680eccc80"
+    },
+    {
+      "document": "2010 - mashboot.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 24574,
+      "text_sha256": "5e8464756aa567a0acb5e38dc20ae4a0ef170e8f41fd5673ef5c47c270466f34"
+    },
+    {
+      "document": "2010 - split merge.pdf",
+      "split": "dev",
+      "format": "pdf",
+      "status": "ok",
+      "chars": 48093,
+      "text_sha256": "271df51e4bf8b9687605423b396e76b95db584d8c61ec48cdacc9b85135af0f4"
+    },
+    {
+      "document": "2011 - opensg 0.1.doc",
+      "split": "dev",
+      "format": "doc",
+      "status": "ok",
+      "chars": 10675,
+      "text_sha256": "914b590ce3d20e70e00ba2c0e58cf00f9a99e32ed0a7c102d8e0c0e82499ac37"
+    }
+  ]
+}

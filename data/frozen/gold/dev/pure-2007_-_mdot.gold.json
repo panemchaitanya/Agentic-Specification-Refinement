@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2007_-_mdot",
+  "prd_path": "data/raw/pure/extracted/2007 - mdot.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "458662aedd3dbc3b15be191dea671a2cd23bf129ef0d1581d9079f63c1f1d3f2",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

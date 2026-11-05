@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2005_-_grid_3D",
+  "prd_path": "data/raw/pure/extracted/2005 - grid 3D.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "e64a61638b26b7fcec4044c1217a30d200f12ddeba6cbdd522c23c04817f4238",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

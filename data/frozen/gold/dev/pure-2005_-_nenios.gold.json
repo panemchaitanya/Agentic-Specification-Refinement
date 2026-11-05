@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2005_-_nenios",
+  "prd_path": "data/raw/pure/extracted/2005 - nenios.html",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "bedee293e84fb7027ce77c31865a926be603d15f55a61b322af47bbf2ad76ccf",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

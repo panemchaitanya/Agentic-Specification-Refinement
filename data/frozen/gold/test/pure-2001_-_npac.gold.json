@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2001_-_npac",
+  "prd_path": "data/raw/pure/extracted/2001 - npac.doc",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "9beff349ac78c17200e7789b217ea19e03ea83c563a171a027e5faac8b38e6d0",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

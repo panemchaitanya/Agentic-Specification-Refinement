@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2008_-_viper",
+  "prd_path": "data/raw/pure/extracted/2008 - viper.doc",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "726ba99c620da2f4730ef0a51d2a0b577033c2a0d9b772b7693836fbb6ee2ed1",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

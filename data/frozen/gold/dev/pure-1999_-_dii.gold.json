@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-1999_-_dii",
+  "prd_path": "data/raw/pure/extracted/1999 - dii.htm",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "82ad6a988a3f750ee1de3e2f9115a724a4f96a63f7d1a1d98a2e1fcfb4b03afd",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

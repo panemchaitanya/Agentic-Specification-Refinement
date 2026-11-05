@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2009_-_peppol",
+  "prd_path": "data/raw/pure/extracted/2009 - peppol.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "515704f939b4edbc931235aa74de991df3d638e32c973f9fc55313fd1c0f9228",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

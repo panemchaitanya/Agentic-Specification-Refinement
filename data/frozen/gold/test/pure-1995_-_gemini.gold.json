@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-1995_-_gemini",
+  "prd_path": "data/raw/pure/extracted/1995 - gemini.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "1b9ad3e8377052e5690922c3eebbcd1118bd870593a1f8c2fb2692e40d668264",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

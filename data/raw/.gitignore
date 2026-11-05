@@ -1,0 +1,5 @@
+# Raw dataset downloads are large and re-fetched by training/fetch_datasets.py.
+# Only the manifest (hashes + provenance) is committed.
+*
+!RAW_MANIFEST.json
+!.gitignore

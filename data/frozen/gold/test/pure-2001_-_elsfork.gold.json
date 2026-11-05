@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2001_-_elsfork",
+  "prd_path": "data/raw/pure/extracted/2001 - elsfork.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "dcbf288ffad5312f9265f7fac74700913fb13015761f11dd0033c84631473e8b",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

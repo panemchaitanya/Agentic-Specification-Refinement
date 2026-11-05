@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2010_-_split_merge",
+  "prd_path": "data/raw/pure/extracted/2010 - split merge.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "099f99c92a29713f98d44fc914af9aa8380a4f0c7f9069de5c1f287823a16475",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

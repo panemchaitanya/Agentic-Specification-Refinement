@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2002_-_evla_back",
+  "prd_path": "data/raw/pure/extracted/2002 - evla back.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "f08c1b886ef283af108b7ebe81663e11793e31a88633d15bbaae85633eae8086",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

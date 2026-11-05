@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2007_-_central_trading_system",
+  "prd_path": "data/raw/pure/extracted/2007 - central trading system.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "00cc02b0b130462881e4424cadacf1bdc21bc25df579daa7af1d842c728d3203",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

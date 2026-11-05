@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2007_-_water_use",
+  "prd_path": "data/raw/pure/extracted/2007 - water use.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "a82e718e6ac8ed71a589e3fff18446c19b20114f3fffb6d2688b5926c45e53f4",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

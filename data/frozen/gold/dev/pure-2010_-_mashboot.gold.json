@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2010_-_mashboot",
+  "prd_path": "data/raw/pure/extracted/2010 - mashboot.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "afd8495db93df87833b876e424102cec3a246534e2e791f24a84d1126adefde4",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

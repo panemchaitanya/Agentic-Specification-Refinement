@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2004_-_grid_bgc",
+  "prd_path": "data/raw/pure/extracted/2004 - grid bgc.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "ab1c39758177753310dec1873a4a5a15a04832281f4e5f9cbb1fe52b5d0e37f2",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

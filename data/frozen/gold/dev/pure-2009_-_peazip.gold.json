@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2009_-_peazip",
+  "prd_path": "data/raw/pure/extracted/2009 - peazip.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "b8225e2377db2332ea3ce80c8f36b8ef965d0a3ef7ff75114838d2823b41c875",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

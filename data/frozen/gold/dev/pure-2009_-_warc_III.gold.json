@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2009_-_warc_III",
+  "prd_path": "data/raw/pure/extracted/2009 - warc III.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "c164f7caa474fd7a03615a987352df2853fd46a2edb24c7ca1ae5f67984ac3c0",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

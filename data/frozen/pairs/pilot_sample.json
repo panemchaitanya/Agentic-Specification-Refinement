@@ -1,0 +1,590 @@
+{
+  "created_by": "training/build_pairs.py",
+  "created_at": "2026-11-05T20:58:13.246718+00:00",
+  "status": "PILOT SAMPLE - candidates only, not frozen, not gold",
+  "construction": {
+    "proposal_side": "document content at its adding commit only (proposal-time visibility; leakage guard)",
+    "spec_side": "document content at HEAD at build time"
+  },
+  "hand_validation_checklist": [
+    "proposal side reads like a proposal/motivation, not a finished spec",
+    "spec side is the evolved version of the SAME proposal",
+    "no later revisions folded into the proposal side",
+    "pair is usable: enough content on both sides to extract FRs/NFRs"
+  ],
+  "validation": {
+    "kep:4802": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:5295": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:6268": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:1733": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:2268": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:5311": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:548": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:5547": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:2413": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "kep:695": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:0369": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:1581": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:3892": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:1044": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:3559": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:3516": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:3672": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:2438": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:0068": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "rust-rfc:3924": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0513": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0279": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0728": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0708": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0259": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0393": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0472": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0327": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0370": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    },
+    "pep:0529": {
+      "reviewer": null,
+      "checks_passed": null,
+      "notes": null
+    }
+  },
+  "pairs": [
+    {
+      "id": "4802",
+      "path": "keps/sig-windows/4802-windows-node-shutdown/README.md",
+      "added_commit": "8d72fb317d4ac618fdfb371730958fd0432b2293",
+      "added_at": "2024-10-09T14:42:51-07:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-windows/4802-windows-node-shutdown/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "13cc2a961e3714c418e2861f5969f9d3bd05d452755d7f36a4be2a86975a8be6",
+      "spec_sha256": "4ec7fbdda7f8f2a3e4974b6c752383e7431da016aca8cdd55f66d41ce75ce076",
+      "proposal_bytes": 20714,
+      "spec_bytes": 22236,
+      "source": "kep"
+    },
+    {
+      "id": "5295",
+      "path": "keps/sig-cli/5295-kyaml/README.md",
+      "added_commit": "e9d5887d3fd0326633da159845bcd373a6a50eb5",
+      "added_at": "2025-06-05T13:51:34-07:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-cli/5295-kyaml/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "54faeb97cdd01e66492fa542ab9ad944067fd4d8dc2349a36078360add835519",
+      "spec_sha256": "c27e782f58a2953212a0521a8b20edb098f30474f3259892571b055f96d14f52",
+      "proposal_bytes": 45171,
+      "spec_bytes": 45101,
+      "source": "kep"
+    },
+    {
+      "id": "6268",
+      "path": "keps/sig-api-machinery/6268-watch-cache-stall-resume/README.md",
+      "added_commit": "9bcd95501a89ae435d366b797157b2cf933c0ec8",
+      "added_at": "2026-09-25T21:56:05+00:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-api-machinery/6268-watch-cache-stall-resume/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "ff9ab803ace2096088352169f1744a96c96f13e2243305005107bf8fd7db1a23",
+      "spec_sha256": "33091088cd1c1a2132aedd0dfd16657aaceacd03da32f3d6ec1dcb7ac07d620f",
+      "proposal_bytes": 39816,
+      "spec_bytes": 53171,
+      "source": "kep"
+    },
+    {
+      "id": "1733",
+      "path": "keps/sig-release/1733-release-notes/README.md",
+      "added_commit": "6f9b8abec567fbca82086c6525443a730fc69cca",
+      "added_at": "2019-03-31T01:30:52-04:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-release/20190331-release-notes.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "3016174aa0ad43a040af714acc0f6449b866084343d158291fd1d35d6104a10e",
+      "spec_sha256": "d9fe128c0928780392a6e2d8a5a1538562f83325ec290e40042ca7df9748f462",
+      "proposal_bytes": 6202,
+      "spec_bytes": 6006,
+      "source": "kep"
+    },
+    {
+      "id": "2268",
+      "path": "keps/sig-storage/2268-non-graceful-shutdown/README.md",
+      "added_commit": "ee97d63886735924a51677a066053e58efa767e0",
+      "added_at": "2022-02-02T13:31:26+00:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-storage/2268-non-graceful-shutdown/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "beab7902e372c334139c4d6b0ab31909e560be345af4f2722321fb96aa459770",
+      "spec_sha256": "bd7d1eb1ac75e96a7031d1e0248f69c5b7911c9da28ee542caa6a7b28b0151e3",
+      "proposal_bytes": 27085,
+      "spec_bytes": 40218,
+      "source": "kep"
+    },
+    {
+      "id": "5311",
+      "path": "keps/sig-network/5311-relaxed-validation-for-service-names/README.md",
+      "added_commit": "f031c0119d6f04b1e77381d333dde6b2fc263bb6",
+      "added_at": "2025-06-12T07:33:43+02:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-network/5311-relaxed-validation-for-service-names/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "07a0f9c5fe4454303546e24234fb4e2b1c543d3c1fd522d6cb7f968d9e524760",
+      "spec_sha256": "7e4351aa41a7e8ae6eaa6567d24b2f1abc110fc20ddc8e6730134e968513ce47",
+      "proposal_bytes": 18025,
+      "spec_bytes": 14357,
+      "source": "kep"
+    },
+    {
+      "id": "548",
+      "path": "keps/sig-scheduling/548-schedule-daemonset-pods/README.md",
+      "added_commit": "6d36008c9c8a73495e9f3a3d5c7acdf0dc710345",
+      "added_at": "2019-10-14T10:06:40+08:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-scheduling/20191011-graduate-schedule-daemonset-pods-to-ga.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "7a8e6bfb48d653059c1ffc3cec11ae7f86527872a52a936c80c56a3d8185f47e",
+      "spec_sha256": "892a9abb9328fb8802d599a2857b84f3278e45b10c78b84b7003dd4a9dfcac3a",
+      "proposal_bytes": 3674,
+      "spec_bytes": 3262,
+      "source": "kep"
+    },
+    {
+      "id": "5547",
+      "path": "keps/sig-apps/5547-integrate-workload-with-job/README.md",
+      "added_commit": "5e67e40c47b8696809b868fc20b0612ead842a99",
+      "added_at": "2026-02-11T20:30:04+05:30",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-apps/5547-integrate-workload-with-job/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "b1966a7a2c06b150109dae1691b85bec9788a7cd91ab2c9e949b29b3fac9fa44",
+      "spec_sha256": "46efbce509f7db923d5a7ea84b4eaa8e791f0992b6a197293b45f486b4449859",
+      "proposal_bytes": 37902,
+      "spec_bytes": 102966,
+      "source": "kep"
+    },
+    {
+      "id": "2413",
+      "path": "keps/sig-node/2413-seccomp-by-default/README.md",
+      "added_commit": "34fa3dd6d71f9d72b8df1850ee90d15383427dda",
+      "added_at": "2021-05-10T10:55:13+02:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-node/2413-seccomp-by-default/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "6a96b5eabd95aeb58e70b05cdfaa4fb558503d11907e2064d44ba04de8fb5adf",
+      "spec_sha256": "406a94f89ee2d9da568b2a0e2236d28b38cf11e6b34e353710e177c3cef41957",
+      "proposal_bytes": 15889,
+      "spec_bytes": 19815,
+      "source": "kep"
+    },
+    {
+      "id": "695",
+      "path": "keps/sig-storage/695-skip-permission-change/README.md",
+      "added_commit": "5cd6d1784f4bee18567492fbcc081d622782165a",
+      "added_at": "2020-05-15T17:43:17-04:00",
+      "rename_followed": true,
+      "proposal_path": "keps/sig-storage/695-skip-permission-change/README.md",
+      "head": "92eb8a18eb831a21b610dd86053ecab7a663ec46",
+      "proposal_sha256": "085326d4bca7e99410803d3e6ef6ffb7fb0bb1cd4fdd41ea514292b112a0d640",
+      "spec_sha256": "126e76ad1435424984bc9dcc6299afbe7de002375a7e526ec43ebcce236faf2f",
+      "proposal_bytes": 15231,
+      "spec_bytes": 15321,
+      "source": "kep"
+    },
+    {
+      "id": "0369",
+      "path": "text/0369-num-reform.md",
+      "added_commit": "ec91149154d13e0bdb006075ce630b60606ab5cd",
+      "added_at": "2014-10-08T11:37:15-07:00",
+      "rename_followed": true,
+      "proposal_path": "active/0000-num-reform.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "414135d82abbfcfb80e2ef82b44b22b4fa458c5c4bbc735942fbceac9427ed65",
+      "spec_sha256": "2efe52efa38fd2a57d3bf04438633a9a08c4d74a0a19bd2007a59c362dbd1385",
+      "proposal_bytes": 13163,
+      "spec_bytes": 15018,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "1581",
+      "path": "text/1581-fused-iterator.md",
+      "added_commit": "1fd4a15e938a743c9afe59631535c7292a135e1b",
+      "added_at": "2016-04-15T13:41:46-04:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-fused-iterator.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "e278855b7f8f49cacea843863b6c0995049a47a7f120120582e5d13b6c99236c",
+      "spec_sha256": "5774057f7b5ca6b4aa0c753a13866ac9e0e98fea62359d8a0068c06e44c88856",
+      "proposal_bytes": 6244,
+      "spec_bytes": 7665,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "3892",
+      "path": "text/3892-complex-numbers.md",
+      "added_commit": "ba634bb21663efac99eb4abc52b5fc688b661e20",
+      "added_at": "2025-12-02T18:50:47+08:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-complex-numbers.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "aa1e777798f42fbefb128e9a1cd55d2b60b4a82fa3d4e8d72d2c7b00c697c57a",
+      "spec_sha256": "994da6f229bdcb8d5d298a76800c8ddd442f1fbe01ed4b39fa8fc43fd034e59f",
+      "proposal_bytes": 8176,
+      "spec_bytes": 9635,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "1044",
+      "path": "text/1044-io-fs-2.1.md",
+      "added_commit": "f3153e669c807e844f82bf361fdb6dd106eb8d49",
+      "added_at": "2015-04-06T10:56:44-07:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-io-fs-2.1.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "5b0039fb8dee4b262cd0fba66d779c0930bc9638aaadbb0d1c1514de354ab444",
+      "spec_sha256": "cd14c136c3d10039ede06c6ad712ec01b180bd53298862fba1dfc227e0835d54",
+      "proposal_bytes": 15622,
+      "spec_bytes": 22879,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "3559",
+      "path": "text/3559-rust-has-provenance.md",
+      "added_commit": "da3ccb8cf285cd3f53ef53f541b31f03cceb7134",
+      "added_at": "2024-01-25T09:59:13+01:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-rust-has-provenance.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "be25bf3a652db777e0ea60959715ab3989a2974b069fe1e62bc4c03c87b772a6",
+      "spec_sha256": "703f143e79a7cd6e8c8b2acaa3bb0ed37cb4f29675bb5eee4fe93873b404638c",
+      "proposal_bytes": 25211,
+      "spec_bytes": 30455,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "3516",
+      "path": "text/3516-public-private-dependencies.md",
+      "added_commit": "7c1e39762ad360fd4b8a4e75bb8486bc88130ad0",
+      "added_at": "2017-04-18T09:35:17+02:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-public-private-dependencies.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "773070018102c98542ba964320a417618b3ce4aae0809c65f328002dce9d14f6",
+      "spec_sha256": "466c90756fa68ed4436bd2a5185990864d74a3d049e7f63b9cd98f3cd4a9b2b3",
+      "proposal_bytes": 9467,
+      "spec_bytes": 21994,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "3672",
+      "path": "text/3672-Project-Goals-2024h2.md",
+      "added_commit": "4fc3a0002196fb8c302aa95ded14bceb97cb144e",
+      "added_at": "2024-07-09T20:58:47-04:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-Project-Goals-2024h2.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "c73b1535a496ef415b90e564e17b076447eaa7a3520936de54ccb922f4de6487",
+      "spec_sha256": "9b3fd4b8d12999f52521cfa2e6a628859e43590d1ff74b35d9fa5221c1cfbb96",
+      "proposal_bytes": 43828,
+      "spec_bytes": 53844,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "2438",
+      "path": "text/2438-deny-integer-literal-overflow-lint.md",
+      "added_commit": "3ef39053a92963abf0cf446c3f6ee57a20875063",
+      "added_at": "2018-05-11T04:44:12+00:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-deny-integer-literal-overflow-lint.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "a9a686355f4372e25416505962f91b03bb8676309952b0a3232ce6b42434e510",
+      "spec_sha256": "f8745c4648a6c573e9e88b663cb4fd7dc4827950d766f574d958aa3cc6d0289e",
+      "proposal_bytes": 4316,
+      "spec_bytes": 6999,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "0068",
+      "path": "text/0068-const-unsafe-pointers.md",
+      "added_commit": "82bd04dc039bb40565484302743c56d7a977e367",
+      "added_at": "2014-05-05T11:52:25-07:00",
+      "rename_followed": true,
+      "proposal_path": "active/0000-const-unsafe-pointers.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "89554bf5aca01df2ecacd0c81a1eab38a44053af6d6d1290f4b2ffe503d1e127",
+      "spec_sha256": "35edaf687da635ce09b7f363a9b4a89c22add1f8803a5a91f4c86e259672dde8",
+      "proposal_bytes": 3860,
+      "spec_bytes": 7298,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "3924",
+      "path": "text/3924-cargo-hints-min-opt-level.md",
+      "added_commit": "44fc14e857b338942c04a2150b05327b08860151",
+      "added_at": "2026-02-23T02:08:47-08:00",
+      "rename_followed": true,
+      "proposal_path": "text/0000-cargo-hints-min-opt-level.md",
+      "head": "3bdcd22feea6848a7920fa06d17ad4c6ada9db89",
+      "proposal_sha256": "08863b1fc1980a3990fe8f2cf144cd345906b268236ae6eae0f8bf75f03997d9",
+      "spec_sha256": "3c266a22e9a079d86a4057c7d4bd52afdcc601b72a031695ad5adbe43fc09eed",
+      "proposal_bytes": 6664,
+      "spec_bytes": 10556,
+      "source": "rust-rfc"
+    },
+    {
+      "id": "0513",
+      "path": "peps/pep-0513.rst",
+      "added_commit": "d161460a4ba7f80871a31098fda89c06b7c967c2",
+      "added_at": "2016-01-21T16:23:03+10:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0513.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "b3ae1cfc67f82b1529f78f1828972f3b33ad67b974a665446fcc168d793acbfb",
+      "spec_sha256": "0da44eb82bedb5c430d4373f1ef8361fb2de13f88a22b66089fe5b447f361ee9",
+      "proposal_bytes": 14056,
+      "spec_bytes": 27942,
+      "source": "pep"
+    },
+    {
+      "id": "0279",
+      "path": "peps/pep-0279.rst",
+      "added_commit": "1947249ff7df90ba79ef42eba0aaafc20d67578d",
+      "added_at": "2002-02-01T05:59:14+00:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0279.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "5de03a2064444861e547e08ed7f013c7af24f6acdef2bd2860632e51a4a9f76b",
+      "spec_sha256": "8116ef4fe5f9f7aca33e939a3dccfb5d09bc1c1255507f25d1f43101b0db4101",
+      "proposal_bytes": 16731,
+      "spec_bytes": 8245,
+      "source": "pep"
+    },
+    {
+      "id": "0728",
+      "path": "peps/pep-0728.rst",
+      "added_commit": "395a3115da663be1782a7724b7c8c81d645e9a35",
+      "added_at": "2024-02-08T18:55:10-08:00",
+      "rename_followed": true,
+      "proposal_path": "peps/pep-0728.rst",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "b2ed94ca07be882ada1d684a23d91587a42d5d667fb2dc66de333fb213bbd557",
+      "spec_sha256": "6cdc5b691939dd3798be37de9a563f6dc5e1b6f71fec11f2ba6c22e477869bbe",
+      "proposal_bytes": 23795,
+      "spec_bytes": 38358,
+      "source": "pep"
+    },
+    {
+      "id": "0708",
+      "path": "peps/pep-0708.rst",
+      "added_commit": "f074fe020b137e13dae3c03a96e6a2e5d48a950a",
+      "added_at": "2023-02-23T10:48:47-05:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0708.rst",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "aa0215271bb63f4cfd5e963adbcdce0733b07229a9a2e50d67328258ff49b0e2",
+      "spec_sha256": "165dc9d07f7b749e1d470805216dd040baf6174242ad38141dbe297bb0170b43",
+      "proposal_bytes": 40154,
+      "spec_bytes": 42727,
+      "source": "pep"
+    },
+    {
+      "id": "0259",
+      "path": "peps/pep-0259.rst",
+      "added_commit": "559c1c1ad46a85ce10e6e3057368fc4dd62a63e9",
+      "added_at": "2001-06-11T20:07:37+00:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0259.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "73ce204ee3d791d6f9f50c80a188d4839a1f4e955fdc18b910d801f2da94b879",
+      "spec_sha256": "d2dd15a7077638685a168e978be35620465ac98432f916fe49c7dd7e5ad069c0",
+      "proposal_bytes": 3617,
+      "spec_bytes": 3636,
+      "source": "pep"
+    },
+    {
+      "id": "0393",
+      "path": "peps/pep-0393.rst",
+      "added_commit": "d034c2d2dcee581cf95e00e6160ce2e9064cb461",
+      "added_at": "2011-01-24T20:00:09+00:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0393.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "fa14015d6d8d4bba463c94bd75761aa92bb8f992739de49f3d7b23d3a5aba936",
+      "spec_sha256": "f343f1ef5ac994d058ebe51a7d73f8112204301e51f679a4dec243bb8bbec15a",
+      "proposal_bytes": 6894,
+      "spec_bytes": 19860,
+      "source": "pep"
+    },
+    {
+      "id": "0472",
+      "path": "peps/pep-0472.rst",
+      "added_commit": "84d82f06f22a789b7ed3923e37552daef13eba14",
+      "added_at": "2014-07-13T17:40:44-07:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0472.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "19d65da93a8212390e6127b289dcdaf9b74d61169e5b215aa054bf3df64e598e",
+      "spec_sha256": "9bc5f6a9ed7dacbcd9ccf92341ea2fbb6988e2e4a6ee1f5bf56a1cea10719b4d",
+      "proposal_bytes": 26438,
+      "spec_bytes": 25988,
+      "source": "pep"
+    },
+    {
+      "id": "0327",
+      "path": "peps/pep-0327.rst",
+      "added_commit": "65755da08ef34156ccf7ed89050a721153661391",
+      "added_at": "2004-01-29T19:59:56+00:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0327.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "604f75f38c3602b60bd3007a3bd1e609f33983640fb1d670f43ae6fdbe4555c9",
+      "spec_sha256": "4820bed2a7ccc032b485a7f365bc95a2cc6ebe2421e2b3bcd8b9a8f18f35a7af",
+      "proposal_bytes": 22711,
+      "spec_bytes": 40409,
+      "source": "pep"
+    },
+    {
+      "id": "0370",
+      "path": "peps/pep-0370.rst",
+      "added_commit": "da0826355696f5f6e802d6559200585f1519b46f",
+      "added_at": "2008-01-14T20:42:39+00:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0370.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "dac52f6f093786ed7949f6f1418163341ae561947dd6292e90df338ba4e77ba2",
+      "spec_sha256": "b5871868181e7b25061b0e3d6306f954517622e9eacf6c488bfaf54e98cef936",
+      "proposal_bytes": 6524,
+      "spec_bytes": 7918,
+      "source": "pep"
+    },
+    {
+      "id": "0529",
+      "path": "peps/pep-0529.rst",
+      "added_commit": "846dfcfab83a324dedd9ea3d8e20a64101b06bfd",
+      "added_at": "2016-09-01T15:26:27-07:00",
+      "rename_followed": true,
+      "proposal_path": "pep-0529.txt",
+      "head": "da2bb69d6337b3f34d35763d4d3a5428baba46a8",
+      "proposal_sha256": "080963eb78bd96a0bbab843c6ceb76e4978fc8a21fff501cce6c53f9c2e575c7",
+      "spec_sha256": "c75fc7f49e56c8826f93a75ea3ad8e8fac457d54cc3c6ea915877ffa4253ebbd",
+      "proposal_bytes": 12815,
+      "spec_bytes": 19534,
+      "source": "pep"
+    }
+  ],
+  "next_step": "Hand-validate this sample, then freeze a validated pair set with a by-proposal split before any evaluation."
+}

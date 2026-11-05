@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2008_-_vub",
+  "prd_path": "data/raw/pure/extracted/2008 - vub.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "d4553dd3e8153e14fd9007104bef14c051a7e430451a54bd8d86d89b34c1ff4a",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

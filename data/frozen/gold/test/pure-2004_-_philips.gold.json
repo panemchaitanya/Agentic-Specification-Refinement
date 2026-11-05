@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2004_-_philips",
+  "prd_path": "data/raw/pure/extracted/2004 - philips.doc",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "24c49f94f38dbdcf26d15daa42bcd4c1706651e0b7245678fdb37e41aa89d580",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

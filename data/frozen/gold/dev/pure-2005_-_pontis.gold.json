@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2005_-_pontis",
+  "prd_path": "data/raw/pure/extracted/2005 - pontis.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "92731c839cad8c6def79c3b1e74d364ecc038d569da19e37e776c0141067a63f",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

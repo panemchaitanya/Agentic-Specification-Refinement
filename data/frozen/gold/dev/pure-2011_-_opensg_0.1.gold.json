@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2011_-_opensg_0.1",
+  "prd_path": "data/raw/pure/extracted/2011 - opensg 0.1.doc",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "1f1df635a33f2b2943868311fdb117f2ec7eb399f9215f1ff797efce1bb635ad",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

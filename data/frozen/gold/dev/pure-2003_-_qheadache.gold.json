@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2003_-_qheadache",
+  "prd_path": "data/raw/pure/extracted/2003 - qheadache.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "0c5b68f8df28005f549bcb2703bc5a487833c144962bc19aae3ca9e75678211e",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

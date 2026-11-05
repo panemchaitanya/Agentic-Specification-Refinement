@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2005_-_triangle",
+  "prd_path": "data/raw/pure/extracted/2005 - triangle.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "6e27e44e6ae1fa8cb54ea45c98155b51fb4558015bba0969a0ac70d975fb921d",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

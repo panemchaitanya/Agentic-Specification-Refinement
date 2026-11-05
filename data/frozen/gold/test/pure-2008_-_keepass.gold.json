@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2008_-_keepass",
+  "prd_path": "data/raw/pure/extracted/2008 - keepass.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "58b171a34980641f05ee12b864e73f06d37982992aec81f99e2d5a9eb29ab89b",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2003_-_agentmom",
+  "prd_path": "data/raw/pure/extracted/2003 - agentmom.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "c02ac202894f1411747a884de713b15ef222256bbe3f451b26d835d95697df51",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

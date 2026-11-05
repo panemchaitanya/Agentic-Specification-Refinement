@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2008_-_caiso",
+  "prd_path": "data/raw/pure/extracted/2008 - caiso.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "07ccfef5adc0ce709a39bc19b9322daf1945e677153880b1813650f15b5e4a80",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

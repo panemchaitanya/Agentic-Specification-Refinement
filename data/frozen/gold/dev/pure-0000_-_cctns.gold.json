@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-0000_-_cctns",
+  "prd_path": "data/raw/pure/extracted/0000 - cctns.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "c34ebce2bf6bff2bb166c2b5f83800a33e47310f9acbfb9ce0e42208c27b1f8d",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

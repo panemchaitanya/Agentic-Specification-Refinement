@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2005_-_znix",
+  "prd_path": "data/raw/pure/extracted/2005 - znix.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "f980f763c078f789a8876c616d88747f7fb4f7e6ac33d27a5f3a4ecc0d210971",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}
