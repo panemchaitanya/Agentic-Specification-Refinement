@@ -21,6 +21,29 @@ next. Without a `GEMINI_API_KEY` the app runs in a deterministic demo mode
 used for development and tests; demo-mode output is not model-quality and
 is never used for evaluation.
 
+**Hosted demo:** https://agentic-specification-refinement.onrender.com
+runs the app in demo mode only (no API key in hosted secrets, by design).
+It is a free instance: it sleeps after ~15 minutes idle and takes about a
+minute to wake. Demo output shows the flow, not refinement quality.
+
+## Known quality gaps (carried, not solved)
+
+These are evaluation targets for Stages 2-4, not claims of quality:
+
+- PRD statements are currently typed by the orchestrator as FRs even when
+  they are really quality statements (e.g. "The checkout must be fast."
+  or "We store user profile data" show up as FR-n traced to the PRD).
+  FR/NFR typing guidelines and measurement land in Stage 2.
+- A `vague` critic finding turns the critic's suggested fix into a final
+  NFR directly, traced to that critic, without asking the user. That
+  follows the proposal's escalation rule, but the user never explicitly
+  approves those lines; H1/H3 measurement must count them separately
+  from user-answered lines.
+- "0 untraced lines" means trace coverage only (every line names a
+  source). It says nothing about whether the lines are correct,
+  complete, or well-typed - that is what the frozen-split evaluation
+  (H1-H3) is for.
+
 ## Run
 
 ```bash
@@ -48,6 +71,8 @@ src/specpipe/
   gapcheck.py           dedupe, escalation rule, targeted questions (cap 5)
   pipeline.py           analyze() + finalize(): deterministic trace-linked composition
 data/sample_prds/       demo inputs
+docs/datasets.md        dataset qualification: licenses, label gap, open checks
+docs/compute.md         training feasibility: verified free compute options
 tests/                  offline unit tests (MockLLM)
 ```
 
