@@ -31,21 +31,20 @@ def finalize(title: str, draft: list, findings: list,
     """Stage B: compose the trace-linked spec.
 
     answers maps question id -> answer text (empty means unanswered).
-    Every spec line traces to a PRD sentence, a critic, or a human answer.
+    Every spec line traces to a PRD sentence, a critic, or a human answer,
+    and carries user_confirmed so lines a critic auto-applied are visible
+    as not human-approved (they are evaluation targets, not silent edits).
     """
-    reqs = list(draft)  # FRs, already traced to PRD sentences
-    n = 0
-
-    def next_id():
-        nonlocal n
-        n += 1
-        return f"NFR-{n}"
+    reqs = list(draft)  # PRD-traced lines (FR + NFR-typed), user-stated
 
     # Auto-resolvable findings (vague wording fixed by a critic).
+    # These enter WITHOUT human confirmation: the escalation rule applies
+    # them directly, so they are marked user_confirmed=False.
     for f in gapcheck.auto_resolvable(findings):
         reqs.append(Requirement(
-            id=next_id(), kind=f.category, text=f.suggestion,
-            trace_kind=TRACE_CRITIC, trace_ref=f.critic))
+            id="", kind=f.category, text=f.suggestion,
+            trace_kind=TRACE_CRITIC, trace_ref=f.critic,
+            user_confirmed=False))
 
     # Escalated findings: answered ones become human-traced NFRs;
     # unanswered ones enter as open items marked from the critic.
@@ -60,12 +59,25 @@ def finalize(title: str, draft: list, findings: list,
         answer = (answers.get(q.id, "").strip() if q else "")
         if answer:
             reqs.append(Requirement(
-                id=next_id(), kind=f.category,
+                id="", kind=f.category,
                 text=f"{f.suggestion} (specified: {answer})",
-                trace_kind=TRACE_HUMAN, trace_ref=q.id))
+                trace_kind=TRACE_HUMAN, trace_ref=q.id,
+                user_confirmed=True))
         else:
             reqs.append(Requirement(
-                id=next_id(), kind=f.category,
+                id="", kind=f.category,
                 text=f"OPEN: {f.issue} - {f.suggestion}",
-                trace_kind=TRACE_CRITIC, trace_ref=f.critic))
+                trace_kind=TRACE_CRITIC, trace_ref=f.critic,
+                user_confirmed=False))
+
+    # One consistent renumbering pass: FR-1.. for kind FR, NFR-1.. for
+    # every NFR category, in spec order. Draft ids were provisional.
+    fr_n = nfr_n = 0
+    for r in reqs:
+        if r.kind == "FR":
+            fr_n += 1
+            r.id = f"FR-{fr_n}"
+        else:
+            nfr_n += 1
+            r.id = f"NFR-{nfr_n}"
     return Spec(title=title, requirements=reqs)

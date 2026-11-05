@@ -30,15 +30,17 @@ minute to wake. Demo output shows the flow, not refinement quality.
 
 These are evaluation targets for Stages 2-4, not claims of quality:
 
-- PRD statements are currently typed by the orchestrator as FRs even when
-  they are really quality statements (e.g. "The checkout must be fast."
-  or "We store user profile data" show up as FR-n traced to the PRD).
-  FR/NFR typing guidelines and measurement land in Stage 2.
-- A `vague` critic finding turns the critic's suggested fix into a final
-  NFR directly, traced to that critic, without asking the user. That
-  follows the proposal's escalation rule, but the user never explicitly
-  approves those lines; H1/H3 measurement must count them separately
-  from user-answered lines.
+- FR/NFR typing of PRD statements is a keyword heuristic
+  (`orchestrator.classify_statement`): explicit quality wording ("fast",
+  "secure", ...) becomes an NFR category, everything else stays FR. The
+  heuristic is unvalidated - the Stage 2 extraction guidelines and
+  matching rubric own the real FR/NFR boundary.
+- A `vague` critic finding still turns the critic's suggested fix into a
+  final NFR without asking the user (the proposal's escalation rule).
+  These lines are now marked in output: `user_confirmed: false` in the
+  downloaded spec and counted as `user_unconfirmed` in the trace report.
+  Marking is visibility, not approval; H1/H3 measurement must count
+  these separately from user-answered lines.
 - "0 untraced lines" means trace coverage only (every line names a
   source). It says nothing about whether the lines are correct,
   complete, or well-typed - that is what the frozen-split evaluation

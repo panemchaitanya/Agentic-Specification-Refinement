@@ -33,6 +33,10 @@ class Requirement:
     text: str
     trace_kind: str  # TRACE_PRD / TRACE_CRITIC / TRACE_HUMAN
     trace_ref: str  # PRD sentence quote, critic name, or question id
+    # Whether a human actually stated or answered this line:
+    # True for PRD-stated and human-answered lines, False for lines a
+    # critic auto-applied (vague fixes) or left OPEN. None = legacy/unknown.
+    user_confirmed: Optional[bool] = None
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -90,5 +94,8 @@ class Spec:
                 counts[r.trace_kind] += 1
             else:
                 untraced += 1
+        unconfirmed = sum(1 for r in self.requirements
+                          if r.user_confirmed is False)
         return {"by_source": counts, "untraced": untraced,
+                "user_unconfirmed": unconfirmed,
                 "total": len(self.requirements)}

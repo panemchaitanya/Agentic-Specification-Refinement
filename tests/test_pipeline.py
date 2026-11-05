@@ -66,3 +66,37 @@ def test_question_cap():
                         suggestion="s", prd_sentence="p", reason="r")
                 for i in range(MAX_QUESTIONS + 3)]
     assert len(select_questions(findings)) == MAX_QUESTIONS
+
+
+def test_quality_statements_typed_as_nfr_not_fr():
+    from specpipe.orchestrator import classify_statement, draft_frs
+    assert classify_statement("The checkout must be fast.") == "performance"
+    assert classify_statement("The system should be secure.") == "security"
+    assert classify_statement("Users can reset their password.") == "FR"
+    draft = draft_frs(PRD, MockLLM())
+    kinds = {r.text: r.kind for r in draft}
+    assert kinds["The app must be fast."] == "performance"
+    assert any(k == "FR" for k in kinds.values())
+
+
+def test_critic_auto_lines_marked_unconfirmed():
+    r = analyze(PRD, MockLLM())
+    spec = finalize("T", r["draft"], r["findings"], r["questions"],
+                    {q.id: "answer" for q in r["questions"]})
+    auto = [x for x in spec.requirements
+            if x.trace_kind == "critic" and not x.text.startswith("OPEN:")]
+    assert auto and all(x.user_confirmed is False for x in auto)
+    human = [x for x in spec.requirements if x.trace_kind == "human_answer"]
+    assert human and all(x.user_confirmed is True for x in human)
+    prd = [x for x in spec.requirements if x.trace_kind == "prd_sentence"]
+    assert prd and all(x.user_confirmed is True for x in prd)
+    assert spec.trace_report()["user_unconfirmed"] == len(auto)
+
+
+def test_final_ids_are_one_consistent_sequence():
+    r = analyze(PRD, MockLLM())
+    spec = finalize("T", r["draft"], r["findings"], r["questions"], {})
+    fr_ids = [x.id for x in spec.requirements if x.kind == "FR"]
+    nfr_ids = [x.id for x in spec.requirements if x.kind != "FR"]
+    assert fr_ids == [f"FR-{i}" for i in range(1, len(fr_ids) + 1)]
+    assert nfr_ids == [f"NFR-{i}" for i in range(1, len(nfr_ids) + 1)]
