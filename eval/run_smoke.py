@@ -6,6 +6,12 @@ logs are written and parse). It is NOT evaluation evidence: MockLLM output
 is rule-based demo text, the tiny references below are synthetic, and no
 frozen split exists yet. Real runs need the datasets lane's frozen split
 and an LLM budget decision.
+
+Known smoke artifact: MockLLM builds critic prd_sentence quotes from the
+WRAPPED prompt ("PRD:\n..."), so finding_trace_verbatim_rate is 0.0 in
+smoke logs. That is the validity metric correctly catching a mock
+artifact, not a pipeline defect; the real model is instructed to quote
+the PRD verbatim and this metric measures whether it actually does.
 """
 import json
 import sys

@@ -33,6 +33,16 @@ Ablations ("each critic removed in turn") pass a `critic_names` subset to
 the B2/B3/B3T/B4 builders, e.g. `("architecture", "performance")` drops
 the security critic.
 
+Baseline-semantics stability: B2's "apply every suggestion" behavior is
+implemented inside `eval/baselines.py` and does NOT change when the
+product pipeline evolves - comparisons stay pinned to the recorded code
+version. B3/B3T deliberately track the real pipeline (`finalize`), so
+their semantics move with the coordinator's core changes (e.g. the
+planned critic-suggestion approval step); every run log records the git
+code version, and runs across a core change are never pooled into one
+comparison. Any core change that alters escalation or composition must be
+flagged to the evaluation lane before the next run batch.
+
 Why B2 and B3 differ: B2 applies every critic suggestion blindly, so its
 NFR count is maximal and its precision is the interesting number. B3 keeps
 the pipeline's escalation discipline, so unresolved context gaps stay
@@ -58,8 +68,10 @@ A generated requirement and a gold requirement **match** when ALL hold:
 Matching is one-to-one (`eval/scoring.py::score_item`): only the first
 pair for a gold id counts; extra preds matched to the same gold count as
 unmatched and the item is flagged `many_to_one` for audit. 20% of match
-verdicts per run are re-checked by a second person; inter-rater agreement
-on the audit sample is reported with the results.
+verdicts per run are re-checked by a second person, sampled
+deterministically by `eval/audit.py::sample_matches_for_audit` (seeded,
+at least one match per item); inter-rater agreement on the audit sample
+is reported with the results.
 
 ## 3. Metrics
 
@@ -76,17 +88,41 @@ From `src/specpipe/metrics.py` (stable, coordinator-owned):
 
 ## 4. Hypothesis readouts (fixed rules, in `eval/scoring.py`)
 
+Each rule below says what traces verbatim to the proposal and what is a
+transparent pre-data operationalization. Nothing here tightens or weakens
+a hypothesis silently; every operational choice is named and was fixed
+before any evaluation data exists.
+
 - **H1** = B3 vs B1, per-item paired NFR scores. Supported iff the paired
   bootstrap 95% CI for mean recall(B3) - recall(B1) lies above 0 AND mean
   precision(B3) - precision(B1) >= -0.03.
+  - Traces to proposal: the comparison arms, the recall direction, the
+    0.03 precision-drop bound (verbatim), and bootstrap CIs with paired
+    tests (section 4).
+  - Operationalization: the proposal says "higher recall"; we require the
+    95% CI to exclude 0 rather than only a positive mean difference -
+    this is the pre-registered significance bar implied by "report
+    bootstrap confidence intervals", and it is stricter, never looser.
+    The raw mean differences are reported alongside either way.
 - **H2** = SLM vs LLM critics in identical roles, per-item paired NFR F1.
   Supported iff mean F1(SLM) - F1(LLM) >= -0.05. Token cost and latency
   are reported as means and ratios; the proposal says "much lower"
   without a number, so no pass/fail is attached to them.
+  - Traces to proposal: arms, F1 gap 0.05 (verbatim), cost/latency
+    reporting.
+  - Operationalization: the pass/fail uses the mean difference (CI
+    reported); "much lower" stays descriptive because the proposal sets
+    no threshold.
 - **H3** = B3T vs B4, per-item paired. Supported iff mean
   completeness(B3T)/completeness(B4) >= 0.95 AND mean
   1 - questions(B3T)/questions(B4) >= 0.50. (0/0 completeness is scored
   1.0; 0 questions on both arms is a 1.0 reduction.)
+  - Traces to proposal: 95% completeness and 50% fewer questions
+    (verbatim).
+  - Operationalization: we average per-item ratios rather than taking
+    ratios of aggregate sums; the per-item pairing matches the proposal's
+    paired-test design. The 0/0 conventions are arbitrary but fixed here
+    pre-data.
 
 Negative and null results are reported as measured; if H1 fails the
 critic ablations identify the responsible component (proposal section 5).
@@ -129,7 +165,83 @@ Cost note: `GeminiLLM` exposes each response's `usageMetadata` via
 (char volumes and latency always). H2's token-cost claim additionally
 needs SLM-side measurements from the training lane.
 
-## 8. Current state (6 Nov 2026)
+## 8. Trace fidelity (quality metric, not a hypothesis)
+
+Trace coverage ("every line names a source") is already guaranteed by the
+pipeline; whether the named source is REAL is not checked anywhere.
+`eval/validity.py` measures it per run: `fr_trace_verbatim_rate` (share of
+PRD-traced FRs whose trace_ref is a strictly verbatim PRD quote,
+whitespace-normalized, case-sensitive) and `finding_trace_verbatim_rate`
+(same for critic findings' PRD pointers). Both land in every run log.
+Reported alongside H1-H3; a low rate means trace claims overstate
+grounding. Whether the pipeline should validate/repair/drop hallucinated
+traces itself is a coordinator core decision, flagged here pre-data.
+
+## 9. Deviation register (implementation vs proposal, recorded openly)
+
+- **D1 - MAX_QUESTIONS=5 cap.** The proposal's rule is "a question goes to
+  the human only when a critic reports missing business context or two
+  critics disagree" - with no cap. The pipeline's gap check caps targeted
+  questions at 5. Effect on H3: the targeted arm may ask fewer questions
+  than the proposal rule implies (helping the 50%-reduction side) while
+  dropping escalated findings (hurting completeness). Handling: every run
+  log records `n_escalated` alongside `questions_asked`, so dropped
+  escalations are visible; H3 results report both, and if any item has
+  n_escalated > questions_asked the item is flagged in the results table.
+  DECISION (coordinator, 6 Nov 2026, pre-data): the cap STAYS as a
+  product decision; the evaluation arms run with it and H3 results
+  disclose it explicitly.
+
+- **D2 - Conflict detection is self-declared, not cross-critic.** The
+  proposal's escalation example ("an encryption requirement that breaks a
+  latency target") implies the gap-and-conflict check COMPARES findings
+  across critics. The implementation has each critic review in isolation
+  (a critic sees only the PRD and draft FRs, never other critics'
+  findings, verified against src/specpipe/critics.py), so kind=conflict
+  only appears when one critic speculates about another's requirement.
+  Effect on H3: a whole escalation trigger may under-fire in real runs,
+  understating questions on the targeted arm. Run logs record per-kind
+  finding counts (`finding_kinds`), so conflict rates are measurable
+  per run; if conflicts stay near zero on the dev split, that is evidence
+  for the coordinator to implement cross-critic comparison in the gap
+  check (core change, coordinator-owned) before the frozen run.
+  DECISION (coordinator, 6 Nov 2026, pre-data): implemented
+  `gapcheck.detect_cross_critic_conflicts` - a bounded deterministic
+  pass: a finding pair from different critics is flagged conflict only
+  when the suggestions carry opposing directive keywords (fixed table)
+  AND share a target (same PRD sentence or common content word). Low
+  recall by design: it catches explicit tension and cannot prove none
+  exists, so under-firing is reduced, not eliminated; conflict rates stay
+  measurable via `finding_kinds` in every run log.
+
+- **D3 - Trace fidelity is measured eval-side, not repaired pipeline-side.**
+  PRD-sentence citations from a real model can be hallucinated (not
+  verbatim). `eval/validity.py` measures verbatim rates
+  (`fr_trace_verbatim_rate`, `finding_trace_verbatim_rate`,
+  whitespace-normalized, case-sensitive) in every run log. DECISION
+  (coordinator, 6 Nov 2026, pre-data): the pipeline does NOT validate,
+  repair or drop unverified traces for now - silent repair would change
+  outputs differently across arms and bias H1-H3. If dev-split verbatim
+  rates come out low, a pipeline-side *visible* flag (mark, never
+  silently drop) is the candidate follow-up, recorded here in advance.
+
+## 10. Evidence labels (use these exact words in reports)
+
+- **smoke** - deterministic MockLLM runs (`run_smoke.py`): plumbing only,
+  never cited as results.
+- **pilot** - real-model runs on synthetic or dev-split data to measure
+  feasibility (cost, latency, failure modes): informs decisions, is not
+  hypothesis evidence.
+- **evaluation** - runs on the frozen test split under this protocol: the
+  only evidence cited for H1-H3.
+- **oracle evidence** - from the automated ReferenceOracle: repeatable,
+  but a simulated and extractive upper bound on human cooperation and on
+  phrasing leakage; always labeled "simulated human (oracle)".
+- **human evidence** - from actual people (extractors, match auditors,
+  the optional classmate study): the only source for kappa, match-audit
+  agreement, and any real-user claim.
+
+## 11. Current state (6 Nov 2026)
 
 - Harness, baselines B1/B2/B3/B3T/B4, oracle, scoring, gold/verdict
   loaders: implemented and unit-tested (30/30 with the metric tests).
@@ -137,6 +249,9 @@ needs SLM-side measurements from the training lane.
   `eval/runs/*-sample-prds-*.jsonl`. This proves plumbing only; MockLLM
   output is rule-based demo text and the references are synthetic. It is
   NOT evaluation evidence.
+- `eval/run_pilot.py` - bounded free-route feasibility pilot (synthetic
+  PRDs only, 40-call hard budget, aborts clean on LLM error, labeled
+  pilot). Ready to run the moment the route/scale is approved.
 - Blocked on: frozen dev/test splits and gold extraction (datasets lane),
-  an LLM budget/route decision for real generation runs, and SLM critics
-  for H2 (training lane).
+  an LLM budget/route/scale decision for real generation runs, and SLM
+  critics for H2 (training lane).

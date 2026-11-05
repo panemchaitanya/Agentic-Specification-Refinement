@@ -21,6 +21,7 @@ def analyze(prd_text: str, llm) -> dict:
     findings = []
     for critic in default_critics(llm):
         findings.extend(critic.review(prd_text, draft))
+    findings = gapcheck.detect_cross_critic_conflicts(findings)
     findings = gapcheck.dedupe(findings)
     questions = gapcheck.select_questions(findings)
     return {"draft": draft, "findings": findings, "questions": questions}

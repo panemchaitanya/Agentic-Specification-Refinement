@@ -20,6 +20,7 @@ from .baselines import BASELINES, ALL_CRITICS
 from .llm_logging import LoggingLLM
 from .oracle import ReferenceOracle
 from .scoring import open_rate, nfr_kinds, spec_completeness
+from .validity import fr_trace_verbatim_rate
 
 
 def _code_version() -> str:
@@ -93,6 +94,12 @@ def run_experiment(config: ExperimentConfig, items: list, llm_factory,
                         1 for r in spec.requirements
                         if r.trace_kind == "human_answer"),
                     "n_findings": meta.get("n_findings", 0),
+                    "n_escalated": meta.get("n_escalated", 0),
+                    "finding_kinds": meta.get("finding_kinds", {}),
+                    "fr_trace_verbatim_rate": fr_trace_verbatim_rate(
+                        spec.requirements, item["prd_text"]),
+                    "finding_trace_verbatim_rate": meta.get(
+                        "finding_trace_verbatim_rate"),
                     "llm": llm.summary(),
                 }
                 if item.get("implied_categories") is not None:

@@ -105,4 +105,10 @@ frozen splits, gold extraction and real runs are pending.
 Any host that can run `streamlit run app.py` works. The app reads `GEMINI_API_KEY` from the environment or from `.streamlit/secrets.toml`; without it, it runs in the labelled demo mode.
 
 - Generic container/VM (e.g. Render): build `pip install -r requirements.txt`, start `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0`.
+- Hosted instance notes: the service deploys MANUALLY (auto-deploy is off)
+  so the demo stays stable during testing windows. Every deploy restarts
+  the service and resets all active sessions (in-progress analyses are
+  lost); the free instance also sleeps after ~15 minutes idle and takes
+  about a minute to wake. Both are known hosting limitations, not app
+  bugs.
 - Streamlit Community Cloud: main file path `app.py`, set `GEMINI_API_KEY` in the app's Secrets.

@@ -26,6 +26,8 @@ from specpipe.critics import Critic
 from specpipe.gapcheck import dedupe, select_questions, auto_resolvable
 from specpipe.pipeline import finalize
 
+from .validity import finding_trace_verbatim_rate
+
 ALL_CRITICS = ("security", "architecture", "performance")
 
 _B1_SYSTEM = """ROLE: baseline_b1
@@ -36,6 +38,13 @@ specification in one shot. Return JSON only:
 Include the functional and non-functional requirements you believe a
 complete spec needs, based only on what the PRD states or implies."""
 
+
+
+def _finding_kind_counts(findings: list) -> dict:
+    counts = {"vague": 0, "missing_context": 0, "conflict": 0}
+    for f in findings:
+        counts[f.kind] = counts.get(f.kind, 0) + 1
+    return counts
 
 def _norm_kind(kind: str) -> str:
     kind = str(kind or "").strip()
@@ -100,6 +109,9 @@ def b2_orchestrator_critics(prd_text: str, llm, title: str = "Untitled",
     if meta is not None:
         meta["questions_asked"] = 0
         meta["n_findings"] = len(findings)
+        meta["finding_kinds"] = _finding_kind_counts(findings)
+        meta["finding_trace_verbatim_rate"] = finding_trace_verbatim_rate(
+            findings, prd_text)
     return _apply_all_findings(draft, findings, title)
 
 
@@ -112,6 +124,11 @@ def b3_pipeline_no_human(prd_text: str, llm, title: str = "Untitled",
     if meta is not None:
         meta["questions_asked"] = len(questions)
         meta["n_findings"] = len(findings)
+        meta["n_escalated"] = sum(
+            1 for f in findings if f.kind in ("missing_context", "conflict"))
+        meta["finding_kinds"] = _finding_kind_counts(findings)
+        meta["finding_trace_verbatim_rate"] = finding_trace_verbatim_rate(
+            findings, prd_text)
     return finalize(title, draft, findings, questions, {})
 
 
@@ -124,6 +141,11 @@ def b3_targeted_with_oracle(prd_text: str, llm, oracle, title: str = "Untitled",
     if meta is not None:
         meta["questions_asked"] = len(questions)
         meta["n_findings"] = len(findings)
+        meta["n_escalated"] = sum(
+            1 for f in findings if f.kind in ("missing_context", "conflict"))
+        meta["finding_kinds"] = _finding_kind_counts(findings)
+        meta["finding_trace_verbatim_rate"] = finding_trace_verbatim_rate(
+            findings, prd_text)
     answers = {q.id: oracle.answer(q) for q in questions}
     return finalize(title, draft, findings, questions, answers)
 
@@ -156,6 +178,9 @@ def b4_ask_everything(prd_text: str, llm, oracle, title: str = "Untitled",
     if meta is not None:
         meta["questions_asked"] = len(questions)
         meta["n_findings"] = len(findings)
+        meta["finding_kinds"] = _finding_kind_counts(findings)
+        meta["finding_trace_verbatim_rate"] = finding_trace_verbatim_rate(
+            findings, prd_text)
     by_issue = {f.issue: q for f, q in zip(findings, questions)}
     answers = {q.id: oracle.answer(q) for q in questions}
     reqs = list(draft)

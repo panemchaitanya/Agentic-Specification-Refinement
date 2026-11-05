@@ -15,6 +15,8 @@ hypothesis-readout rules live in `docs/evaluation.md`; read it first.
   pre-data rules).
 - `gold.py` - loaders/validators for gold and match-verdict files.
 - `harness.py` - `run_experiment`: repeats, JSONL run logs.
+- `summarize.py` - aggregate run logs; scored tables from gold+verdicts.
+- `audit.py` - deterministic 20% match-audit sampling (seeded).
 - `llm_logging.py` - per-call latency/character logging wrapper.
 - `run_smoke.py` - MockLLM plumbing check on the two sample PRDs.
 - `runs/` - append-only JSONL run logs.

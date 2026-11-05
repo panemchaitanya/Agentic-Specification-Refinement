@@ -100,3 +100,46 @@ def test_final_ids_are_one_consistent_sequence():
     nfr_ids = [x.id for x in spec.requirements if x.kind != "FR"]
     assert fr_ids == [f"FR-{i}" for i in range(1, len(fr_ids) + 1)]
     assert nfr_ids == [f"NFR-{i}" for i in range(1, len(nfr_ids) + 1)]
+
+
+def _finding(critic, kind, issue, suggestion, prd_sentence="s"):
+    return Finding(critic=critic, category="security", kind=kind,
+                   issue=issue, suggestion=suggestion,
+                   prd_sentence=prd_sentence, reason="r")
+
+
+def test_cross_critic_conflict_flagged_on_shared_target():
+    from specpipe.gapcheck import detect_cross_critic_conflicts
+    a = _finding("security", "vague", "data at rest unprotected",
+                 "All checkout records shall be encrypted at rest")
+    b = _finding("performance", "vague", "checkout too slow",
+                 "The checkout records read path shall stay under 100 ms p95")
+    out = detect_cross_critic_conflicts([a, b])
+    assert [f.kind for f in out] == ["conflict", "conflict"]
+    assert out[0].conflicts_with == "performance"
+    assert out[1].conflicts_with == "security"
+
+
+def test_no_conflict_without_shared_target():
+    from specpipe.gapcheck import detect_cross_critic_conflicts
+    a = _finding("security", "vague", "data at rest unprotected",
+                 "All stored personal data shall be encrypted at rest",
+                 prd_sentence="We store user profile data.")
+    b = _finding("performance", "vague", "action unquantified",
+                 "The action shall complete within 2 seconds at p95",
+                 prd_sentence="The app must be fast.")
+    out = detect_cross_critic_conflicts([a, b])
+    assert [f.kind for f in out] == ["vague", "vague"]
+
+
+def test_no_conflict_within_same_critic():
+    from specpipe.gapcheck import detect_cross_critic_conflicts
+    a = _finding("security", "vague", "x", "records shall be encrypted")
+    b = _finding("security", "vague", "y", "records read under 100 ms")
+    out = detect_cross_critic_conflicts([a, b])
+    assert all(f.kind == "vague" for f in out)
+
+
+def test_demo_prd_has_no_false_conflicts():
+    r = analyze(PRD, MockLLM())
+    assert not any(f.kind == "conflict" for f in r["findings"])

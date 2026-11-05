@@ -15,12 +15,15 @@ own provenance block):
   "provenance": {"extractor_agreement_kappa": 0.0, "freeze_id": "..."}
 }
 
-Verdict file (one per scored run, produced by the rubric process):
+Verdict file (one per scored item+run, produced by the rubric process):
 {
   "item_id": "kep-NNNN", "run_id": "...",
+  "pred_ids": ["FR-1", "NFR-1", ...],   # ids of the predicted set matched against
   "matches": [["G1", "NFR-2"], ...],
   "audited": false
 }
+pred_ids is required for scoring (eval/summarize.py::score_run): PRF needs
+the full predicted set, not only the matched ones.
 """
 from __future__ import annotations
 
