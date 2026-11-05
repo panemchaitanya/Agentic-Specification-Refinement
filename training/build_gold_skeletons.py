@@ -9,6 +9,14 @@ must not consume them until requirements are filled and kappa recorded
 (a skeleton with empty gold_requirements is a placeholder, never ground
 truth).
 
+Status convention (ruled by the evaluation lane, 6 Nov 2026): load_gold
+whitelists - a gold file's provenance.status must START WITH "FROZEN"
+when present; anything else (this skeleton's sentence, bare "SKELETON",
+"PARTIAL", unknown future statuses) is rejected, with non-empty
+gold_requirements as the second layer. When the two-extractor pass +
+adjudication completes, flip the status to e.g.
+"FROZEN - two-extractor pass + adjudication complete" and record kappa.
+
 Sources of items:
   --pairs   validated pair records from data/frozen/pairs/pilot_sample.json
             (only pairs whose validation entry has checks_passed=true)
