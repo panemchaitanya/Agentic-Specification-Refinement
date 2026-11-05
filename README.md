@@ -81,14 +81,16 @@ when a critic reports missing business context (`missing_context`) or two
 critics disagree (`conflict`). Vague wording the critic can fix itself
 (`vague`) becomes an NFR directly, traced to that critic.
 
-## Pre-registered hypotheses (unchanged from the proposal)
+## Pre-registered hypotheses (verbatim from the submitted proposal)
 
-- H1: the full pipeline (no human input) has higher NFR recall than a
-  single LLM, precision dropping no more than 0.03.
-- H2: SLM critics come within 0.05 NFR F1 of LLM critics, at much lower
-  token cost and latency.
-- H3: targeted questioning reaches at least 95% of the completeness of
-  ask-everything review, with at least 50% fewer questions.
+- H1. The full pipeline (without human input) has higher NFR recall than
+  a single LLM given the same PRD, with precision dropping by no more
+  than 0.03.
+- H2. SLM critics come within 0.05 NFR F1 of LLM critics in the same
+  roles, at much lower token cost and latency.
+- H3. Targeted questioning reaches at least 95% of the completeness of
+  asking the human to review everything, using at least 50% fewer
+  questions.
 
 No evaluation results are claimed yet; this repo currently contains the
 implementation the evaluation will run on.
