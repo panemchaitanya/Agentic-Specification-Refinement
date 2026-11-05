@@ -1,0 +1,3 @@
+Build a secure shopping app. Users can sign up with an email and password,
+browse products, add items to a cart and check out. The checkout must be
+fast. We store user profile data and order history. Admins can refund orders.
