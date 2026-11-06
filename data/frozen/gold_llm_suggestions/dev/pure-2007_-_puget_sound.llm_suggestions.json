@@ -1,0 +1,141 @@
+{
+  "item_id": "pure-2007_-_puget_sound",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system must allow for multiple file upload to be configured on a per-page basis."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system must allow actors to organize their voice clips into a portfolio."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system must allow actors to download their voice clips in a flexible format."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system must store audio clips in a format conducive to speech."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system must allow actors to delete recorded clips."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system must allow web feeds to be turned on or off on a per-page basis."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "An actor must be able to search through pages in a course."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system must display a search box on every page after an actor has logged in."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "A course administrator must be able to grade an assignment."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system should display grade information to the appropriate actor."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system should maintain a grade history."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system must provide a wiki where actors can collaboratively create networks of documents."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system must provide a blog engine."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system must provide both e-mail and SMS notifications for pages."
+    },
+    {
+      "id": "G15",
+      "kind": "usability",
+      "text": "The system should provide a simple, responsive interface."
+    },
+    {
+      "id": "G16",
+      "kind": "reliability",
+      "text": "The system must be backed up on a configurable schedule."
+    },
+    {
+      "id": "G17",
+      "kind": "reliability",
+      "text": "The system must have the ability and capacity to restore back-up data within six hours."
+    },
+    {
+      "id": "G18",
+      "kind": "reliability",
+      "text": "The system should be available 24 hours a day, 7 days a week."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The system should support at least 1000 concurrent users."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system must be maintainable without substantial modification."
+    },
+    {
+      "id": "G21",
+      "kind": "usability",
+      "text": "Relevant, online documentation for users should be available on each page."
+    },
+    {
+      "id": "G22",
+      "kind": "usability",
+      "text": "System administrators must have access to comprehensive, searchable documentation."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:47:09Z",
+    "source_document_sha256": "7e0d85a375b8d0bce19baad5216522b88564df04915d33a348358775935c04c1",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 7123,
+      "candidatesTokenCount": 604,
+      "totalTokenCount": 7727,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 7123
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

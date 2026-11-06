@@ -1,0 +1,187 @@
+{
+  "item_id": "pure-2002_-_evla_corr",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall receive configuration information from the EVLA M&C system and translate it into a physical correlator hardware configuration."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall process and transfer dynamic control data and monitor data."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall monitor correlator and correlator subsystem health."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall take corrective action autonomously to recover from hardware and computing system faults."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall provide tools to collect and display auto correlation products."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall provide a Virtual Correlator Interface (VCI) for configuration via a human GUI."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The MCCC shall accept external data feeds for models, time standards, and fiber-link phase corrections."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall issue an alert notice if a CMIB subsystem fails and does not respond to reboot requests."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall automatically restart and configure a failed CMIB subsystem back into the operational environment."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall activate a backup MCCC system automatically upon detection of a non-recoverable primary MCCC failure."
+    },
+    {
+      "id": "G11",
+      "kind": "security",
+      "text": "The system shall require unique identification for all users."
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "The system shall perform all login attempts in a secure manner."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall provide an administrator with unrestricted access to all aspects of the system."
+    },
+    {
+      "id": "G14",
+      "kind": "security",
+      "text": "The system shall define access privileges for each user based on system access properties."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The system shall log all attempts to access the system."
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The administrator shall have the ability to create, remove, and edit user access properties."
+    },
+    {
+      "id": "G17",
+      "kind": "security",
+      "text": "The administrator shall have the ability to block system access for users."
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "The interface between CMIB, MCCC, and CPCC shall be Ethernet of 100 Mbits/sec or better."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The interface between MCCC and external networks shall be Ethernet of 100 Mbits/sec or better."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "The CMCS processors shall respond to correlator hardware interrupts in a deterministic fashion."
+    },
+    {
+      "id": "G21",
+      "kind": "reliability",
+      "text": "The system shall be self-monitoring and capable of detecting and reporting abnormal conditions."
+    },
+    {
+      "id": "G22",
+      "kind": "reliability",
+      "text": "The system shall be able to perform without total system restart between maintenance windows."
+    },
+    {
+      "id": "G23",
+      "kind": "reliability",
+      "text": "The system shall be able to continue processing configuration events until parameter queues are exhausted during communication loss."
+    },
+    {
+      "id": "G24",
+      "kind": "usability",
+      "text": "The system shall provide a Graphical User Interface for test software to allow remote access."
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The system shall use transformer-coupled copper twisted pair for internal network topology unless RFI constraints dictate otherwise."
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "The system shall use fiber optic or low RFI material for pathways penetrating the correlator shielded room."
+    },
+    {
+      "id": "G27",
+      "kind": "other",
+      "text": "The system shall provide a redundant serial communication path between MCCC and CPCC for remote reboot."
+    },
+    {
+      "id": "G28",
+      "kind": "other",
+      "text": "The CMIB shall be capable of reading a 16-bit identifier from the host correlator board."
+    },
+    {
+      "id": "G29",
+      "kind": "other",
+      "text": "The CMIB shall have an externally visible indicator for operational status."
+    },
+    {
+      "id": "G30",
+      "kind": "other",
+      "text": "All computers and peripherals shall be powered through UPS devices with sufficient capacity for safe shutdown."
+    },
+    {
+      "id": "G31",
+      "kind": "other",
+      "text": "Each computer system shall have a hardware-based watchdog timer to reboot the system in case of a hang."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:59Z",
+    "source_document_sha256": "01b5561310d326027efcc839afca25ef87aa4377ee4f6721356313611d1a5e9d",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 7950,
+      "candidatesTokenCount": 966,
+      "totalTokenCount": 8916,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 7950
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "item_id": "pure-2008_-_vub",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow a guest to register an account."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow a user to log in."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow a user to validate a new account via email."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow a user to retrieve a forgotten password."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow a VUB-network user to search for publications by keyword, author, or date range."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow a user to perform an advanced search for publications."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall allow a user to order search results by title, author, or year."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow a user to export search results to HTML, PDF, or PS format."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow a user to search for publications by similarity."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall allow a member to change their account details."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall allow a member to log off."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow a publisher to upload a publication in BibTeX or RIS format."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall automatically retrieve bibliographical information from uploaded publication text."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall allow a publisher to edit their own publications."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall allow a publisher to perform a bulk upload of publications."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall allow a moderator to manage user levels for their department."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall allow a moderator to manage group permissions."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall allow a moderator to edit author information."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall allow a moderator to edit departmental publications."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall allow an administrator to access a control panel."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall allow an administrator to create or delete users."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall allow an administrator to create or delete groups."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall allow an administrator to edit all publications."
+    },
+    {
+      "id": "G24",
+      "kind": "security",
+      "text": "The system shall encrypt user passwords during submission and storage."
+    },
+    {
+      "id": "G25",
+      "kind": "security",
+      "text": "The system shall enforce access control based on user roles."
+    },
+    {
+      "id": "G26",
+      "kind": "usability",
+      "text": "The web interface shall comply with the W3C XHTML 1.0 Transitional standard."
+    },
+    {
+      "id": "G27",
+      "kind": "reliability",
+      "text": "The system shall log errors to notify the administrator of technical difficulties."
+    },
+    {
+      "id": "G28",
+      "kind": "other",
+      "text": "The system shall run on a Linux-based environment."
+    },
+    {
+      "id": "G29",
+      "kind": "other",
+      "text": "The system shall use a MySQL database."
+    },
+    {
+      "id": "G30",
+      "kind": "other",
+      "text": "The system shall be documented using RDoc."
+    },
+    {
+      "id": "G31",
+      "kind": "other",
+      "text": "The system shall use Git for configuration management."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:47:54Z",
+    "source_document_sha256": "e8e7211575b4384d834472fb1f031296eaaee528f0aed6e6c1bf7afe71b41b7c",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 14232,
+      "candidatesTokenCount": 816,
+      "totalTokenCount": 15048,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 14232
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

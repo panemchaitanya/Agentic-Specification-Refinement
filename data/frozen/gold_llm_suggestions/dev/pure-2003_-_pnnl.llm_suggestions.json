@@ -1,0 +1,126 @@
+{
+  "item_id": "pure-2003_-_pnnl",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The tool shall input sensed data in real time from data acquisition devices and the HVAC unit under diagnosis."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The tool shall permit sensed data to be input from an electronic file."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The tool shall input fixed data provided by the user."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The tool shall store sensed and fixed data to permanent storage."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The tool shall detect and identify performance and operational faults in chiller and cooling tower subsystems."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The tool shall store identified faults, causes, and sources to permanent storage."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The tool shall display diagnostic results in a graphical and textual format."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The tool shall print screen images of diagnostic results and historical data at user request."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The tool shall provide the capability to manually input and edit fixed data."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The tool shall provide the capability to adjust the sensitivity of the diagnostic algorithms."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The tool shall authenticate the user by checking an identifier and password against a database."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The tool shall automatically revert user privileges to general user after 15 minutes of inactivity."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The tool shall safeguard customer data."
+    },
+    {
+      "id": "G14",
+      "kind": "performance",
+      "text": "The tool shall process sensed data in real time or batch mode."
+    },
+    {
+      "id": "G15",
+      "kind": "usability",
+      "text": "The tool shall provide a visual indication of faults, descriptive information, and suggested corrective actions."
+    },
+    {
+      "id": "G16",
+      "kind": "usability",
+      "text": "The tool shall support a wide variety of users with respect to computer expertise."
+    },
+    {
+      "id": "G17",
+      "kind": "other",
+      "text": "The tool shall be restricted to Microsoft Windows-compatible operating systems."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "The tool shall support the incorporation of diagnostic algorithms for additional HVAC subsystems."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "The tool shall provide long-term storage of diagnostic results and permit the user to supply metadata."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:43:07Z",
+    "source_document_sha256": "9874ef57a047290607711e49d2395f3d84459d9ef178cb47fd24036717631b7f",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 18008,
+      "candidatesTokenCount": 556,
+      "totalTokenCount": 18564,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 18008
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

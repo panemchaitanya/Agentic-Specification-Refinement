@@ -1,0 +1,187 @@
+{
+  "item_id": "pure-1999_-_multi-mahjong",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The MultiMahjongServer shall reside on a central computer connected to a TCP/IP network with a unique IP address."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The MultiMahjongServer shall allow connections from MultiMahjongClients and communicate with them using IP."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The MultiMahjongServer shall relay data received from one MultiMahjongClient to other MultiMahjongClients that request it."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall allow users to create a new multi player game, create a new single player game, join an existing multi player game, or quit the program."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall limit the user to choosing 4 players in total for a game."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall send game initialisation information to the MultiMahjongServer."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall retrieve a list of available games from the MultiMahjongServer."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall retrieve game data from the MultiMahjongServer in multi player mode."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall only allow players to make moves according to the Chinese rules of Mahjong."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user whose turn it is to pick up a tile."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall update the user's screen based on game changes retrieved from the MultiMahjongServer."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if they can Chow, Pung, Kong, or Mahjong based on the current game state."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall send user move information to the MultiMahjongServer."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if another player is fishing."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if another player goes Mahjong."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if the hand has ended in a draw."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The MultiMahjongServer shall inform all connected MultiMahjongClients that the game has ended."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The Computer Opponent shall play moves according to the Chinese rules of Mahjong."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The Computer Opponent shall not have access to the faces of tiles in the wall or concealed tiles in other players' hands."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The Computer Opponent shall have access to the number of tiles in the wall or in a player's hand."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The Computer Opponent shall be able to read any player's exposed or revealed hands."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The Computer Opponent shall be able to pick up tiles, discard tiles, reveal Kongs, and Chow/Pung/Kong/Mahjong."
+    },
+    {
+      "id": "G23",
+      "kind": "performance",
+      "text": "The Computer Opponent must respond within 1 minute in both single and multi player modes."
+    },
+    {
+      "id": "G24",
+      "kind": "performance",
+      "text": "The MultiMahjongServer must be able to handle up to 10 simultaneous games."
+    },
+    {
+      "id": "G25",
+      "kind": "performance",
+      "text": "The MultiMahjongClient must calculate possible Chow/Pung/Kong/Mahjong moves within 5 seconds of being informed of the last discard."
+    },
+    {
+      "id": "G26",
+      "kind": "usability",
+      "text": "The MultiMahjongClient shall have a graphical user interface interactable via mouse and keyboard."
+    },
+    {
+      "id": "G27",
+      "kind": "usability",
+      "text": "The MultiMahjongServer shall have no graphical user interface and be run using a command prompt."
+    },
+    {
+      "id": "G28",
+      "kind": "other",
+      "text": "The MultiMahjong system shall be written using JDK 1.2."
+    },
+    {
+      "id": "G29",
+      "kind": "other",
+      "text": "The MultiMahjong system shall follow the Sun Microsystems coding standard."
+    },
+    {
+      "id": "G30",
+      "kind": "security",
+      "text": "Encryption and protection of data are not needed for the MultiMahjong system."
+    },
+    {
+      "id": "G31",
+      "kind": "reliability",
+      "text": "The system shall display a dialogue box reporting the nature of any fatal or nonfatal error."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:41:51Z",
+    "source_document_sha256": "1762bd8db7d857ef3cfc083d97ac133f94ed79fc38c3d2350b7281ee838e1130",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 11430,
+      "candidatesTokenCount": 1047,
+      "totalTokenCount": 12477,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 11430
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

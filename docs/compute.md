@@ -22,3 +22,11 @@ model on ~1k labelled sentences) is realistic on all three. Full SLM
 critic training (H2) depends on the pilot's measured VRAM/time and on
 the extra contextual labels from docs/datasets.md existing first.
 Compute choice is the team/user's call once pilot numbers exist.
+
+## Owner decision (6 Nov 2026, ~12:07 IST)
+
+Free GPU route APPROVED for DistilBERT fine-tuning (Colab free tier).
+Sandbox CPU note: a 2-core/2GB sandbox OOM-kills even the 2-epoch pilot
+config (peak RSS 1.7GB measured in the pilot), so the GPU route is
+required for anything beyond TF-IDF in practice.
+

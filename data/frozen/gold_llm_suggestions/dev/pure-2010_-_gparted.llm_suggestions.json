@@ -1,0 +1,155 @@
+{
+  "item_id": "pure-2010_-_gparted",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide a boot menu upon startup."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow the user to select a keyboard keymap."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow the user to select a language."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall provide a graphical desktop environment."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow the user to refresh the list of connected devices."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow the user to undo pending operations."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall allow the user to apply pending operations."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall display information about a selected device."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow the user to create a partition table on a device."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall allow the user to create a new partition."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall allow the user to delete a partition."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow the user to resize or move a partition."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall allow the user to copy a partition to the clipboard."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall allow the user to paste a copied partition into unallocated space."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall allow the user to format a partition with a supported file system."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall allow the user to unmount a partition."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall allow the user to manage partition flags."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall allow the user to check and repair a file system."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall allow the user to label a partition."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall allow the user to take a screenshot of the desktop or an active window."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall provide a terminal interface for command line operations."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall allow the user to change the screen resolution."
+    },
+    {
+      "id": "G23",
+      "kind": "security",
+      "text": "The system shall grant the user administrator rights and root access by default."
+    },
+    {
+      "id": "G24",
+      "kind": "usability",
+      "text": "The system shall provide a graphical user interface for partition management."
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The system shall be distributed under the GNU General Public License version 2 or later."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:49:09Z",
+    "source_document_sha256": "0d387cea8266181661b32697c769acf659983f81e952f8a23ac027278b494e58",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 8313,
+      "candidatesTokenCount": 661,
+      "totalTokenCount": 8974,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 8313
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

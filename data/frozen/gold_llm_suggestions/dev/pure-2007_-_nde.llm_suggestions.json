@@ -1,0 +1,230 @@
+{
+  "item_id": "pure-2007_-_nde",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The System shall provide the capability to operate in an Open Mode, within which authorized customers shall be allowed read-only access to requested Data Products."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The System shall provide the capability to operate in a Degraded System Mode, within which the system generates a subset of products based upon priority and availability of system resources."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The System shall provide the capability to notify customers upon the NPOESS Ground System entering and leaving a Degraded Operations Mode."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The System shall provide the capability to operate in a Restricted Access Mode, within which only users meeting certain criteria will be authorized access to the data."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The System shall provide the capability to send an electronic notification to authorized users when they receive restricted access data."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The System shall be capable of defining Data Products for Ingest."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The System shall be capable of integrating System Elements including Scientific Algorithms, Product Tailoring Tools, Data Format Translation Tools, and other pre-defined transformation utilities."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The System shall provide the capability to support functional and performance tests of system elements without impacting operational product generation."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The System shall be capable of maintaining records of at least 30 days worth of Ingest history."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The System shall provide the capability to control the execution of Scientific Algorithms."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The System shall be capable of generating Data Products."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The System shall provide the capability for an authorized user to adjust Product Generation priorities."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The System shall be capable of rendering Platte Carre projections."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The System shall be capable of rendering Mercator projections."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The System shall be capable of rendering Polar Stereographic projections."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The System shall be capable of aggregating Data Products up to and including one orbit."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The System shall be capable of producing time-averaged Data Products."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The System shall be capable of generating NOAA-Unique and Tailored Data Products with Government-specified grid spacing."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The System shall be capable of reformatting Data Products into BUFR."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The System shall be capable of reformatting Data Products into GRIB2."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The System shall be capable of reformatting Data Products into GeoTIFF."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The System shall be capable of reformatting Data Products into HDF5."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The System shall be capable of reformatting Data Products into netCDF."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The System shall be capable of compressing Data Products with the GZIP algorithm."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The System shall be capable of compressing Data Products with the ZIP algorithm."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The System shall be capable of compressing Data Products with the RICE algorithm."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The System shall be capable of compressing images of Data Products with the JPEG algorithm."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The System shall be capable of compressing animated images of Data Products with the MPEG algorithm."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The System shall be capable of generating Data Products within a time frame not to exceed the maximum user-specified shelf-life of the Data Product."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The System shall be capable of making Data Products available to registered users."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The System shall provide an online capability for registered users to request subscriptions to xDRs, Ancillary, NOAA-Unique, and Tailored Data Products."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The System shall provide an online capability for the Government to approve subscription requests for xDRs, Ancillary, NOAA-Unique, and Tailored Data Products."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The System shall be capable of distributing NOAA-Unique Data Products to the CLASS Long-Term Archive."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The System shall provide a list of files distributed to CLASS."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The System shall provide the capability to receive an electronic delivery acknowledgement message from CLASS."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The System shall be capable of delivering NDE Data Products to registered user's computer systems."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The System shall be capable of notifying registered users of the status of their orders."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "The System shall be capable of notifying registered users of the status of the System."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The System shall ensure that NDE information is accessible only to those authorized to have access."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "The System shall be capable of registering Users for the purpose of controlling their access to System Elements and Data Products."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:57Z",
+    "source_document_sha256": "d2968de1169373963979ec2c3311e15040891a3de5b4d3cedaa2073db379411a",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 23383,
+      "candidatesTokenCount": 3684,
+      "totalTokenCount": 27067,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 23383
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

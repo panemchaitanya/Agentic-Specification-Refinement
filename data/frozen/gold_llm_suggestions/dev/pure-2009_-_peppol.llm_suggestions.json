@@ -1,0 +1,102 @@
+{
+  "item_id": "pure-2009_-_peppol",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system must support authorized entities in creating an electronic information package consisting of required documentation, evidences, proof, attestations, certificates, declarations, and metadata."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system must collect certificates and attestations from existing registries."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system must enable the economic operator to add self-declarations or other documents of formal qualification."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system must enable economic operators to submit the VCD information package to any contracting authority in Europe."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system must enable contracting authorities or their eTendering systems to interpret and accept the documentation submitted by the economic operator."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system must provide a pre-VCD mapping tool to support the proof of compliance of evidences of one country to the requested selection and exclusion criteria of another country."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system must provide a VCD viewing system to allow human-readable access to the VCD package."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system must implement a VCD transportation system for submitting the VCD to contracting authorities."
+    },
+    {
+      "id": "G9",
+      "kind": "security",
+      "text": "VCD Service Providers must be trustworthy, implying that services are precise, up-to-date, available, and reliable."
+    },
+    {
+      "id": "G10",
+      "kind": "security",
+      "text": "The system must implement identity and access management to handle roles for authorization and protect sensitive data."
+    },
+    {
+      "id": "G11",
+      "kind": "performance",
+      "text": "The system must ensure that European legal changes are implemented within five days after enforcement."
+    },
+    {
+      "id": "G12",
+      "kind": "other",
+      "text": "The system must use a standard representation of common criteria of qualitative selection and exclusion defined according to Articles 45-50 of Directive 2004/18/EC."
+    },
+    {
+      "id": "G13",
+      "kind": "other",
+      "text": "The system must provide a mapping template that ensures comparable and reliable mappings between criteria for qualitative selection and exclusion and national attestations."
+    },
+    {
+      "id": "G14",
+      "kind": "other",
+      "text": "The system must ensure that the mapping facility is accessible to all relevant key stakeholders such as economic operators, contracting authorities, certifiers, and national service providers."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:48:41Z",
+    "source_document_sha256": "5843c375735fcd705d350018526226318e83a9eddc12411fdbab1f28fbb3af3e",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 23181,
+      "candidatesTokenCount": 662,
+      "totalTokenCount": 23843,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 23181
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

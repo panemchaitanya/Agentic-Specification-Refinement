@@ -1,0 +1,157 @@
+{
+  "item_id": "pure-2001_-_libra",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall accept job submission parameters including executable location, input data sets, system type, maximum run length, job type, budget, and deadline."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall verify user identity upon job submission."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow users and administrators to view the status of submitted jobs."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow users and administrators to cancel submitted jobs."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow users and administrators to modify specific job parameters such as output directory or deadline."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall determine whether to accept or reject a job based on budget, deadline, and execution time."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall calculate job priority using the Stride Scheduling algorithm based on budget and deadline."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall select an execution host and queue based on job budget, execution time, and deadline."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall dispatch jobs to the selected execution host and queue."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall update cluster status including CPU load, node status, and queue length upon job scheduling or removal."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall perform time-slicing between executing jobs using the Stride Scheduling algorithm."
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "The system shall provide administrative security to prevent unauthorized alteration of scheduling criteria or resource allocation."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall ensure the privacy of user job status."
+    },
+    {
+      "id": "G14",
+      "kind": "performance",
+      "text": "The system shall have a maximum job submission response time of 1 minute."
+    },
+    {
+      "id": "G15",
+      "kind": "performance",
+      "text": "The system shall ensure all jobs are completed within a 10% error allowance of their deadlines."
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "The system shall ensure the maximum cost charged to the user does not exceed the user-submitted budget."
+    },
+    {
+      "id": "G17",
+      "kind": "reliability",
+      "text": "The system shall have a maximum bug rate of 1 bug per 1000 lines of code."
+    },
+    {
+      "id": "G18",
+      "kind": "reliability",
+      "text": "The system shall recover from a system outage in less than five minutes."
+    },
+    {
+      "id": "G19",
+      "kind": "usability",
+      "text": "The system shall provide a command-line interface for users to submit jobs, query costs, monitor status, cancel jobs, and check credit/usage."
+    },
+    {
+      "id": "G20",
+      "kind": "usability",
+      "text": "The system shall provide a command-line interface for administrators to check node status, usage history, job status, node load, and modify cost/policy/job state."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The system shall be a sub-component of the Sun Grid Engine."
+    },
+    {
+      "id": "G22",
+      "kind": "other",
+      "text": "The system shall be written in standard C."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system shall use the Hungarian Naming Convention for all code."
+    },
+    {
+      "id": "G24",
+      "kind": "other",
+      "text": "The system shall be released under the GNU General Purpose License."
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The system shall provide online documentation in the form of Linux man pages."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:38Z",
+    "source_document_sha256": "4e5612d813984a17403806535d4737ee6aef9dc7d08b79baac1989ae6baa9ded",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 8180,
+      "candidatesTokenCount": 797,
+      "totalTokenCount": 8977,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 8180
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

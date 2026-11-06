@@ -1,0 +1,121 @@
+{
+  "item_id": "pure-2005_-_grid_3D",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The product shall plot data points in a scientifically correct manner."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The product shall label the grid axis according to the input from the data file."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The product shall colour data points in accordance with the cluster number contained in the data file."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The product shall handle up to 2000 data points."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The product shall display the name of a data point upon a single mouse click over the point."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The product shall display all details of a data point upon a double-click of the mouse over the point."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The product shall allow the user to select multiple points to display multiple names."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The product shall allow the user to rotate, zoom, and move the grid."
+    },
+    {
+      "id": "G9",
+      "kind": "security",
+      "text": "The product shall be available on both Windows and Linux operating platforms."
+    },
+    {
+      "id": "G10",
+      "kind": "performance",
+      "text": "The execution of the application shall be kept on the server side."
+    },
+    {
+      "id": "G11",
+      "kind": "performance",
+      "text": "The product shall run on a minimum of a mid-range personal computer."
+    },
+    {
+      "id": "G12",
+      "kind": "usability",
+      "text": "The product shall run with the minimum input tools of mouse and keyboard."
+    },
+    {
+      "id": "G13",
+      "kind": "other",
+      "text": "The user must have a capability for creating tab-delimited text files."
+    },
+    {
+      "id": "G14",
+      "kind": "usability",
+      "text": "The application shall be coloured to allow clear printing on a white background."
+    },
+    {
+      "id": "G15",
+      "kind": "usability",
+      "text": "The application shall be intuitive and not require specialist training."
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "The program shall start within 30 seconds."
+    },
+    {
+      "id": "G17",
+      "kind": "performance",
+      "text": "The interaction with data points shall have a delay of no longer than 2 seconds."
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "The response to a change in orientation shall be fast enough to avoid interrupting the user's flow of thought."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:45:38Z",
+    "source_document_sha256": "3492b8d6a73d23af5f5fe6cf818e48fc6b8bcd48d0b73b7b4692d37277e0b2ca",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 4180,
+      "candidatesTokenCount": 541,
+      "totalTokenCount": 4721,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 4180
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

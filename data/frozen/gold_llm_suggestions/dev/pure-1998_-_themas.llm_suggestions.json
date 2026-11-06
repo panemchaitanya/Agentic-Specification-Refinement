@@ -1,0 +1,160 @@
+{
+  "item_id": "pure-1998_-_themas",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The THEMAS system shall read the initialization file to derive heating and cooling unit definitions."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The THEMAS system shall load thermostat unique identifiers from the initialization file."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The THEMAS system shall read the maximum number of concurrently running heating or cooling units from the initialization file."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The THEMAS system shall read trigger values from the initialization file."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The THEMAS system shall read overtemperature values from the initialization file."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The THEMAS system shall read the valid temperature range from the initialization file."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The THEMAS system shall turn off all heating and cooling units upon initialization."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The THEMAS system shall identify current temperature values as invalid if they are outside the valid temperature range."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The THEMAS system shall identify temperature settings as invalid if they are outside the valid temperature range."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The THEMAS system shall compare reported temperature values to the temperature setting to detect if limits are exceeded."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The THEMAS system shall activate the appropriate heating or cooling unit when the current temperature exceeds the temperature setting by a predefined amount."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The THEMAS system shall maintain the ON/OFF status of each heating and cooling unit."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The THEMAS system shall queue heating or cooling requests if the maximum number of units is already running."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The THEMAS system shall record a system event when a heating or cooling request is denied."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The THEMAS system shall generate a control signal for heating or cooling units."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The THEMAS system shall output a continuous series of alternating 500 Hz and 700 Hz beeps when an invalid temperature is detected."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The THEMAS system shall output a continuous series of alternating 1000 Hz and 1500 Hz beeps when a temperature limit is exceeded."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The THEMAS system shall record event data including description and current system time in a database."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The THEMAS system shall provide a mechanism for the supervisor to change the temperature setting of any thermostat."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The THEMAS system shall generate operational history reports and statistical summary reports."
+    },
+    {
+      "id": "G21",
+      "kind": "security",
+      "text": "The THEMAS system shall be designed to run on the Microsoft Windows NT operating system."
+    },
+    {
+      "id": "G22",
+      "kind": "reliability",
+      "text": "The SRS shall give a prototype of a simulated thermostat for verification and validation of THEMAS reliability."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The THEMAS system shall ensure the temperature reported by a thermostat does not exceed a maximum deviation value of 3 degrees Fahrenheit."
+    },
+    {
+      "id": "G24",
+      "kind": "other",
+      "text": "The thermostats shall only provide temperature values and temperature settings."
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The heating and cooling units shall provide no feedback to the THEMAS system."
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "No signal shall be available to allow the THEMAS system to determine if a signal sent to a heating or cooling unit was realized."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "reliability",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:41:24Z",
+    "source_document_sha256": "40a4928a2f2327c51f3d000977436301c43af445472c6bdbd575d5983118a30e",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 13039,
+      "candidatesTokenCount": 845,
+      "totalTokenCount": 13884,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 13039
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

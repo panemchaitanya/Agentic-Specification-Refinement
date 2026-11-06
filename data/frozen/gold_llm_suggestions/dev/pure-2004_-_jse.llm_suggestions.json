@@ -1,0 +1,105 @@
+{
+  "item_id": "pure-2004_-_jse",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide an electronic method to create, amend, and delete ISINs for money market instruments."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall automatically issue ISINs in response to an electronic SWIFT request."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall use the MT 598 User Defined SWIFT message format for all communications."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall use the ISIN prefix ZAM for money market instruments."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall use the branch code ISN as an extension of the JSE's current BIC address."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall support the nine defined SWIFT message types for ISIN request, rejection, and acceptance flows."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide a front-end interface for inputting manual ISINs for BCP purposes."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall provide a front-end interface to update issuer codes."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall provide a screen to view and print rejections from JSE to STRATE and STRATE to JSE."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall send an email notification to Clearing & Settlement at the time of a rejection."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall provide a screen to view and print issued, de-issued, and matured ISINs."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall provide parameter-driven screens to view and print active, cancelled, and de-registered ISINs based on issuer, category, or date."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall be safe, secure, structured, formalised, and robust."
+    },
+    {
+      "id": "G14",
+      "kind": "performance",
+      "text": "The system shall support the immediate issuance of ISINs to facilitate T+0 trading and settlement."
+    },
+    {
+      "id": "G15",
+      "kind": "other",
+      "text": "The system shall maintain records of cancelled and de-registered ISINs for at least 12 months."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:44:55Z",
+    "source_document_sha256": "2786d30c2d707de3b4341a8643c608be33435227dd8a79942be1cb005500422d",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 21527,
+      "candidatesTokenCount": 538,
+      "totalTokenCount": 22065,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 21527
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

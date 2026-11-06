@@ -1,0 +1,89 @@
+{
+  "item_id": "pure-2002_-_sce_api",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The SCE-MI shall provide multiple communication channels between software models on a host workstation and a device under test (DUT) on a verification platform."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The SCE-MI shall provide a service loop function to allow the infrastructure to service communication channels."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The SCE-MI shall provide clock and reset generation and shared clock control using handshake signals with the transactor."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The SCE-MI shall provide a C++ object-oriented interface and a C API for application interaction."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The SCE-MI shall support version discovery, parameter access, initialization, and shutdown."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The SCE-MI shall support message input and output port proxy binding and callback registration."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The SCE-MI shall support rendezvous operations between the software side and the hardware side."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The SCE-MI shall provide error handling mechanisms."
+    },
+    {
+      "id": "G9",
+      "kind": "performance",
+      "text": "The SCE-MI shall be optimized to avoid communication bottlenecks when interfacing software models to an emulator."
+    },
+    {
+      "id": "G10",
+      "kind": "performance",
+      "text": "The SCE-MI shall be optimized to be compatible with SystemC."
+    },
+    {
+      "id": "G11",
+      "kind": "other",
+      "text": "The SCE-MI shall use message or transaction oriented communication rather than event oriented communication."
+    },
+    {
+      "id": "G12",
+      "kind": "other",
+      "text": "The SCE-MI shall allow transactors to freeze controlled time while performing message composition and decomposition operations."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:43:03Z",
+    "source_document_sha256": "c2302642b90af2ced5d0f50ab7de4f3f6b67f602e621b6f5efcb692f2d454d80",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 22384,
+      "candidatesTokenCount": 497,
+      "totalTokenCount": 22881,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 22384
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

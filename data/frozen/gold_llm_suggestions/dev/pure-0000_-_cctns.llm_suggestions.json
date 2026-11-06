@@ -1,0 +1,173 @@
+{
+  "item_id": "pure-0000_-_cctns",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "Citizens shall be able to register complaints with the police."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall facilitate the investigation process by automating tasks after registration."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall provide a platform to record entries of court interactions for prosecution."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow police personnel to execute basic or advanced searches on cases, persons, crimes, modus operandi, and property."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow users to customize search result views by criminal, accused, or case."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall enable police to generate reports including monthly reporting and RTI related queries."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide a citizen interface for information exchange and acknowledgements between citizens and police."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall provide role-based landing pages showing assigned cases, alerts, and pending tasks."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow configuration of state-specific data, acts, sections, castes, tribes, and property information."
+    },
+    {
+      "id": "G10",
+      "kind": "security",
+      "text": "The system must keep an unalterable audit trail of all create, read, update, and delete actions on critical entities."
+    },
+    {
+      "id": "G11",
+      "kind": "security",
+      "text": "The system must log unauthorized attempts to access cases in the audit trail."
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "The system must allow administrators to limit access to cases to specified users or user groups."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system must support role-based control for all system functionality."
+    },
+    {
+      "id": "G14",
+      "kind": "security",
+      "text": "The system must allow only admin-users to set up user profiles and allocate users to groups."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The system must support SSL encrypted connections and secure virtual private network connections."
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The system must use HTTPS as the communication protocol."
+    },
+    {
+      "id": "G17",
+      "kind": "security",
+      "text": "The system must prevent cross-site scripting, SQL injection, and validate/encode all incoming data."
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "The system must perform a simple search within 5-8 seconds."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The system must perform an advanced search within 10-15 seconds."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "The system must retrieve and display recently accessed cases within 5-8 seconds."
+    },
+    {
+      "id": "G21",
+      "kind": "performance",
+      "text": "The system must retrieve and display infrequently accessed cases within 20 seconds."
+    },
+    {
+      "id": "G22",
+      "kind": "usability",
+      "text": "The system must provide detailed context-sensitive help material for all user interfaces."
+    },
+    {
+      "id": "G23",
+      "kind": "usability",
+      "text": "The system must provide a single set of user interface rules to ensure a common look and feel."
+    },
+    {
+      "id": "G24",
+      "kind": "usability",
+      "text": "The system must support multilingual interfaces."
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The system must work in an offline mode for critical functionality."
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "The system must be implemented using Service Oriented Architecture (SOA) and modular design."
+    },
+    {
+      "id": "G27",
+      "kind": "other",
+      "text": "The system must support Single-Sign on for end-users."
+    },
+    {
+      "id": "G28",
+      "kind": "other",
+      "text": "The system must be designed for centralized deployment in a 3-tier datacenter architecture."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:40:58Z",
+    "source_document_sha256": "5a7bf370a5bbc5572d5ed312e443c8b0f16b94b48c2645781a473dd1d802e99b",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 8166,
+      "candidatesTokenCount": 849,
+      "totalTokenCount": 9015,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 8166
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

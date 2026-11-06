@@ -1,0 +1,3 @@
+{"type": "header", "run_id": "PRELABEL-dev-20261106T064055Z", "label": "llm-prelabel", "note": "free-tier LLM suggestions on real PURE text (owner-approved 6 Nov); UNVERIFIED, never gold", "model": "gemini-3.1-flash-lite", "prompt_version": "prelabel-v1", "split": "dev"}
+{"type": "prelabel", "item_id": "pure-0000_-_cctns", "n_suggested": 28, "truncated": false, "token_usage": {"promptTokenCount": 8166, "candidatesTokenCount": 849, "totalTokenCount": 9015, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 8166}], "serviceTier": "standard"}}
+{"type": "stopped", "calls": 1, "done": 1, "skipped": 0}

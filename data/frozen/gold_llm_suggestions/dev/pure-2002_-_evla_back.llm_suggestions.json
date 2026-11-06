@@ -1,0 +1,227 @@
+{
+  "item_id": "pure-2002_-_evla_back",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall receive data from the Correlator in real-time."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall assemble time-series from the Correlator lag output."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall perform Fourier Transforms of the assembled time series."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall deliver formatted results to the End-to-End System."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall receive Lag Frames from the Correlator."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall receive State Count data from the M&C system."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall receive observational mode parameters from the M&C system."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall provide operational status data to the M&C system."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall provide error and warning reports to the M&C system."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall verify successful delivery of output to the e2e system."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall handle lag frames of less than 128 values."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall handle lag sets up to a maximum size of 262,144 values."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall replace all invalid data with zero values."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall perform windowing operations prior and subsequent to Fourier Transform."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall sum the frequency domain spectral results."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall monitor data transfer rates from the Correlator and to the e2e."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall monitor the overall data processing rate."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall trap, flag and repair computation errors."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall check PID's to assure that all started tasks are alive and running."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall check Backend physical processors to assure that all needed processors are alive."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall check all Backend internal networks to assure that all communication connections are intact."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall initiate a processing task on any Backend processor."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall signal a kill for any Backend process."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall alter the priority of any of the BE tasks."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The system shall initiate a reboot of any Backend physical processor."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The system shall initiate a reboot of any internal network."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system shall redistribute internal workload among its processors."
+    },
+    {
+      "id": "G28",
+      "kind": "security",
+      "text": "All users of the system shall login using unique identification."
+    },
+    {
+      "id": "G29",
+      "kind": "security",
+      "text": "All login attempts shall be done in a secure manner."
+    },
+    {
+      "id": "G30",
+      "kind": "security",
+      "text": "A system administrator shall have unrestricted access to all aspects of the system."
+    },
+    {
+      "id": "G31",
+      "kind": "security",
+      "text": "Each user shall have a set of system access properties that defines the user\u2019s privileges."
+    },
+    {
+      "id": "G32",
+      "kind": "security",
+      "text": "The administrator shall have the ability to create, add, remove, and edit users."
+    },
+    {
+      "id": "G33",
+      "kind": "security",
+      "text": "The administrator shall have the ability to block all access to the system for all users or selectively by user."
+    },
+    {
+      "id": "G34",
+      "kind": "performance",
+      "text": "The system shall be capable of accepting an aggregate data input stream from the Correlator of a minimum of 1.6 Gbytes/sec."
+    },
+    {
+      "id": "G35",
+      "kind": "performance",
+      "text": "The system shall be capable of delivering an output data stream to the e2e System of a minimum of 25 MBytes/sec."
+    },
+    {
+      "id": "G36",
+      "kind": "reliability",
+      "text": "The system shall be self-monitoring and capable of detecting and automatically remedying abnormal conditions."
+    },
+    {
+      "id": "G37",
+      "kind": "reliability",
+      "text": "The system shall continue to operate in a loss-less manner in the event of a temporary loss of availability of the e2e System."
+    },
+    {
+      "id": "G38",
+      "kind": "scalability",
+      "text": "The system shall be scaleable to handle up to two Gbytes per second per Correlator output channel in real-time."
+    },
+    {
+      "id": "G39",
+      "kind": "other",
+      "text": "Operations performed shall be reversible, such that the original raw uncorrected data is recoverable from the processing output."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:54Z",
+    "source_document_sha256": "4396e3aec5d0a6c57dc691c16c2442d6bb2ae270c695e2c51d1166840976d898",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 9972,
+      "candidatesTokenCount": 1123,
+      "totalTokenCount": 11095,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 9972
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

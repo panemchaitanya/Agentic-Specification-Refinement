@@ -1,0 +1,151 @@
+{
+  "item_id": "pure-2006_-_stewards",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide one-point access to data from research sites in standardized formats."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall translate data from location-specific formats into the standardized STEWARDS formats."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow users to access, search, analyze, visualize, download, and report integrated watershed data."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall provide graphical and tabular interface tools for viewing and downloading data."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall provide a metadata search tool to query dataset parameters."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall provide web-based geographic information tools to allow site-specific data to be viewed within their spatial context."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide tools for database contributors to create and upload metadata compatible with the STEWARDS metadata database."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall support multiple levels of data aggregation of time-series data (daily, monthly, or yearly)."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall provide a non-graphical interface option."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall provide a warning message when a low transmission speed is detected."
+    },
+    {
+      "id": "G11",
+      "kind": "security",
+      "text": "The system shall use user/password authentication to enable user settings management and access to protected data."
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "The system shall use single-sign-on systems like Microsoft Active Directory for authentication."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall be available 24 hours per day, 7 days a week with 99% availability."
+    },
+    {
+      "id": "G14",
+      "kind": "performance",
+      "text": "The system shall show no visible deterioration in response time as the number of users increases."
+    },
+    {
+      "id": "G15",
+      "kind": "performance",
+      "text": "The system shall provide metadata query response times of a few seconds or less."
+    },
+    {
+      "id": "G16",
+      "kind": "usability",
+      "text": "The system shall operate with Microsoft Internet Explorer 5.0/6.0, Netscape Communicator 4.7, Netscape 6/7, and FireFox."
+    },
+    {
+      "id": "G17",
+      "kind": "usability",
+      "text": "The system shall provide an online hierarchical and cross-linked help system in HTML."
+    },
+    {
+      "id": "G18",
+      "kind": "usability",
+      "text": "The system shall provide a user's guide containing instructions for accessing and using the data system."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "The system shall use the Microsoft SQL Server database engine."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system shall be in compliance with all Accessibility, Web Design, and Security policies applicable."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The system shall back up all user and application data as well as software installation and configuration files week-nightly."
+    },
+    {
+      "id": "G22",
+      "kind": "other",
+      "text": "The system shall provide secure, off-site storage on a weekly basis with 24-hour retrieval times."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system shall use load balancing at the application level for application and database servers."
+    },
+    {
+      "id": "G24",
+      "kind": "other",
+      "text": "The system shall use a back-end private network environment to isolate end-user operations from large back-end data transfers."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:16Z",
+    "source_document_sha256": "fdc44b9cde372b11b9a58311060c7d657cf075a3a00cc2cd6a1a7b0a00e5d65b",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 17773,
+      "candidatesTokenCount": 796,
+      "totalTokenCount": 18569,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 17773
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "item_id": "pure-2005_-_pontis",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide the ability to perform data validation on National Bridge Inventory items."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The user shall be able to select structures by structure ID, district, county, administrative area, ownership, custodianship, functional class, NHS status, on/off system, inspector, bridge group, inspection due dates, and all or some environment and elements."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The user shall be able to find structures based on the structure ID, structure name, feature intersected, facility carried, route number, LRS Inventory Route, KM/mile posts, structure types, design types and materials, and by searching the notes fields."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall display the data in the appropriate unit of measurement as configured for the application."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The user shall be able to select bridges on a supported map display and generate a bridge list for use within Pontis."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The user shall be able to create a new structure by copying all data of an existing structure."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide the capability to lock down an inspection record once signed and sealed to prevent deletion or modification."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall be capable of calculating NBI condition ratings using the FHWA NBI Translator."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall be capable of calculating and storing bridge Sufficiency Rating."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall be capable of calculating appraisal ratings."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall be capable of calculating Structurally Deficient/Functionally Obsolete status."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall be capable of running a program simulation for a selected set of structures and storing the simulation results in the Pontis database."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall guarantee atomic database transactions to ensure maximum data integrity."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall be capable of validating user name and password during log-in process."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall be capable of operating with a single-sign-on authentication mechanism based on Active Directory Services or the LDAP standard."
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The information contained in the system must be secure, with access limited to appropriate staff and agency-designated parties."
+    },
+    {
+      "id": "G17",
+      "kind": "performance",
+      "text": "The system must be reliable and in operation at an acceptable level of availability and performance."
+    },
+    {
+      "id": "G18",
+      "kind": "usability",
+      "text": "The software must enable users to access the majority of data and capabilities without specialized technical skills or training."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "Pontis 5.0 must be a Microsoft .NET application."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "Pontis 5.0 must support its existing relational databases of Sybase Adaptive Server Anywhere, Oracle, and Microsoft SQL Server."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "Pontis 5.0 must be a GIS-aware application that operates properly within an agency\u2019s GIS technology."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:45:56Z",
+    "source_document_sha256": "3b0a9b65b35e1f5a524b8e9dab6858b87db6e0deaed6b2dd8cabb67e183d2358",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 20145,
+      "candidatesTokenCount": 934,
+      "totalTokenCount": 21079,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 20145
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

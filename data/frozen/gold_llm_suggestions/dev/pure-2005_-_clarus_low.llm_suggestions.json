@@ -1,0 +1,229 @@
+{
+  "item_id": "pure-2005_-_clarus_low",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The Clarus system shall implement quality checking processes as soon as data become available."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The CAS shall be able to configure schedules for executing QChS."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The Clarus system shall record the methods applied when deriving quality checking information."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The CAS shall record the quality checking methods used."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The Clarus system shall be able to implement quality checking rules for each environmental parameter."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The CAS shall be able to configure the quality checking rules for each environmental parameter."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The CAS shall enable administrators to manage quality checking rules."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The Clarus system shall be able to implement quality checking rules for specific environmental situations."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The CAS shall be able to configure quality checking rules for specific environmental situations."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The Clarus system shall be able to implement quality checking rules specific to observation locations."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The CAS shall be able to configure quality checking rules specific to observation locations."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The Clarus system shall be able to base its quality checking process on historical environmental data."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The CAS shall be able to configure historical environmental data to be used by quality checking processes."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The Clarus system shall be able to use multiple algorithms for its quality checking process."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The CAS shall be able to configure multiple algorithms to be used in the quality checking process."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The Clarus system shall allow access to new surface transportation-related environmental data."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The CAS shall be configurable to allow new observation types to be implemented as they become available."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The Clarus system shall enable administrators to manage security groups."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The CAS system shall enable administrators to manage security group members."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The CAS shall have an administrator security group."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The CAS shall have a quality manager security group."
+    },
+    {
+      "id": "G22",
+      "kind": "security",
+      "text": "The Clarus system shall be able to restrict environmental data publication based on source."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The CAS shall be able to record data sharing restrictions."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The Clarus system shall record statistics about its operation."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The CAS shall record statistics about the system operation."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The Clarus system shall log data transactions."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The CAS shall log data transactions."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The Clarus system shall acquire, process, and disseminate environmental metadata."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The CAS shall manage contributor metadata."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The CAS shall manage collector metadata."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The CAS shall manage quality checking schedules."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The CAS shall manage environmental data collection schedules."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The CAS shall manage ESS metadata."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The Clarus system shall manage environmental data and metadata according to the Clarus data sharing agreements."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The CAS shall manage data sharing rules based on contributor data sharing agreements."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The Clarus system shall collect, quality check, and disseminate environmental data."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The CAUI shall be able to initiate CS on demand."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "The Clarus system shall provide environmental data quality flags."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The CAUI shall enable a quality manager to apply manual flags to a set of observations from an individual ESS."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "The CAUI shall enable a quality manager to apply manual flags to a set of observations."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:45:34Z",
+    "source_document_sha256": "305e107694a203a9e4952f9b6fadb0529397c75bccd73f4e790923f8ed2c107a",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 19827,
+      "candidatesTokenCount": 3634,
+      "totalTokenCount": 23461,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 19827
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "item_id": "pure-2003_-_qheadache",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow the user to undo up to 1000 previous actions."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow the user to redo up to 1000 previous actions."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall count and display the time spent playing."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall count and display the number of user actions."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall record the score (time and action count) associated with a user name."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall display a window containing all player scores."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall display a main window containing a game board and a menu bar."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow the user to select a block via a left mouse click."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow the user to deselect a block via a left mouse click."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall allow the user to move blocks using mouse movement."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall prevent blocks from overlapping or exiting the game zone."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall maintain a minimum distance of 0.05x between blocks during movement."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall display a finish window when the great square is moved to the bottom of the board."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall record player statistics in a file."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall allow the user to erase all statistics via menu selection."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall allow the user to open a previously saved game file."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall allow the user to save the current game state to a file."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall prompt the user to save the game upon exit if the game has not been saved."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The system shall provide a graphical display of at least 800x600 resolution."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system shall be built using the Qt graphical library."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The system shall be portable to the Windows OS."
+    },
+    {
+      "id": "G22",
+      "kind": "other",
+      "text": "The system shall support only one user per machine."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system shall use a keyboard and mouse for user input."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:43:11Z",
+    "source_document_sha256": "2443d9a7e005f551613d77a6bc83badca9988036859de1800190fa8bd80443d2",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 5050,
+      "candidatesTokenCount": 650,
+      "totalTokenCount": 5700,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 5050
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "item_id": "pure-2007_-_get_real_0.2",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide an Exploring College page listing computer science offerings from Oregon University System campuses and other Oregon colleges."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall provide a Jobs & Money page answering questions about societal contribution and salary potential with a computer science degree."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall provide a Real People page featuring profiles of recent CS graduates and experienced professionals."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall provide a Women in Computer Science page profiling women computer scientists and engineers."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall provide a Resources page exploring pre-college technology programs and courses for high school students."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall provide an I\u2019m Looking For page containing a list of focused questions and answers."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide an Articles page listing external articles related to computer science careers."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall provide a High School Courses page showing recommended curricula for students interested in CS."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall provide an internal search function for the Get Real site."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall provide an external search function for CS-related outside sites."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall provide a Professional Organizations page listing links to organizations such as ACM and IEEE."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall provide RSS feeds of current CS information."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall provide an Ask a Grad or Prof FAQ section."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall provide a Consider a CS Minor page with information for students in other professions."
+    },
+    {
+      "id": "G15",
+      "kind": "usability",
+      "text": "The website must be teen-friendly and easy to navigate."
+    },
+    {
+      "id": "G16",
+      "kind": "usability",
+      "text": "The website must use short paragraphs, bullets, and charts to accommodate short reader attention spans."
+    },
+    {
+      "id": "G17",
+      "kind": "performance",
+      "text": "The website must be hosted on a server that provides rapid response time."
+    },
+    {
+      "id": "G18",
+      "kind": "security",
+      "text": "The website must adhere to the copyright and security measures of the OUS site."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "The website must be tested against IE, Firefox, and Netscape browsers."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system must track and evaluate hits and time spent on the website."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The website design must be consistent with the standards and conventions used on the OUS site."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:39Z",
+    "source_document_sha256": "3749862011a2f1fd43737bee88f1bab5488239216fdc0f4c28deb5ca68892289",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 4397,
+      "candidatesTokenCount": 817,
+      "totalTokenCount": 5214,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 4397
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

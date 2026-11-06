@@ -1,0 +1,124 @@
+{
+  "item_id": "pure-2010_-_fishing",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The ELSS must capture all data necessary for recording the fishing activities undertaken by a UK fishing vessel."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The ELSS must output the data as an XML file for transmission to the UK fisheries administrations\u2019 ERS system."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The ELSS must validate data against the UK XML/XSD before transmission from the fishing vessel."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The ELSS must transmit data at the required times set out in Section 2.5.1."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The ELSS must provide data capture screens for the entry of the logbook, transhipment and landing declaration data."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The ELSS must use English (UK) localizations for all UK Electronic Logbook features."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The ELSS must provide the ability to print out the ELSS logbook data using an onboard printer."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The ELSS must protect electronic print files so that they cannot be modified once generated and distributed."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The ELSS must provide facilities to capture and deliver corrections to previously successfully transmitted data."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The ELSS must provide facilities to transmit deletions to previously transmitted data."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The ELSS must be able to receive acknowledgement (RET) messages transmitted from the UK fisheries administrations\u2019 ERS system."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The ELSS must match each acknowledgement message with the appropriate transmitted data operation, deletion or correction report."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The ELSS must retain all logbook reports and any corrections on the system at least until the end of each trip."
+    },
+    {
+      "id": "G14",
+      "kind": "security",
+      "text": "All xml documents attached to emails to the UK fisheries administrations\u2019 ERS system must be encrypted using PGP."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The ELSS must provide one username/password for the owner of each vessel."
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The ELSS must allow the owner to set up subsidiary users with their own username and password."
+    },
+    {
+      "id": "G17",
+      "kind": "security",
+      "text": "The ELSS must record the username in each report completed and in each transmission made."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "All dates and times must be UTC."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "Each ELSS data transmission will be acknowledged by a return message from the UK fisheries administrations\u2019 ERS system."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:49:01Z",
+    "source_document_sha256": "0933ff3b2a8475ed54414356a32765adabf99da49b1e693b5058a55b0c458659",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 18341,
+      "candidatesTokenCount": 784,
+      "totalTokenCount": 19125,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 18341
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

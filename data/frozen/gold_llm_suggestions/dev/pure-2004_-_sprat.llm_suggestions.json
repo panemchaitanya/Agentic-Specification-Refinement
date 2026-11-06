@@ -1,0 +1,230 @@
+{
+  "item_id": "pure-2004_-_sprat",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall support an administrator level."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The administrator shall be able to create user groups."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The administrator shall be able to create project managers, analysts, and guests."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The administrator shall be able to reset user passwords."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The administrator shall be able to disable access for users."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall support a project manager level."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The project manager shall be able to insert a new privacy policy into the repository."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The project manager shall be able to delete a privacy policy from the repository."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The project manager shall be able to create a new domain of privacy policies."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The project manager shall be able to assign analysts to user groups."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The project manager shall be able to assign user groups and individual analysts to projects."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The project manager shall set restrictions on access to information for guests."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The project manager shall be able to export project data to an XML file."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The project manager shall be able to save the current version of the repository."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall support an analyst level."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The analyst shall be able to select a privacy policy assigned to them."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The analyst shall be able to add, delete, and update goals."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The analyst shall be able to add, delete, and update scenarios."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The analyst shall be able to view details of any goal or scenario in the repository."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The analyst shall be able to update their personal profile."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The analyst shall be able to add, delete, and update requirements."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The analyst shall be able to add, delete, and update access control policies."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The analyst shall be able to view access control policies."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall support a guest level."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The guest shall be able to view information in the repository subject to project manager restrictions."
+    },
+    {
+      "id": "G26",
+      "kind": "security",
+      "text": "The system shall allow all users to have different access levels to projects."
+    },
+    {
+      "id": "G27",
+      "kind": "security",
+      "text": "The system shall allow secure storage of passwords in the database."
+    },
+    {
+      "id": "G28",
+      "kind": "security",
+      "text": "The system shall allow users to securely log onto the system."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system shall allow analysts to add a new goal."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The system shall provide templates for goals, scenarios, P3P statements, EPAL rules, and access control policies."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The system shall allow analysts to classify goals."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The system shall allow multiple subject classifications for each goal."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The system shall allow the project manager to add a new classification type of goals."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The system shall allow analysts to request a new classification type of goals."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The system shall provide the ability to update an existing goal."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The system shall provide the ability to delete a goal."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The system shall automatically propagate associated policy information upon deletion or replacement of a goal."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "The system shall maintain traceability links between a goal and the policy from which it was derived."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The system shall display the number of occurrences of a goal in a policy, multiple policies, and within a domain."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "The system shall display the number of different goals that occur in a policy."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:45:08Z",
+    "source_document_sha256": "92a0dcb659a6f059a22fd51421c4fb9f68290d74a3c8f5045a99d049ffa76a2c",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 12110,
+      "candidatesTokenCount": 2404,
+      "totalTokenCount": 14514,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 12110
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

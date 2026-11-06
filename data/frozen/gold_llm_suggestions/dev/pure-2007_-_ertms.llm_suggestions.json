@@ -1,0 +1,231 @@
+{
+  "item_id": "pure-2007_-_ertms",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "ETCS shall provide the driver with information to allow him to drive the train safely."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "ETCS shall be able to supervise train and shunting movements."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "If the supervision is performed by a RBC it shall be possible to prevent movements of a traction unit in its area if not authorised by the RBC."
+    },
+    {
+      "id": "G4",
+      "kind": "performance",
+      "text": "ETCS is required to be functional to a maximum train speed of 500 km/h."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "It shall be possible to implement one or more of the ETCS application levels on a line."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The current application level shall be indicated on the DMI."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The driver shall acknowledge the level transitions, if requested from trackside."
+    },
+    {
+      "id": "G8",
+      "kind": "security",
+      "text": "ETCS shall be compatible with existing national systems such that it does not interfere with the national systems and is not interfered with by the national systems."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The ETCS trainborne equipment shall be capable of supervising the defined operational states."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "Any transition which occurs while the train is moving shall in principle occur automatically."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "Transitions which occur while the train is stationary, shall be initiated automatically or manually as appropriate."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "If, as a result of an automatic transition, the responsibility for the driver increases, the ETCS shall seek an acknowledgement from the driver."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "For transitions to and from National Operation (STM) the ETCS shall request an acknowledgement by the driver."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "In case the transition has to be acknowledged and the driver fails to acknowledge as required, the ETCS shall initiate a brake application."
+    },
+    {
+      "id": "G15",
+      "kind": "reliability",
+      "text": "During the transition period between two operational states the supervision provided shall at least ensure the same protection provided by the least restrictive state."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "If an ETCS equipped train passes a level transition to a line fitted with more than one level, the onboard shall switch to the highest level for which it is equipped."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "If an ETCS equipped train passes a level transition to one or more levels for which it is not equipped, ETCS shall initiate a brake application."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The current operational status shall be indicated to the driver on the DMI."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The ETCS on-board shall be capable of receiving National values from the trackside to adapt to National requirements."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "National values shall be applicable to a defined area."
+    },
+    {
+      "id": "G21",
+      "kind": "reliability",
+      "text": "Once received onboard the national values shall remain valid even if the onboard equipment is switched off."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "If the on-board has no valid national values for the current location, default values shall be used by the onboard equipment."
+    },
+    {
+      "id": "G23",
+      "kind": "reliability",
+      "text": "Default values shall be harmonised values, permanently stored in all ERTMS/ETCS on board equipment."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "At Start Up, the on board equipment shall perform an automatic self-test."
+    },
+    {
+      "id": "G25",
+      "kind": "usability",
+      "text": "The test shall require no action on the part of the driver."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The DMI shall indicate the result of the self-test."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "Train data shall be entered before the on-board ETCS equipment allows train movement."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The driver shall be able to select Train Data Entry on the DMI."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "Entering or overwriting data manually by the driver shall be possible but only when stationary."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The driver shall be able to consult train data when the train is stationary or moving."
+    },
+    {
+      "id": "G31",
+      "kind": "reliability",
+      "text": "Current train data shall be stored in the ETCS equipment until the traction unit is not operative."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "Stored train data shall be offered to the driver to be confirmed when Data Entry starts."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The system for Train Data Entry shall provide for the input of other data required by STMs connected to ETCS."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The entry of driver identification and the selection of the language shall be possible."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The change of driver identification during a journey or a Train Running Number shall be possible."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "Following successful completion of Train Data Entry, the driver shall be able to perform shunting movements or train movements."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "If the onboard fails to contact the RBC when awakening the driver shall be asked to enter the RBC contact details."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "An ETCS equipped traction unit shall be capable of being moved in Shunting without train data, track data or movement authority."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "Transfer to Shunting on driver\u2019s selection shall only be possible when stationary."
+    },
+    {
+      "id": "G40",
+      "kind": "security",
+      "text": "To prevent unauthorised use of the shunting function permission shall be obtained from the RBC if the train is operating under the control of the RBC."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:31Z",
+    "source_document_sha256": "bc03ddcb8fbd9ce94c21e5bc3b7dde754f43f8d95b422b5162c55a7e222c562a",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 18059,
+      "candidatesTokenCount": 2798,
+      "totalTokenCount": 20857,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 18059
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

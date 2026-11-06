@@ -1,0 +1,205 @@
+{
+  "item_id": "pure-2007_-_mdot",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The DUAP System shall collect probe vehicle data."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The DUAP data elements shall include probe vehicle data fields corresponding to the SAE J2735 format."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The DUAP Input Services shall collect probe vehicle data from the VII Proof of Concept (POC) Probe Data Service (PDS) using the X-031 interface."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The DUAP System shall collect weather data."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The DUAP System shall collect roadway traffic data."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The DUAP System shall collect traveler information."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The DUAP System shall collect road condition data."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The DUAP System shall collect work zone (lane closure) data."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The DUAP System shall log Input Services data transactions."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The DUAP System shall organize the sequence of execution of computational modules."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The DUAP System shall allow the system administrator to add, modify, and delete Input, Computational, Output, and Presentation Services."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The DUAP System shall restrict access to authorized users."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The DUAP System shall keep records of user access."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The DUAP System shall allow a system administrator to add, modify and delete user access rights."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The DUAP System shall log system operations and administrative data transactions."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The DUAP System shall cache probe vehicle, traffic, road weather, and road condition data."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The DUAP System shall cache data only if the data record associates the data with its source, a geo-referenced location, and a timestamp."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The DUAP System shall cache data for 1 week."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The DUAP System shall allow data to be accessed as soon as it is cached."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The DUAP System shall log Dynamic Data Services data transactions."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The DUAP System shall derive traffic data, incident information, road surface weather observations, travel demand, roadway surface conditions, pothole locations, high risk locations, and measures of effectiveness from probe vehicle data."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The DUAP System shall perform data quality checking."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The DUAP System shall log Computational Services data transactions."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The DUAP System shall store geo-references for Michigan roadways."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The DUAP System shall store DUAP system configuration data."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The DUAP System shall archive cached probe vehicle, traffic, roadway weather, and road condition data."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The DUAP System shall log Persistent Data Services data transactions."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The DUAP System shall publish traveler data, traffic management data, weather data, and asset condition data."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The DUAP System shall publish traffic condition, weather condition, asset condition, and threshold exceeded alerts."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The DUAP System shall log Output Services data transactions."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The DUAP Presentation Services shall present data published by Output Services."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The DUAP Presentation Services shall include a user interface for browsing traffic, incident, traveler, asset condition, and weather information."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The DUAP System shall require users to log in for system access."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The DUAP System shall log Presentation Services data transactions."
+    },
+    {
+      "id": "G35",
+      "kind": "other",
+      "text": "The DUAP System shall conform to IT standards established by the Michigan Department of Information Technology (MDIT)."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:46Z",
+    "source_document_sha256": "b1fed007de4fc8466dd7377892bcddd5fbb4312f945a473f30a9e6f0a4cbd034",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 20320,
+      "candidatesTokenCount": 1440,
+      "totalTokenCount": 21760,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 20320
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

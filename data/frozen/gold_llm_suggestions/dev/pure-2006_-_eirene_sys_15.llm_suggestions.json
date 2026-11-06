@@ -1,0 +1,129 @@
+{
+  "item_id": "pure-2006_-_eirene_sys_15",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The network shall support the GSM teleservices listed in table 2-1."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The network shall support the GSM bearer services listed in table 2-2."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The network shall support the GSM supplementary services listed in table 2-3."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The network shall support the railway specific services listed in table 2-4."
+    },
+    {
+      "id": "G5",
+      "kind": "performance",
+      "text": "The network shall limit the maximum alerting duration to 60 seconds."
+    },
+    {
+      "id": "G6",
+      "kind": "performance",
+      "text": "The network shall provide a coverage probability of 95% based on a coverage level of 38.5 dB\u00b5V/m for voice and non-safety critical data."
+    },
+    {
+      "id": "G7",
+      "kind": "performance",
+      "text": "The network shall provide a coverage probability of 95% based on a coverage level of 41.5 dB\u00b5V/m on lines with ETCS levels 2/3 for speeds lower than or equal to 220km/h."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The network shall terminate an ongoing VGCS/VBS call upon receiving the 3-digit sequence \u201c***\u201d via DTMF signals."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The network shall send a SET-PARAMETER message with attribute \u201cD-ATT = T\u201d to the talking subscriber's mobile if it receives the 3-digit sequence \u201c###\u201d via DTMF or a group call SETUP message from a controller."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The network shall send a SET-PARAMETER message with attribute \u201cD-ATT = F\u201d to the talking subscriber's mobile only if it receives the 3-digit sequence \u201c#**\u201d via DTMF from all talking controllers."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The Cab radio shall initiate a call to the appropriate controller with \u2018Railway operation\u2019 priority upon an appropriate MMI action."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The Cab radio shall initiate a group call using the \u2018all trains\u2019 group identification with eMLPP priority level 2 upon a \u2018Call other drivers in area\u2019 request."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The Cab radio shall initiate a Railway emergency call upon activation of the \u2018Railway emergency call\u2019 function."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The Cab radio shall establish a permanent radio connection between active cabs using the GSM Multi-Party service where multiple traction vehicles are not connected by on-train wiring."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The Cab radio shall initiate a GSM point-to-point voice call at \u2018Railway operation\u2019 priority upon activation of the \u2018Call train staff\u2019 function."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The Cab radio shall be able to receive, display, and store incoming short (SMS) text messages."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The Cab radio shall register with a mobile network upon switch on."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The Cab radio shall send a USSD message upon activation of the train number registration or deregistration function."
+    },
+    {
+      "id": "G19",
+      "kind": "security",
+      "text": "The mobile radio shall prevent the user from entering direct mode if the GSM service is available."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "The mobile radio shall automatically re-attempt Railway emergency call setup if the initial attempt is unsuccessful until successful, a 30-second retry timer expires, or the user abandons the call."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:11Z",
+    "source_document_sha256": "aae540d729e3e1fa9bd8c410946a3dbf32dd61054b0021cc75fb15bcf930de3b",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 24631,
+      "candidatesTokenCount": 981,
+      "totalTokenCount": 25612,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 24631
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

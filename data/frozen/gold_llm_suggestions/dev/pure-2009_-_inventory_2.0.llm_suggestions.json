@@ -1,0 +1,110 @@
+{
+  "item_id": "pure-2009_-_inventory_2.0",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide a categorized view of the entire inventory to the Construction Junction staff."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow administrators to define inventory departments."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow administrators to define inventory categories."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow administrators to customize attributes and details for inventory items."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow authorized staff to add items to the inventory."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow authorized staff to modify, delete, or split existing inventory items."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall suggest item prices based on historical data of similar items."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow authorized staff to view past and current acquisitions."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow authorized staff to process the receipt of donated items."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall update inventory records when an item is sold via QuickBooks POS."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall provide a reporting mechanism for inventory, acquisitions, and donor information."
+    },
+    {
+      "id": "G12",
+      "kind": "usability",
+      "text": "The application shall operate via a touch screen user interface."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall require user login for access to the application."
+    },
+    {
+      "id": "G14",
+      "kind": "security",
+      "text": "The system shall restrict access to screens and functions based on user role."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The system shall record changes to application entities including the user and timestamp."
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "The system shall perform with consistently and predictably low response times."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:48:12Z",
+    "source_document_sha256": "e1113ab9c87cda2ff79149816b3bdc836a1458a62d0561938e16a7bb32e4f240",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 26171,
+      "candidatesTokenCount": 617,
+      "totalTokenCount": 26788,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 26171
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

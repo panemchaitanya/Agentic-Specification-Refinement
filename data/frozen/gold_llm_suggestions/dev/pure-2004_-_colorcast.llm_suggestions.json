@@ -1,0 +1,131 @@
+{
+  "item_id": "pure-2004_-_colorcast",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide a graphical color chooser."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall provide a color translator for converting old paint scheme numbers to new scheme numbers."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall provide a tool to locate colors near a given paint number and collection."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall provide a color search engine to locate colors based on paint name, number, or color value."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall provide a session-persistent user color palette to store recent color searches."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall provide an administrative interface to update, add, and delete paint information."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall allow administrative users to add other administrative users."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow users to upload images for color matching."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall provide an error reporting utility."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall provide on-line help and an online tutorial."
+    },
+    {
+      "id": "G11",
+      "kind": "performance",
+      "text": "The system shall process color search queries in sub-second time on the server."
+    },
+    {
+      "id": "G12",
+      "kind": "performance",
+      "text": "The system shall process updates to paint and collection information in real-time."
+    },
+    {
+      "id": "G13",
+      "kind": "usability",
+      "text": "The system shall retain full functionality with a keyboard input device only."
+    },
+    {
+      "id": "G14",
+      "kind": "usability",
+      "text": "The system shall provide a task-based screen interface with consistent navigation."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The system shall protect administrative access permissions with secure authentication."
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The system shall keep user-specified color palettes private."
+    },
+    {
+      "id": "G17",
+      "kind": "security",
+      "text": "The system shall implement privacy and security measures on par with industry standards."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "The system shall be a web-based application."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "The system shall be integrated into the ABC Paint website."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system shall remove user data from the server after 30 days."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:44:10Z",
+    "source_document_sha256": "245635335f3edc18088fff31834d417188416c6c721e77051a0e52afd8e25725",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 6151,
+      "candidatesTokenCount": 724,
+      "totalTokenCount": 6875,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 6151
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

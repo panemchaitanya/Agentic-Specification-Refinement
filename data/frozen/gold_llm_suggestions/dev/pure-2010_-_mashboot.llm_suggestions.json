@@ -1,0 +1,129 @@
+{
+  "item_id": "pure-2010_-_mashboot",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow the creation of new user accounts."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow users to modify their own password, email address, and name."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow the deactivation of user accounts."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow users to reset their own password."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow the association of Mashbot accounts with external service accounts."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall provide an interface for authenticating a user account to an external service account."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide a standardized method of interacting with external service accounts."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow users to schedule content for various services to be published concurrently."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow users to view and compare historical metrics of campaigns."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall allow users to view and create replies to content."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall allow the maintenance of users and approvers of content."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow users to set up keyword alerts for watched services."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall encrypt data over a direct connection between the web client and the server using TLS."
+    },
+    {
+      "id": "G14",
+      "kind": "security",
+      "text": "The system shall allow for the backup of the data system to local or remote non-volatile storage systems."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The system shall allow only valid, non-disabled users to log into the system."
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The system shall require a valid username and password for user authentication."
+    },
+    {
+      "id": "G17",
+      "kind": "security",
+      "text": "The system shall allow the System Administrator to configure a timeout after which a user is automatically logged out."
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "The Mashbot server shall require no greater than 1 gigabyte of RAM memory."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The web client shall require no more than 256 megabytes of RAM."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "Full system backups shall not interfere with user interaction for more than 10 minutes."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:50:11Z",
+    "source_document_sha256": "5e8464756aa567a0acb5e38dc20ae4a0ef170e8f41fd5673ef5c47c270466f34",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 5951,
+      "candidatesTokenCount": 584,
+      "totalTokenCount": 6535,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 5951
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

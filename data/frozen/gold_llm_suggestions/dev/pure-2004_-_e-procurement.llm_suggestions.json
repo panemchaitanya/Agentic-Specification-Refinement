@@ -1,0 +1,188 @@
+{
+  "item_id": "pure-2004_-_e-procurement",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall exchange eProcurement messages between Buyer and Seller using XML."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall validate XML messages using XML schema."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall include a mandatory status attribute in all documents with values: original, copy, revision, or cancellation."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Document UUID in all documents."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Document ID in all documents."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Document Date in all documents."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Document Status in all documents."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Test Status boolean in all documents."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Sender Software Manufacturer URI in all documents."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Sender Software Product name in all documents."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Sender Software Version in all documents."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Schema Version in all documents."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Party UUID for every Party instance."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Line UUID for every Line instance."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Line Number for every Line instance."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Line Status for every Line instance."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Line Quantity for every Quantified Line."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Amount Ex VAT for every Priced Line."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Item Name for every Item."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Unit of Measure for every Item."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Unit Price for every Priced Item."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Commodity Class for every Priced Item."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Extended Item ID for every Extended Item ID instance."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Extended Item ID Source for every Extended Item ID instance."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Aspect Name, Aspect Value, and Aspect Value Unit for every Aspect."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The system shall include a mandatory VAT Evidence boolean in all VAT documents."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Paid In Full boolean in all Invoice documents."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Requested Delivery Date in all RFQ documents."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Quoted Delivery Date in all Quotation documents."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Required By Date in all Purchase Order documents."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The system shall include a mandatory Rectification Action in all Rectification Advice documents."
+    },
+    {
+      "id": "G32",
+      "kind": "other",
+      "text": "The system shall comply with the e-Government Interoperability Framework (e-GIF)."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:44:14Z",
+    "source_document_sha256": "21de720c7978b665a195258989f10d93ce799e721740766370de77b7fe7fa6df",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 13452,
+      "candidatesTokenCount": 1127,
+      "totalTokenCount": 14579,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 13452
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

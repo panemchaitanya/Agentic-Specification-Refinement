@@ -1,0 +1,231 @@
+{
+  "item_id": "pure-2009_-_library",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall run on a fully relational, SQL-based database system."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow running SQL queries against any table in the database."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall provide real-time processing for library operations."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow multiple staff and patrons to simultaneously access and update patron and item records."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow staff to identify where a patron or item record is in use."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall support individual and shared staff login accounts with role-based access control."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide access to all configuration files."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall provide full access to all log files."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall provide access to the root shell."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall support the creation of custom dashboards for system performance and data monitoring."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall support SNMP for monitoring system resources."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow administrators to set thresholds for record locks and unlock records."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall provide a server management console for software and server startup, shutdown, and restart."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall provide a management console for monitoring client workstations and sessions."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall provide a circulation dashboard showing key performance indicators."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall provide a single interface for reviewing and controlling scheduled tasks."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall support SMTP for email transport."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall enforce business rules for record deletion based on status."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall provide customizable rules of suppression for record visibility."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall allow creation and modification of rules for placing holds on items."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall allow creation and modification of loan rules for check-out, loan periods, and renewals."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall allow specification of default values, data validation, and required status for any field."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall perform live incremental and full backups of data and transaction logs."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall provide undo functionality for data changes."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The system shall support server clustering for failover capability."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The system shall support secure protocols including SFTP, SSL, and SSH."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system shall support batch import and export of MARC bibliographic and authority records."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The system shall support the creation and management of record sets for batch operations."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system shall provide a dedicated interface for creating and managing staff accounts."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The system shall provide a dedicated interface for creating and managing patron accounts."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The system shall support administrator and user-programmable keyboard macros and shortcuts."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The system shall support centrally managed client software installation and updates."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The system shall allow full customization of report layout and appearance."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The system shall provide a user-friendly interface for designing queries against all record types."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The system shall allow administrators to create report templates for staff use."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The system shall provide fine-grained permissions for running reports."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The system shall support four types of printers: receipt, standard, label, and forms."
+    },
+    {
+      "id": "G38",
+      "kind": "performance",
+      "text": "The system must support 50 locations, 20 million circulations, and 500,000 items per year."
+    },
+    {
+      "id": "G39",
+      "kind": "performance",
+      "text": "Searches and reports should be processed during open hours without disrupting other system functions."
+    },
+    {
+      "id": "G40",
+      "kind": "other",
+      "text": "The system shall operate on a Linux or Solaris server."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:48:18Z",
+    "source_document_sha256": "9e632f6b6a24c6ea071104be138a21dc5f9c6907d764f3b2a77f4a9e8beb49c9",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 7042,
+      "candidatesTokenCount": 1344,
+      "totalTokenCount": 8386,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 7042
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

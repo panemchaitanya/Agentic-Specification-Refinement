@@ -1,0 +1,196 @@
+{
+  "item_id": "pure-1999_-_tcs",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The TCS shall consist of the TCS workstation Hardware Configuration Items (HWCIs), TCS Computer Software Configuration Items (CSCIs), and additional TCS Support HWCIs and CSCIs."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The TCS shall support 5 levels of UAV interaction."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The TCS system shall provide software capabilities and hardware configurations necessary to fulfill the operational tasking requirements across the 5 levels of interaction."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The TCS shall be interoperable with the payloads identified in Table 3-2."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The states of operation of the TCS shall include Startup, Operation, and Shutdown."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "Upon application of power the TCS shall enter the Startup State."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The Startup State shall be comprised of the following modes: Normal Startup Mode and Recovery Startup Mode."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "When the TCS Software is terminated normally the TCS shall enter the Normal Startup Mode of operation upon application of power."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "When the TCS software is halted due to an unplanned power interruption as well as abnormal program termination, then the TCS shall enter the Recovery Startup Mode upon application of power."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "During startup, the TCS shall determine which of the 5 levels of interaction are achievable by the TCS configuration."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The TCS shall inform the operator if the operator attempts to execute a function prohibited as a result of the determined level of interaction."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The TCS shall be capable of automatically recording system state data, interface communications and other information necessary to support event reconstruction."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "For recovery from abnormal termination, TCS shall prompt the operator to select the type of recovery to be executed."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "When in the Operations State the TCS shall be capable of operating in three modes: normal operations mode, training operations mode, and maintenance operations mode."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The operator shall have the capability to command the system to the Shutdown State from all modes under the Operations State."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The TCS hardware and software shall execute periodic Fault Detection/Location (FD/L) while in the Normal Operations Mode and Training Mode."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "Upon the selection of a shutdown command the TCS shall enter the Shutdown State."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The TCS shall have the functionality to allow the operator to generate a UAV mission plan."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The TCS shall have the functionality to receive and process UAV mission plans from service specific mission planning systems."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The TCS shall have the functionality to transmit UAV mission plans to service specific mission planning systems."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The TCS shall have the functionality to receive and process UAV mission plans from other TCSs."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The TCS shall have the functionality to transmit UAV mission plans to other TCSs."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The TCS shall automatically check the validity of the intended mission plan prior to being uploaded."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The TCS shall notify the operator of all discrepancies found during the mission plan check as well as indicate successful completion of the mission plan check."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The TCS shall provide the capability to compute the range and bearing between two geographic positions on the map display."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The TCS shall provide the capability to graphically display Line of Sight versus terrain profile (DTED)."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The TCS shall be capable of displaying the positions of the icons in Lat./Lon., Universal Transverse Mercator (UTM), and Military Grid Reference System (MGRS) formats."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The TCS shall be capable of being interoperable with Predator and Outrider UAVs across the 5 levels of UAV interaction."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The TCS shall be capable of simultaneously controlling and monitoring a line-of-sight as well as a BLOS data terminal."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The TCS shall be in compliance with Common Imagery Ground Surface Station (CIGSS), United States Imagery Standards (USIS), Video Working Group Standards Architecture, National Imagery Transmission Format (NITF) Version 2.0, and Global Command Control Systems (GCCS) when processing payload imagery data."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The TCS shall be capable of entering DII-COE compliant (C4I) networks."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The TCS shall be designed such that no single hardware failure results in an unsafe command to be transmitted to the air vehicle."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The TCS shall be designed such that no single software error results in an unsafe command to be transmitted to the air vehicle."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:03Z",
+    "source_document_sha256": "45df8e4a9ea3690b231d4e492f24abae1f3cfade42e1662c5955aa6d4c02fea7",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 25425,
+      "candidatesTokenCount": 1475,
+      "totalTokenCount": 26900,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 25425
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "item_id": "pure-2007_-_nlm",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow resources to be reviewed before a decision is made whether they should be retained."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall support a workflow to receive and track content, normalize content, validate content, review content, and accept or reject content."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall record a minimal set of identifying information concerning rejection decisions."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall provide a mechanism to eliminate the need to review some resubmissions based on rejection metadata."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall notify producers and donors about rejected content."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall accept content from physical media or via electronic transfer."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall accept content in multiple file formats including TIFF, XML, audio, streaming video, and PDF."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall accept SIPs in XML, MARC, MARC XML, MODS, EAD, DC, and TEI formats."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall accept articles, journals, images, monographs, audio files, video files, websites, numeric data, text files, and databases."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall convert data to accepted file formats as needed."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall prompt a request for resubmission to the Content Originator if an error of transmission or receipt occurs."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall accommodate a resubmitted SIP in case of errors."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall send a configurable automatic system confirmation receipt of SIP to the producer."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall store and track versions of a document, file, or image."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall assign a unique identifier to each object and maintain relationships between parent and child objects."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall keep an audit trail of all actions."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall perform virus checking on SIPs."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall automatically validate the successful transfer of the SIP to a staging area using CRCs or checksums."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall verify the validity of the submission based on submitter, expected format, file quality, duplication, and completeness."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall allow NLM staff to perform manual quality control assurance on staged SIPs via a GUI."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall generate statistical and error reports."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall generate AIPs by transforming SIPs to conform to repository data formatting standards."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall allow entry and validation of additional metadata."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall store metadata in a database in a manner that conforms to repository reformatting and links to corresponding objects via an identifier."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The system shall recognize and document relations among files."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The system shall transfer AIPs to Archival Storage and Descriptive Information to Data Management."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system shall receive AIPs from Ingest and add them to permanent storage."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The system shall refresh or replace the media on which repository holdings are stored without service interruption."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system shall provide disaster recovery capabilities including data backup, off-site data storage, and data recovery."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The system shall provide AIPs to Access to generate DIPs."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The system shall maintain the integrity of the Data Management database."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The system shall provide internal validation such as referential integrity of the database contents."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The system shall create and maintain schema or table definitions for Data Management."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The system shall allow creation, maintenance, and access to customized user views of the database."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The system shall generate result sets from query requests."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The system shall support the production of management information reports and statistics."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The system shall allow online updates to individual records by authorized staff."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "The system shall audit submissions to ensure they meet repository standards."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The system shall maintain configuration management of system hardware and software."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "The system shall track negotiation status, written submission agreements, and schedules."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:47:04Z",
+    "source_document_sha256": "2fb5f43d4a3f15e8a7d7ba3a3b10dcd9b7a8777354069606713b94c3a91eff36",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 25585,
+      "candidatesTokenCount": 1954,
+      "totalTokenCount": 27539,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 25585
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

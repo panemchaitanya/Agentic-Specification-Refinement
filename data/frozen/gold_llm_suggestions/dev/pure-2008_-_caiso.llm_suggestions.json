@@ -1,0 +1,134 @@
+{
+  "item_id": "pure-2008_-_caiso",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The CAISO shall review and update the Black Start Capability Plan at least every five years."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The CAISO shall annually verify that the number, size, availability, and location of system Black Start generating units are sufficient to meet WECC restoration plan requirements."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The CAISO shall document Cranking Paths between each Black Start generating unit and the units to be started."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The CAISO shall annually enter into RMR and Interim Black Start Contracts with generators that satisfy the planning evaluation process."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "Voluntary Black Start unit owners shall demonstrate at least every five years that the unit can perform its intended functions."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "Participants shall submit documentation of Black Start test results and analysis to the CAISO, WECC, or NERC upon request."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "Participants shall notify the CAISO RT Dispatcher by phone of the success or failure of a Black Start test within 24 hours of conducting the test."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "Participants shall file a letter with the CAISO regarding the success or failure of a Black Start test within 14 days of performing the test."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The CAISO shall maintain a Black Start database containing all Black Start generators designated for use during system restoration."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The CAISO shall review and update the Black Start database on at least an annual basis."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The CAISO shall train Real-time Grid Operators at least annually for system restoration."
+    },
+    {
+      "id": "G12",
+      "kind": "performance",
+      "text": "Black Start units must be able to self-start without any source of off-site electric power."
+    },
+    {
+      "id": "G13",
+      "kind": "performance",
+      "text": "Black Start units must maintain adequate voltage and frequency while energizing isolated transmission facilities and auxiliary loads."
+    },
+    {
+      "id": "G14",
+      "kind": "performance",
+      "text": "Black Start units must maintain voltage within emergency voltage limits over a range of loading from no external load to full external load."
+    },
+    {
+      "id": "G15",
+      "kind": "performance",
+      "text": "Black Start units must be equipped with governors capable of operating in an isochronous mode."
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "Black Start units must be capable of starting and energizing the applicable transmission path without assistance from the electrical system."
+    },
+    {
+      "id": "G17",
+      "kind": "performance",
+      "text": "Hydroelectric generating units or combustion gas turbines must start within 30 minutes of the initiation of the Black Start process."
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "Industrial gas turbines must start within 60 minutes of the initiation of the Black Start process."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "Hot, steam-driven turbines must start within 2.5 hours of the initiation of the Black Start process."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "The minimum run time duration of a Black Start test is 10 minutes."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "Black Start testing must not endanger the safety of any person, damage equipment, harm the environment, or violate any applicable law, regulation, or operating limit."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:47:23Z",
+    "source_document_sha256": "ff72240d3c4f53fb7c293479e7de032f6b23012824e434ce6b12bcea278895ed",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 4403,
+      "candidatesTokenCount": 928,
+      "totalTokenCount": 5331,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 4403
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

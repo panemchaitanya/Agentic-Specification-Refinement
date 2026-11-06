@@ -60,6 +60,19 @@ before any experiment or prompt tuning touches evaluation data.
   to text under `data/frozen/pure/text/<split>/` (79 ok / 0 failed,
   per-document hashes in EXTRACTION_REPORT.json).
 
+## LLM pre-labeling (owner-approved 6 Nov 2026)
+
+`training/llm_prelabel.py` pre-labels the gold skeletons with the free
+Gemini route (owner approved the free-model labeling decision, ~12:07
+IST). Output lands in `data/frozen/gold_llm_suggestions/<split>/` with
+provenance.status "LLM-SUGGESTED - unverified, not gold": eval/gold.py's
+whitelist rejects these, and only a human verification + adjudication
+pass (annotate_critic.py, two-extractor protocol, kappa recorded) can
+promote any of it to FROZEN gold. First pass: 61/61 dev docs, 1601
+suggestions, 18 docs truncated at 120k chars (flagged per file), logs in
+eval/runs/PRELABEL-dev-*. Labels are free-tier quality by declaration and
+upgradeable before 30 Nov.
+
 ## KEPs / Rust RFCs / PEPs - PRD-to-spec pair candidates
 
 - https://github.com/kubernetes/enhancements,

@@ -1,0 +1,160 @@
+{
+  "item_id": "pure-2001_-_hats",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The HATS-GUI shall provide the user with the ability to construct and use transformations."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The HATS-GUI shall facilitate the creation, deletion, and modification of the files related to an application."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The HATS-GUI shall manage file associations within an application."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The HATS-GUI shall allow the user to examine and modify file associations."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The HATS-GUI shall orchestrate the parsing of transformation language programs and target files."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The HATS-GUI shall orchestrate the execution of transformation language programs."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The HATS-GUI shall capture data written to debugging and error streams and make that data available to the user."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The HATS-GUI shall facilitate the display of transformation output and error messages received from HATS-SML."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The HATS-GUI shall make a list of files available to the user and allow the user to select files for display."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The HATS-GUI shall allow the user to manipulate the display by choosing portions of the tree to display and by allowing the user to search for text strings and sub-trees."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The HATS-GUI shall allow a user to create an application minimally consisting of a lexical specification file, a grammar file, a user-defined functions file, and application configuration information."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The HATS-GUI shall allow the user to specify the number of levels of nodes to expand during SDT viewing."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The HATS-GUI shall allow the user to select the colors for types of displayed nodes in a displayed graph."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The HATS-GUI shall allow the user to select the shapes for types of displayed nodes in a displayed graph."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The HATS-GUI shall interface with HATS-SML (version 2.0) in order to parse transformation language programs, execute transformation language programs, and create output SDTs, error messages, pretty-printed text, and parsed transformation language programs."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The HATS-GUI shall allow the user to create, modify, copy, or delete applications or files regardless of the current status of HATS-SML."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The HATS-GUI shall interact with the HOST OS file services to create, delete, open, read, write, and close files."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The HATS-GUI shall interact with the HOST OS to find files in directories."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The HATS-GUI shall interact with the HOST OS to compare time stamps for files."
+    },
+    {
+      "id": "G20",
+      "kind": "security",
+      "text": "The HATS-GUI shall prompt the user to confirm deletion prior to completing file or application deletion."
+    },
+    {
+      "id": "G21",
+      "kind": "performance",
+      "text": "The system shall be completed by December 2001."
+    },
+    {
+      "id": "G22",
+      "kind": "other",
+      "text": "The system shall be platform independent and function properly on any operating system, specifically Sun Solaris, Windows 2000, and Linux."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system shall be designed in such a way as to minimize the number of windows opened by the application."
+    },
+    {
+      "id": "G24",
+      "kind": "other",
+      "text": "The system shall be developed using the Java programming language."
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The HATS-GUI shall be menu driven."
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "All files associated with a given application shall be stored in one directory."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:32Z",
+    "source_document_sha256": "46ec7ab86018c9cbb50181e10ecc5394bfc908b1922aef313710e858c0b57956",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 24657,
+      "candidatesTokenCount": 934,
+      "totalTokenCount": 25591,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 24657
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

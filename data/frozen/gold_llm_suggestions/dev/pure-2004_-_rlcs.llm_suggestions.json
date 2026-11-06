@@ -1,0 +1,151 @@
+{
+  "item_id": "pure-2004_-_rlcs",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The RLCS application shall open and close the reversible lanes for morning and evening peak traffic hours and special events."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The RLCS application shall interface with field hardware components via driver software."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The RLCS application shall provide data to external systems via an external server data store."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The RLCS application shall allow remote access through a firewall by authorized users."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The RLCS application shall provide a graphical user interface for operators to view status, issue commands, configure the system, and generate reports."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The RLCS application shall perform a one-way data transfer of system status to an external computer every 30 seconds."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The RLCS application shall send and receive data from field device I/O cards through I/O driver software."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The RLCS application shall require a user name and password for GUI access."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The RLCS application shall display current date, time, user name, and workstation location on the GUI."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The RLCS application shall display facility status, traffic flow direction, and device sensor status on the GUI."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The RLCS application shall issue an audible alarm and visual indicator when an alarm condition occurs."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The RLCS application shall store and export system activity logs including device commands, alarms, and operator diaries."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The RLCS application shall monitor all field device sensors and process status change requests."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The RLCS application shall validate all control commands against security rules before execution."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The RLCS application shall execute stored operational control command sequences based on the current system mode and schedule."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The RLCS application shall halt opening or closing sequences if a device fails to report completion or if an illegal state is detected."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The RLCS application shall use a one-way hash function (MD5) to verify the integrity of application data and software."
+    },
+    {
+      "id": "G18",
+      "kind": "security",
+      "text": "The RLCS application shall be available 24 hours per day, 7 days per week, 365 days per year."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The RLCS application shall update the external server data store at least once per minute."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "The RLCS application shall update field device status information on the GUI within 2 seconds of occurrence."
+    },
+    {
+      "id": "G21",
+      "kind": "performance",
+      "text": "The RLCS application shall detect alarm conditions within 2 seconds of occurrence."
+    },
+    {
+      "id": "G22",
+      "kind": "reliability",
+      "text": "The RLCS application shall function continuously without rebooting for at least 30 consecutive days."
+    },
+    {
+      "id": "G23",
+      "kind": "reliability",
+      "text": "The RLCS application shall maintain at least 99.99% yearly uptime."
+    },
+    {
+      "id": "G24",
+      "kind": "usability",
+      "text": "The RLCS application shall allow for future roadway changes without requiring programming effort by using non-volatile memory-based tables."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:45:00Z",
+    "source_document_sha256": "f11b7f749c8a3fbd80caeaf092d09e1c01651f4b154c148eedf6fe26756d6f33",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 21193,
+      "candidatesTokenCount": 817,
+      "totalTokenCount": 22010,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 21193
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

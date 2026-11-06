@@ -1,0 +1,141 @@
+{
+  "item_id": "pure-2005_-_znix",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The Framework must capture information from the software tools specified in Table 3.10.3-A."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The Framework must store captured data in a centralized data store."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The user must be able to view the information in the central store in a hierarchical manner."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The Framework must include a browser capable of displaying the information hierarchy."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The Framework must leave a residue on the data store when information is archived to removable media."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The Framework must inform the user that an entity has been archived when the user attempts to access it."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The Framework API must allow client processes to create, delete, and modify entities and entity groups."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The Framework API must allow client processes to create, delete, and modify relationships between entities."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The Framework API must allow client processes to list and access entities."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The Framework API must allow client processes to execute queries for the retrieval of entities."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The Framework must provide a GUI for the user to specify relationships between disparate entities."
+    },
+    {
+      "id": "G12",
+      "kind": "performance",
+      "text": "The Framework should run on systems with 256 megabytes of RAM."
+    },
+    {
+      "id": "G13",
+      "kind": "performance",
+      "text": "The Framework Shell should not utilize more than 40 megabytes of RAM."
+    },
+    {
+      "id": "G14",
+      "kind": "reliability",
+      "text": "The mean time between failures (MTBF) shall exceed 3 months."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The Framework must guard against malicious scripts on remote websites from accessing its information."
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The Framework must guard against unintended corruption of information by the user."
+    },
+    {
+      "id": "G17",
+      "kind": "other",
+      "text": "Any coding conventions used during implementation must be documented and strictly adhered to."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "The website for distributing the project shall include provisions for users to make comments and compile a wish-list of features."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "The system shall conform to ISO 10646 (Unicode UTF-8) standards for character set encoding."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system shall conform to Windows 2000 Logo Requirements."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The Framework must be licensed under the GNU Library General Public License (LGPL)."
+    },
+    {
+      "id": "G22",
+      "kind": "other",
+      "text": "The browser and tools released alongside the Framework must be licensed under the GNU Public License (GPL)."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:05Z",
+    "source_document_sha256": "5c261d6c798255efc5391d0d7e3b152033b1cc2d3c3727bb2b16ca3532a674c6",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 6776,
+      "candidatesTokenCount": 681,
+      "totalTokenCount": 7457,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 6776
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

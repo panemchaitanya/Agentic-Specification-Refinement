@@ -1,0 +1,233 @@
+{
+  "item_id": "pure-2009_-_warc_III",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The migration workflow shall provide an API to handle the migration process and default configuration."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The migration API shall require inclusion of only one header file."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall generate errors in the absence of a provided configuration."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The user shall be able to provide metadata related to the conversion to be stored in the converted files."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall store automatically generated migration metadata in the converted files."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The migration workflow shall be able to call external tools and services."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The migration process shall use persistent, opaque, unique, and global identifiers for records access."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall use an external tool to scan files for malware before conversion."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The API shall allow external tools to be used for file format identification."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The migration process shall be able to run on multiple machines using a messaging infrastructure."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall allow logging to be turned on or off at any time during migration."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall support software checkpoints for managing atomic transactions."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall support a dry-run migration mode to generate reports without writing WARC data."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall detect and report duplicate WARC records based on checksums."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The validation tool shall use metadata in generated WARC files to match records with original ARC files."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The validation tool shall use payload checksum comparisons for core validation."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The validation tool shall support sampling of records for rapid verification."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The validation tool shall support using Heritrix\u2019s arcreader to verify conversion correctness."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall support round-trip validation by migrating WARC files back to ARC and comparing checksums."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The repackaging tool shall filter records based on URL, MIME-Types, size, timestamp, or any WARC field."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The repackaging tool shall support pre and post record, file, and job operations."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The repackaging tool shall include a user-defined metadata record in each repackaged WARC file."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall provide tools to build reports from WARC files."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall export summaries in XML and CSV formats."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The system shall display aggregated WARC summaries in the browser UI."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The system shall display a manifest of WARC files and their locations in the browser UI."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system shall provide a diff tool to compare WARC sets based on defined criteria."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The system shall provide a tool to draw difference graphs between WARC collections."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system shall provide a way to view crawl deltas for quality assurance."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The system shall implement server-side rewriting in the WARC browser."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The system shall integrate a proxy mode inside the WARC browser."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The system shall integrate full-text search capabilities with the WARC browser."
+    },
+    {
+      "id": "G33",
+      "kind": "security",
+      "text": "The tools shall be able to process a set of multiple WARC files at the same time using explicit naming, wildcard matching, size limitation, or number of items."
+    },
+    {
+      "id": "G34",
+      "kind": "scalability",
+      "text": "The tools shall be able to scale to process large collections using distributed processing and data transport."
+    },
+    {
+      "id": "G35",
+      "kind": "performance",
+      "text": "The tools shall offer best possible performance to correctly process large collections."
+    },
+    {
+      "id": "G36",
+      "kind": "other",
+      "text": "The tools shall be able to run on multiple machines without providing functionality for hardware failure recovery."
+    },
+    {
+      "id": "G37",
+      "kind": "other",
+      "text": "The tools shall avoid unnecessary technology dependencies and partner-specific integration technologies."
+    },
+    {
+      "id": "G38",
+      "kind": "other",
+      "text": "The tools shall be compliant with Java development environments using web services and RESTful APIs."
+    },
+    {
+      "id": "G39",
+      "kind": "usability",
+      "text": "The tools shall provide logging facilities to follow command progression."
+    },
+    {
+      "id": "G40",
+      "kind": "usability",
+      "text": "The tools shall provide easy to adapt shell script wrappers for major commands."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:48:56Z",
+    "source_document_sha256": "0a0cf4c4ea02454e405794f3b690b26595e8658ba290cece68ab54dafe30e26d",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 6313,
+      "candidatesTokenCount": 1360,
+      "totalTokenCount": 7673,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 6313
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

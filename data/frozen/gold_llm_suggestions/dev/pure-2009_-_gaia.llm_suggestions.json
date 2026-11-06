@@ -1,0 +1,170 @@
+{
+  "item_id": "pure-2009_-_gaia",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "GOG shall provide Catalogue, Main Database (MDB) and final mission data."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "GOG shall use the GaiaSimu library and the Gaia Tools library."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "GOG shall support source generation from the Universe Model or an Object Input Catalogue."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "GOG shall process data source by source."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "GOG shall allow users to select whether to add instrumental and reduction noise effects."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "GOG shall accept user-defined values for noise effects."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "GOG shall use the I/O Catalogue format defined in the Interface Control Document for the Gaia Main Database."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "GOG shall produce identical results for identical input configuration parameters."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "GOG shall provide a command line interface for execution."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "GOG shall be deployable as a standalone Java jar file."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "GOG shall be capable of running in cluster or grid environments."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "GOG shall support single-threaded execution mode."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "GOG shall be platform independent across LINUX, UNIX, and MAC."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "GOG shall process one complete source in 2 CPU seconds."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The Initialisation Module shall read input source information from the Universe Model or user-provided sources."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The Initialisation Module shall include information on the Galaxy, SkyBackground, Extinction Law, and DMS models."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The Initialisation Module shall include information on the instrument model, including scanning law, dead time, and noise models."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The Initialisation Module shall include information on the reduction model, including instrument effects subtraction and scientific content extraction noise."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The Initialisation Module shall define output specifications including spectrum, astrometry, radial velocity, physical parameters, and epoch counts."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The Epoch Parameters module shall calculate astrometric parameters including transit times and field angles with instrumental and reduction errors."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The Epoch Parameters module shall calculate epoch photometry including G, GRP, GBP, and GRVS magnitudes."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The Epoch Parameters module shall calculate epoch radial velocity."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The Epoch Parameters module shall determine epoch flags and physical parameters."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The Combined Parameters module shall compute astrometric combined data, including parallax, proper motion errors, covariance matrix, and estimated errors."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The Combined Parameters module shall determine combined photometry, mean radial velocity, final flags, and mean physical parameters."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The Spectrum Simulation Module shall calculate flux noise, CCD combination noise, wavelength calibration, and multi-transit combination noise."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The Output Module shall write universe catalog output data according to the universe model ICD."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The Output Module shall format output data according to the MDB data model."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:48:01Z",
+    "source_document_sha256": "b7eb57450a3427556fd63d1507b159873df82873a281f64bcdbd9e86f85b50f1",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 8612,
+      "candidatesTokenCount": 848,
+      "totalTokenCount": 9460,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 8612
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

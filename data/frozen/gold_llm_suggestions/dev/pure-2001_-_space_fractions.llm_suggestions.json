@@ -1,0 +1,131 @@
+{
+  "item_id": "pure-2001_-_space_fractions",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall display an introductory movie upon startup."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow the user to skip the introductory movie via a mouse click."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall provide a main menu with options to start the game, view help, or visit the team website."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall present a series of multiple-choice fraction questions to the user."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall provide feedback to the user upon selecting an answer to a fraction question."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow the user to retry a question if the initial answer is incorrect."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall adapt the storyline based on user performance at critical points."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall calculate and display the user's final score at the end of the game."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall provide an option to quit or restart the game at the end of the session."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall provide an administrative interface to update fraction questions."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall require a password for access to the question updater interface."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall validate administrative input for completeness and context before saving updates."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall store updated question data in a file on the web server."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall provide a menu of links to other math-related projects."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall accept all user input via mouse clicks only."
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "The system shall be accessible via a web browser supporting Macromedia Flash 5 and JavaScript."
+    },
+    {
+      "id": "G17",
+      "kind": "performance",
+      "text": "The system shall allow the main game to be playable within a few minutes over a standard modem connection."
+    },
+    {
+      "id": "G18",
+      "kind": "security",
+      "text": "The system shall inherit security properties from the host web browser."
+    },
+    {
+      "id": "G19",
+      "kind": "usability",
+      "text": "The system shall be designed with a graphical interface appropriate for sixth-grade students."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system shall be available over the Internet via the S2S website."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:42Z",
+    "source_document_sha256": "edb0284c832fc15f22caa4fdb6d2c81ae6e1bae1f88f8b91eaa6b9d08aef1575",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 4995,
+      "candidatesTokenCount": 601,
+      "totalTokenCount": 5596,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 4995
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

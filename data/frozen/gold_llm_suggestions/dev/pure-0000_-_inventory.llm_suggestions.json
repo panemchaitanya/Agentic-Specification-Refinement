@@ -1,0 +1,147 @@
+{
+  "item_id": "pure-0000_-_inventory",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow users to transfer assets between departments."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow authorized users to edit asset information."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow users to modify asset fields except for IDs."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall support bulk entry of assets."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow authorized users to add inventory assets."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow users to create requests to borrow an asset or reserve a space."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall allow inventory users to update the inventory upon asset return."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow IT group members to create new spaces."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow authorized users to approve or reject pending requests."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall notify users via email when a request is treated."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall authenticate users via username and password."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow administrative users to delegate permissions to other users."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall generate reports on assets by location, requests, and user permissions."
+    },
+    {
+      "id": "G14",
+      "kind": "usability",
+      "text": "The system learning time must be between 2 to 4 hours maximum."
+    },
+    {
+      "id": "G15",
+      "kind": "usability",
+      "text": "The web interface must use clear and consistent terminology."
+    },
+    {
+      "id": "G16",
+      "kind": "reliability",
+      "text": "The application must be available during all working hours."
+    },
+    {
+      "id": "G17",
+      "kind": "other",
+      "text": "The application must be installable on Microsoft or Unix platforms."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "The web application must run on IE, Firefox, Chrome, Opera, or Safari browsers."
+    },
+    {
+      "id": "G19",
+      "kind": "security",
+      "text": "The system must authenticate all users via username and password."
+    },
+    {
+      "id": "G20",
+      "kind": "security",
+      "text": "The system must assign permissions to users according to their roles."
+    },
+    {
+      "id": "G21",
+      "kind": "security",
+      "text": "Only IT team members shall access and maintain database servers locally."
+    },
+    {
+      "id": "G22",
+      "kind": "performance",
+      "text": "The system must terminate any database query that takes more than 1 minute."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system must perform backup operations periodically."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:41:17Z",
+    "source_document_sha256": "bdeb177c584a0b3d41cc9156f94fdb1f11c204982e947b7ffa5f87fee611caeb",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 6869,
+      "candidatesTokenCount": 615,
+      "totalTokenCount": 7484,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 6869
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

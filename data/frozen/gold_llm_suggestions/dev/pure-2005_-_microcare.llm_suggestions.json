@@ -1,0 +1,177 @@
+{
+  "item_id": "pure-2005_-_microcare",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall generate unique voucher numbers with in-built security protocols."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall print voucher codes in bar-code format."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow authorized users to amend the validity date of vouchers."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall capture master details of distributors including code, name, address, and business type."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow users to view the sales history of a specific distributor."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall capture details of MSIU salesmen including code, name, and assigned sales team."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall record voucher distribution transactions between the MSIU sales team and distributors."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall automatically calculate invoice amounts based on the number of vouchers sold and the wholesale price."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall capture VSP (Voucher Service Provider) master information including contact details, facility level, and payment terms."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall automatically inactivate a VSP if more than two fraud entries are detected during the claim process."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall capture VSP staff details including staff code, name, and type."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall record claim submissions from VSPs including the number of forms and treatment details."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall generate a receipt document upon claim submission."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall validate claim data against mandatory fields before saving to the database."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall store claims with missing or false information in a quarantine area."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall calculate claim amounts based on consultation fees, lab fees, and drug costs."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall compare thumb-print impressions on claims with previous visits for the same voucher number."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall record voucher sales returns from distributors."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall capture client feedback including treatment satisfaction and counseling quality."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall generate standard and customized medical, financial, and statistical reports."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall manage user access privileges based on user groups and screen-level permissions."
+    },
+    {
+      "id": "G22",
+      "kind": "usability",
+      "text": "The system shall use drop-down selection menus for transaction screens to minimize data entry errors."
+    },
+    {
+      "id": "G23",
+      "kind": "performance",
+      "text": "The system shall minimize keyboard usage for number entry to facilitate faster transaction data entry."
+    },
+    {
+      "id": "G24",
+      "kind": "performance",
+      "text": "The database storage shall be highly efficient to manage and avoid empty unused space."
+    },
+    {
+      "id": "G25",
+      "kind": "security",
+      "text": "The system shall implement high intrusion controls for the system and the database."
+    },
+    {
+      "id": "G26",
+      "kind": "security",
+      "text": "The system shall interface with a thumb-print reader for verifying client claim forms."
+    },
+    {
+      "id": "G27",
+      "kind": "security",
+      "text": "The system shall interface with a bar-code reader for transaction details and voucher verification."
+    },
+    {
+      "id": "G28",
+      "kind": "scalability",
+      "text": "The system shall have provision to expand beyond the pilot period."
+    },
+    {
+      "id": "G29",
+      "kind": "other",
+      "text": "The system shall be developed on the Oracle 9i platform using Visual Basic for the front end and Crystal Reports 9 for reporting."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:45:44Z",
+    "source_document_sha256": "5514feb0a8ef3d9d4746f0a8faf6465d6d44daa66f14d213ffba332230b77c5c",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 10345,
+      "candidatesTokenCount": 880,
+      "totalTokenCount": 11225,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 10345
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

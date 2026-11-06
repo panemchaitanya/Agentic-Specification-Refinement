@@ -1,0 +1,115 @@
+{
+  "item_id": "pure-2004_-_grid_bgc",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide a graphical user interface to all functions of the system."
+    },
+    {
+      "id": "G2",
+      "kind": "security",
+      "text": "The system shall use grid technologies to provide secure and reliable communications to remote computing resources."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The web portal components shall integrate into the Dataportal Web Server at NCAR."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The compute node software shall be developed and deployed for the Hemisphere Linux cluster at CU."
+    },
+    {
+      "id": "G5",
+      "kind": "other",
+      "text": "The system shall use the Globus toolkit."
+    },
+    {
+      "id": "G6",
+      "kind": "security",
+      "text": "The system shall adhere to NCAR security policies and constraints."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall use the NCAR Mass Storage System for all file based storage."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "All GridBGC users shall be required to have valid NCAR Gatekeeper accounts to use the system."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall retrieve all user information from the Gatekeeper account system."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall support the user roles of User and Administrator."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall require the user to enter their username and password to login to the system."
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "All login actions shall be protected by using secure data channels."
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall lock the account after 3 login attempts."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall prevent the user from changing object or project values once that project has been used in a model run."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall support the object states of Unlocked, Locked, and Invalidated."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall require users to enable cookies to use the system."
+    },
+    {
+      "id": "G17",
+      "kind": "usability",
+      "text": "The web portal shall be usable in Internet Explorer 6.0, Netscape 7.1, and Safari 1.2.1."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:44:19Z",
+    "source_document_sha256": "0d38898e5bfa0d74e931331e6f02471c6e557d7e4f2fa927ee2d93ea56657aba",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 13666,
+      "candidatesTokenCount": 656,
+      "totalTokenCount": 14322,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 13666
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

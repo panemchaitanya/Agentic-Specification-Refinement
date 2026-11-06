@@ -1,0 +1,231 @@
+{
+  "item_id": "pure-2010_-_home_1.3",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow a general user to monitor and control the home environment."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The Master user shall be able to add a user account."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The Master user shall be able to change default parameter settings."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The DH Technician shall be able to set up and maintain the system configuration."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The DH Technician shall be able to start and stop the operation of the DH System."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The DH system shall establish an individual home web server hosted on a home computer."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The DH web server shall provide interaction with and control of the DH elements."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The DH web server shall provide storage of DH plans and data."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The DH web server shall provide backup service for user account information, user plans, and a home database."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The DH Gateway device shall provide communication with all DigitalHome devices."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The DH Gateway device shall connect with a broadband Internet connection."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The Gateway shall send and receive wireless communications between the Gateway and other DigitalHome devices."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall include digital programmable thermostats to monitor and regulate temperature."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The thermostat shall provide a reading of the current temperature."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The thermostat shall provide a set point temperature to control heating or cooling devices."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall include digital programmable humidistats to monitor and regulate humidity."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The humidistat shall provide a reading of the current humidity."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The humidistat shall provide a set point humidity to control humidifiers and dehumidifiers."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall include magnetic alarm contact switches to monitor entry through doors or windows."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall include security sound and light alarms that activate upon a security breach."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall include digital programmable power switches to monitor the state of an appliance."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall be able to change the state of an appliance via a power switch."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall allow a web-ready device to control temperature, humidity, lights, security, and appliance states."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall save sensor values in the home database."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The system shall send controller values to controllers to change the environment."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The thermostat shall allow a user to set temperatures between 60\u00b0F and 80\u00b0F in one-degree increments."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system shall support Fahrenheit and Celsius temperature values."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The humidistat shall allow a user to set humidity levels between 30% and 60% in 1% increments."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system shall manage up to fifty door and window contact sensors."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The system shall manage up to one hundred 115 volt, 10 amp power switches."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The system shall provide a monthly planner for setting environmental parameters."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The system shall provide a report on home management and control for any month in the past two years."
+    },
+    {
+      "id": "G33",
+      "kind": "performance",
+      "text": "Displays of environmental conditions shall be updated at least every two seconds."
+    },
+    {
+      "id": "G34",
+      "kind": "performance",
+      "text": "Sensors shall have a minimum data acquisition rate of 10 Hz."
+    },
+    {
+      "id": "G35",
+      "kind": "performance",
+      "text": "The Gateway device shall operate up to a 1000-foot range for indoor transmission."
+    },
+    {
+      "id": "G36",
+      "kind": "reliability",
+      "text": "The system shall have no more than 1 failure per 10,000 hours of operation."
+    },
+    {
+      "id": "G37",
+      "kind": "reliability",
+      "text": "The system shall backup all system data on a daily basis."
+    },
+    {
+      "id": "G38",
+      "kind": "reliability",
+      "text": "The system shall restore system data from the most recent backup upon failure."
+    },
+    {
+      "id": "G39",
+      "kind": "reliability",
+      "text": "The system shall provide a clear, descriptive message when an error or exceptional condition occurs."
+    },
+    {
+      "id": "G40",
+      "kind": "security",
+      "text": "The web system shall provide authentication and information encryption."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:50:03Z",
+    "source_document_sha256": "0c80160df1ae81c0768a6424343cfbef8a38b944375b2c30b91d6a1680eccc80",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 7189,
+      "candidatesTokenCount": 1220,
+      "totalTokenCount": 8409,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 7189
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "item_id": "pure-2008_-_peering",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The Web server shall replicate content on-demand from the origin server."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The Web server shall initiate a request to trigger peering in the event of a Web hotspot."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The Web services host shall ensure the delivery of content to end-users based on negotiated policies."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The SLA-allocator shall perform provisioning and reservation of Web server resources to satisfy SLAs."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The Mediator shall generate service requirements as the basis for negotiated relationships."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The Mediator shall pass service requirements to the Peering Agent."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The Mediator shall control the redirection of Web traffic to peering CDNs."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The Service Registry shall store resource and service information for each CDN."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The Service Registry shall supply local resource information to the mediator during traffic surges."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The Policy Repository shall provide rules to the mediator to administer and control access to resources."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The Peering Agent shall exchange policy, resource information, and service requirements with external Peering Agents."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall perform content replication using a cooperative pull-based approach."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall perform load distribution by measuring and disseminating load information using a hierarchical approach."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall perform request assignment and redirection via DNS and CDN gateway redirection."
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The system shall use a cryptographically secure auction-based framework for content replication."
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "The system shall decrease Web access cost and reduce latency to improve content delivery performance."
+    },
+    {
+      "id": "G17",
+      "kind": "other",
+      "text": "The system shall be implemented using a modular stack on top of standard application layers and protocols."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "The system shall use TCP/IP as the transport protocol for communication between software components."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:47:31Z",
+    "source_document_sha256": "b68959ea9a0f3b136e7e5ca640b2e213c9c08bcf949edba14203e39b7e36d4d7",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 8815,
+      "candidatesTokenCount": 685,
+      "totalTokenCount": 9500,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 8815
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

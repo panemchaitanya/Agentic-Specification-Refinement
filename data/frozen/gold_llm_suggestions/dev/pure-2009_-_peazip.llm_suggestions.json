@@ -1,0 +1,140 @@
+{
+  "item_id": "pure-2009_-_peazip",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow users to browse and access computer system areas and objects."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow users to select objects using various criteria including extension, attributes, size, and date."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow users to access the create archive interface and extraction interface."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow users to access computer system management tools including disk utilities and system benchmark."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow users to perform secure file deletion."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow users to perform byte-to-byte file comparison."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall allow users to check files for duplicates and corruption."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow users to split files and merge split volumes."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow users to view file content in hexadecimal format."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall allow users to extract contents of compressed archives."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall allow users to create and update compressed archives."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow users to append a timestamp to archive names."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall support drag and drop of objects between the computer system and the application."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall allow users to encrypt archives using a password and optional keyfile."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall allow users to generate random passwords and keyfiles."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall provide a graphical display of the progress of currently executed functions."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall allow users to modify application settings including language, interface layout, and tool behavior."
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "The system shall require an x-86 compatible CPU."
+    },
+    {
+      "id": "G19",
+      "kind": "security",
+      "text": "The system shall prevent access to encrypted archives without the correct password and keyfile."
+    },
+    {
+      "id": "G20",
+      "kind": "security",
+      "text": "The system shall ensure no data remains in the storage area after a secure deletion procedure."
+    },
+    {
+      "id": "G21",
+      "kind": "usability",
+      "text": "The system shall provide help messages in case of errors."
+    },
+    {
+      "id": "G22",
+      "kind": "usability",
+      "text": "The system shall be usable by users without specific computer experience by providing manuals and tutorials."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:48:36Z",
+    "source_document_sha256": "a56c006b2ee4e6ccb9e27106c3c2e7dac9ba4b2fe635a778a163434cff8b40b1",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 12412,
+      "candidatesTokenCount": 631,
+      "totalTokenCount": 13043,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 12412
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

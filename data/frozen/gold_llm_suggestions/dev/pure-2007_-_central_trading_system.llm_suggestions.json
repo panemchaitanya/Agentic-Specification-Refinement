@@ -1,0 +1,171 @@
+{
+  "item_id": "pure-2007_-_central_trading_system",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall analyze incoming instructions and categorize them."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall match buy and sell instructions based on specific prescripts."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall provide interfaces to send messages to other subsystems."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall receive instructions from the trade client serve."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall produce new messages for the network message promulgating subsystem after processing instructions."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow the system manager to access information within the CTS."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall save buy instructions."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall match buy instructions with the same stock ID."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall execute trades by matching instructions."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall modify the information of matched instructions."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall save sell instructions."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall match sell instructions with the same stock ID."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall save cancel instructions."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall cancel the correlative instruction upon receiving a cancel instruction."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall output successful trade information to the security account management subsystem."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall implement queries from the trading information release system."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall structuralize queried data for the release system."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall send queried data to the release system."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall validate incoming instructions in the pretreatment module."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall freeze funds in the user's account based on trade instructions."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall write log files for processed instructions."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall reject trading instructions if the price exceeds rising or falling limits."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall return the result of trading instructions to the client serve."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall remove instructions from the CTS if they are not finished within one day."
+    },
+    {
+      "id": "G25",
+      "kind": "usability",
+      "text": "The system shall provide terminal users with simplified operations confined to mouse clicks and keyboard inputs."
+    },
+    {
+      "id": "G26",
+      "kind": "performance",
+      "text": "The system shall handle high frequency operations including fetching, dealing, and repealing instructions."
+    },
+    {
+      "id": "G27",
+      "kind": "reliability",
+      "text": "The system shall implement strategies to overcome system crashes when overhead exceeds capacity."
+    },
+    {
+      "id": "G28",
+      "kind": "security",
+      "text": "The system shall authorize the system manager to access information."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:46:20Z",
+    "source_document_sha256": "e2a14df03228b8e1ff95fd090111bcc1f44132bc14aae045dba0bbdb56e01f3e",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 4289,
+      "candidatesTokenCount": 729,
+      "totalTokenCount": 5018,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 4289
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

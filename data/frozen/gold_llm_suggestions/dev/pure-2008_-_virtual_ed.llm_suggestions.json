@@ -1,0 +1,121 @@
+{
+  "item_id": "pure-2008_-_virtual_ed",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall provide instant messaging for real-time communication between users."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall provide streaming audio and video capabilities for live and on-demand lectures."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow users to create and customize personal profiles with pictures and contact information."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall provide file hosting and management tools for users to upload, store, and retrieve files."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall provide online testing tools with support for multiple question formats and instant grading."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow users to customize the GUI background colors, fonts, and layout."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide application sharing and whiteboard tools for collaborative work."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow professors to host lectures as video or audio podcasts."
+    },
+    {
+      "id": "G9",
+      "kind": "security",
+      "text": "User passwords must be between 8 and 12 characters including letters and numbers but excluding spaces."
+    },
+    {
+      "id": "G10",
+      "kind": "security",
+      "text": "Users must change their passwords every three months."
+    },
+    {
+      "id": "G11",
+      "kind": "performance",
+      "text": "The system shall support at least 250 concurrent users."
+    },
+    {
+      "id": "G12",
+      "kind": "performance",
+      "text": "The system shall maintain an estimated 99% uptime."
+    },
+    {
+      "id": "G13",
+      "kind": "usability",
+      "text": "The system shall provide printable manuals and online tutorials for users."
+    },
+    {
+      "id": "G14",
+      "kind": "other",
+      "text": "The system shall be compatible with Windows XP, Vista, or Mac OS."
+    },
+    {
+      "id": "G15",
+      "kind": "other",
+      "text": "The system shall be compatible with Internet Explorer, Mozilla Firefox, and Safari browsers."
+    },
+    {
+      "id": "G16",
+      "kind": "other",
+      "text": "Users must have pop-up windows enabled."
+    },
+    {
+      "id": "G17",
+      "kind": "other",
+      "text": "Users must have JavaScript enabled to use messaging and whiteboard software."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "Users must have antivirus software installed to scan incoming files."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:47:49Z",
+    "source_document_sha256": "c159e65a3bad135dec348f9783f18432cebf5eaabe2f1bcc8c8e070e84c1130e",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 14238,
+      "candidatesTokenCount": 521,
+      "totalTokenCount": 14759,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 14238
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "item_id": "pure-2001_-_telescope",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall process science data from the camera and relay it to the Spacecraft Control Unit in the form of CCSDS Source Packets."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall receive commands from the Spacecraft Control Unit that establish the current instrument state and camera mode."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall transmit detailed housekeeping data to the Spacecraft Control Unit in the form of CCSDS Source Packets."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall receive a time message from the Spacecraft Control Unit and synchronize the XCP local copy of the spacecraft clock."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall control the heaters on the telescope tube and on the thermal baffles."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall read the Telescope Alignment Monitor."
+    },
+    {
+      "id": "G7",
+      "kind": "performance",
+      "text": "The system shall generate an XRT Position message to UVOT and TDRSS within 1200 seconds of a burst alert."
+    },
+    {
+      "id": "G8",
+      "kind": "performance",
+      "text": "The system shall produce a Postage Stamp Report and transmit it via TDRSS within 1200 seconds of a burst alert."
+    },
+    {
+      "id": "G9",
+      "kind": "performance",
+      "text": "The system shall produce a Spectrum Report and transmit it to TDRSS within 1200 seconds of a new burst."
+    },
+    {
+      "id": "G10",
+      "kind": "reliability",
+      "text": "The system shall perform Built-In Test Stage 1 during the boot state."
+    },
+    {
+      "id": "G11",
+      "kind": "reliability",
+      "text": "The system shall perform Built-In Test Stage 2 during the initialization state."
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "The system shall reject commands received in the RED state that are not RED commands."
+    }
+  ],
+  "suggested_implied_categories": [
+    "performance",
+    "reliability",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:47Z",
+    "source_document_sha256": "8ab991dabc3808209ae4ae00e1d2fce11024a94d906a1d25e5bce9197c36fbf9",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 19290,
+      "candidatesTokenCount": 531,
+      "totalTokenCount": 19821,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 19290
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

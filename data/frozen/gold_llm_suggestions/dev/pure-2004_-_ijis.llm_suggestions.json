@@ -1,0 +1,144 @@
+{
+  "item_id": "pure-2004_-_ijis",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The Detention Facility Officer shall capture defendant, incident, and financial information."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The Detention Facility Officer shall schedule an Indigency Hearing."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The Magistrate shall determine if a defendant is indigent."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The Magistrate shall submit a Request for Appointed Counsel to the Office of Attorney Appointments."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The Office of Attorney Appointments shall select a Defense Attorney from the appointment rotation list."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The Office of Attorney Appointments shall notify the defendant, defense attorney, and detention facility officer of an appointment."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The Defense Attorney shall record the date and type of first contact with the defendant."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The Court Coordinator shall enter setting information into the Court Case Management System."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The Auditor shall remit payment to the Defense Attorney upon approval by the Commissioners Court."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The Office of Attorney Appointments shall generate reports for the Task Force on Indigent Defense."
+    },
+    {
+      "id": "G11",
+      "kind": "performance",
+      "text": "Law enforcement agencies must capture defendant and incident information within 48 hours of arrest."
+    },
+    {
+      "id": "G12",
+      "kind": "performance",
+      "text": "Magistrates must submit requests for counsel within 24 hours of the indigency hearing."
+    },
+    {
+      "id": "G13",
+      "kind": "performance",
+      "text": "The Office of Attorney Appointments must process requests for counsel no later than the end of the first working day after receipt."
+    },
+    {
+      "id": "G14",
+      "kind": "performance",
+      "text": "The system must notify law enforcement agencies of denied requests within 24 hours."
+    },
+    {
+      "id": "G15",
+      "kind": "performance",
+      "text": "The system must notify the appointed attorney and defendant of an appointment within 24 hours."
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "The Defense Attorney must capture the date and type of first contact no later than the end of the first working day after the appointment."
+    },
+    {
+      "id": "G17",
+      "kind": "other",
+      "text": "The system must comply with the Texas Code of Criminal Procedure."
+    },
+    {
+      "id": "G18",
+      "kind": "other",
+      "text": "The system must comply with the Texas Uniform Electronic Transactions Act (UETA)."
+    },
+    {
+      "id": "G19",
+      "kind": "other",
+      "text": "The system must comply with the Texas Department of Information Resources guidelines for electronic transactions and signed records."
+    },
+    {
+      "id": "G20",
+      "kind": "other",
+      "text": "The system must integrate with the Court Case Management System."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The system must integrate with the District Attorney Electronic Case Filing System."
+    },
+    {
+      "id": "G22",
+      "kind": "other",
+      "text": "The system must integrate with external accounting systems."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system must use the Global Justice XML Data Model (GJXDM)."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:44:23Z",
+    "source_document_sha256": "cde247efb7beb93effb7e0fb8ceff0f54059f21ee97945045e8dbc48b09d73df",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 10707,
+      "candidatesTokenCount": 861,
+      "totalTokenCount": 11568,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 10707
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

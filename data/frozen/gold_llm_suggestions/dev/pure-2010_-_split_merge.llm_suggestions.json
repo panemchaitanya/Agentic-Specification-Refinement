@@ -1,0 +1,145 @@
+{
+  "item_id": "pure-2010_-_split_merge",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow the user to split a PDF document into multiple parts based on selected options."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow the user to merge multiple PDF documents or subsections thereof."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow the user to extract sections of a PDF document into a single document."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow the user to mix pages from two PDF documents alternatively."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow the user to rotate pages of selected PDF documents."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow the user to visually reorder pages of a PDF document."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall allow the user to visually compose a new document by dragging pages from selected PDF documents."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow the user to save and load the current working environment."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall display log messages for operations in a log panel."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall allow the user to manage application settings."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall provide a command-line interface for all features."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow the user to split only one document at a time."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall require PDF version 1.5 or above for output file compression."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall limit the number of digits for the unique [FILENUMBER] prefix to 10 or less."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall allow the user to mix only two documents at a time."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall allow the user to manipulate only one document at a time in the visual reorder plugin."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall require the log level to be set to a value other than OFF for the log panel to function."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall require an application restart for settings changes to be applied."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The system shall be designed to not delay the system from other key processes."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "The system response time shall be direct and considered real-time."
+    },
+    {
+      "id": "G21",
+      "kind": "usability",
+      "text": "The system shall provide a user-friendly graphical interface."
+    },
+    {
+      "id": "G22",
+      "kind": "other",
+      "text": "The system shall be platform independent and require a Java Virtual Machine version 1.6 or higher."
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system shall be released under the GNU General Public License."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:50:19Z",
+    "source_document_sha256": "271df51e4bf8b9687605423b396e76b95db584d8c61ec48cdacc9b85135af0f4",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 9435,
+      "candidatesTokenCount": 743,
+      "totalTokenCount": 10178,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 9435
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

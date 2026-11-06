@@ -1,0 +1,229 @@
+{
+  "item_id": "pure-2000_-_nasa_x38",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "System Initialization shall perform the functions required whenever a power-on reset occurs."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The Boot ROM shall be configured to call the VxWorks BSP initialization software followed by the FTSS System Initialization software after completing IBIT."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "System Initialization shall initiate the watchdog timer."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "System Initialization shall enable and reset the processor\u2019s watchdog timer."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "System Initialization shall synchronize the FCP virtual group in the presence of a power on skew of 2.5 seconds."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "System Initialization shall configure the FCP virtual group to use all available synchronized processors if at least 3 of the 5 FCRs are active."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "System Initialization shall attempt to sync with a failed FCP if any FCP processors are not synchronized."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The surviving triplex shall send a single voted VMEbus reset through the NE to a failed FCP if it has not synced within 2.5 seconds."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "System Initialization shall align processor state and congruent aligned memory locations."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The FCP shall configure ICP simplex virtual groups for each channel in the FCP virtual group."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The FCP shall wait up to 15 seconds for communication to start from the ICP after configuring the ICP virtual groups."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "System Initialization shall call an application initialization function."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The FCP shall send an FCP Ready Sync message to the ICP after application initialization is complete."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The FCP shall wait up to 2.5 seconds for the ICP Ready signal after sending the FCP Ready Sync."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The FCP shall mask out an ICP if it fails to send its ICP Ready signal."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "System Initialization shall start the 50 Hz timer and enable the timer interrupt when all other activities are completed."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "System Initialization shall take no longer than 1.5 minutes from hardware reset to starting the 50 Hz timer."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The scheduler shall provide an API call to install a task into a rate group."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The scheduler shall provide an API call to install a rate group into a vehicle mode."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The scheduler shall provide an API call for an FCP application task to alert the scheduler of a vehicle mode change."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The scheduler shall complete the change from one vehicle mode to the next within 1.02 seconds."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The scheduler shall process vehicle mode changes during minor frame 49."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The scheduler shall execute cyclic tasks and provide an API call to allow the application to block until its next iteration."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The scheduler shall execute as the highest priority FTSS or application task in the system."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The scheduler shall keep a minor frame count from 0 to 49."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The scheduler shall give tasks priority values according to their rate."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The scheduler shall detect 50 Hz, 10 Hz and 1 Hz rate group over-runs."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The scheduler shall report rate group over-runs to the application via an API service."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The scheduler shall provide an API call to specify which task was running within an over-running rate group."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The scheduler shall provide a mechanism to inform a task when it did not complete during the previous frame and restart it."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The scheduler shall set the 50 Hz interval timer to cause the next minor frame interrupt at 20 msec."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The scheduler shall issue a 50 Hz interrupt to the ICPs via a VMEbus IRQ5 interrupt."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The scheduler shall issue the 50 Hz interrupt to all ICPs with a skew no greater than 330 microseconds."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The scheduler shall send the minor frame number, vehicle mode, MET, and SEP to the ICP prior to the 50 Hz interrupt."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The scheduler shall take no longer than 1 millisecond to execute scheduler and Time Services FTSS overhead tasks in each rate group."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The FTSS software shall provide an API call that provides the application program the minor frame number."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The scheduler shall provide rate groups that execute at 50 Hz, 10 Hz and 1 Hz with a drift rate no greater than 50 microseconds per second and jitter no greater than 330 microseconds."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "The scheduler shall provide a method to schedule tasks at a set rate and in a set order within the rate group."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The scheduler shall execute all tasks in each rate group installed in the current mode."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "The scheduler shall use the order of task installation to determine task priorities."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:42:17Z",
+    "source_document_sha256": "8b065cd2a155f850a1939292a96358860673604bfd6d2cfcb9103124552fdeee",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 29571,
+      "candidatesTokenCount": 5539,
+      "totalTokenCount": 35110,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 29571
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

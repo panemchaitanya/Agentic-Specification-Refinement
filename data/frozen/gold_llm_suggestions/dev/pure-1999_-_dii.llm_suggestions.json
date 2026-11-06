@@ -1,0 +1,196 @@
+{
+  "item_id": "pure-1999_-_dii",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The XS shall provide registration of XML terms, tags, and structures."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The XS shall provide design capabilities for XML schemas."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The XS shall provide generation and consumption capabilities for XML documents."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The XS shall allow producers to receive XML registry forms."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The XS shall allow producers to submit metadata and related information resource artifacts."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The XS shall allow producers to notify changes in information resources."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The XS shall allow users to download the Information Resource Submittal Package."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The XS shall allow users to submit metadata via an on-line interactive process."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The XS shall allow users to submit metadata via an off-line interactive batch process."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The XS shall parse submitted XML Registry specification forms."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The XS shall populate the XML Registry database."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The XS shall allow modification of specified terms, definitions of metadata, and status of information resources."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The XS shall provide a capability to post planned changes to a registry."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The XS shall allow users to view XML tags via a tree/hierarchy structure or tabular format."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The XS shall allow users to search for specific XML tags."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The XS shall allow users to search for all tags of a given subscriber or author."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The XS shall provide capabilities to download XML tags or other selected information resources."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The XS shall catalog entities and attributes within servers to enable browsing, searching, and retrieving of data related to XML sources."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The XS shall process ANSI standard SQL as specified in FIPS PUB 127-2."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The XS shall provide a capability to subscribe for notification of changes to Communities of Interest or Information Resources."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The XS shall allow managers to create and manage usernames and superusers."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The XS shall generate standard views of XML data."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The XS shall generate XML and schema documents."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The XS shall validate XML documents for conformance and well-formedness."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The XS shall provide standard APIs for registry services."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The XS shall provide standard APIs for data access services."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The XS shall interface with existing data elements of DBIF, DAC, and COTS RDBMS products."
+    },
+    {
+      "id": "G28",
+      "kind": "performance",
+      "text": "In fixed mode, data management services shall be tunable by on-site personnel to adjust for varying workloads and database sizes."
+    },
+    {
+      "id": "G29",
+      "kind": "performance",
+      "text": "Session time-out values shall be user-definable and resettable prior to initialization of a user session."
+    },
+    {
+      "id": "G30",
+      "kind": "usability",
+      "text": "The XS shall have the ability to redefine or reset names of connect descriptors to database server instances."
+    },
+    {
+      "id": "G31",
+      "kind": "reliability",
+      "text": "The Registry software shall be portable and execute on COE-compliant platforms."
+    },
+    {
+      "id": "G32",
+      "kind": "other",
+      "text": "The XS software shall be delivered in accordance with DII COE guidelines."
+    },
+    {
+      "id": "G33",
+      "kind": "other",
+      "text": "The XS developer is responsible for software maintenance, support, and updates."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T06:41:29Z",
+    "source_document_sha256": "602d52f8d1efeeabd9ec18a1989a0b327c2be0b2c17446ecdec1b6f55630db9d",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 6902,
+      "candidatesTokenCount": 938,
+      "totalTokenCount": 7840,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 6902
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}
