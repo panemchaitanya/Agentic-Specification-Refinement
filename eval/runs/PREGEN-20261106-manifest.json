@@ -1,0 +1,485 @@
+{
+  "label": "bounded dev generation (120k-char prefix scope), pre-freeze generation only - UNSCORED until gold FROZEN; not the final TEST protocol",
+  "scope_chars": 120000,
+  "docs": {
+    "pure-0000_-_cctns": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-0000_-_cctns.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-0000_-_cctns.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-0000_-_cctns.jsonl"
+      },
+      "status": "done",
+      "seconds": 24.7
+    },
+    "pure-0000_-_gamma_j": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-0000_-_gamma_j.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-0000_-_gamma_j.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-0000_-_gamma_j.jsonl"
+      },
+      "status": "done",
+      "seconds": 34.3
+    },
+    "pure-0000_-_inventory": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-0000_-_inventory.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-0000_-_inventory.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-0000_-_inventory.jsonl"
+      },
+      "status": "done",
+      "seconds": 14.5
+    },
+    "pure-1998_-_themas": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-1998_-_themas.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-1998_-_themas.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-1998_-_themas.jsonl"
+      },
+      "status": "done",
+      "seconds": 32.7
+    },
+    "pure-1999_-_dii": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-1999_-_dii.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-1999_-_dii.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-1999_-_dii.jsonl"
+      },
+      "status": "done",
+      "seconds": 22.2
+    },
+    "pure-1999_-_multi-mahjong": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-1999_-_multi-mahjong.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-1999_-_multi-mahjong.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-1999_-_multi-mahjong.jsonl"
+      },
+      "status": "done",
+      "seconds": 13.0
+    },
+    "pure-1999_-_tcs": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-1999_-_tcs.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-1999_-_tcs.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-1999_-_tcs.jsonl"
+      },
+      "status": "done",
+      "seconds": 73.3
+    },
+    "pure-2000_-_nasa_x38": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2000_-_nasa_x38.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2000_-_nasa_x38.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2000_-_nasa_x38.jsonl"
+      },
+      "status": "done",
+      "seconds": 62.1
+    },
+    "pure-2001_-_ctc_network": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2001_-_ctc_network.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2001_-_ctc_network.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2001_-_ctc_network.jsonl"
+      },
+      "status": "done",
+      "seconds": 39.7
+    },
+    "pure-2001_-_hats": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2001_-_hats.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2001_-_hats.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2001_-_hats.jsonl"
+      },
+      "status": "done",
+      "seconds": 16.1
+    },
+    "pure-2001_-_libra": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2001_-_libra.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2001_-_libra.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2001_-_libra.jsonl"
+      },
+      "status": "done",
+      "seconds": 12.8
+    },
+    "pure-2001_-_space_fractions": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2001_-_space_fractions.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2001_-_space_fractions.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2001_-_space_fractions.jsonl"
+      },
+      "status": "done",
+      "seconds": 40.9
+    },
+    "pure-2001_-_telescope": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2001_-_telescope.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2001_-_telescope.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2001_-_telescope.jsonl"
+      },
+      "status": "done",
+      "seconds": 55.5
+    },
+    "pure-2002_-_evla_back": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2002_-_evla_back.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2002_-_evla_back.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2002_-_evla_back.jsonl"
+      },
+      "status": "done",
+      "seconds": 18.3
+    },
+    "pure-2002_-_evla_corr": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2002_-_evla_corr.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2002_-_evla_corr.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2002_-_evla_corr.jsonl"
+      },
+      "status": "done",
+      "seconds": 28.5
+    },
+    "pure-2002_-_sce_api": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2002_-_sce_api.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2002_-_sce_api.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2002_-_sce_api.jsonl"
+      },
+      "status": "done",
+      "seconds": 51.2
+    },
+    "pure-2003_-_pnnl": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2003_-_pnnl.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2003_-_pnnl.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2003_-_pnnl.jsonl"
+      },
+      "status": "done",
+      "seconds": 30.3
+    },
+    "pure-2003_-_qheadache": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2003_-_qheadache.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2003_-_qheadache.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2003_-_qheadache.jsonl"
+      },
+      "status": "done",
+      "seconds": 23.3
+    },
+    "pure-2003_-_tachonet": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2003_-_tachonet.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2003_-_tachonet.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2003_-_tachonet.jsonl"
+      },
+      "status": "done",
+      "seconds": 51.0
+    },
+    "pure-2004_-_colorcast": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2004_-_colorcast.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2004_-_colorcast.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2004_-_colorcast.jsonl"
+      },
+      "status": "done",
+      "seconds": 29.0
+    },
+    "pure-2004_-_e-procurement": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2004_-_e-procurement.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2004_-_e-procurement.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2004_-_e-procurement.jsonl"
+      },
+      "status": "done",
+      "seconds": 37.6
+    },
+    "pure-2004_-_grid_bgc": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2004_-_grid_bgc.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2004_-_grid_bgc.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2004_-_grid_bgc.jsonl"
+      },
+      "status": "done",
+      "seconds": 48.7
+    },
+    "pure-2004_-_ijis": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2004_-_ijis.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2004_-_ijis.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2004_-_ijis.jsonl"
+      },
+      "status": "done",
+      "seconds": 12.6
+    },
+    "pure-2004_-_jse": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2004_-_jse.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2004_-_jse.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2004_-_jse.jsonl"
+      },
+      "status": "done",
+      "seconds": 52.5
+    },
+    "pure-2004_-_rlcs": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2004_-_rlcs.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2004_-_rlcs.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2004_-_rlcs.jsonl"
+      },
+      "status": "done",
+      "seconds": 32.6
+    },
+    "pure-2004_-_sprat": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2004_-_sprat.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2004_-_sprat.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2004_-_sprat.jsonl"
+      },
+      "status": "done",
+      "seconds": 26.1
+    },
+    "pure-2005_-_clarus_low": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2005_-_clarus_low.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2005_-_clarus_low.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2005_-_clarus_low.jsonl"
+      },
+      "status": "done",
+      "seconds": 37.3
+    },
+    "pure-2005_-_grid_3D": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2005_-_grid_3D.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2005_-_grid_3D.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2005_-_grid_3D.jsonl"
+      },
+      "status": "done",
+      "seconds": 24.7
+    },
+    "pure-2005_-_microcare": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2005_-_microcare.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2005_-_microcare.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2005_-_microcare.jsonl"
+      },
+      "status": "done",
+      "seconds": 15.0
+    },
+    "pure-2005_-_nenios": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2005_-_nenios.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2005_-_nenios.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2005_-_nenios.jsonl"
+      },
+      "status": "done",
+      "seconds": 19.8
+    },
+    "pure-2005_-_pontis": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2005_-_pontis.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2005_-_pontis.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2005_-_pontis.jsonl"
+      },
+      "status": "done",
+      "seconds": 72.5
+    },
+    "pure-2005_-_triangle": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2005_-_triangle.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2005_-_triangle.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2005_-_triangle.jsonl"
+      },
+      "status": "done",
+      "seconds": 29.1
+    },
+    "pure-2005_-_znix": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2005_-_znix.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2005_-_znix.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2005_-_znix.jsonl"
+      },
+      "status": "done",
+      "seconds": 25.2
+    },
+    "pure-2006_-_eirene_sys_15": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2006_-_eirene_sys_15.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2006_-_eirene_sys_15.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2006_-_eirene_sys_15.jsonl"
+      },
+      "status": "done",
+      "seconds": 25.6
+    },
+    "pure-2006_-_stewards": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2006_-_stewards.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2006_-_stewards.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2006_-_stewards.jsonl"
+      },
+      "status": "done",
+      "seconds": 64.7
+    },
+    "pure-2007_-_central_trading_system": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_central_trading_system.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_central_trading_system.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_central_trading_system.jsonl"
+      },
+      "status": "done",
+      "seconds": 33.2
+    },
+    "pure-2007_-_ertms": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_ertms.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_ertms.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_ertms.jsonl"
+      },
+      "status": "done",
+      "seconds": 64.9
+    },
+    "pure-2007_-_get_real_0.2": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_get_real_0.2.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_get_real_0.2.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_get_real_0.2.jsonl"
+      },
+      "status": "done",
+      "seconds": 25.7
+    },
+    "pure-2007_-_mdot": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_mdot.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_mdot.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_mdot.jsonl"
+      },
+      "status": "done",
+      "seconds": 65.4
+    },
+    "pure-2007_-_nde": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_nde.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_nde.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_nde.jsonl"
+      },
+      "status": "done",
+      "seconds": 36.7
+    },
+    "pure-2007_-_nlm": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_nlm.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_nlm.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_nlm.jsonl"
+      },
+      "status": "done",
+      "seconds": 98.9
+    },
+    "pure-2007_-_puget_sound": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_puget_sound.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_puget_sound.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_puget_sound.jsonl"
+      },
+      "status": "done",
+      "seconds": 17.1
+    },
+    "pure-2007_-_water_use": {
+      "logs": {
+        "B1": "eval/runs/B1-pure-dev-pregen-20261106-pure-2007_-_water_use.jsonl",
+        "B2": "eval/runs/B2-pure-dev-pregen-20261106-pure-2007_-_water_use.jsonl",
+        "B3": "eval/runs/B3-pure-dev-pregen-20261106-pure-2007_-_water_use.jsonl"
+      },
+      "status": "done",
+      "seconds": 50.9
+    },
+    "pure-2008_-_caiso": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2008_-_peering": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2008_-_viper": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2008_-_virtual_ed": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2008_-_vub": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2009_-_gaia": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2009_-_inventory_2.0": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2009_-_library": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2009_-_peazip": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2009_-_peppol": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2009_-_video_search": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2009_-_warc_III": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2010_-_fishing": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2010_-_gparted": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2010_-_home_1.3": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2010_-_mashboot": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2010_-_split_merge": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    },
+    "pure-2011_-_opensg_0.1": {
+      "logs": {},
+      "status": "done",
+      "seconds": 0.0
+    }
+  },
+  "status": "paused (budget)",
+  "started_utc": "2026-11-06T15:42:32Z"
+}

@@ -65,9 +65,17 @@ Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
   (`eval/gold.py`), and run logs under `eval/runs/`. Status 2026-11-06:
   the dev gold subset is still SKELETON pending the two-extractor
   verdict pass, so `run_dev_eval.py --dry-run` reports 0 eligible / 61
-  excluded (fail-closed); no frozen evaluation result is claimed yet,
-  and if the verdict pass does not land before the mid-submission the
-  honest state is generation-only, unscored.
+  excluded (fail-closed); no frozen evaluation result is claimed yet.
+  Pre-freeze generation ran on 2026-11-06 against the free-tier Gemini
+  model: 43 of 61 dev documents have complete B1+B2+B3 triplets
+  (per-document logs `eval/runs/*-pure-dev-pregen-20261106-*.jsonl`,
+  manifest `eval/runs/PREGEN-20261106-manifest.json`, driver
+  `eval/pregen_driver.py`). The run stopped on the free-tier daily
+  request quota (500 requests/day, retry-after ~15h) with 18 documents
+  not generated. These logs are generation-only and UNSCORED until gold
+  is FROZEN; the comparable subset is the 43 complete triplets, and if
+  the verdict pass does not land before the mid-submission the honest
+  state is generation-only, unscored.
 
 **Hosted demo:** https://agentic-specification-refinement.onrender.com
 runs the app in demo mode only (no API key in hosted secrets, by design).
