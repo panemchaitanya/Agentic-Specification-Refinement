@@ -1,13 +1,213 @@
 {
   "item_id": "pure-1999_-_multi-mahjong",
   "prd_path": "data/raw/pure/extracted/1999 - multi-mahjong.html",
-  "implied_categories": [],
-  "gold_requirements": [],
+  "implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "gold_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The MultiMahjongServer shall reside on a central computer connected to a TCP/IP network with a unique IP address.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G2",
+      "kind": "scalability",
+      "text": "The MultiMahjongServer shall allow connections from MultiMahjongClients and communicate with them using IP.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The MultiMahjongServer shall handle up to 10 simultaneous games (max 40 players).",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "When the user begins the MultiMahjongClient program, they will be able to choose to create a new multi player game, to create a new single player game, to join an existing multi player game, or to quit the program. These options will be available at any stage while the program is running as long as there is no game currently being played by the user.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall limit the user to choosing 4 players in total for a game.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall send game initialisation information to the MultiMahjongServer.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall retrieve a list of available games from the MultiMahjongServer.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall retrieve game data from the MultiMahjongServer in multi player mode.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall only allow players to make moves according to the Chinese rules of Mahjong.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user whose turn it is to pick up a tile.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall update the user's screen based on game changes retrieved from the MultiMahjongServer.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if they can Chow, Pung, Kong, or Mahjong based on the current game state.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall send user move information to the MultiMahjongServer.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if another player is fishing.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if another player goes Mahjong.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The MultiMahjongClient shall inform the user if the hand has ended in a draw.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The MultiMahjongServer shall inform all connected MultiMahjongClients that the game has ended.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The Computer Opponent shall play moves according to the Chinese rules of Mahjong.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The Computer Opponent shall be able to read any player's exposed or revealed hands.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G25",
+      "kind": "performance",
+      "text": "The MultiMahjongClient must calculate possible Chow/Pung/Kong/Mahjong moves within 5 seconds of being informed of the last discard.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G26",
+      "kind": "usability",
+      "text": "The MultiMahjongClient shall have a graphical user interface interactable via mouse and keyboard.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G27",
+      "kind": "usability",
+      "text": "The MultiMahjongServer shall have no graphical user interface and be run using a command prompt.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G28",
+      "kind": "other",
+      "text": "The MultiMahjong system shall be written using JDK 1.2.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G29",
+      "kind": "other",
+      "text": "The MultiMahjong system shall follow the Sun Microsystems coding standard.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G30",
+      "kind": "security",
+      "text": "Encryption and protection of data are not needed for the MultiMahjong system.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G31",
+      "kind": "reliability",
+      "text": "The system shall display a dialogue box reporting the nature of any fatal or nonfatal error.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "human-001",
+      "kind": "FR",
+      "text": "The MultiMahjongClient must send this join information to the MultiMahjongServer.",
+      "source": "human-added:b"
+    },
+    {
+      "id": "human-002",
+      "kind": "scalability",
+      "text": "The MultiMahjongServer must be able to handle requests in multi player mode of up to 10 simultaneous games (max 40 players).",
+      "source": "human-added:b"
+    }
+  ],
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "REVIEW-INCOMPLETE (anchored)",
     "source_document_sha256": "098e11697cb0005bf494dbc699be40cdaf026457ca085266cb2fb0a30d170cc6",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "b"
+    ],
+    "review_scope": {
+      "doc_chars_total": 39729,
+      "llm_scope_chars": 39729,
+      "chars_presented_to_reviewer": 39729,
+      "reviewer_read_full_llm_scope": true
+    },
+    "excluded": {
+      "skipped": [
+        "G19",
+        "G20"
+      ],
+      "rejected": [
+        "G22",
+        "G23",
+        "G24"
+      ]
+    },
+    "implied_categories_verified": true,
+    "blocked_reasons": [
+      "unresolved suggestions: skipped=2"
+    ]
   }
 }

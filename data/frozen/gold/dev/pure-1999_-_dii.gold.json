@@ -1,13 +1,240 @@
 {
   "item_id": "pure-1999_-_dii",
   "prd_path": "data/raw/pure/extracted/1999 - dii.htm",
-  "implied_categories": [],
-  "gold_requirements": [],
+  "implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "gold_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The XS shall provide registration of XML terms, tags, and structures.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The XS shall provide design capabilities for XML schemas.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The XS shall provide generation and consumption capabilities for XML documents.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The XS shall allow producers to receive XML registry forms.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The XS shall allow producers to submit metadata and related information resource artifacts.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The XS shall allow producers to notify changes in information resources.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The XS shall allow users to download the Information Resource Submittal Package.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The XS shall allow users to submit metadata via an on-line interactive process.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The XS shall allow users to submit metadata via an off-line interactive batch process.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The XS shall parse submitted XML Registry specification forms.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The XS shall populate the XML Registry database.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The XS shall allow modification of specified terms, definitions of metadata, and status of information resources.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The XS shall provide a capability to post planned changes to a registry.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The XS shall allow users to view XML tags via a tree/hierarchy structure or tabular format.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The XS shall allow users to search for specific XML tags.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The XS shall allow users to search for all tags of a given subscriber or author.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The XS shall provide capabilities to download XML tags or other selected information resources.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The XS shall catalog entities and attributes within servers to enable browsing, searching, and retrieving of data related to XML sources.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The XS shall process ANSI standard SQL as specified in FIPS PUB 127-2.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The XS shall provide a capability to subscribe for notification of changes to Communities of Interest or Information Resources.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The XS shall allow managers to create and manage usernames and superusers.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The XS shall generate standard views of XML data.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The XS shall generate XML and schema documents.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The XS shall validate XML documents for conformance and well-formedness.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The XS shall provide standard APIs for registry services.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The XS shall provide standard APIs for data access services.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The XS shall interface with existing data elements of DBIF, DAC, and COTS RDBMS products.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G28",
+      "kind": "performance",
+      "text": "In fixed mode, data management services shall be tunable by on-site personnel to adjust for varying workloads and database sizes.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G29",
+      "kind": "performance",
+      "text": "Session time-out values shall be user-definable and resettable prior to initialization of a user session.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G30",
+      "kind": "usability",
+      "text": "The XS shall have the ability to redefine or reset names of connect descriptors to database server instances.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G31",
+      "kind": "reliability",
+      "text": "The Registry software shall be portable and execute on COE-compliant platforms.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G32",
+      "kind": "other",
+      "text": "The XS software shall be delivered in accordance with DII COE guidelines.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G33",
+      "kind": "other",
+      "text": "The XS developer is responsible for software maintenance, support, and updates.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "human-001",
+      "kind": "security",
+      "text": "The system shall support modification and addition of user permissions and privileges.",
+      "source": "human-added:b"
+    },
+    {
+      "id": "human-002",
+      "kind": "other",
+      "text": "XML Services shall be segmented.",
+      "source": "human-added:b"
+    }
+  ],
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "FROZEN - human-verified (anchored, single annotator)",
     "source_document_sha256": "82ad6a988a3f750ee1de3e2f9115a724a4f96a63f7d1a1d98a2e1fcfb4b03afd",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "b"
+    ],
+    "review_scope": {
+      "doc_chars_total": 33197,
+      "llm_scope_chars": 33197,
+      "chars_presented_to_reviewer": 33197,
+      "reviewer_read_full_llm_scope": true
+    },
+    "implied_categories_verified": true
   }
 }

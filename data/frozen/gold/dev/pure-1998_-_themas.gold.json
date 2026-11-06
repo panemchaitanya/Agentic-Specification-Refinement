@@ -1,13 +1,211 @@
 {
   "item_id": "pure-1998_-_themas",
   "prd_path": "data/raw/pure/extracted/1998 - themas.pdf",
-  "implied_categories": [],
-  "gold_requirements": [],
+  "implied_categories": [
+    "other",
+    "reliability",
+    "usability"
+  ],
+  "gold_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The THEMAS system shall read the initialization file to derive heating and cooling unit definitions.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The THEMAS system shall load thermostat unique identifiers from the initialization file.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The THEMAS system shall read the maximum number of concurrently running heating or cooling units from the initialization file.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The THEMAS system shall read trigger values from the initialization file.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The THEMAS system shall read overtemperature values from the initialization file.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The THEMAS system shall read the valid temperature range from the initialization file.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The THEMAS system shall turn off all heating and cooling units upon initialization.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The THEMAS system shall identify current temperature values as invalid if they are outside the valid temperature range.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The THEMAS system shall identify temperature settings as invalid if they are outside the valid temperature range.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The THEMAS system shall compare reported temperature values to the temperature setting to detect if limits are exceeded.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The THEMAS system shall activate the appropriate heating or cooling unit when the current temperature exceeds the temperature setting by a predefined amount.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The THEMAS system shall maintain the ON/OFF status of each heating and cooling unit.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The THEMAS system shall add heating or cooling requests to a LIFO queue if the maximum number of units is already running.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The THEMAS system shall record a system event when a heating or cooling request is denied.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The THEMAS system shall generate a control signal for heating or cooling units.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The THEMAS system shall output a continuous series of alternating 500 Hz and 700 Hz beeps when an invalid temperature is detected.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The THEMAS system shall output a continuous series of alternating 1000 Hz and 1500 Hz beeps when a temperature limit is exceeded.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The THEMAS system shall record event data including description and current system time in a database.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The THEMAS system shall provide a mechanism for the supervisor to change the temperature setting of any thermostat.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The THEMAS system shall generate operational history reports and statistical summary reports.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The THEMAS system shall be designed to run on the Microsoft Windows NT operating system.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The THEMAS system shall ensure the temperature reported by a thermostat does not exceed a maximum deviation value of 3 degrees Fahrenheit.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G24",
+      "kind": "other",
+      "text": "The thermostats shall only provide temperature values and temperature settings.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "No signal shall be available to allow the THEMAS system to determine if a signal sent to a heating or cooling unit was realized.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "human-001",
+      "kind": "FR",
+      "text": "After start-up, the system shall check every thermostat and turn on any unit that's needed.",
+      "source": "human-added:b"
+    },
+    {
+      "id": "human-002",
+      "kind": "FR",
+      "text": "When the room temperature is within range, the system shall turn the heating and cooling off.",
+      "source": "human-added:b"
+    },
+    {
+      "id": "human-003",
+      "kind": "FR",
+      "text": "The system shall not let more than the set maximum number of units run at once.",
+      "source": "human-added:b"
+    },
+    {
+      "id": "human-004",
+      "kind": "FR",
+      "text": "When a unit turns off, the system shall pick the latest waiting request and turn that unit on if it's still needed.",
+      "source": "human-added:b"
+    },
+    {
+      "id": "human-005",
+      "kind": "FR",
+      "text": "An alarm shall keep beeping until the supervisor switches it off.",
+      "source": "human-added:b"
+    }
+  ],
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "REVIEW-INCOMPLETE (anchored)",
     "source_document_sha256": "414fc8c90aa3d3184b94aa776ef8303ba3ab5a189ef468758dc6666b281a0742",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "b"
+    ],
+    "review_scope": {
+      "doc_chars_total": 71863,
+      "llm_scope_chars": 71863,
+      "chars_presented_to_reviewer": 71863,
+      "reviewer_read_full_llm_scope": true
+    },
+    "excluded": {
+      "skipped": [
+        "G22",
+        "G25"
+      ]
+    },
+    "implied_categories_verified": true,
+    "blocked_reasons": [
+      "unresolved suggestions: skipped=2"
+    ]
   }
 }
