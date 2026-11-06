@@ -62,8 +62,12 @@ Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
   preserved checkpoint.
 - **Evaluation harness:** frozen-split runner with pre-registered H1-H3
   (`docs/evaluation.md`, decisions D1-D4), gold fail-closed loading
-  (`eval/gold.py`), and run logs under `eval/runs/`. No frozen evaluation
-  result is claimed yet.
+  (`eval/gold.py`), and run logs under `eval/runs/`. Status 2026-11-06:
+  the dev gold subset is still SKELETON pending the two-extractor
+  verdict pass, so `run_dev_eval.py --dry-run` reports 0 eligible / 61
+  excluded (fail-closed); no frozen evaluation result is claimed yet,
+  and if the verdict pass does not land before the mid-submission the
+  honest state is generation-only, unscored.
 
 **Hosted demo:** https://agentic-specification-refinement.onrender.com
 runs the app in demo mode only (no API key in hosted secrets, by design).

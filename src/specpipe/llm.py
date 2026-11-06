@@ -8,10 +8,18 @@ from __future__ import annotations
 
 import json
 import os
+import time
 
 import requests
 
 DEFAULT_MODEL = "gemini-3.1-flash-lite"
+
+# Bounded retry policy for transient quota/server errors (429, 503).
+# Honors the Retry-After header when present; otherwise exponential
+# backoff capped at 60s. Never retries other statuses, never loops
+# unbounded: after MAX_ATTEMPTS the last error is raised.
+MAX_ATTEMPTS = 4
+RETRYABLE = (429, 503)
 
 
 class LLMError(Exception):
@@ -39,8 +47,20 @@ class GeminiLLM:
                 "responseMimeType": "application/json",
             },
         }
-        resp = requests.post(url, headers={"x-goog-api-key": self.api_key},
-                             json=body, timeout=90)
+        resp = None
+        for attempt in range(MAX_ATTEMPTS):
+            resp = requests.post(url, headers={"x-goog-api-key": self.api_key},
+                                 json=body, timeout=90)
+            if resp.status_code not in RETRYABLE:
+                break
+            if attempt == MAX_ATTEMPTS - 1:
+                break
+            retry_after = resp.headers.get("Retry-After")
+            try:
+                wait = float(retry_after) if retry_after else min(5 * 2 ** attempt, 60)
+            except ValueError:
+                wait = min(5 * 2 ** attempt, 60)
+            time.sleep(wait)
         if resp.status_code != 200:
             raise LLMError(f"Gemini HTTP {resp.status_code}: {resp.text[:300]}")
         data = resp.json()
