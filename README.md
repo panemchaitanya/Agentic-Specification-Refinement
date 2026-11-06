@@ -76,6 +76,15 @@ These are evaluation targets for Stages 2-4, not claims of quality:
   complete, or well-typed - that is what the frozen-split evaluation
   (H1-H3) is for.
 
+## Post-mid-submission backlog
+
+Explicit, owned follow-ups after the mid-submission checkpoint:
+
+1. **H2 treatment arm (SLM critic).** Fine-tune `google/flan-t5-base` on the frozen TRAIN split to paraphrase suggestions (LoRA/QLoRA if memory demands), then integrate as a third critic (`critics.slm_flan`) behind the `ASE_SLM_MODEL` flag. Defaults stay on B2 critics. This is the H2 treatment arm; it is not yet in the critic comparison.
+2. **DistilBERT tagger integration.** The trained kind-classifier (best config 6ep/b16/lr5e-5, dev-holdout accuracy 0.826 / macro-F1 0.782; weights preserved outside git via the train script's `--save-dir`) is currently tag-only (`--tag` in `tools/llm_prelabel.py`). Integration: surface `kind` labels in the UI and use them to route statements to kind-specific critics. Pipeline code was pinned for mid-submission reproducibility, so this lands after the checkpoint.
+3. **Full H1-H3 comparison on TEST.** With frozen gold complete and both arms validated, run the locked TEST split once under `docs/evaluation.md` and fill the verdict table.
+4. **Gold adjudication completion.** Merge annotator verdicts into FROZEN `labels.jsonl` (harness ready: `training/merge_verdicts.py`).
+
 ## Run
 
 ```bash
