@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Noto Sans", sans-serif; font-size: 11.6pt; color: #1a1a1a; margin: 0; line-height: 1.58; }
+  .page { page-break-after: always; position: relative; min-height: 258mm; box-sizing: border-box; padding-bottom: 9mm; }
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; font-size: 8pt; color: #666; border-top: 0.6px solid #bbb; padding-top: 1.2mm; }
+  .page:last-child { page-break-after: avoid; }
+  h1 { font-size: 20pt; margin: 0 0 1.5mm 0; color: #12325e; line-height: 1.2; }
+  h2 { font-size: 14.5pt; margin: 5.5mm 0 2.6mm 0; color: #12325e; border-bottom: 1.2px solid #12325e; padding-bottom: 1mm; }
+  h3 { font-size: 12.6pt; margin: 4.5mm 0 2mm 0; color: #1d4e89; }
+  p { margin: 0 0 2.8mm 0; text-align: justify; }
+  ul { margin: 0 0 2.8mm 0; padding-left: 5.5mm; }
+  li { margin-bottom: 1.9mm; text-align: justify; }
+  table { border-collapse: collapse; width: 100%; margin: 2.4mm 0 3.6mm 0; font-size: 10.4pt; }
+  th { background: #eaf0f8; color: #12325e; }
+  th, td { border: 0.6px solid #9db2cc; padding: 1.8mm 2.4mm; text-align: left; vertical-align: top; }
+  table.gold { font-size: 10pt; }
+  table.gold th, table.gold td { padding: 1.5mm 2mm; }
+  .subtitle { font-size: 13pt; color: #444; margin-bottom: 4mm; }
+  .metabox { background: #f4f7fb; border: 0.8px solid #c3d2e5; border-radius: 1.5mm; padding: 3.2mm 4.5mm; margin: 3mm 0; font-size: 11.4pt; }
+  .metabox td { border: none; padding: 0.6mm 2mm 0.6mm 0; }
+  .code { font-family: "Noto Sans Mono", monospace; font-size: 10pt; }
+  .small { font-size: 9.8pt; color: #333; }
+  .hyp { background: #f8f9fb; border-left: 1.2mm solid #1d4e89; padding: 2.6mm 3.4mm; margin-bottom: 2.2mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 ============ -->
+<div class="page">
+  <h1>Agentic Specification Refinement</h1>
+  <div class="subtitle">Mid-Submission Progress Report - Team ReqHQ</div>
+
+  <div class="metabox">
+    <table>
+      <tr><td><b>Course</b></td><td>CS6.403 Autonomous Software Engineering, IIIT Hyderabad, Monsoon 2026</td></tr>
+      <tr><td><b>Team</b></td><td>Panem Chaitanya Pavan Kumar (2025204023) &middot; Anjali Yadav (2025204015) &middot; Anshul Agrawal (2025901015)</td></tr>
+      <tr><td><b>Date</b></td><td>6 November 2026</td></tr>
+      <tr><td><b>Repository</b></td><td class="code">github.com/panemchaitanya/Agentic-Specification-Refinement</td></tr>
+      <tr><td><b>Hosted demo</b></td><td class="code">agentic-specification-refinement.onrender.com</td></tr>
+    </table>
+  </div>
+
+  <h2>1. Project overview</h2>
+  <p>Product requirement documents (PRDs) are usually strong on what a system should do and weak on how well it should do it: performance budgets, security expectations and reliability targets are often missing, vague, or scattered across long documents. Writing a complete specification from such a PRD is slow, and a single-pass LLM draft inherits the same gaps. Our project builds an agentic pipeline that turns a rough PRD into a complete, <i>trace-linked</i> specification: every line in the final spec names where it came from - a verbatim PRD sentence, a specialist critic, or a human answer.</p>
+  <p>The system has four cooperating components:</p>
+  <ul>
+    <li><b>Orchestrator.</b> Reads the PRD and drafts functional requirements, each traced to the exact PRD sentence it came from.</li>
+    <li><b>Specialist critics.</b> Three reviewers - Security, Architecture and Performance - inspect the draft and the PRD for missing or vague non-functional requirements. Each finding quotes the PRD sentence that triggered it and explains why it matters.</li>
+    <li><b>Gap-and-conflict check.</b> Applies the proposal's escalation rule: the human is asked only for missing business context or critic disagreement; fixes a critic can make itself are repaired directly and marked not user-confirmed.</li>
+    <li><b>Trace-linked composer.</b> Produces the final specification grouped into functional requirements and NFR categories, downloadable as JSON or Markdown, with a trace report counting how every line is grounded.</li>
+  </ul>
+  <p>Later stages train small specialist models (SLMs) to replace the LLM critics, and evaluate the whole system on frozen dataset splits against these hypotheses.</p>
+
+  <h2>2. Research hypotheses (verbatim from the submitted proposal)</h2>
+  <div class="hyp"><b>H1.</b> The full pipeline (without human input) has higher NFR recall than a single LLM given the same PRD, with precision dropping by no more than 0.03.</div>
+  <div class="hyp"><b>H2.</b> SLM critics come within 0.05 NFR F1 of LLM critics in the same roles, at much lower token cost and latency.</div>
+  <div class="hyp"><b>H3.</b> Targeted questioning reaches at least 95% of the completeness of asking the human to review everything, using at least 50% fewer questions.</div>
+  <p class="small">No hypothesis results are claimed at this checkpoint; scoring runs only after the gold set is fully human-verified (Section 3).</p>
+<h2>3. Work completed</h2>
+
+  <h3>3.1 Stage 1 - Working PRD-to-spec pipeline</h3>
+  <p>The full loop from raw PRD text to a downloadable, trace-linked specification works end to end. The code is organized as a small, testable core (<span class="code">src/specpipe/</span>: schemas, LLM client, orchestrator, critics, gap check, pipeline) behind a Streamlit UI. A deterministic mock model runs the whole application offline without an API key, and is used for development and tests. The trained classifier is not yet integrated, so the hosted demo shows the flow with demo-mode output, not model quality; demo-mode output is never used for evaluation.</p>
+
+  
+  <div class="footer">Team ReqHQ - Agentic Specification Refinement - Mid-Submission Progress Report<span style="float:right">Page 1 of 4</span></div>
+  </div>
+
+<!-- ============ PAGE 2 ============ -->
+<div class="page">
+  <ul>
+    <li>Orchestrator drafts FRs, each traced to a verbatim PRD sentence.</li>
+    <li>Security / Architecture / Performance critics flag missing or vague NFRs with the triggering PRD sentence and rationale.</li>
+    <li>Gap check deduplicates findings, applies the escalation rule, and asks at most 5 targeted questions; unanswered questions enter the spec as open items instead of being silently resolved.</li>
+    <li>Final spec marks every line&rsquo;s source; critic repairs made without asking are marked <span class="code">user_confirmed: false</span> and counted separately in the trace report.</li>
+    <li>87 offline unit tests cover the pipeline contracts; the hosted demo deploys manually for stability in testing.</li>
+  </ul>
+
+  <h3>3.2 User interface</h3>
+  <p>A guided three-step wizard: (1) <b>Describe</b> - paste a PRD or load a bundled sample and analyse it; (2) <b>Review &amp; answer</b> - inspect draft FRs with their PRD traces and critic findings, answering only the questions the system cannot settle; (3) <b>Specification</b> - the final trace-linked spec, downloadable as JSON or Markdown.</p>
+
+  <h3>3.3 Stage 2 - Frozen datasets and the gold protocol</h3>
+  <p>Two datasets are frozen under <span class="code">data/frozen/</span> with manifests, provenance and license documentation: PROMISE NFR (classification subtask) and PURE (61 requirement documents for the end-to-end evaluation). The dev/test split is fixed and the test split stays untouched until the Stage 4 evaluation, so no iterative tuning can leak into final numbers.</p>
+  <p>Because PURE ships without per-requirement NFR gold labels, we built a two-step ground-truth protocol:</p>
+  <ul>
+    <li><b>LLM-suggested labels.</b> On 6 November a free-tier Google Gemini model (<span class="code">gemini-3.1-flash-lite</span>, prompt <span class="code">prelabel-v1</span>) proposed requirement labels for all 61 dev documents: 1,601 suggestions, each file recorded with its source-document hash, token usage, truncation flag and the status &ldquo;LLM-SUGGESTED - unverified, not gold&rdquo;. A second free-tier model (<span class="code">gemini-3-flash-preview</span>) independently re-labeled the 8 shared documents as a two-model cross-check sample. The evaluation loader rejects all suggestions fail-closed: unverified suggestions can never be scored as gold.</li>
+    <li><b>Anchored human verification.</b> Two annotators verify the suggestions with fixed written guidelines and a paging review tool that records exactly how many characters were presented and read. Documents are split into two unique parts plus a shared subsample reviewed independently by both; anchored accept/reject agreement (Cohen&rsquo;s kappa) is computed on the shared docs at merge time.</li>
+    <li><b>Fail-closed merge.</b> A document is promoted to FROZEN gold only when every suggestion has a verified resolution and the annotator confirmed reading the full scope. Any skip, tie, contested edit or incomplete read makes the whole document review-incomplete and ineligible for scoring - there is no partial-gold scoring.</li>
+  </ul>
+<h3>3.4 Gold verification status (6 Nov 2026)</h3>
+  <p>The human verification pass is underway. First verdicts from both annotators arrived on 6 November and were validated against the protocol (verdict coverage of every suggestion, full-scope reading confirmation, assignment membership). Current state:</p>
+  <table class="gold">
+    <tr><th>Document</th><th>Suggestions</th><th>Verdict state</th><th>Eligible for gold</th></tr>
+    <tr><td class="code">pure-0000 cctns</td><td>28</td><td>All resolved (27 accept incl. 2 edits, 1 reject, 1 human-added requirement)</td><td>Yes - FROZEN 6 Nov</td></tr>
+    <tr><td class="code">pure-0000 gamma_j</td><td>25</td><td>All resolved (25 accept, 1 edit)</td><td>Yes - FROZEN 6 Nov</td></tr>
+    <tr><td class="code">pure-1999 dii</td><td>33</td><td>All resolved (33 accept, 2 human-added requirements)</td><td>Yes - FROZEN 6 Nov</td></tr>
+  </table>
+
+  
+  <div class="footer">Team ReqHQ - Agentic Specification Refinement - Mid-Submission Progress Report<span style="float:right">Page 2 of 4</span></div>
+  </div>
+
+<!-- ============ PAGE 3 ============ -->
+<div class="page">
+  <p class="small">Gold status table, continued from previous page.</p>
+  <table class="gold">
+    <tr><th>Document</th><th>Suggestions</th><th>Verdict state</th><th>Eligible for gold</th></tr>
+    <tr><td class="code">pure-1998 themas</td><td>26</td><td>24 resolved (3 edits, 5 human-added), 2 skipped</td><td>No - awaits adjudication of the skips</td></tr>
+    <tr><td class="code">pure-1999 multi-mahjong</td><td>31</td><td>29 resolved (3 edits, 2 human-added), 2 skipped</td><td>No - awaits adjudication of the skips</td></tr>
+    <tr><td class="code">pure-0000 inventory</td><td>23</td><td>22 resolved, 1 skipped</td><td>No - awaits adjudication of the skip</td></tr>
+    <tr><td class="code">pure-2001 ctc_network</td><td>40</td><td>All resolved, but full-scope read not completed</td><td>No - needs full-scope re-review</td></tr>
+    <tr><td class="code">pure-2000 nasa_x38, pure-2001 hats</td><td>40 / 26</td><td>All suggestions skipped</td><td>No - review pending</td></tr>
+  </table>
+
+  <p>These verdicts are merged into the repository: 3 documents are FROZEN (each single annotator so far, so no inter-annotator kappa is recorded yet) and the evaluation loader reports 3 eligible / 58 excluded, the rest refused fail-closed. Scoring the eligible documents is currently blocked on the free-tier model's exhausted daily request quota (the rubric-matching step needs the model), not on the remaining verdicts; we make no gold-based metric claims in this report.</p>
+
+  <h3>3.5 Stage 3 - Training pilot (feasibility)</h3>
+  <p>We trained the NFR classification subtask on the frozen PROMISE dev split with a stratified dev-internal holdout, to measure feasibility and the honest floor a trained specialist must beat:</p>
+  <table>
+    <tr><th>Model / setting</th><th>Accuracy</th><th>Macro-F1</th><th>Notes</th></tr>
+    <tr><td>TF-IDF + logistic regression</td><td>0.744</td><td>0.679</td><td>Classical baseline</td></tr>
+    <tr><td>DistilBERT, CPU pilot</td><td>0.779</td><td>0.504</td><td>Memory-bound pilot</td></tr>
+    <tr><td>DistilBERT, GPU sweep best (6 ep, batch 16, lr 5e-5)</td><td>0.826</td><td>0.782</td><td>Colab T4, 21 s, 1.5 GB peak; historical run, checkpoint not preserved</td></tr>
+    <tr><td>Weakest sweep config</td><td>0.523</td><td>0.235</td><td>Kept: shows lr/batch sensitivity</td></tr>
+  </table>
+  <p>Training is currently unseeded: the same best config measured macro-F1 0.782 (GPU sweep run, not preserved), 0.7571 (first preservation run; its checkpoint was lost when the Colab VM was recycled) and 0.6489 (the retrain whose checkpoint is actually preserved) across three runs of the same frozen dev holdout. The 0.782 and 0.7571 numbers are historical, unpreserved pilot runs; the only checkpoint we hold today is the 0.6489 retrain, byte-verified outside git with hashes. Seeded, reproducible training is scheduled follow-up work.</p>
+
+  <h3>3.6 Stage 4 - Evaluation harness and pre-freeze generation</h3>
+  <p>The evaluation harness is built and documented (<span class="code">docs/evaluation.md</span>, decisions D1-D4). It runs the frozen split with four baselines (B1-B4), loads only human-verified gold, applies the matching rubric, and writes per-run JSONL logs. On 6 November we ran <b>generation</b> over the dev split, bounded to the same first 120,000 characters per document that the gold protocol uses. 43 of 61 documents now hold a complete B1+B2+B3 output set; the run then stopped cleanly on the free-tier daily quota, with 18 documents not yet generated. These outputs are <b>unscored</b> and this report claims no evaluation metric.</p>
+
+  
+  <div class="footer">Team ReqHQ - Agentic Specification Refinement - Mid-Submission Progress Report<span style="float:right">Page 3 of 4</span></div>
+  </div>
+
+<!-- ============ PAGE 4 ============ -->
+<div class="page">
+<h2>4. Known gaps, carried honestly</h2>
+  <ul>
+    <li><b>Gold coverage is scope-bounded.</b> The LLM pre-labeler and human review see at most the first 120,000 characters per document (18 of 61 dev documents are longer); dev scoring uses the same bound and no full-document recall is claimed.</li>
+    <li><b>The pipeline separates FRs from NFRs with a simple keyword heuristic</b> that we have not validated; the Stage 2 guidelines and matching rubric define the real boundary.</li>
+    <li><b>Unseeded training</b> makes classifier quality vary run to run (Section 3.5); seeded training and a reproducibility check are open work.</li>
+    <li><b>&ldquo;0 untraced lines&rdquo; means trace coverage only</b> - every line names a source; it says nothing about correctness, which is exactly what the frozen-split evaluation will measure.</li>
+    <li><b>Evaluation is not scored yet.</b> Generation outputs exist for 43/61 dev documents; extending gold coverage beyond the 3 frozen documents, and the quota-blocked rubric scoring, are the immediate next steps.</li>
+  </ul>
+
+  <h2>5. Milestones achieved vs. plan</h2>
+  <table>
+    <tr><th>Planned stage</th><th>Status at mid-submission</th></tr>
+    <tr><td>Stage 1: pipeline + UI + hosted demo</td><td><b>Core complete.</b> End-to-end loop, 3-step wizard, 87 offline tests, public demo. The hosted app runs the deterministic demo mode only; the trained model is not yet integrated, so the demo performs no real model inference.</td></tr>
+    <tr><td>Stage 2: dataset freeze + gold protocol</td><td><b>Datasets complete; gold in progress.</b> Splits frozen with provenance; verification tooling, guidelines and assignments done; 3 documents FROZEN on 6 Nov; rest in review.</td></tr>
+    <tr><td>Stage 3: SLM training pilot</td><td><b>Feasibility shown.</b> Best sweep 0.826 acc / 0.782 macro-F1; checkpoint preserved; seeded training pending.</td></tr>
+    <tr><td>Stage 4: frozen evaluation of H1-H3</td><td><b>Bounded-dev harness implemented; final protocol not yet executed.</b> 43/61 dev generation triplets ready; 3 documents FROZEN; rubric scoring currently blocked on the free-tier daily quota.</td></tr>
+  </table>
+
+  <h2>6. Next steps</h2>
+  <ul>
+    <li>Complete gold adjudication (merge the verified verdicts, re-review the blocked documents, collect the second annotator&rsquo;s shared docs for kappa), then run the bounded dev evaluation and rubric matching on the eligible subset.</li>
+    <li>H2 treatment arm: fine-tune <span class="code">google/flan-t5-base</span> on the frozen train split and integrate it as a third critic behind a flag; integrate the trained DistilBERT tagger into the UI for kind-specific critic routing.</li>
+    <li>Seeded classifier training with a reproducibility check.</li>
+    <li>Full H1-H3 comparison on the untouched TEST split, once, under the fixed protocol.</li>
+  </ul>
+
+  <h2>7. Repository and development history</h2>
+  <p>Development is tracked in the GitHub repository linked on page 1 (active development branch: <span class="code">Chaitanya</span>). The commit history records the work above as it happened, including: the initial pipeline and UI build with a deterministic demo mode; the dataset freeze with leak checks and provenance documentation; the training pilot and checkpoint preservation with honest run identity; the evaluation harness with fail-closed gold loading; the bounded generation driver with rate-limit-aware retries and per-document run logs, and the first anchored human-verified gold merge. The current tree documents its own state: the README carries the same milestone status, known gaps and backlog as this report.</p>
+  <p class="small">All evaluation scripts, frozen manifests, annotation guidelines and run logs referenced in this report are in the repository, and the trained checkpoint is preserved with byte-level hashes for verification.</p>
+<div class="footer">Team ReqHQ - Agentic Specification Refinement - Mid-Submission Progress Report<span style="float:right">Page 4 of 4</span></div>
+  </div>
+
+</body>
+</html>
