@@ -1,0 +1,234 @@
+{
+  "item_id": "pure-2007_-_puget_sound",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system must capture and manage files on assignment submission, forum, wiki, and announcement pages."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system must allow for multiple file upload to be configured on a per-page basis."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "Course administrators or professors shall enable multiple file uploads on a page during creation and editing stages."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system must capture and organize voice clips."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system must allow actors to organize their voice clips into a portfolio."
+    },
+    {
+      "id": "G6",
+      "kind": "scalability",
+      "text": "Equal and finite drive space shall be allotted to each actor in the role of professor or administrator for storing voice clips."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "Course administrators or system administrators shall partition voice clip storage space for students."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow actors to preview a voice clip before it is archived."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow actors to attach archived voice clips to any page where uploads are permitted."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system must allow actors to download their voice clips in MPEG Audio (mp3) format."
+    },
+    {
+      "id": "G11",
+      "kind": "other",
+      "text": "The system must store audio clips in a format optimized for speech."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall provide a cross-platform viewer for listening to clips in Moodle."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system must allow actors to delete recorded clips from their portfolio."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system must display web feeds, such as RSS 2.0 feeds, for all pages where information blocks are added."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "Course administrators shall determine which components have feeds and to whom those feeds pertain."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system must allow web feeds to be turned on or off on a per-page basis."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "An actor must be able to search through pages in a course."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall provide a dedicated search page that allows actors to filter results by category and search specific sections."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system must display a search box on every page after an actor has logged in."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "A course administrator must be able to grade an assignment."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "Course administrators shall post grades for an assignment based on the ratio of points earned to points possible."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The course administrator shall attach feedback in the form of text or an attachment to a grade."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall attach timestamps to the last time a grade was modified."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system should display grade information, averages, and overall grades to the actor to whom the grades belong."
+    },
+    {
+      "id": "G25",
+      "kind": "security",
+      "text": "No actor shall view another\u2019s grades except for the course administrator for that course."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The system should maintain a history of grades for a particular assignment."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system must provide a wiki where actors can collaboratively create networks of documents using a simple markup language."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The system must provide a blog engine supporting tagging, drafting, and comments."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system must provide both e-mail and SMS notifications for pages."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "Students shall select in their preferences whether notifications are sent via SMS or e-mail."
+    },
+    {
+      "id": "G31",
+      "kind": "usability",
+      "text": "The system should provide a simple, responsive interface."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The system shall be configurable from a single source at a central administrative position."
+    },
+    {
+      "id": "G33",
+      "kind": "reliability",
+      "text": "The system must be backed up on a nightly basis."
+    },
+    {
+      "id": "G34",
+      "kind": "reliability",
+      "text": "The system must have the capacity to restore back-up data within six hours."
+    },
+    {
+      "id": "G35",
+      "kind": "reliability",
+      "text": "The system should be available 24 hours a day, 7 days a week."
+    },
+    {
+      "id": "G36",
+      "kind": "reliability",
+      "text": "The system shall maintain 99% up-time."
+    },
+    {
+      "id": "G37",
+      "kind": "performance",
+      "text": "The system should support at least 1000 concurrent users."
+    },
+    {
+      "id": "G38",
+      "kind": "other",
+      "text": "The system must be maintainable without substantial modification."
+    },
+    {
+      "id": "G39",
+      "kind": "usability",
+      "text": "Relevant, online documentation for users should be available on each page."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "System administrators must have access to a comprehensive, searchable database of maintenance tasks and help files."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:12:03Z",
+    "source_document_sha256": "7e0d85a375b8d0bce19baad5216522b88564df04915d33a348358775935c04c1",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 7123,
+      "candidatesTokenCount": 1495,
+      "totalTokenCount": 11109,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 7123
+        }
+      ],
+      "thoughtsTokenCount": 2491,
+      "serviceTier": "standard"
+    }
+  }
+}

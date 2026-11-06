@@ -1,0 +1,230 @@
+{
+  "item_id": "pure-2001_-_ctc_network",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The C2C infrastructure shall implement a repository for traffic data."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The C2C infrastructure shall provide a mechanism to exchange device control information between Traffic Management Centers."
+    },
+    {
+      "id": "G3",
+      "kind": "other",
+      "text": "The C2C project shall be implemented using the ITS Traffic Management Data Dictionary (TMDD) standard."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The C2C infrastructure shall interconnect several dissimilar traffic management systems."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The C2C infrastructure shall convert data deposited into it to a standard format based on ITS standards."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The Center shall provide network identifier, name, link count, node count, link data, and node data for each roadway network it maintains."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The Center shall provide link identifier, name, road number, type, nodes, direction, length, capacity, speed limits, and lane counts for each link."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The Center shall provide node identifier, name, jurisdiction, owner, coordinates, type, and link counts for each node."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The Center shall provide network identifier, link identifier, data type, delay, travel time, volume, speed, density, and occupancy for each link."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The Center shall support incident information including ID, description, location, status, affected lanes, classification, severity, and weather conditions."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The Center shall support lane closure information including ID, description, start/end locations, status, affected lanes, and schedule."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The Center shall provide status information for each Dynamic Message Sign including ID, name, location, geometry, status, message, and beacons."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for Dynamic Message Signs including network ID, sign ID, credentials, beacons, and messages."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Lane Control Signal including ID, name, location, geometry, capabilities, status, and pattern."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for Lane Control Signals including network ID, signal ID, credentials, and signal pattern."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The Center shall provide status information for each CCTV including ID, name, location, status, lock status, and current PTZ/Focus/Iris positions."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The Center shall support CCTV control requests including network ID, camera ID, credentials, and specific camera movement or locking actions."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The Center shall support status information for video snapshots including camera ID, status, direction, size, and JPEG format image."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The Center shall support CCTV switching commands including network ID, credentials, and video channel input/output identifiers."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The Center shall support status information for each ramp meter including ID, name, location, status, plan, and cycle time."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for ramp meters including network ID, meter ID, credentials, plan, and duration."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Highway Advisory Radio including ID, name, location, status, and current message."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for Highway Advisory Radios including network ID, radio ID, credentials, message, and duration."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Traffic Signal including ID, name, location, status, state, plan, and preemption status."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for Traffic Signals including network ID, signal ID, credentials, plan identifier, and duration."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Environmental Sensor Station including ID, name, type, location, status, reading, and alarm status."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The Center shall support status information for each High Occupancy Vehicle lane including ID, name, link ID, status, plan, and occupants."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for HOV Lanes including network ID, lane ID, credentials, plan, and duration."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Parking Lot including ID, name, location, status, capacity, utilization, and restrictions."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The Center shall support status information for each School Zone including ID, name, link ID, location, status, and state plan."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for School Zones including network ID, zone ID, credentials, and plan."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Railroad Crossing including ID, name, link ID, location, status, and estimated train arrival/clearance times."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Reversible Lane including ID, name, link ID, indicator status, plan, and direction transition time."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for Reversible Lanes including network ID, lane ID, credentials, plan, and duration."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The Center shall support status information for each Dynamic Lane including ID, name, link ID, indicator status, plan, and transition time."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The Center shall support device control commands for Dynamic Lanes including network ID, lane ID, credentials, plan, and duration."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The Center shall support status information for transit assets including bus stops, bus locations, rail stops, rail locations, and park and ride lots."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "The Center shall support status information for Vehicle Priority including vehicle ID, intersection ID, priority request status, and service strategy."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The Center shall support summary information about network device status including counts and status data for all managed device types."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "The device status requestor and Center shall support command timeframe requests including network identifier and device type."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:11:09Z",
+    "source_document_sha256": "cd27542e854ac411e7ba81747ef9b3fc6236fe2d6d237a55351fabf8e4023054",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 11368,
+      "candidatesTokenCount": 3079,
+      "totalTokenCount": 21408,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 11368
+        }
+      ],
+      "thoughtsTokenCount": 6961,
+      "serviceTier": "standard"
+    }
+  }
+}

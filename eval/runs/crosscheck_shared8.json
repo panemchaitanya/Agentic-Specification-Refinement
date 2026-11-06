@@ -1,0 +1,75 @@
+{
+  "type": "two-model-crosscheck",
+  "recorded_at": "2026-11-06T07:23:41.471074+00:00",
+  "model_a": "gemini-3.1-flash-lite",
+  "model_b": "gemini-3-flash-preview",
+  "match_threshold": 0.6,
+  "docs": [
+    {
+      "item_id": "pure-2001_-_ctc_network",
+      "n_model_a": 40,
+      "n_model_b": 40,
+      "matched": 16,
+      "kind_agreement_on_matched": 1.0
+    },
+    {
+      "item_id": "pure-2003_-_pnnl",
+      "n_model_a": 19,
+      "n_model_b": 24,
+      "matched": 4,
+      "kind_agreement_on_matched": 0.75
+    },
+    {
+      "item_id": "pure-2006_-_eirene_sys_15",
+      "n_model_a": 20,
+      "n_model_b": 40,
+      "matched": 7,
+      "kind_agreement_on_matched": 0.714
+    },
+    {
+      "item_id": "pure-2007_-_puget_sound",
+      "n_model_a": 22,
+      "n_model_b": 40,
+      "matched": 18,
+      "kind_agreement_on_matched": 0.944
+    },
+    {
+      "item_id": "pure-2007_-_water_use",
+      "n_model_a": 40,
+      "n_model_b": 40,
+      "matched": 29,
+      "kind_agreement_on_matched": 1.0
+    },
+    {
+      "item_id": "pure-2009_-_peazip",
+      "n_model_a": 22,
+      "n_model_b": 32,
+      "matched": 3,
+      "kind_agreement_on_matched": 1.0
+    },
+    {
+      "item_id": "pure-2010_-_home_1.3",
+      "n_model_a": 40,
+      "n_model_b": 33,
+      "matched": 19,
+      "kind_agreement_on_matched": 0.947
+    },
+    {
+      "item_id": "pure-2011_-_opensg_0.1",
+      "n_model_a": 4,
+      "n_model_b": 12,
+      "matched": 3,
+      "kind_agreement_on_matched": 1.0
+    }
+  ],
+  "overall": {
+    "docs": 8,
+    "requirements_a": 207,
+    "requirements_b": 261,
+    "matched_pairs": 99,
+    "coverage_of_a": 0.478,
+    "coverage_of_b": 0.379,
+    "kind_agreement_on_matched": 0.949,
+    "note": "Token-Jaccard >= 0.6 fuzzy match, greedy. Model agreement is a quality prior / attention filter for human verification, NOT gold evidence. Human verdicts decide (D4)."
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "item_id": "pure-2009_-_peazip",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "PeaZip shall create compressed archives in supported formats including 7z, ARC, BZ2, GZ, PAQ, PEA, QUAD, TAR, UPX, and ZIP."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "PeaZip shall update existing compressed archives by adding new objects."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "PeaZip shall extract the content of compressed archives to a user-specified folder."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "PeaZip shall perform secure file deletion by executing multiple successive passes over the storage area."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "PeaZip shall perform byte to byte comparison between two files."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "PeaZip shall calculate checksums and hashes over selected files."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "PeaZip shall append a timestamp with date and time to the managed archive name."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "PeaZip shall support two-factor authentication using a password and a keyfile for managed archives."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "PeaZip shall allow users to execute functions as command prompt commands."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "PeaZip shall extract and save resulting command prompt commands into a text file."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "PeaZip shall check files to find duplicates and corruption."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "PeaZip shall split files into multiple volumes and merge split volumes back to the original file."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "PeaZip shall display the content of a file or archive represented as hexadecimal values."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "PeaZip shall provide access to system disk utilities including clean, defrag, and manage."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "PeaZip shall provide access to system management tools including control panel, computer management, and task manager."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "PeaZip shall display system environment variables for Linux and Windows."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "PeaZip shall rate the host system in terms of MIPS and Core 2 Duo equivalent speed."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "PeaZip shall support drag and drop of objects from the computer system to the application interfaces."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "PeaZip shall support dragging an archived object from the application to the computer system for extraction on Microsoft Windows."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "PeaZip shall generate random passwords and random keyfiles."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "PeaLauncher shall provide a graphical display of the progress and status of currently executed functions."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "PeaZip shall allow users to modify the application language through a localization menu."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "PeaZip shall allow users to customize the graphical interface including colors, icons, fonts, and window opacity."
+    },
+    {
+      "id": "G24",
+      "kind": "other",
+      "text": "PeaZip shall be compatible with all 32-bit and 64-bit versions of Microsoft Windows."
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "PeaZip shall be compatible with POSIX operating systems including Linux and BSD."
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "PeaZip shall require an x-86 compatible CPU for performance critical sections written in ASM."
+    },
+    {
+      "id": "G27",
+      "kind": "other",
+      "text": "PeaZip shall be available as a standalone portable application that does not require installation."
+    },
+    {
+      "id": "G28",
+      "kind": "reliability",
+      "text": "The application shall function correctly even in cases of wrong data insertion or incorrect settings."
+    },
+    {
+      "id": "G29",
+      "kind": "usability",
+      "text": "The application shall provide users with appropriate help messages in case of an error."
+    },
+    {
+      "id": "G30",
+      "kind": "security",
+      "text": "PeaZip shall prevent the extraction of encrypted archives without the insertion of the correct password and keyfile."
+    },
+    {
+      "id": "G31",
+      "kind": "security",
+      "text": "PeaZip shall ensure no data remains in the storage area after a secure deletion procedure is completed."
+    },
+    {
+      "id": "G32",
+      "kind": "usability",
+      "text": "The application shall be usable by individuals without specific computer experience through the use of manuals and provided warnings."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:23:03Z",
+    "source_document_sha256": "a56c006b2ee4e6ccb9e27106c3c2e7dac9ba4b2fe635a778a163434cff8b40b1",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 12412,
+      "candidatesTokenCount": 1268,
+      "totalTokenCount": 16102,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 12412
+        }
+      ],
+      "thoughtsTokenCount": 2422,
+      "serviceTier": "standard"
+    }
+  }
+}

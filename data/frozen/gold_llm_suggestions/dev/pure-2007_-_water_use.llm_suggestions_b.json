@@ -1,0 +1,240 @@
+{
+  "item_id": "pure-2007_-_water_use",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall track the movement of lapsed quantities in an area including the permit and well that obtained the quantities."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall track the relocation of active water use within the Southern Water Use Caution Area (SWUCA)."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall report on the history of irrigation water conserving credits including balance, earned, and used amounts."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall track and report on the history of permitted data such as use type, irrigated acres, and pumpage."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall track and measure alternative source projects including reclaimed water, augmented surface water, and desalination."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall display the spatial impact of a person's application alongside other active applications on-line."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall create a heat map indicating permittees who are over-pumping."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall create a heat map for water quality including District WUPnet sentinel wells."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall report on permits that have been relocated by a permit holder."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall track the impact of water use on established Minimum Flows and Levels (MFL)."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall track net benefit changes including relocated permits and change of use type."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall report the net benefit amount in MGD for land use changes and use of lapsed quantities."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall mark permits that have a land use change for potential relocation to public supply utilities."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall create a GIS layer including cones of depression for MFL information."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall report on water use amounts sold or given from one permit to another."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall report on the improvement percentage and cost for mitigation of MFL impacts."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall report on water made available through District water resource development projects."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The system shall report on permit duration and expiration dates."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall allow comparison to adjacent districts' GIS layers."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall report compliance and crop reports on a permit basis."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The system shall report on competing applications including those in modification or expiring."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The system shall provide water levels in relationship to MFL to identify mitigation requirements."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The system shall determine the availability of alternative use supplies such as reclaimed water."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall report the reservation from use amounts allocated to specific participants."
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The system shall track ownership of wells or permits over the life of the withdrawal point."
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The system shall identify when a standby permit is reactivated due to the loss of alternative quantities."
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The system shall provide a heat map showing permit information for specific time periods."
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The system shall automate requests for permitted and pumpage quantities at the permit and well level."
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The system shall allow users to find existing permits in or near their service area spatially."
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The system shall analyze permits using a soils type GIS layer."
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The system shall provide printable and customizable maps."
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The system shall identify permits on land purchased by governmental agencies for retirement."
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The system shall allow querying of data by issue date, expiration date, use type, and permit status."
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The system shall generate a well package file for import into groundwater models."
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The system shall associate permitted quantities, pumpage quantities, and use code data at the well level."
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The system shall track trends in land use and water use changes."
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The system shall track water use over time to negotiate new water use based on pumpage trends."
+    },
+    {
+      "id": "G38",
+      "kind": "FR",
+      "text": "The system shall track withdrawal sources by aquifer or USGS water body."
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The system shall display the quantity of pumpage on a map."
+    },
+    {
+      "id": "G40",
+      "kind": "FR",
+      "text": "The system shall compare the percentage a permit is over-pumping against the regional average for the same use type."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:13:42Z",
+    "source_document_sha256": "d286bdd1a2d64b44890466dd768648aa8e5ff66ed902cbb834f6ba59623d33b8",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 22779,
+      "candidatesTokenCount": 2779,
+      "totalTokenCount": 28441,
+      "cachedContentTokenCount": 20396,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 22779
+        }
+      ],
+      "cacheTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 20396
+        }
+      ],
+      "thoughtsTokenCount": 2883,
+      "serviceTier": "standard"
+    }
+  }
+}

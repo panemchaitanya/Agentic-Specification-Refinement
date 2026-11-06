@@ -1,0 +1,151 @@
+{
+  "item_id": "pure-2003_-_pnnl",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The tool shall provide the user with a visual indication of faults."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The tool shall provide descriptive information concerning the faults and their causes."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The tool shall provide suggested corrective actions for identified faults."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The tool shall store the results of diagnostics for subsequent retrieval and use."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The user shall manually input and edit fixed data describing the characteristics of the unit under diagnosis."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The tool shall print screen images of diagnostic results and historical data at user request."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The tool shall permit the user to supply metadata relevant to the results, such as location and serial number."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The tool shall obtain sensed data from real-time data acquisition devices and data files."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The administrator shall start and stop diagnostic processing through the status menu."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The tool shall display a list of buildings under diagnosis on the main window."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The tool shall display historical results in the form of a color map."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The tool shall save configuration changes to permanent storage upon user confirmation."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The tool shall authenticate the user by obtaining a user name and password."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The tool shall associate the absolute time of input with each sensed data item."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The tool shall validate sensed data against expected minimum and maximum ranges."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The tool shall convert sensed data to required engineering units such as Degrees F and Amps."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The tool shall monitor performance and operational parameters for chillers and cooling towers to identify specific faults."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The tool shall log all errors associated with obtaining, validating, converting, or storing sensed data."
+    },
+    {
+      "id": "G19",
+      "kind": "usability",
+      "text": "Setting up and operating the automated diagnostic tool should require minimal user input."
+    },
+    {
+      "id": "G20",
+      "kind": "usability",
+      "text": "The automated diagnostic tool must support a wide variety of users with respect to computer expertise."
+    },
+    {
+      "id": "G21",
+      "kind": "other",
+      "text": "The tool shall be restricted to Microsoft Windows-compatible operating systems."
+    },
+    {
+      "id": "G22",
+      "kind": "security",
+      "text": "The tool shall automatically revert user privileges to those of a general user if 15 minutes of inactivity elapses."
+    },
+    {
+      "id": "G23",
+      "kind": "security",
+      "text": "The tool shall permit only three attempts at authentication before dismissing the authentication window."
+    },
+    {
+      "id": "G24",
+      "kind": "other",
+      "text": "Sensed data input to the tool shall be stored to permanent storage with a precision of three significant figures."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:11:21Z",
+    "source_document_sha256": "9874ef57a047290607711e49d2395f3d84459d9ef178cb47fd24036717631b7f",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 18008,
+      "candidatesTokenCount": 901,
+      "totalTokenCount": 20937,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 18008
+        }
+      ],
+      "thoughtsTokenCount": 2028,
+      "serviceTier": "standard"
+    }
+  }
+}

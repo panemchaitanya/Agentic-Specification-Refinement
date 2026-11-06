@@ -1,0 +1,198 @@
+{
+  "item_id": "pure-2010_-_home_1.3",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The general user shall monitor and control the environment in his/her home."
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The Master user shall add user accounts."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The Master user shall change the default parameter settings."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The DH Technician shall start and stop operation of the DH System."
+    },
+    {
+      "id": "G5",
+      "kind": "other",
+      "text": "The prototype version of the DigitalHome System must be completed within twelve months of inception."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The DH System shall establish an individual home web server hosted on a home computer."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The DH Gateway device shall provide communication with all the DigitalHome devices."
+    },
+    {
+      "id": "G8",
+      "kind": "performance",
+      "text": "The Gateway device shall operate up to a 1000-foot range for indoor transmission."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The thermostat shall provide a reading of the current temperature in the space where the thermostat is located."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The thermostat controller shall provide a set point temperature to control the flow of heat energy."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The humidistat shall provide a reading of the current humidity in the space where the humidistat is located."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The humidistat shall provide a set point humidity to control humidifiers and dehumidifiers."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall monitor entry through a door or window using magnetic alarm contact switches."
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The system shall activate security sound and light alarms when a security breach is sensed."
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The system shall monitor the current state of an appliance using digital programmable power switches."
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The system shall change the state of an appliance using a power switch."
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The system shall read and save sensor values in the home database using wireless communication."
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The DH user shall set the thermostat temperatures to between 60 F and 80 F inclusive at one degree increments."
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The system shall schedule up to twenty-four one hour settings per day for every day of the week for each thermostat."
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The system shall support Fahrenheit and Celsius temperature values."
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The DH user shall set the humidity level for a humidistat from 30% to 60% inclusive at 1% increments."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The alarm system shall be activated when a security breach occurs and a contact sensor is set OPEN."
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The user shall create or modify a month plan that specifies environmental parameter settings for each day."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The DigitalHome shall provide a report on the management and control of the home for a given month and year."
+    },
+    {
+      "id": "G25",
+      "kind": "performance",
+      "text": "Displays of environmental conditions shall be updated at least every two seconds."
+    },
+    {
+      "id": "G26",
+      "kind": "performance",
+      "text": "Sensors shall have a minimum data acquisition rate of 10 Hz."
+    },
+    {
+      "id": "G27",
+      "kind": "reliability",
+      "text": "The DigitalHome System must be highly reliable with no more than 1 failure per 10,000 hours of operation."
+    },
+    {
+      "id": "G28",
+      "kind": "reliability",
+      "text": "The DH System shall backup all system data on a daily basis."
+    },
+    {
+      "id": "G29",
+      "kind": "reliability",
+      "text": "The system recovery mechanism shall restore system data from the most recent backup if the DH System fails."
+    },
+    {
+      "id": "G30",
+      "kind": "usability",
+      "text": "The system shall respond to a user with a clear, descriptive message when an error or an exceptional condition occurs."
+    },
+    {
+      "id": "G31",
+      "kind": "security",
+      "text": "The DigitalHome web system shall provide for authentication and information encryption through a recognized reliable technology."
+    },
+    {
+      "id": "G32",
+      "kind": "security",
+      "text": "Log in to an account shall require entry of an account name and a password."
+    },
+    {
+      "id": "G33",
+      "kind": "usability",
+      "text": "The DigitalHome System shall provide users with online documentation about the system installed in their home."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:23:20Z",
+    "source_document_sha256": "0c80160df1ae81c0768a6424343cfbef8a38b944375b2c30b91d6a1680eccc80",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 7189,
+      "candidatesTokenCount": 1289,
+      "totalTokenCount": 11083,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 7189
+        }
+      ],
+      "thoughtsTokenCount": 2605,
+      "serviceTier": "standard"
+    }
+  }
+}

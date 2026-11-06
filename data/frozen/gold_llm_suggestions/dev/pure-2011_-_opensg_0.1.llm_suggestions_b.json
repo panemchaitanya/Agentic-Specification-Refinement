@@ -1,0 +1,90 @@
+{
+  "item_id": "pure-2011_-_opensg_0.1",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "security",
+      "text": "The system shall secure data artifacts and the processes supporting the creation, retrieval, updating, and deletion of information objects."
+    },
+    {
+      "id": "G2",
+      "kind": "reliability",
+      "text": "The system shall include self healing capabilities."
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall include self discovery capabilities."
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall define patterns of using new technologies to create interfaces with older systems."
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The information model shall define common definitions of data concepts."
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The information model shall allow aliases of data concepts."
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall use a reference architecture to create an enterprise information architecture."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall model how semantic modeling supports information modeling."
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall define patterns of introducing business units to smart grid semantic modeling."
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall introduce data movement patterns to the organization."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall introduce data movement tools and methodologies to the organization."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall enhance the organization\u2019s ability to create, maintain, and reuse logical data models."
+    }
+  ],
+  "suggested_implied_categories": [
+    "reliability",
+    "security"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:23:32Z",
+    "source_document_sha256": "914b590ce3d20e70e00ba2c0e58cf00f9a99e32ed0a7c102d8e0c0e82499ac37",
+    "doc_truncated": false,
+    "token_usage": {
+      "promptTokenCount": 2289,
+      "candidatesTokenCount": 434,
+      "totalTokenCount": 4381,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 2289
+        }
+      ],
+      "thoughtsTokenCount": 1658,
+      "serviceTier": "standard"
+    }
+  }
+}

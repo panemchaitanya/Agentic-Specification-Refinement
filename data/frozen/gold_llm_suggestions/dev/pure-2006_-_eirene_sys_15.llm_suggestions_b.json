@@ -1,0 +1,233 @@
+{
+  "item_id": "pure-2006_-_eirene_sys_15",
+  "suggested_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall comply with the list of normative documents for all GSM services necessary to provide the functionality specified in the EIRENE FRS."
+    },
+    {
+      "id": "G2",
+      "kind": "performance",
+      "text": "The network shall provide a coverage probability of 95% based on a coverage level of 38.5 dB\u00b5V/m for voice and non-safety critical data."
+    },
+    {
+      "id": "G3",
+      "kind": "performance",
+      "text": "The network shall provide a coverage probability of 95% based on a coverage level of 41.5 dB\u00b5V/m on lines with ETCS levels 2/3 for speeds lower than or equal to 220km/h."
+    },
+    {
+      "id": "G4",
+      "kind": "reliability",
+      "text": "The EIRENE mobile installation shall be designed to operate in a network meeting the specified coverage criteria."
+    },
+    {
+      "id": "G5",
+      "kind": "performance",
+      "text": "Call setup times as defined in the EIRENE FRS shall be achieved with authentication and ciphering procedures enabled."
+    },
+    {
+      "id": "G6",
+      "kind": "other",
+      "text": "The network shall operate in a sub-band, or combination of sub-bands, of the R-GSM band."
+    },
+    {
+      "id": "G7",
+      "kind": "other",
+      "text": "The network shall use the frequency convention Fl(n) = 890 + 0.2*(n-1024) for carriers in the UIC frequency band where 955 \u2264 n \u2264 973."
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The network shall terminate the ongoing VGCS/VBS call if it receives the 3-digit sequence '***' transmitted via DTMF signals."
+    },
+    {
+      "id": "G9",
+      "kind": "performance",
+      "text": "The fixed line dispatcher shall generate a DTMF tone duration of 70ms \u00b1 5ms."
+    },
+    {
+      "id": "G10",
+      "kind": "performance",
+      "text": "The fixed line dispatcher shall provide a minimum gap of 65ms between each DTMF tone."
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The network shall send the SET-PARAMETER message with the attribute 'D-ATT = T' to the mobile station of the talking subscriber if it receives the 3-digit sequence '## #' transmitted via DTMF."
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The network shall send the SET-PARAMETER message with the attribute 'D-ATT = T' to the mobile station of the talking subscriber if it receives the group call SETUP message from a controller terminal."
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The network shall send the SET-PARAMETER message with the attribute 'D-ATT = F' to the mobile of the talking subscriber only if it has received the 3-digit sequence '# **' transmitted via DTMF from all the talking controllers."
+    },
+    {
+      "id": "G14",
+      "kind": "performance",
+      "text": "The duration of each tone added in the voice channel shall be 70ms \u00b1 5ms."
+    },
+    {
+      "id": "G15",
+      "kind": "performance",
+      "text": "The network shall provide a minimum gap of 65ms between each tone in the voice channel."
+    },
+    {
+      "id": "G16",
+      "kind": "other",
+      "text": "All SIM cards used in EIRENE mobiles shall comply with the requirements of the MORANE FFFIS for GSM-R SIM Cards."
+    },
+    {
+      "id": "G17",
+      "kind": "other",
+      "text": "All mobiles shall be capable of operation in the Railway GSM (R-GSM) frequency band (876-915/921-960 MHz)."
+    },
+    {
+      "id": "G18",
+      "kind": "reliability",
+      "text": "The mobile radio antenna installation on vehicles shall be designed to ensure that mobiles operate correctly in networks conforming to design criteria."
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "Cab radios shall be of power class 2 (8W)."
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "General purpose radios shall be of power class 4 (2W)."
+    },
+    {
+      "id": "G21",
+      "kind": "performance",
+      "text": "Operational radios shall be of power class 4 (2W)."
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The EIRENE radio shall automatically re-attempt the Railway emergency call setup until the call setup is successful, a 30-second retry timer expires, or the user abandons the call."
+    },
+    {
+      "id": "G23",
+      "kind": "usability",
+      "text": "A service availability indication shall be provided to radio users."
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The system shall prevent the user from entering direct mode if the GSM service is available."
+    },
+    {
+      "id": "G25",
+      "kind": "usability",
+      "text": "The system shall provide an indication to the user of the status of the establishment request procedure if a Railway emergency call setup is not successful after 2 seconds."
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "All EIRENE mobile equipment shall comply with environmental, EMC and physical specifications defined in the GSM standard."
+    },
+    {
+      "id": "G27",
+      "kind": "security",
+      "text": "All EIRENE mobile equipment shall conform to EN 60950 (Safety of Information Technology Equipment)."
+    },
+    {
+      "id": "G28",
+      "kind": "other",
+      "text": "All design, manufacturing, testing and installation of EIRENE mobile radio equipment shall comply with ISO 9001 quality procedures."
+    },
+    {
+      "id": "G29",
+      "kind": "performance",
+      "text": "EIRENE mobile equipment shall be capable of operating over a standard range of temperatures from -20\u00b0C to +55\u00b0C."
+    },
+    {
+      "id": "G30",
+      "kind": "reliability",
+      "text": "EIRENE mobile equipment shall be capable of being stored at temperatures down to -40\u00b0C without any permanent damage."
+    },
+    {
+      "id": "G31",
+      "kind": "performance",
+      "text": "The equipment shall be capable of coping with temperature variations of up to +/- 1\u00b0C/minute."
+    },
+    {
+      "id": "G32",
+      "kind": "performance",
+      "text": "EIRENE mobile equipment shall be capable of operating between altitudes of -100m and 1800m."
+    },
+    {
+      "id": "G33",
+      "kind": "performance",
+      "text": "The equipment shall be able to cope with relative humidities of 100% for short periods."
+    },
+    {
+      "id": "G34",
+      "kind": "performance",
+      "text": "The equipment shall cope with 95% humidity for 30 days in the year."
+    },
+    {
+      "id": "G35",
+      "kind": "reliability",
+      "text": "Operationally caused infrequent and slight moisture condensation shall not lead to any malfunction or failure."
+    },
+    {
+      "id": "G36",
+      "kind": "reliability",
+      "text": "All equipment shall not degrade photochemically when exposed to solar radiation of up to 1200 W/m2."
+    },
+    {
+      "id": "G37",
+      "kind": "reliability",
+      "text": "All EIRENE mobile equipment shall be protected against shock and vibration in compliance with standards defined in prEN 50125."
+    },
+    {
+      "id": "G38",
+      "kind": "reliability",
+      "text": "All handheld mobile equipment shall be capable of withstanding non-repetitive shocks of up to 3g for up to 100ms."
+    },
+    {
+      "id": "G39",
+      "kind": "reliability",
+      "text": "All handheld mobile equipment shall be capable of withstanding free fall from 0.5m."
+    },
+    {
+      "id": "G40",
+      "kind": "reliability",
+      "text": "EIRENE mobile equipment shall be capable of being subjected to both sinusoidal and random vibration."
+    }
+  ],
+  "suggested_implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "provenance": {
+    "status": "LLM-SUGGESTED - unverified, not gold",
+    "model": "gemini-3-flash-preview",
+    "prompt_version": "prelabel-v1",
+    "generated_at": "2026-11-06T07:12:04Z",
+    "source_document_sha256": "aae540d729e3e1fa9bd8c410946a3dbf32dd61054b0021cc75fb15bcf930de3b",
+    "doc_truncated": true,
+    "token_usage": {
+      "promptTokenCount": 24631,
+      "candidatesTokenCount": 3506,
+      "totalTokenCount": 36637,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 24631
+        }
+      ],
+      "thoughtsTokenCount": 8500,
+      "serviceTier": "standard"
+    }
+  }
+}
