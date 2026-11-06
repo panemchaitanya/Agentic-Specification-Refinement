@@ -86,6 +86,7 @@ def main() -> int:
         cfg = ExperimentConfig(
             baseline=baseline, dataset_id="pure-dev-frozen", repeats=1,
             input_scope_chars=SCOPE,
+            persist_requirements=True,
             note=("bounded dev evaluation (120k-char prefix scope); gold = "
                   "anchored human-verified FROZEN subset only; NOT the "
                   "final TEST protocol"))

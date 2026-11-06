@@ -48,6 +48,10 @@ class ExperimentConfig:
     # 120_000) for bounded dev runs; leave None for full-document (the only
     # valid scope for the final TEST evaluation).
     input_scope_chars: int | None = None
+    # Persist the generated requirements per run record (ids assigned
+    # sequentially as <KIND>-<n>). Needed for rubric match verdicts and
+    # the 20% hand-audit; off by default to keep smoke/pilot logs small.
+    persist_requirements: bool = False
 
 
 def run_experiment(config: ExperimentConfig, items: list, llm_factory,
@@ -116,6 +120,11 @@ def run_experiment(config: ExperimentConfig, items: list, llm_factory,
                     and len(item["prd_text"]) > scope,
                     "finding_trace_verbatim_rate": meta.get(
                         "finding_trace_verbatim_rate"),
+                    "requirements": ([
+                        {"id": f"{r.kind}-{n}", "kind": r.kind,
+                         "text": r.text}
+                        for n, r in enumerate(spec.requirements, 1)]
+                        if config.persist_requirements else None),
                     "llm": llm.summary(),
                 }
                 if item.get("implied_categories") is not None:
