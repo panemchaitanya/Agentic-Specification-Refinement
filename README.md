@@ -49,14 +49,17 @@ Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
   feasibility and the honest floor a trained model must beat, not
   hypothesis evidence for H1-H3.
 
-  **Preserved checkpoint:** the best config was re-trained on Colab T4
-  with `--save-dir` and the checkpoint (model + tokenizer + label order,
-  ~247 MB zip) is kept outside git on Drive (`ASE-weights/`). That
-  preservation run itself measured accuracy 0.8605 / macro-F1 0.7571 on
-  the same dev holdout - training is currently unseeded, so re-runs of
-  the same config vary run to run (recorded as run 8 in
-  `training/pilot_results.json`; the checkpoint corresponds to that run,
-  not to the sweep row).
+  **Preserved checkpoint:** an unseeded retrain feasibility checkpoint
+  of the best config (model + tokenizer + label order, 247 MB zip in six
+  parts) is kept outside git on Drive (`ASE-weights/`), byte-verified;
+  see `training/WEIGHTS_CHECKPOINT.md` for links, assembly, hashes and
+  run identity. The original preservation run (accuracy 0.8605 /
+  macro-F1 0.7571, recorded as run 8 in `training/pilot_results.json`)
+  lost its checkpoint when the Colab VM was recycled; the preserved
+  bytes are a retrain of the same config whose own observed macro-F1 was
+  0.6489 - training is unseeded, so quality varies run to run and the
+  recorded sweep/preservation numbers are NOT achieved-by-claim for the
+  preserved checkpoint.
 - **Evaluation harness:** frozen-split runner with pre-registered H1-H3
   (`docs/evaluation.md`, decisions D1-D4), gold fail-closed loading
   (`eval/gold.py`), and run logs under `eval/runs/`. No frozen evaluation
@@ -70,6 +73,12 @@ minute to wake. Demo output shows the flow, not refinement quality.
 ## Known quality gaps (carried, not solved)
 
 These are evaluation targets for Stages 2-4, not claims of quality:
+
+- Classifier training is unseeded: the same config measured macro-F1
+  0.782 / 0.7571 / 0.6489 on three runs of the same frozen dev holdout.
+  Deterministic seeded training and a reproducibility check are open
+  work (`training/WEIGHTS_CHECKPOINT.md` records the runs and the
+  preserved checkpoint's identity honestly).
 
 - Gold coverage is scope-bounded: the LLM pre-labeler saw at most the
   first 120,000 chars per document (18 of 61 dev documents are longer),

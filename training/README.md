@@ -17,6 +17,7 @@ Owns: `data/raw/`, `data/frozen/`, `training/` (see LANES.md).
 | `validate_pairs.py` | Interactive hand-validation of pair candidates; verdicts recorded in pilot_sample.json, only passing pairs reach gold/freeze. |
 | `extract_pure_text.py` | Convert PURE pdf/doc/rtf/html to text under `data/frozen/pure/text/<split>/`; per-document coverage in EXTRACTION_REPORT.json (failures recorded, never dropped silently). |
 | `pilot_results.json` | Recorded pilot runs (created by the pilot; numbers are never hand-edited). |
+| `WEIGHTS_CHECKPOINT.md` | Manifest for the Drive-hosted DistilBERT checkpoint: links, assembly, hashes, run identity, unseeded-retrain caveat. |
 
 ## Reproduce from scratch
 
