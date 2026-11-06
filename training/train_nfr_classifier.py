@@ -113,7 +113,8 @@ def run_tfidf(tr_x, tr_y, va_x, va_y) -> dict:
     }
 
 
-def run_distilbert(tr_x, tr_y, va_x, va_y, epochs: int, batch: int, max_len: int, lr: float) -> dict:
+def run_distilbert(tr_x, tr_y, va_x, va_y, epochs: int, batch: int, max_len: int, lr: float,
+                   save_dir: str | None = None) -> dict:
     import torch
     from torch.utils.data import DataLoader, Dataset
     from transformers import (AutoModelForSequenceClassification,
@@ -170,6 +171,14 @@ def run_distilbert(tr_x, tr_y, va_x, va_y, epochs: int, batch: int, max_len: int
     }
     if device == "cuda":
         out["peak_cuda_mb"] = round(torch.cuda.max_memory_allocated() / 1e6, 1)
+    if save_dir:
+        from pathlib import Path as _P
+        d = _P(save_dir)
+        d.mkdir(parents=True, exist_ok=True)
+        model.save_pretrained(d)
+        tok.save_pretrained(d)
+        (d / "label_order.json").write_text(json.dumps(labels))
+        out["saved_to"] = str(d)
     return out
 
 
@@ -180,6 +189,8 @@ def main() -> int:
     ap.add_argument("--batch", type=int, default=16)
     ap.add_argument("--max-len", type=int, default=128)
     ap.add_argument("--lr", type=float, default=2e-5)
+    ap.add_argument("--save-dir", default="",
+                    help="if set, save model+tokenizer+label order here")
     args = ap.parse_args()
 
     texts, labels = load_dev()
@@ -187,7 +198,8 @@ def main() -> int:
     print(f"dev rows={len(texts)} -> train={len(tr_x)} val={len(va_x)} "
           f"(classes={len(set(labels))})")
     result = run_tfidf(tr_x, tr_y, va_x, va_y) if args.backend == "tfidf" \
-        else run_distilbert(tr_x, tr_y, va_x, va_y, args.epochs, args.batch, args.max_len, args.lr)
+        else run_distilbert(tr_x, tr_y, va_x, va_y, args.epochs, args.batch, args.max_len, args.lr,
+                        save_dir=args.save_dir or None)
     result.update({
         "recorded_at": datetime.now(timezone.utc).isoformat(),
         "dataset": "PROMISE NFR frozen dev split only (test untouched)",
