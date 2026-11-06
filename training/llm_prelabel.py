@@ -67,7 +67,13 @@ def main() -> int:
     ap.add_argument("--max-calls", type=int, default=150)
     ap.add_argument("--max-seconds", type=float, default=100)
     ap.add_argument("--sleep", type=float, default=2.0)
+    ap.add_argument("--docs", default="",
+                    help="comma-separated item ids; default: all")
+    ap.add_argument("--tag", default="",
+                    help="output suffix, e.g. '_b' writes "
+                         "<item>.llm_suggestions_b.json (cross-check runs)")
     args = ap.parse_args()
+    only = set(args.docs.split(",")) if args.docs else None
 
     llm = GeminiLLM()
     started = time.time()
@@ -86,7 +92,10 @@ def main() -> int:
             "split": args.split}) + "\n")
         for gold_path in sorted((GOLD_DIR / args.split).glob("*.gold.json")):
             item_id = gold_path.stem.replace(".gold", "")
-            out_path = out_dir / f"{item_id}.llm_suggestions.json"
+            if only is not None and item_id not in only:
+                continue
+            suffix = f".llm_suggestions{args.tag}.json"
+            out_path = out_dir / f"{item_id}{suffix}"
             if out_path.exists():
                 skipped += 1
                 continue
