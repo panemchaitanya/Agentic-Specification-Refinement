@@ -150,6 +150,20 @@ is the real-human check.
   kappa from the two independent extractors.
 - Contamination guard (proposal): documents dated after the model's
   training cutoff are preferred and reported as a separate subset.
+- Bounded-scope rule (6 Nov 2026, D5 candidate): the LLM pre-labeler saw
+  at most the first 120,000 chars of each document
+  (`training/llm_prelabel.py` MAX_DOC_CHARS; 18 of 61 dev documents
+  exceed this). Human review pages exactly that same range
+  (`training/verify_suggestions.py`), and every verdict records
+  `review_scope` (chars presented vs LLM scope). Therefore any dev-split
+  scoring run MUST bound the pipeline input to the same 120,000-char
+  prefix per document: never score full-document pipeline output against
+  prefix-scoped gold. Such runs are labeled "bounded dev evaluation
+  (120k-char prefix scope)". For the 43 documents at or under 120k chars
+  the bounded scope IS the full document. The frozen full-document
+  protocol above is unchanged and is the only protocol valid for the
+  final TEST evaluation; the bound is a dev-stage correctness repair,
+  not a protocol change.
 
 ## 7. Run logs and reproducibility
 

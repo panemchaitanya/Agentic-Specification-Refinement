@@ -69,6 +69,13 @@ minute to wake. Demo output shows the flow, not refinement quality.
 
 These are evaluation targets for Stages 2-4, not claims of quality:
 
+- Gold coverage is scope-bounded: the LLM pre-labeler saw at most the
+  first 120,000 chars per document (18 of 61 dev documents are longer),
+  and human review pages that same range. Dev-split scoring runs
+  therefore bound pipeline input to the same prefix ("bounded dev
+  evaluation", docs/evaluation.md section 6). Documents over 120k chars
+  carry prefix-only gold; no full-document recall is claimed anywhere.
+
 - FR/NFR typing of PRD statements is a keyword heuristic
   (`orchestrator.classify_statement`): explicit quality wording ("fast",
   "secure", ...) becomes an NFR category, everything else stays FR. The

@@ -35,6 +35,11 @@ from specpipe.schemas import NFR_CATEGORIES  # noqa: E402
 
 KINDS = ["FR"] + NFR_CATEGORIES
 
+# Same scope the LLM pre-labeler saw (training/llm_prelabel.py
+# MAX_DOC_CHARS): reviewers page through exactly this range.
+LLM_SCOPE_CHARS = 120_000
+PAGE_CHARS = 4000
+
 
 def ask(prompt: str, valid: set[str]) -> str:
     while True:
@@ -51,12 +56,37 @@ def verify_doc(item_id: str, annotator: str, split: str) -> dict:
     doc_name = Path(skel["prd_path"]).name + ".txt"
     doc = (TEXT / split / doc_name).read_text(encoding="utf-8",
                                               errors="replace")
+    llm_scope = doc[:LLM_SCOPE_CHARS]
+    truncated_for_llm = len(doc) > LLM_SCOPE_CHARS
     print("=" * 72)
-    print(f"ITEM {item_id}  ({len(doc)} chars, "
+    print(f"ITEM {item_id}  ({len(doc)} chars total, "
           f"{len(sugg['suggested_requirements'])} suggestions)")
+    if truncated_for_llm:
+        print(f"NOTE: the AI only saw the first {LLM_SCOPE_CHARS} chars of "
+              f"this document (it is {len(doc)} chars). Review that same "
+              f"range; the tail beyond it is out of scope for this pass.")
+    print(f"Full text file (same content): "
+          f"data/frozen/pure/text/{split}/{doc_name}")
     print("-" * 72)
-    print("DOCUMENT EXCERPT (first 2000 chars; full text is the ground):")
-    print(doc[:2000])
+    print("FULL DOCUMENT TEXT (the AI's scope), paged. "
+          "Enter = next page, d + Enter = done reading.")
+    presented = 0
+    for start in range(0, len(llm_scope), PAGE_CHARS):
+        print("-" * 72)
+        print(llm_scope[start:start + PAGE_CHARS])
+        presented = start + PAGE_CHARS
+        if start + PAGE_CHARS >= len(llm_scope):
+            print("-- end of the AI's document scope --")
+            break
+        more = input(f"[{presented}/{len(llm_scope)} chars] "
+                     "Enter = next page, d = done reading: ")
+        if more.strip().lower() == "d":
+            break
+    presented = min(presented, len(llm_scope))
+    if presented < len(llm_scope):
+        print(f"READER STOPPED at {presented}/{len(llm_scope)} chars - "
+              f"recorded in the verdict. Judge 'missed' only against what "
+              f"you actually read.")
     print("-" * 72)
     verdicts = []
     for r in sugg["suggested_requirements"]:
@@ -85,6 +115,12 @@ def verify_doc(item_id: str, annotator: str, split: str) -> dict:
         "item_id": item_id, "annotator": annotator, "split": split,
         "finished_at": datetime.now(timezone.utc).isoformat(),
         "verdicts": verdicts, "added_requirements": added,
+        "review_scope": {
+            "doc_chars_total": len(doc),
+            "llm_scope_chars": len(llm_scope),
+            "chars_presented_to_reviewer": presented,
+            "reviewer_read_full_llm_scope": presented >= len(llm_scope),
+        },
         "source_suggestion_file": f"data/frozen/gold_llm_suggestions/"
                                   f"{split}/{item_id}.llm_suggestions.json",
     }
