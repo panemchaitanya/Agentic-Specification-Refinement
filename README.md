@@ -13,13 +13,40 @@ came from: a PRD sentence, a critic, or a human answer.
 
 ## Status
 
-Walking skeleton (Stage 1 of the project plan): the full PRD-to-spec loop
-works end to end. Critics are currently one LLM with narrow role prompts
-(baseline B2 in the proposal); fine-tuned SLM critics (hypothesis H2),
-frozen-split evaluation (H1-H3) and the ground-truth study are planned
-next. Without a `GEMINI_API_KEY` the app runs in a deterministic demo mode
-used for development and tests; demo-mode output is not model-quality and
-is never used for evaluation.
+Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
+
+- **Pipeline (Stage 1):** the full PRD-to-spec loop works end to end.
+  Critics are currently one LLM with narrow role prompts (baseline B2 in
+  the proposal). Without a `GEMINI_API_KEY` the app runs in a
+  deterministic demo mode used for development and tests; demo-mode
+  output is not model-quality and is never used for evaluation.
+- **UI:** guided web wizard (upload PRD -> extraction -> critic review ->
+  spec download) served by the Streamlit app, plus the hosted demo below.
+- **Datasets (Stage 2):** PROMISE NFR and PURE are frozen under
+  `data/frozen/` with manifest, provenance and license documentation
+  (`docs/datasets.md`). Dev/test discipline: test stays untouched until
+  the Stage 4 evaluation.
+- **Ground truth (in progress):** 61 dev documents carry LLM-suggested
+  requirement labels (free-tier model, status "LLM-SUGGESTED -
+  unverified, not gold"; the evaluation loader rejects them fail-closed).
+  A human verification pass is underway with fixed guidelines
+  (`training/ANNOTATION_GUIDELINES.md`, `training/verify_suggestions.py`,
+  `docs/verification_assignment.md`); verified documents are promoted to
+  FROZEN gold by `training/merge_verdicts.py` with inter-annotator
+  agreement (Cohen's kappa) on a shared subsample. Until then, no gold
+  claims are made.
+- **Training pilot (Stage 3, feasibility only):** NFR classification
+  subtask on the frozen PROMISE dev split, dev-internal stratified holdout
+  (`training/train_nfr_classifier.py`, `training/pilot_results.json`).
+  Measured so far: TF-IDF + logistic regression accuracy 0.744 / macro-F1
+  0.679; DistilBERT 2-epoch CPU pilot accuracy 0.779 / macro-F1 0.504
+  (GPU sweep pending). These are pilot-label numbers: they measure
+  feasibility and the honest floor a trained model must beat, not
+  hypothesis evidence for H1-H3.
+- **Evaluation harness:** frozen-split runner with pre-registered H1-H3
+  (`docs/evaluation.md`, decisions D1-D4), gold fail-closed loading
+  (`eval/gold.py`), and run logs under `eval/runs/`. No frozen evaluation
+  result is claimed yet.
 
 **Hosted demo:** https://agentic-specification-refinement.onrender.com
 runs the app in demo mode only (no API key in hosted secrets, by design).
