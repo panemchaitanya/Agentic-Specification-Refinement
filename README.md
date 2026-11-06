@@ -63,9 +63,11 @@ Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
 - **Evaluation harness:** frozen-split runner with pre-registered H1-H3
   (`docs/evaluation.md`, decisions D1-D4), gold fail-closed loading
   (`eval/gold.py`), and run logs under `eval/runs/`. Status 2026-11-06:
-  the dev gold subset is still SKELETON pending the two-extractor
-  verdict pass, so `run_dev_eval.py --dry-run` reports 0 eligible / 61
-  excluded (fail-closed); no frozen evaluation result is claimed yet.
+  the first annotator's verdicts arrived on 2026-11-06 and 2 documents
+  are now FROZEN (anchored, single annotator: pure-0000 cctns,
+  pure-0000 gamma_j), so `run_dev_eval.py --dry-run` reports 2
+  eligible / 59 excluded (fail-closed) pending the remaining verdicts
+  and adjudication; no frozen evaluation result is claimed yet.
   Pre-freeze generation ran on 2026-11-06 against the free-tier Gemini
   model: 43 of 61 dev documents have complete B1+B2+B3 triplets
   (per-document logs `eval/runs/*-pure-dev-pregen-20261106-*.jsonl`,
