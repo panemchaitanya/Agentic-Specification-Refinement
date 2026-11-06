@@ -118,17 +118,26 @@ def verify_doc(item_id: str, annotator: str, split: str) -> dict:
     ic = sugg.get("suggested_implied_categories", [])
     print(f"\nImplied NFR categories suggested by the AI: {ic or 'none'}")
     a = ask("  [a]ccept as listed / [e]dit (enter comma-separated kinds) / "
-            "[n]one (verified: this document implies NO NFR categories)? ",
-            {"a", "e", "n"})
+            "[n]one (verified: this document implies NO NFR categories) / "
+            "[u]nsure (leave unreviewed - the document stays eligible for "
+            "scoring but is excluded from the H3 completeness comparison)? ",
+            {"a", "e", "n", "u"})
+    implied_reviewed = True
     if a == "a":
         implied = list(ic)
     elif a == "e":
-        raw = input("  categories (comma-separated, from "
-                    + ", ".join(NFR_CATEGORIES) + "): ").strip()
-        implied = [c.strip() for c in raw.split(",") if c.strip()]
-        bad = [c for c in implied if c not in NFR_CATEGORIES]
-        if bad:
-            print(f"  WARNING: unknown categories {bad} - recorded as typed")
+        while True:
+            raw = input("  categories (comma-separated, from "
+                        + ", ".join(NFR_CATEGORIES) + "): ").strip()
+            implied = [c.strip() for c in raw.split(",") if c.strip()]
+            bad = [c for c in implied if c not in NFR_CATEGORIES]
+            if not bad:
+                break
+            print(f"  unknown categories {bad} - use only: "
+                  + ", ".join(NFR_CATEGORIES))
+    elif a == "u":
+        implied = []
+        implied_reviewed = False
     else:
         implied = []
     # Explicit full-scope confirmation (recorded next to the page counter).
@@ -141,7 +150,7 @@ def verify_doc(item_id: str, annotator: str, split: str) -> dict:
         "finished_at": datetime.now(timezone.utc).isoformat(),
         "verdicts": verdicts, "added_requirements": added,
         "implied_categories": implied,
-        "implied_categories_reviewed": True,
+        "implied_categories_reviewed": implied_reviewed,
         "review_scope": {
             "doc_chars_total": len(doc),
             "llm_scope_chars": len(llm_scope),
@@ -169,8 +178,25 @@ def main() -> int:
     if args.docs:
         want = set(args.docs.split(","))
         queue = [q for q in queue if q in want]
-    todo = [q for q in queue
-            if not (out_dir / f"{q}.{args.annotator}.verdict.json").exists()]
+    todo, redo = [], []
+    for q in queue:
+        vf = out_dir / f"{q}.{args.annotator}.verdict.json"
+        if not vf.exists():
+            todo.append(q)
+            continue
+        try:
+            prev = json.loads(vf.read_text())
+        except Exception:
+            todo.append(q)
+            continue
+        if not (prev.get("review_scope") or {}).get(
+                "reviewer_read_full_llm_scope"):
+            redo.append(q)  # incomplete read: explicit re-review
+    if redo:
+        print(f"RE-REVIEW: {len(redo)} document(s) had an incomplete read "
+              f"last time and are queued again (new verdicts overwrite the "
+              f"old ones): {', '.join(redo)}")
+        todo = redo + todo
     print(f"{len(todo)} documents to verify for {args.annotator} "
           f"(of {len(queue)} in scope)")
     t0 = time.time()

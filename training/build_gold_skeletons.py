@@ -2,20 +2,20 @@
 
 One skeleton per item, in the exact `eval/gold.py` format, so the two
 independent extractors (docs/extraction-guidelines.md) fill in
-`gold_requirements` and `implied_categories`, and adjudication records
-`provenance.extractor_agreement_kappa`. Skeletons are NOT gold: they
-carry `provenance.status = "SKELETON - ..."`, and the evaluation lane
-must not consume them until requirements are filled and kappa recorded
-(a skeleton with empty gold_requirements is a placeholder, never ground
-truth).
+`gold_requirements` and verified `implied_categories`, and the anchored
+accept/reject kappa is recorded as `provenance.kappa_accept_reject`.
+Skeletons are NOT gold: they carry `provenance.status = "SKELETON - ..."`,
+and the evaluation lane must not consume them until requirements are
+filled by the fail-closed merge (a skeleton with empty gold_requirements
+is a placeholder, never ground truth).
 
 Status convention (ruled by the evaluation lane, 6 Nov 2026): load_gold
 whitelists - a gold file's provenance.status must START WITH "FROZEN"
 when present; anything else (this skeleton's sentence, bare "SKELETON",
-"PARTIAL", unknown future statuses) is rejected, with non-empty
-gold_requirements as the second layer. When the two-extractor pass +
-adjudication completes, flip the status to e.g.
-"FROZEN - two-extractor pass + adjudication complete" and record kappa.
+"PARTIAL", "REVIEW-INCOMPLETE", unknown future statuses) is rejected,
+with non-empty gold_requirements as the second layer. Promotion happens
+only via training/merge_verdicts.py (anchored verification, fail-closed
+R5): "FROZEN - human-verified (anchored, ...)".
 
 Sources of items:
   --pairs   validated pair records from data/frozen/pairs/pilot_sample.json
@@ -45,8 +45,8 @@ def skeleton(item_id: str, prd_path: str, freeze_id: str) -> dict:
         "provenance": {
             "extractor_agreement_kappa": None,
             "freeze_id": freeze_id,
-            "status": "SKELETON - not gold until two-extractor pass + "
-                      "adjudication + kappa are recorded",
+            "status": "SKELETON - not gold until anchored human "
+                      "verification + fail-closed merge (R5)",
         },
     }
 

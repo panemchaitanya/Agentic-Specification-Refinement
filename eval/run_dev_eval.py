@@ -49,9 +49,12 @@ def collect_items() -> tuple[list, list]:
         if not ok:
             excluded.append((item_id, reason))
             continue
-        text_path = TEXT_DEV / f"{item_id}.txt"
+        # same resolution as training/verify_suggestions.py: the frozen
+        # text file is named after the source document, not the item id
+        doc_name = Path(gold["prd_path"]).name + ".txt"
+        text_path = TEXT_DEV / doc_name
         if not text_path.exists():
-            excluded.append((item_id, f"missing text {text_path.name}"))
+            excluded.append((item_id, f"missing text {doc_name}"))
             continue
         items.append({
             "id": item_id,
