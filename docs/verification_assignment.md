@@ -1,18 +1,22 @@
 # Gold verification assignment — mid-submission (6 Nov 2026)
 
 Two annotators, all 61 dev documents. Guidelines: training/ANNOTATION_GUIDELINES.md.
+Owner assignment (6 Nov 2026): Part A = Anshul (annotator id `a`), Part B = Anjali (annotator id `b`).
 Tool: `python3 training/verify_suggestions.py --annotator <name> --split dev --docs <list>`
 (stdlib only, Python 3.10+, resumable — rerun the same command to continue).
 Output: one verdict JSON per doc under data/frozen/gold_verdicts/dev/.
 
 Each annotator verifies their UNIQUE list plus the SHARED list. Shared docs are
-verified independently by both (no peeking); pairwise Cohen's kappa on
-accept/reject is computed from them at merge time (training/merge_verdicts.py),
-conflicts resolve by majority vote — tie means the item stays out
-(conservative). Unsure about an item? press s (skip) — skipped items stay
-unverified instead of guessed.
+verified independently by both (no peeking); anchored pairwise Cohen's kappa
+on accept/reject decisions (skips excluded) is computed from them at merge time
+(training/merge_verdicts.py). Merge is FAIL-CLOSED (docs/evaluation.md R5):
+any skip, no-majority tie, contested edit or incomplete read makes the whole
+document REVIEW-INCOMPLETE and ineligible for scoring until adjudicated -
+there is no partial-gold scoring. Unsure about an item? press s (skip) -
+skipped items stay unresolved instead of guessed, and the document waits for
+adjudication.
 
-Estimated pace: ~12 min/doc. A: 27+8=35 docs ≈ 7h. B: 26+8=34 docs ≈ 6.8h.
+Estimated pace: ~15-20 min/doc with full paged reading of the AI scope. A: 27+8=35 docs ≈ 9-12h. B: 26+8=34 docs ≈ 9-11h. Split across sittings; the tool resumes where you stopped.
 
 ## Annotator A — 27 unique + 8 shared
 pure-2005_-_grid_3D,pure-2007_-_get_real_0.2,pure-2009_-_video_search,pure-2003_-_qheadache,pure-2010_-_mashboot,pure-2009_-_warc_III,pure-0000_-_inventory,pure-2009_-_library,pure-0000_-_cctns,pure-2005_-_triangle,pure-2009_-_gaia,pure-2010_-_split_merge,pure-2005_-_microcare,pure-0000_-_gamma_j,pure-2004_-_sprat,pure-2004_-_e-procurement,pure-2008_-_vub,pure-2006_-_stewards,pure-2007_-_ertms,pure-2001_-_telescope,pure-2005_-_pontis,pure-2004_-_rlcs,pure-2002_-_sce_api,pure-2007_-_nde,pure-2001_-_hats,pure-2007_-_nlm,pure-2000_-_nasa_x38
