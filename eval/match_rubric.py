@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -40,12 +41,22 @@ requirements (human-verified) and PREDICTED requirements (model output)
 from the same source document. Reply with ONLY a JSON array of
 [gold_id, pred_id] pairs where the two entries state the SAME
 requirement (paraphrases count; a looser, stronger, or merely related
-statement does NOT). One gold entry matches at most one prediction and
-vice versa. When unsure, do NOT match. No prose, only the JSON array."""
+statement does NOT). A match is valid only when both entries have the
+SAME kind/class: FR matches FR, and an NFR category matches only the
+same category (shown in brackets). One gold entry matches at most one
+prediction and vice versa. When unsure, do NOT match. No prose, only
+the JSON array."""
 
 
-def parse_pairs(raw: str, gold_ids: set, pred_ids: set) -> tuple:
-    """Validated (pairs, dropped_count). Anything unverifiable drops."""
+def parse_pairs(raw: str, gold_ids: set, pred_ids: set,
+                gold_kinds: dict | None = None,
+                pred_kinds: dict | None = None) -> tuple:
+    """Validated (pairs, dropped_count). Anything unverifiable drops.
+
+    gold_kinds/pred_kinds (id -> kind/class) enforce the rubric's
+    same-kind constraint in the parser, not only in the prompt: a
+    cross-kind proposal is invalid and counted in dropped, never kept.
+    """
     text = raw.strip()
     if text.startswith("```"):
         text = text.strip("`")
@@ -60,14 +71,18 @@ def parse_pairs(raw: str, gold_ids: set, pred_ids: set) -> tuple:
     if not isinstance(data, list):
         return [], -1
     for entry in data:
-        if (isinstance(entry, list) and len(entry) == 2
+        if not (isinstance(entry, list) and len(entry) == 2
                 and entry[0] in gold_ids and entry[1] in pred_ids
                 and entry[0] not in seen_g and entry[1] not in seen_p):
-            pairs.append([entry[0], entry[1]])
-            seen_g.add(entry[0])
-            seen_p.add(entry[1])
-        else:
             dropped += 1
+            continue
+        if (gold_kinds is not None and pred_kinds is not None
+                and gold_kinds[entry[0]] != pred_kinds[entry[1]]):
+            dropped += 1  # cross-kind proposal: invalid, never kept
+            continue
+        pairs.append([entry[0], entry[1]])
+        seen_g.add(entry[0])
+        seen_p.add(entry[1])
     return pairs, dropped
 
 
@@ -104,17 +119,19 @@ def match_run_log(log_path: str, llm, dry: bool = False) -> dict:
             continue
         preds = rec["requirements"]
         pred_ids = {p["id"] for p in preds}
-        gold_ids = {g["id"] for g in gold["gold_requirements"]}
+        pred_kinds = {p["id"]: p["kind"] for p in preds}
+        gold_reqs = gold["gold_requirements"]
+        gold_ids = {g["id"] for g in gold_reqs}
+        gold_kinds = {g["id"]: g["kind"] for g in gold_reqs}
         if dry:
             continue
         try:
-            raw = llm.complete(_SYSTEM,
-                               build_prompt(gold["gold_requirements"],
-                                            preds))
+            raw = llm.complete(_SYSTEM, build_prompt(gold_reqs, preds))
         except LLMError as exc:
             summary["errors"].append(f"{item_id}/{baseline}: {exc}")
             continue
-        pairs, dropped = parse_pairs(raw, gold_ids, pred_ids)
+        pairs, dropped = parse_pairs(raw, gold_ids, pred_ids,
+                                     gold_kinds, pred_kinds)
         if dropped == -1:
             summary["errors"].append(
                 f"{item_id}/{baseline}: unparseable rubric output")
@@ -125,7 +142,12 @@ def match_run_log(log_path: str, llm, dry: bool = False) -> dict:
         verdict = {"item_id": item_id,
                    "run_id": f"{run_id}:{baseline}",
                    "pred_ids": sorted(pred_ids),
-                   "matches": pairs, "audited": False}
+                   "matches": pairs, "audited": False,
+                   "dropped_pairs": dropped,
+                   "matcher": {"type": "llm-rubric",
+                               "model": getattr(llm, "model", "unknown"),
+                               "matched_at":
+                                   f"{datetime.now(timezone.utc):%Y-%m-%dT%H:%M:%SZ}"}}
         if not dry:
             out_dir.mkdir(parents=True, exist_ok=True)
             (out_dir / f"{item_id}.{baseline}.json").write_text(

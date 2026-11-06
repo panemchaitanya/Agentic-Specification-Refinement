@@ -90,3 +90,30 @@ def test_missing_persisted_requirements_is_error(tmp_path, monkeypatch):
     s = mr.match_run_log(log, _FakeLLM('[]'))
     assert s["verdicts"] == 0 and "no persisted requirements" in \
         s["errors"][0]
+
+
+def test_cross_kind_proposals_dropped():
+    pairs, dropped = mr.parse_pairs(
+        '[["G1","NFR-1"],["G2","NFR-2"]]',
+        {"G1", "G2"}, {"NFR-1", "NFR-2"},
+        gold_kinds={"G1": "FR", "G2": "security"},
+        pred_kinds={"NFR-1": "security", "NFR-2": "security"})
+    assert pairs == [["G2", "NFR-2"]]  # G1/NFR-1 is cross-kind: dropped
+    assert dropped == 1
+
+
+def test_verdict_carries_matcher_metadata(tmp_path, monkeypatch):
+    _write_gold(tmp_path, monkeypatch)
+    log = _write_run_log(tmp_path)
+
+    class _NamedLLM(_FakeLLM):
+        model = "test-model-1"
+
+    s = mr.match_run_log(log, _NamedLLM('[["G1","FR-1"],"junk"]'))
+    assert s["verdicts"] == 1 and s["dropped_pairs"] == 1
+    v = json.loads((tmp_path / "eval" / "verdicts" / "T1"
+                    / "doc1.B1.json").read_text())
+    assert v["dropped_pairs"] == 1
+    assert v["matcher"]["model"] == "test-model-1"
+    assert v["matcher"]["type"] == "llm-rubric"
+    assert v["audited"] is False

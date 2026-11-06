@@ -114,8 +114,9 @@ before any evaluation data exists.
     tests (section 4).
   - Operationalization: the proposal says "higher recall"; we require the
     95% CI to exclude 0 rather than only a positive mean difference -
-    this is the pre-registered significance bar implied by "report
-    bootstrap confidence intervals", and it is stricter, never looser.
+    this is the significance bar specified by this evaluation plan,
+    implied by "report bootstrap confidence intervals", and it is
+    stricter, never looser.
     The raw mean differences are reported alongside either way.
 - **H2** = SLM vs LLM critics in identical roles, per-item paired NFR F1.
   Supported iff mean F1(SLM) - F1(LLM) >= -0.05. Token cost and latency
@@ -309,6 +310,14 @@ traces itself is a coordinator core decision, flagged here pre-data.
   hypothesis evidence.
 - **evaluation** - runs on the frozen test split under this protocol: the
   only evidence cited for H1-H3.
+- **rubric-matched dev results are pilot/feasibility only.** Dev-split
+  scores from `eval/match_rubric.py` verdicts (LLM-judged matches,
+  bounded 120k-char prefix scope, `audited=false` until the 20%
+  hand-audit completes) are reported as pilot evidence with measured
+  paired counts and exclusions - never as H1-H3 conclusions, and with no
+  assumed equal-bias or lower-bound claims about the judge: judge errors
+  can be unequal across arms in either direction, which is exactly what
+  the audit quantifies.
 - **oracle evidence** - from the automated ReferenceOracle: repeatable,
   but a simulated and extractive upper bound on human cooperation and on
   phrasing leakage; always labeled "simulated human (oracle)".
