@@ -1,4 +1,4 @@
-# Datasets and training
+# Datasets and training - Team ReqHQ (Agentic Specification Refinement)
 
 Owns: `data/raw/`, `data/frozen/`, `training/` (see LANES.md).
 

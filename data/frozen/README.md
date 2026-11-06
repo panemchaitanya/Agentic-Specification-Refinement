@@ -1,4 +1,4 @@
-# Frozen data (Stage 0)
+# Frozen data (Stage 0) - Team ReqHQ (Agentic Specification Refinement)
 
 Contents and owners:
 
