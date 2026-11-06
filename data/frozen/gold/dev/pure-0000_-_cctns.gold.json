@@ -1,13 +1,204 @@
 {
   "item_id": "pure-0000_-_cctns",
   "prd_path": "data/raw/pure/extracted/0000 - cctns.pdf",
-  "implied_categories": [],
-  "gold_requirements": [],
+  "implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "gold_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "Citizens shall be able to register complaints with the police.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall facilitate the investigation process by automating tasks after registration.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall provide a platform to record entries of court interactions for prosecution.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow police personnel to execute basic or advanced searches on cases, persons, crimes, modus operandi, and property.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow users to customize search result views by criminal, accused, or case.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall enable police to generate reports including monthly reporting and RTI related queries.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide a citizen interface for information exchange and acknowledgements between citizens and police.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall provide role-based landing pages showing assigned cases, alerts, and pending tasks.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G10",
+      "kind": "security",
+      "text": "The system must keep an unalterable audit trail of all create, read, update, and delete actions on critical entities.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G11",
+      "kind": "security",
+      "text": "The system must log unauthorized attempts to access cases in the audit trail.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "The system must allow administrators to limit access to cases to specified users or user groups.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system must support role-based control for all system functionality.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G14",
+      "kind": "security",
+      "text": "The system must allow only admin-users to set up user profiles and allocate users to groups.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G15",
+      "kind": "security",
+      "text": "The system must support SSL encrypted connections and secure virtual private network connections.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G16",
+      "kind": "security",
+      "text": "The system must use HTTPS as the communication protocol.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G17",
+      "kind": "security",
+      "text": "The system must prevent cross-site scripting, SQL injection, and validate/encode all incoming data.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "The system must perform a simple search within 5-8 seconds.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The system must perform an advanced search within 10-15 seconds.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G20",
+      "kind": "performance",
+      "text": "The time taken by the system must retrieve and display cases that have been accessed in the last 2 months within 5-8 seconds",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G21",
+      "kind": "performance",
+      "text": "The system must retrieve and display infrequently accessed cases within 20 seconds.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G22",
+      "kind": "usability",
+      "text": "The system must provide detailed context-sensitive help material for all user interfaces.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G23",
+      "kind": "usability",
+      "text": "The system must provide a single set of user interface rules to ensure a common look and feel.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G24",
+      "kind": "usability",
+      "text": "The system must support multilingual interfaces.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The system must work in an offline mode for critical functionality.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G26",
+      "kind": "other",
+      "text": "The system must be implemented using Service Oriented Architecture (SOA) and modular design.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G27",
+      "kind": "usability",
+      "text": "The system must support Single-Sign on for end-users.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G28",
+      "kind": "other",
+      "text": "The system must be designed for centralized deployment in a 3-tier datacenter architecture.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "human-001",
+      "kind": "usability",
+      "text": "System should be designed for browser based use and must minimally use client device resources",
+      "source": "human-added:a"
+    }
+  ],
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "FROZEN - human-verified (anchored, single annotator)",
     "source_document_sha256": "c34ebce2bf6bff2bb166c2b5f83800a33e47310f9acbfb9ce0e42208c27b1f8d",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "a"
+    ],
+    "review_scope": {
+      "doc_chars_total": 42036,
+      "llm_scope_chars": 42036,
+      "chars_presented_to_reviewer": 42036,
+      "reviewer_read_full_llm_scope": true
+    },
+    "excluded": {
+      "rejected": [
+        "G9"
+      ]
+    },
+    "implied_categories_verified": true
   }
 }

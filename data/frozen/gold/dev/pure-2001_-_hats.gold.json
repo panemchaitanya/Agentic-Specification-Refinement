@@ -6,8 +6,51 @@
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "REVIEW-INCOMPLETE (anchored)",
     "source_document_sha256": "295b3690601348d46b97c579ba94353563c23a4b7886d987db2390b3c4976834",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "a"
+    ],
+    "review_scope": {
+      "doc_chars_total": 191119,
+      "llm_scope_chars": 120000,
+      "chars_presented_to_reviewer": 4000,
+      "reviewer_read_full_llm_scope": false
+    },
+    "excluded": {
+      "skipped": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9",
+        "G10",
+        "G11",
+        "G12",
+        "G13",
+        "G14",
+        "G15",
+        "G16",
+        "G17",
+        "G18",
+        "G19",
+        "G20",
+        "G21",
+        "G22",
+        "G23",
+        "G24",
+        "G25",
+        "G26"
+      ]
+    },
+    "blocked_reasons": [
+      "incomplete review scope: a",
+      "unresolved suggestions: skipped=26"
+    ]
   }
 }

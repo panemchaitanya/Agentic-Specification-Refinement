@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2000_-_nasa_x38",
+  "prd_path": "data/raw/pure/extracted/2000 - nasa x38.doc",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "1b1089f01fb6983bb2e57ae419083e2871300aa3684c72863b35f7916add4d56",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "item_id": "pure-0000_-_cctns",
+  "annotator": "a",
+  "split": "dev",
+  "finished_at": "2026-11-06T14:34:41.106026+00:00",
+  "verdicts": [
+    {
+      "id": "G1",
+      "decision": "a"
+    },
+    {
+      "id": "G2",
+      "decision": "a"
+    },
+    {
+      "id": "G3",
+      "decision": "a"
+    },
+    {
+      "id": "G4",
+      "decision": "a"
+    },
+    {
+      "id": "G5",
+      "decision": "a"
+    },
+    {
+      "id": "G6",
+      "decision": "a"
+    },
+    {
+      "id": "G7",
+      "decision": "a"
+    },
+    {
+      "id": "G8",
+      "decision": "a"
+    },
+    {
+      "id": "G9",
+      "decision": "r"
+    },
+    {
+      "id": "G10",
+      "decision": "a"
+    },
+    {
+      "id": "G11",
+      "decision": "a"
+    },
+    {
+      "id": "G12",
+      "decision": "a"
+    },
+    {
+      "id": "G13",
+      "decision": "a"
+    },
+    {
+      "id": "G14",
+      "decision": "a"
+    },
+    {
+      "id": "G15",
+      "decision": "a"
+    },
+    {
+      "id": "G16",
+      "decision": "a"
+    },
+    {
+      "id": "G17",
+      "decision": "a"
+    },
+    {
+      "id": "G18",
+      "decision": "a"
+    },
+    {
+      "id": "G19",
+      "decision": "a"
+    },
+    {
+      "id": "G20",
+      "decision": "a",
+      "new_text": "The time taken by the system must retrieve and display cases that have been accessed in the last 2 months within 5-8 seconds"
+    },
+    {
+      "id": "G21",
+      "decision": "a"
+    },
+    {
+      "id": "G22",
+      "decision": "a"
+    },
+    {
+      "id": "G23",
+      "decision": "a"
+    },
+    {
+      "id": "G24",
+      "decision": "a"
+    },
+    {
+      "id": "G25",
+      "decision": "a"
+    },
+    {
+      "id": "G26",
+      "decision": "a"
+    },
+    {
+      "id": "G27",
+      "decision": "a",
+      "new_kind": "usability"
+    },
+    {
+      "id": "G28",
+      "decision": "a"
+    }
+  ],
+  "added_requirements": [
+    {
+      "kind": "usability",
+      "text": "System should be designed for browser based use and must minimally use client device resources"
+    }
+  ],
+  "implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "implied_categories_reviewed": true,
+  "review_scope": {
+    "doc_chars_total": 42036,
+    "llm_scope_chars": 42036,
+    "chars_presented_to_reviewer": 42036,
+    "reviewer_read_full_llm_scope": true,
+    "reviewer_confirmed_full_read": true
+  },
+  "source_suggestion_file": "data/frozen/gold_llm_suggestions/dev/pure-0000_-_cctns.llm_suggestions.json"
+}

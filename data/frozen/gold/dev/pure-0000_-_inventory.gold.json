@@ -1,13 +1,174 @@
 {
   "item_id": "pure-0000_-_inventory",
   "prd_path": "data/raw/pure/extracted/0000 - inventory.pdf",
-  "implied_categories": [],
-  "gold_requirements": [],
+  "implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "scalability",
+    "security",
+    "usability"
+  ],
+  "gold_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow users to transfer assets between departments.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow authorized users to edit asset information.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow users to modify asset fields except for IDs.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall support bulk entry of assets.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G5",
+      "kind": "security",
+      "text": "The system shall allow authorized users to add inventory assets.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall allow users to create requests to borrow an asset or reserve a space.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall allow IT group members to create new spaces.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall allow authorized users to approve or reject pending requests.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The system shall notify users via email when a request is treated.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The system shall authenticate users via username and password.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The system shall allow administrative users to delegate permissions to other users.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The system shall generate reports on assets by location, requests, and user permissions.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G14",
+      "kind": "usability",
+      "text": "The system learning time must be between 2 to 4 hours maximum.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G15",
+      "kind": "usability",
+      "text": "The web interface must use clear and consistent terminology.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G16",
+      "kind": "reliability",
+      "text": "The application must be available during all working hours.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G17",
+      "kind": "usability",
+      "text": "The application must be installable on Microsoft or Unix platforms.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G18",
+      "kind": "usability",
+      "text": "The web application must run on IE, Firefox, Chrome, Opera, or Safari browsers.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G20",
+      "kind": "security",
+      "text": "The system must assign permissions to users according to their roles.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G21",
+      "kind": "security",
+      "text": "Only IT team members shall access and maintain database servers locally.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G22",
+      "kind": "performance",
+      "text": "The system must terminate any database query that takes more than 1 minute.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G23",
+      "kind": "other",
+      "text": "The system must perform backup operations periodically.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "human-001",
+      "kind": "scalability",
+      "text": "The system should be designed in a way to facilitate future evolution and maintenance operations",
+      "source": "human-added:a"
+    }
+  ],
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "REVIEW-INCOMPLETE (anchored)",
     "source_document_sha256": "ed71c1321b23026aa83be410cbb1713e9a4db50ef55c17b1f8489b6cc86e5f9d",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "a"
+    ],
+    "review_scope": {
+      "doc_chars_total": 37251,
+      "llm_scope_chars": 37251,
+      "chars_presented_to_reviewer": 37251,
+      "reviewer_read_full_llm_scope": true
+    },
+    "excluded": {
+      "rejected": [
+        "G7"
+      ],
+      "skipped": [
+        "G19"
+      ]
+    },
+    "implied_categories_verified": true,
+    "blocked_reasons": [
+      "unresolved suggestions: skipped=1"
+    ]
   }
 }

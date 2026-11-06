@@ -1,0 +1,127 @@
+{
+  "item_id": "pure-0000_-_inventory",
+  "annotator": "a",
+  "split": "dev",
+  "finished_at": "2026-11-06T15:25:04.077650+00:00",
+  "verdicts": [
+    {
+      "id": "G1",
+      "decision": "a"
+    },
+    {
+      "id": "G2",
+      "decision": "a"
+    },
+    {
+      "id": "G3",
+      "decision": "a"
+    },
+    {
+      "id": "G4",
+      "decision": "a"
+    },
+    {
+      "id": "G5",
+      "decision": "a",
+      "new_kind": "security"
+    },
+    {
+      "id": "G6",
+      "decision": "a"
+    },
+    {
+      "id": "G7",
+      "decision": "r"
+    },
+    {
+      "id": "G8",
+      "decision": "a"
+    },
+    {
+      "id": "G9",
+      "decision": "a"
+    },
+    {
+      "id": "G10",
+      "decision": "a",
+      "new_text": "The system shall notify users via email when a request is treated."
+    },
+    {
+      "id": "G11",
+      "decision": "a"
+    },
+    {
+      "id": "G12",
+      "decision": "a"
+    },
+    {
+      "id": "G13",
+      "decision": "a"
+    },
+    {
+      "id": "G14",
+      "decision": "a"
+    },
+    {
+      "id": "G15",
+      "decision": "a"
+    },
+    {
+      "id": "G16",
+      "decision": "a"
+    },
+    {
+      "id": "G17",
+      "decision": "a",
+      "new_kind": "usability"
+    },
+    {
+      "id": "G18",
+      "decision": "a",
+      "new_kind": "usability"
+    },
+    {
+      "id": "G19",
+      "decision": "s"
+    },
+    {
+      "id": "G20",
+      "decision": "a"
+    },
+    {
+      "id": "G21",
+      "decision": "a"
+    },
+    {
+      "id": "G22",
+      "decision": "a"
+    },
+    {
+      "id": "G23",
+      "decision": "a"
+    }
+  ],
+  "added_requirements": [
+    {
+      "kind": "scalability",
+      "text": "The system should be designed in a way to facilitate future evolution and maintenance operations"
+    }
+  ],
+  "implied_categories": [
+    "security",
+    "performance",
+    "reliability",
+    "usability",
+    "scalability",
+    "other"
+  ],
+  "implied_categories_reviewed": true,
+  "review_scope": {
+    "doc_chars_total": 37251,
+    "llm_scope_chars": 37251,
+    "chars_presented_to_reviewer": 37251,
+    "reviewer_read_full_llm_scope": true,
+    "reviewer_confirmed_full_read": true
+  },
+  "source_suggestion_file": "data/frozen/gold_llm_suggestions/dev/pure-0000_-_inventory.llm_suggestions.json"
+}

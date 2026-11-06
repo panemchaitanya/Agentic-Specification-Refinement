@@ -1,13 +1,270 @@
 {
   "item_id": "pure-2001_-_ctc_network",
   "prd_path": "data/raw/pure/extracted/2001 - ctc network.pdf",
-  "implied_categories": [],
-  "gold_requirements": [],
+  "implied_categories": [
+    "other",
+    "performance",
+    "usability"
+  ],
+  "gold_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The Center shall provide network identifier, network name, number of links, number of nodes, list of link data, and list of node data for each roadway network.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The Center shall provide link identifier, link name, road number, link type, link type description, start node, end node, direction, length, capacity, speed limit, speed limit truck, and number of lanes for each link.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The Center shall provide node identifier, node name, node jurisdiction, owner, latitude/longitude, type of node, node type description, and number of links for each node.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The Center shall provide network identifier, link identifier, data type, data type description, delay, travel time, volume, speed, density, and occupancy for each link.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The Center shall support incident information including network identifier, incident ID, description, roadway, cross street, latitude/longitude, link identifier, direction, status, update type, affected lanes, classification, severity, incident type, incident type description, road conditions, weather, confirmed date/time, and cleared date/time.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The Center shall support lane closure information including network identifier, lane closure ID, description, starting/ending roadway, starting/ending cross street, starting/ending latitude/longitude, direction, link identifier, status, update type, affected lanes, source, contact, days closed, start/end time, and start/end date of series.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The Center shall provide DMS status information including network identifier, DMS identifier, name, location, sign geometry, status, current message, and beacons status.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The Center shall support DMS control commands including network identifier, DMS identifier, username, password, beacons status, and immediate message.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The Center shall support LCS status information including network identifier, LCS identifier, name, location, geometry, head capabilities, status, and current pattern.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G10",
+      "kind": "FR",
+      "text": "The Center shall support LCS control commands including network identifier, LCS identifier, username, password, and signal pattern.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G11",
+      "kind": "FR",
+      "text": "The Center shall provide CCTV status information including network identifier, CCTV identifier, name, location, status, lock status, lock holder, supported directions, current direction, preset position, pan, tilt, zoom, focus, and iris.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G12",
+      "kind": "FR",
+      "text": "The Center shall support CCTV control requests including network identifier, CCTV identifier, username, password, and specific camera control commands.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G13",
+      "kind": "FR",
+      "text": "The Center shall support CCTV video snapshot status including network identifier, CCTV identifier, name, status, direction, size, and JPEG snapshot.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G14",
+      "kind": "FR",
+      "text": "The Center shall support CCTV switching commands including network identifier, username, password, video channel input, and video channel output.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G15",
+      "kind": "FR",
+      "text": "The Center shall support ramp meter status information including network identifier, ramp meter identifier, name, location, status, status source, plan, and cycle time.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G16",
+      "kind": "FR",
+      "text": "The Center shall support ramp meter control commands including network identifier, ramp meter identifier, username, password, plan, and duration.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G17",
+      "kind": "FR",
+      "text": "The Center shall support HAR status information including network identifier, HAR identifier, name, location, status, current message, and current message text.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G18",
+      "kind": "FR",
+      "text": "The Center shall support HAR control commands including network identifier, HAR identifier, username, password, message, message text, and duration.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G19",
+      "kind": "FR",
+      "text": "The Center shall support traffic signal status information including network identifier, traffic signal identifier, name, location, status, status source, state, failure state, plan, plan expiration, and signal preemption.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G20",
+      "kind": "FR",
+      "text": "The Center shall support traffic signal control commands including network identifier, traffic signal identifier, username, password, plan identifier, and duration.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G21",
+      "kind": "FR",
+      "text": "The Center shall support ESS status information including network identifier, ESS identifier, name, type, location, status, reading, units, and alarm status.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G22",
+      "kind": "FR",
+      "text": "The Center shall support HOV status information including network identifier, HOV identifier, name, link identifier, status, failure state, plan, state, status source, occupants, and next transition time.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G23",
+      "kind": "FR",
+      "text": "The Center shall support HOV lane control commands including network identifier, HOV lane identifier, username, password, lane plan, and duration.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G24",
+      "kind": "FR",
+      "text": "The Center shall support parking lot status information including network identifier, parking lot identifier, name, location, status, capacity, utilization, entrance, restrictions, and special capabilities.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G25",
+      "kind": "FR",
+      "text": "The Center shall support school zone status information including network identifier, link identifier, school zone identifier, name, location, status, failure status, state plan, and state source.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G26",
+      "kind": "FR",
+      "text": "The Center shall support school zone control commands including network identifier, school zone identifier, username, password, and plan.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G27",
+      "kind": "FR",
+      "text": "The Center shall support railroad crossing status information including network identifier, link identifier, rail crossing identifier, name, location, status, rail type, estimated time to clear, estimated minutes to arrival, and signal type.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G28",
+      "kind": "FR",
+      "text": "The Center shall support reversible lane status information including network identifier, reversible lane identifier, name, link identifier, indicator status, failure state, plan, direction, transition time, and status source.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G29",
+      "kind": "FR",
+      "text": "The Center shall support reversible lane control commands including network identifier, reversible lane identifier, username, password, plan, and duration.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G30",
+      "kind": "FR",
+      "text": "The Center shall support dynamic lane status information including network identifier, link identifier, dynamic lane identifier, name, indicator status, failure state, plan, type, and transition time.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G31",
+      "kind": "FR",
+      "text": "The Center shall support dynamic lane control commands including network identifier, dynamic lane identifier, username, password, lane plan, and duration.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G32",
+      "kind": "FR",
+      "text": "The Center shall support bus stop status information including network identifier, link identifier, relative link location, identifier, name, location, bus routes, and frequency.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G33",
+      "kind": "FR",
+      "text": "The Center shall support bus location status information including network identifier, link identifier, bus identifier, name, location, schedule adherence, vehicle attributes, and capacity.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G34",
+      "kind": "FR",
+      "text": "The Center shall support light/commuter stop status information including network identifier, link identifier, stop identifier, name, location, routes, and frequency.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G35",
+      "kind": "FR",
+      "text": "The Center shall support light/commuter location status information including network identifier, link identifier, identifier, name, location, schedule adherence, vehicle attributes, and capacity.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G36",
+      "kind": "FR",
+      "text": "The Center shall support park and ride lot status information including network identifier, lot identifier, name, location, status, capacity, utilization, entrance, restrictions, and special capabilities.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G37",
+      "kind": "FR",
+      "text": "The Center shall support vehicle priority status information including vehicle identifier, network identifier, link identifier, intersection identifier, priority request status, departure time, desired arrival time, priority, vehicle classification, and service strategy.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G39",
+      "kind": "FR",
+      "text": "The Center shall support command timeframe request and response interfaces.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G40",
+      "kind": "other",
+      "text": "The Data Collector shall store TMDD data elements and message set information.",
+      "source": "llm-suggestion+human-verify"
+    }
+  ],
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "REVIEW-INCOMPLETE (anchored)",
     "source_document_sha256": "aeaf02a4e5fed1fc2304a38b68af3b608c4a9af6604dc6468cd7482e324f5876",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "a"
+    ],
+    "review_scope": {
+      "doc_chars_total": 63986,
+      "llm_scope_chars": 63986,
+      "chars_presented_to_reviewer": 4000,
+      "reviewer_read_full_llm_scope": false
+    },
+    "excluded": {
+      "rejected": [
+        "G38"
+      ]
+    },
+    "implied_categories_verified": true,
+    "blocked_reasons": [
+      "incomplete review scope: a"
+    ]
   }
 }

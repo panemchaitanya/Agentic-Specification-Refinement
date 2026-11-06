@@ -6,8 +6,65 @@
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "REVIEW-INCOMPLETE (anchored)",
     "source_document_sha256": "1b1089f01fb6983bb2e57ae419083e2871300aa3684c72863b35f7916add4d56",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "a"
+    ],
+    "review_scope": {
+      "doc_chars_total": 318068,
+      "llm_scope_chars": 120000,
+      "chars_presented_to_reviewer": 4000,
+      "reviewer_read_full_llm_scope": false
+    },
+    "excluded": {
+      "skipped": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9",
+        "G10",
+        "G11",
+        "G12",
+        "G13",
+        "G14",
+        "G15",
+        "G16",
+        "G17",
+        "G18",
+        "G19",
+        "G20",
+        "G21",
+        "G22",
+        "G23",
+        "G24",
+        "G25",
+        "G26",
+        "G27",
+        "G28",
+        "G29",
+        "G30",
+        "G31",
+        "G32",
+        "G33",
+        "G34",
+        "G35",
+        "G36",
+        "G37",
+        "G38",
+        "G39",
+        "G40"
+      ]
+    },
+    "blocked_reasons": [
+      "incomplete review scope: a",
+      "unresolved suggestions: skipped=40"
+    ]
   }
 }

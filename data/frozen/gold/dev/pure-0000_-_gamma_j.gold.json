@@ -1,13 +1,180 @@
 {
   "item_id": "pure-0000_-_gamma_j",
   "prd_path": "data/raw/pure/extracted/0000 - gamma j.pdf",
-  "implied_categories": [],
-  "gold_requirements": [],
+  "implied_categories": [
+    "other",
+    "performance",
+    "reliability",
+    "security",
+    "usability"
+  ],
+  "gold_requirements": [
+    {
+      "id": "G1",
+      "kind": "FR",
+      "text": "The system shall allow customers to create, log in, and log out of accounts.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G2",
+      "kind": "FR",
+      "text": "The system shall allow customers to store profiles, contact information, and purchase history.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G3",
+      "kind": "FR",
+      "text": "The system shall allow administrators to manage product inventory and categories.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G4",
+      "kind": "FR",
+      "text": "The system shall allow customers to add products to a shopping cart.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G5",
+      "kind": "FR",
+      "text": "The system shall allow customers to confirm orders after checkout.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G6",
+      "kind": "FR",
+      "text": "The system shall provide a search engine for customers to find products.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G7",
+      "kind": "FR",
+      "text": "The system shall provide an API to allow for custom plug-ins.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G8",
+      "kind": "FR",
+      "text": "The system shall send an email confirmation to the customer with order details and tracking number.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G9",
+      "kind": "FR",
+      "text": "The system shall send an email to the System Administrator regarding technical queries.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G10",
+      "kind": "security",
+      "text": "The system shall use Secure Socket Layer (SSL) for all sensitive communications.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G11",
+      "kind": "security",
+      "text": "The system shall encrypt all customer data in the database.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G12",
+      "kind": "security",
+      "text": "The system shall validate credit cards against fraud.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G13",
+      "kind": "security",
+      "text": "The system shall auto-detect and block IP DOS attacks.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G14",
+      "kind": "security",
+      "text": "The system shall detect consecutive failed login attempts.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G15",
+      "kind": "performance",
+      "text": "The system shall be operational in less than 1 minute after the USB is plugged in.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G16",
+      "kind": "performance",
+      "text": "The system shall support 1000 concurrent logged-in customers.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G17",
+      "kind": "performance",
+      "text": "The system shall retrieve 200 products per second.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G18",
+      "kind": "performance",
+      "text": "The system shall add a product to the shopping cart in less than 2ms.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G19",
+      "kind": "performance",
+      "text": "The system shall search for a product in less than 1 second.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G20",
+      "kind": "reliability",
+      "text": "The system shall have an availability of 99.99%.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G21",
+      "kind": "reliability",
+      "text": "The system shall allow an optional mirror site for backups.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G22",
+      "kind": "usability",
+      "text": "The system shall provide help bubbles to assist users.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G23",
+      "kind": "usability",
+      "text": "The system shall display error messages that are easy to read.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G24",
+      "kind": "usability",
+      "text": "The system shall operate on an Intel-based system with Slackware Linux 2.6 and Apache Web Server.",
+      "source": "llm-suggestion+human-verify"
+    },
+    {
+      "id": "G25",
+      "kind": "other",
+      "text": "The system shall use a SQL-based database for inventory storage.",
+      "source": "llm-suggestion+human-verify"
+    }
+  ],
   "provenance": {
     "extractor_agreement_kappa": null,
     "freeze_id": "pure/FREEZE.json",
-    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "status": "FROZEN - human-verified (anchored, single annotator)",
     "source_document_sha256": "056dc0bbb4c67adf6d6548c4a07d3580852b6ee57a60b2ed1e59e51b13821306",
-    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling",
+    "verified_by": [
+      "a"
+    ],
+    "review_scope": {
+      "doc_chars_total": 54980,
+      "llm_scope_chars": 54980,
+      "chars_presented_to_reviewer": 54980,
+      "reviewer_read_full_llm_scope": true
+    },
+    "implied_categories_verified": true
   }
 }

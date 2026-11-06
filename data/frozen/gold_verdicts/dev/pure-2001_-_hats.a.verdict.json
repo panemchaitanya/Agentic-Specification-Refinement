@@ -1,0 +1,123 @@
+{
+  "item_id": "pure-2001_-_hats",
+  "annotator": "a",
+  "split": "dev",
+  "finished_at": "2026-11-06T16:03:22.978128+00:00",
+  "verdicts": [
+    {
+      "id": "G1",
+      "decision": "s"
+    },
+    {
+      "id": "G2",
+      "decision": "s"
+    },
+    {
+      "id": "G3",
+      "decision": "s"
+    },
+    {
+      "id": "G4",
+      "decision": "s"
+    },
+    {
+      "id": "G5",
+      "decision": "s"
+    },
+    {
+      "id": "G6",
+      "decision": "s"
+    },
+    {
+      "id": "G7",
+      "decision": "s"
+    },
+    {
+      "id": "G8",
+      "decision": "s"
+    },
+    {
+      "id": "G9",
+      "decision": "s"
+    },
+    {
+      "id": "G10",
+      "decision": "s"
+    },
+    {
+      "id": "G11",
+      "decision": "s"
+    },
+    {
+      "id": "G12",
+      "decision": "s"
+    },
+    {
+      "id": "G13",
+      "decision": "s"
+    },
+    {
+      "id": "G14",
+      "decision": "s"
+    },
+    {
+      "id": "G15",
+      "decision": "s"
+    },
+    {
+      "id": "G16",
+      "decision": "s"
+    },
+    {
+      "id": "G17",
+      "decision": "s"
+    },
+    {
+      "id": "G18",
+      "decision": "s"
+    },
+    {
+      "id": "G19",
+      "decision": "s"
+    },
+    {
+      "id": "G20",
+      "decision": "s"
+    },
+    {
+      "id": "G21",
+      "decision": "s"
+    },
+    {
+      "id": "G22",
+      "decision": "s"
+    },
+    {
+      "id": "G23",
+      "decision": "s"
+    },
+    {
+      "id": "G24",
+      "decision": "s"
+    },
+    {
+      "id": "G25",
+      "decision": "s"
+    },
+    {
+      "id": "G26",
+      "decision": "s"
+    }
+  ],
+  "added_requirements": [],
+  "implied_categories": [],
+  "implied_categories_reviewed": false,
+  "review_scope": {
+    "doc_chars_total": 191119,
+    "llm_scope_chars": 120000,
+    "chars_presented_to_reviewer": 4000,
+    "reviewer_read_full_llm_scope": false,
+    "reviewer_confirmed_full_read": false
+  },
+  "source_suggestion_file": "data/frozen/gold_llm_suggestions/dev/pure-2001_-_hats.llm_suggestions.json"
+}

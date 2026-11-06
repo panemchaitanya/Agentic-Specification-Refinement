@@ -1,0 +1,13 @@
+{
+  "item_id": "pure-2001_-_ctc_network",
+  "prd_path": "data/raw/pure/extracted/2001 - ctc network.pdf",
+  "implied_categories": [],
+  "gold_requirements": [],
+  "provenance": {
+    "extractor_agreement_kappa": null,
+    "freeze_id": "pure/FREEZE.json",
+    "status": "SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded",
+    "source_document_sha256": "aeaf02a4e5fed1fc2304a38b68af3b608c4a9af6604dc6468cd7482e324f5876",
+    "note": "prd_path points at the raw document (re-fetch via training/fetch_datasets.py); pdf/doc/rtf need text extraction before labelling"
+  }
+}
