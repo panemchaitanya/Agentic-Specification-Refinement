@@ -1,0 +1,151 @@
+{
+  "item_id": "pure-1998_-_themas",
+  "annotator": "b",
+  "split": "dev",
+  "finished_at": "2026-11-06T04:29:58.625996+00:00",
+  "verdicts": [
+    {
+      "id": "G1",
+      "decision": "a"
+    },
+    {
+      "id": "G2",
+      "decision": "a"
+    },
+    {
+      "id": "G3",
+      "decision": "a"
+    },
+    {
+      "id": "G4",
+      "decision": "a"
+    },
+    {
+      "id": "G5",
+      "decision": "a"
+    },
+    {
+      "id": "G6",
+      "decision": "a"
+    },
+    {
+      "id": "G7",
+      "decision": "a"
+    },
+    {
+      "id": "G8",
+      "decision": "a"
+    },
+    {
+      "id": "G9",
+      "decision": "a"
+    },
+    {
+      "id": "G10",
+      "decision": "a"
+    },
+    {
+      "id": "G11",
+      "decision": "a"
+    },
+    {
+      "id": "G12",
+      "decision": "a"
+    },
+    {
+      "id": "G13",
+      "decision": "a",
+      "new_text": "The THEMAS system shall add heating or cooling requests to a LIFO queue if the maximum number of units is already running."
+    },
+    {
+      "id": "G14",
+      "decision": "a"
+    },
+    {
+      "id": "G15",
+      "decision": "a"
+    },
+    {
+      "id": "G16",
+      "decision": "a"
+    },
+    {
+      "id": "G17",
+      "decision": "a"
+    },
+    {
+      "id": "G18",
+      "decision": "a"
+    },
+    {
+      "id": "G19",
+      "decision": "a"
+    },
+    {
+      "id": "G20",
+      "decision": "a"
+    },
+    {
+      "id": "G21",
+      "decision": "a",
+      "new_kind": "other"
+    },
+    {
+      "id": "G22",
+      "decision": "s"
+    },
+    {
+      "id": "G23",
+      "decision": "a",
+      "new_kind": "FR"
+    },
+    {
+      "id": "G24",
+      "decision": "a"
+    },
+    {
+      "id": "G25",
+      "decision": "s"
+    },
+    {
+      "id": "G26",
+      "decision": "a"
+    }
+  ],
+  "added_requirements": [
+    {
+      "kind": "FR",
+      "text": "After start-up, the system shall check every thermostat and turn on any unit that's needed."
+    },
+    {
+      "kind": "FR",
+      "text": "When the room temperature is within range, the system shall turn the heating and cooling off."
+    },
+    {
+      "kind": "FR",
+      "text": "The system shall not let more than the set maximum number of units run at once."
+    },
+    {
+      "kind": "FR",
+      "text": "When a unit turns off, the system shall pick the latest waiting request and turn that unit on if it's still needed."
+    },
+    {
+      "kind": "FR",
+      "text": "An alarm shall keep beeping until the supervisor switches it off."
+    }
+  ],
+  "implied_categories": [
+    "other",
+    "reliability",
+    "usability"
+  ],
+  "implied_categories_reviewed": true,
+  "review_scope": {
+    "doc_chars_total": 71863,
+    "llm_scope_chars": 71863,
+    "chars_presented_to_reviewer": 71863,
+    "reviewer_read_full_llm_scope": true,
+    "reviewer_confirmed_full_read": true
+  },
+  "source_suggestion_file": "data/frozen/gold_llm_suggestions/dev/pure-1998_-_themas.llm_suggestions.json"
+}

@@ -1,0 +1,166 @@
+{
+  "item_id": "pure-1999_-_dii",
+  "annotator": "b",
+  "split": "dev",
+  "finished_at": "2026-11-06T04:50:57.394587+00:00",
+  "verdicts": [
+    {
+      "id": "G1",
+      "decision": "a"
+    },
+    {
+      "id": "G2",
+      "decision": "a"
+    },
+    {
+      "id": "G3",
+      "decision": "a"
+    },
+    {
+      "id": "G4",
+      "decision": "a"
+    },
+    {
+      "id": "G5",
+      "decision": "a"
+    },
+    {
+      "id": "G6",
+      "decision": "a"
+    },
+    {
+      "id": "G7",
+      "decision": "a"
+    },
+    {
+      "id": "G8",
+      "decision": "a"
+    },
+    {
+      "id": "G9",
+      "decision": "a"
+    },
+    {
+      "id": "G10",
+      "decision": "a"
+    },
+    {
+      "id": "G11",
+      "decision": "a"
+    },
+    {
+      "id": "G12",
+      "decision": "a"
+    },
+    {
+      "id": "G13",
+      "decision": "a"
+    },
+    {
+      "id": "G14",
+      "decision": "a"
+    },
+    {
+      "id": "G15",
+      "decision": "a"
+    },
+    {
+      "id": "G16",
+      "decision": "a"
+    },
+    {
+      "id": "G17",
+      "decision": "a"
+    },
+    {
+      "id": "G18",
+      "decision": "a"
+    },
+    {
+      "id": "G19",
+      "decision": "a"
+    },
+    {
+      "id": "G20",
+      "decision": "a"
+    },
+    {
+      "id": "G21",
+      "decision": "a"
+    },
+    {
+      "id": "G22",
+      "decision": "a"
+    },
+    {
+      "id": "G23",
+      "decision": "a"
+    },
+    {
+      "id": "G24",
+      "decision": "a"
+    },
+    {
+      "id": "G25",
+      "decision": "a"
+    },
+    {
+      "id": "G26",
+      "decision": "a"
+    },
+    {
+      "id": "G27",
+      "decision": "a"
+    },
+    {
+      "id": "G28",
+      "decision": "a"
+    },
+    {
+      "id": "G29",
+      "decision": "a"
+    },
+    {
+      "id": "G30",
+      "decision": "a"
+    },
+    {
+      "id": "G31",
+      "decision": "a"
+    },
+    {
+      "id": "G32",
+      "decision": "a"
+    },
+    {
+      "id": "G33",
+      "decision": "a"
+    }
+  ],
+  "added_requirements": [
+    {
+      "kind": "security",
+      "text": "The system shall support modification and addition of user permissions and privileges."
+    },
+    {
+      "kind": "other",
+      "text": "XML Services shall be segmented."
+    }
+  ],
+  "implied_categories": [
+    "performance",
+    "usability",
+    "reliability",
+    "other",
+    "security"
+  ],
+  "implied_categories_reviewed": true,
+  "review_scope": {
+    "doc_chars_total": 33197,
+    "llm_scope_chars": 33197,
+    "chars_presented_to_reviewer": 33197,
+    "reviewer_read_full_llm_scope": true,
+    "reviewer_confirmed_full_read": true
+  },
+  "source_suggestion_file": "data/frozen/gold_llm_suggestions/dev/pure-1999_-_dii.llm_suggestions.json"
+}
