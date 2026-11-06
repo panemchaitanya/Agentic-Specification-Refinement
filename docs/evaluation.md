@@ -225,6 +225,30 @@ traces itself is a coordinator core decision, flagged here pre-data.
   rates come out low, a pipeline-side *visible* flag (mark, never
   silently drop) is the candidate follow-up, recorded here in advance.
 
+- **D4 - Mid-submission gold: anchored human verification over LLM
+  suggestions, not the proposal's two-blind-extractor design.**
+  The proposal's ground-truth protocol is two independent human
+  extractions + adjudication + kappa. For the 6 Nov mid-submission the
+  team verifies LLM-suggested labels instead (accept/reject/edit/add per
+  suggestion, fixed guidelines in training/ANNOTATION_GUIDELINES.md),
+  because pre-labels already exist for all 61 dev documents and anchored
+  review is ~12 min/doc vs hours per blind extraction. DECISION
+  (coordinator, 6 Nov 2026, pre-data): (a) suggestion files carry status
+  "LLM-SUGGESTED - unverified" and are rejected fail-closed by
+  eval/gold.py; (b) only verdict files from named human annotators
+  (training/verify_suggestions.py) promote a document to FROZEN gold via
+  training/merge_verdicts.py; (c) a length-stratified shared subsample of
+  8 dev documents (2 LLM-truncated) is verified independently by both
+  annotators; pairwise Cohen's kappa on accept/reject decisions is
+  computed and recorded in gold provenance, and shared-doc conflicts
+  resolve by majority vote (ties keep the item out); (d) a second free
+  model (different model family version) re-extracts the shared 8 as a
+  cross-check pre-filter and LLM-vs-LLM agreement prior; (e) coverage and
+  the single- vs double-verified split are reported verbatim with any
+  evaluation numbers produced under this protocol. Deviation from the
+  proposal is declared here, measured, and upgradeable to the full
+  two-blind-extractor design before the 30 Nov final.
+
 ## 10. Evidence labels (use these exact words in reports)
 
 - **smoke** - deterministic MockLLM runs (`run_smoke.py`): plumbing only,
