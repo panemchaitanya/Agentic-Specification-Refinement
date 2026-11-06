@@ -863,6 +863,132 @@
         "US": 42
       },
       "note": "Classification subtask only; this is not the full critic (contextual gap detection supervision is separate work - see training/ANNOTATION_GUIDELINES.md)."
+    },
+    {
+      "backend": "distilbert-base-uncased",
+      "device": "cuda",
+      "epochs": 6,
+      "batch_size": 16,
+      "max_len": 128,
+      "lr": 5e-05,
+      "train_seconds": 22.305,
+      "peak_rss_mb": 1388.4,
+      "accuracy": 0.8605,
+      "macro_f1": 0.7571,
+      "per_class": {
+        "A": {
+          "precision": 0.75,
+          "recall": 0.75,
+          "f1-score": 0.75,
+          "support": 4.0
+        },
+        "F": {
+          "precision": 0.9032258064516129,
+          "recall": 0.9655172413793104,
+          "f1-score": 0.9333333333333333,
+          "support": 29.0
+        },
+        "FT": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 2.0
+        },
+        "L": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0
+        },
+        "LF": {
+          "precision": 0.8333333333333334,
+          "recall": 0.7142857142857143,
+          "f1-score": 0.7692307692307693,
+          "support": 7.0
+        },
+        "MN": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.6666666666666666,
+          "support": 3.0
+        },
+        "O": {
+          "precision": 0.7777777777777778,
+          "recall": 0.7777777777777778,
+          "f1-score": 0.7777777777777778,
+          "support": 9.0
+        },
+        "PE": {
+          "precision": 0.8181818181818182,
+          "recall": 1.0,
+          "f1-score": 0.9,
+          "support": 9.0
+        },
+        "PO": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "SC": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.8,
+          "support": 3.0
+        },
+        "SE": {
+          "precision": 0.8888888888888888,
+          "recall": 0.8888888888888888,
+          "f1-score": 0.8888888888888888,
+          "support": 9.0
+        },
+        "US": {
+          "precision": 0.8888888888888888,
+          "recall": 0.8,
+          "f1-score": 0.8421052631578947,
+          "support": 10.0
+        },
+        "accuracy": 0.8604651162790697,
+        "macro avg": {
+          "precision": 0.710580265015749,
+          "recall": 0.6858169129720855,
+          "f1-score": 0.6940002249212774,
+          "support": 86.0
+        },
+        "weighted avg": {
+          "precision": 0.8520861275925041,
+          "recall": 0.8604651162790697,
+          "f1-score": 0.8531666823588487,
+          "support": 86.0
+        }
+      },
+      "peak_cuda_mb": 1510.1,
+      "saved_to": "machines/hug/distilbert-nfr-best",
+      "recorded_at": "2026-11-06T09:41:00.643664+00:00",
+      "dataset": "PROMISE NFR frozen dev split only (test untouched)",
+      "dev_csv_sha256": "20eac7f8ce71234ffed5ca51cf2099e308be3d126a18215828a4828f4712fdec",
+      "dev_internal_split": {
+        "seed": 20261106,
+        "validation_fraction": 0.2,
+        "stratified": true
+      },
+      "train_rows": 351,
+      "val_rows": 86,
+      "label_distribution_train": {
+        "A": 14,
+        "F": 118,
+        "FT": 8,
+        "L": 5,
+        "LF": 28,
+        "MN": 14,
+        "O": 37,
+        "PE": 36,
+        "PO": 1,
+        "SC": 14,
+        "SE": 34,
+        "US": 42
+      },
+      "note": "Classification subtask only; this is not the full critic (contextual gap detection supervision is separate work - see training/ANNOTATION_GUIDELINES.md)."
     }
   ]
 }

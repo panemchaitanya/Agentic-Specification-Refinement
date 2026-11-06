@@ -46,6 +46,15 @@ Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
   recorded honestly). These are pilot-label numbers: they measure
   feasibility and the honest floor a trained model must beat, not
   hypothesis evidence for H1-H3.
+
+  **Preserved checkpoint:** the best config was re-trained on Colab T4
+  with `--save-dir` and the checkpoint (model + tokenizer + label order,
+  ~247 MB zip) is kept outside git on Drive (`ASE-weights/`). That
+  preservation run itself measured accuracy 0.8605 / macro-F1 0.7571 on
+  the same dev holdout - training is currently unseeded, so re-runs of
+  the same config vary run to run (recorded as run 8 in
+  `training/pilot_results.json`; the checkpoint corresponds to that run,
+  not to the sweep row).
 - **Evaluation harness:** frozen-split runner with pre-registered H1-H3
   (`docs/evaluation.md`, decisions D1-D4), gold fail-closed loading
   (`eval/gold.py`), and run logs under `eval/runs/`. No frozen evaluation
