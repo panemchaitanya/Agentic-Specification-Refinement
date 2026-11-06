@@ -39,8 +39,11 @@ Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
   subtask on the frozen PROMISE dev split, dev-internal stratified holdout
   (`training/train_nfr_classifier.py`, `training/pilot_results.json`).
   Measured so far: TF-IDF + logistic regression accuracy 0.744 / macro-F1
-  0.679; DistilBERT 2-epoch CPU pilot accuracy 0.779 / macro-F1 0.504
-  (GPU sweep pending). These are pilot-label numbers: they measure
+  0.679; DistilBERT CPU pilot accuracy 0.779 / macro-F1 0.504; DistilBERT
+  GPU sweep (Colab T4, 3 configs): best config 6 epochs / batch 16 /
+  lr 5e-5 -> accuracy 0.826 / macro-F1 0.782 in 21 s of training,
+  peak CUDA 1.5 GB (weakest config 0.523 / 0.235 - lr/batch sensitive,
+  recorded honestly). These are pilot-label numbers: they measure
   feasibility and the honest floor a trained model must beat, not
   hypothesis evidence for H1-H3.
 - **Evaluation harness:** frozen-split runner with pre-registered H1-H3

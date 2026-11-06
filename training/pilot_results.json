@@ -488,6 +488,381 @@
         "US": 42
       },
       "note": "Classification subtask only; this is not the full critic (contextual gap detection supervision is separate work - see training/ANNOTATION_GUIDELINES.md)."
+    },
+    {
+      "backend": "distilbert-base-uncased",
+      "device": "cuda",
+      "epochs": 4,
+      "batch_size": 16,
+      "max_len": 128,
+      "lr": 5e-05,
+      "train_seconds": 15.013,
+      "peak_rss_mb": 1388.8,
+      "accuracy": 0.814,
+      "macro_f1": 0.6309,
+      "per_class": {
+        "A": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1-score": 0.8571428571428571,
+          "support": 4.0
+        },
+        "F": {
+          "precision": 0.9629629629629629,
+          "recall": 0.896551724137931,
+          "f1-score": 0.9285714285714286,
+          "support": 29.0
+        },
+        "FT": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 2.0
+        },
+        "L": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0
+        },
+        "LF": {
+          "precision": 0.7777777777777778,
+          "recall": 1.0,
+          "f1-score": 0.875,
+          "support": 7.0
+        },
+        "MN": {
+          "precision": 0.3333333333333333,
+          "recall": 0.3333333333333333,
+          "f1-score": 0.3333333333333333,
+          "support": 3.0
+        },
+        "O": {
+          "precision": 0.6363636363636364,
+          "recall": 0.7777777777777778,
+          "f1-score": 0.7,
+          "support": 9.0
+        },
+        "PE": {
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1-score": 0.9473684210526315,
+          "support": 9.0
+        },
+        "PO": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "SC": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.8,
+          "support": 3.0
+        },
+        "SE": {
+          "precision": 0.7,
+          "recall": 0.7777777777777778,
+          "f1-score": 0.7368421052631579,
+          "support": 9.0
+        },
+        "US": {
+          "precision": 0.7272727272727273,
+          "recall": 0.8,
+          "f1-score": 0.7619047619047619,
+          "support": 10.0
+        },
+        "accuracy": 0.813953488372093,
+        "macro avg": {
+          "precision": 0.5864758698092032,
+          "recall": 0.5835089399744572,
+          "f1-score": 0.5783469089390142,
+          "support": 86.0
+        },
+        "weighted avg": {
+          "precision": 0.7996554694229111,
+          "recall": 0.813953488372093,
+          "f1-score": 0.8018498280585183,
+          "support": 86.0
+        }
+      },
+      "peak_cuda_mb": 1510.1,
+      "recorded_at": "2026-11-06T07:22:58.478390+00:00",
+      "dataset": "PROMISE NFR frozen dev split only (test untouched)",
+      "dev_csv_sha256": "20eac7f8ce71234ffed5ca51cf2099e308be3d126a18215828a4828f4712fdec",
+      "dev_internal_split": {
+        "seed": 20261106,
+        "validation_fraction": 0.2,
+        "stratified": true
+      },
+      "train_rows": 351,
+      "val_rows": 86,
+      "label_distribution_train": {
+        "A": 14,
+        "F": 118,
+        "FT": 8,
+        "L": 5,
+        "LF": 28,
+        "MN": 14,
+        "O": 37,
+        "PE": 36,
+        "PO": 1,
+        "SC": 14,
+        "SE": 34,
+        "US": 42
+      },
+      "note": "Classification subtask only; this is not the full critic (contextual gap detection supervision is separate work - see training/ANNOTATION_GUIDELINES.md)."
+    },
+    {
+      "backend": "distilbert-base-uncased",
+      "device": "cuda",
+      "epochs": 6,
+      "batch_size": 16,
+      "max_len": 128,
+      "lr": 5e-05,
+      "train_seconds": 20.973,
+      "peak_rss_mb": 1341.6,
+      "accuracy": 0.8256,
+      "macro_f1": 0.7823,
+      "per_class": {
+        "A": {
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1-score": 0.8888888888888888,
+          "support": 4.0
+        },
+        "F": {
+          "precision": 0.9629629629629629,
+          "recall": 0.896551724137931,
+          "f1-score": 0.9285714285714286,
+          "support": 29.0
+        },
+        "FT": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1-score": 0.5,
+          "support": 2.0
+        },
+        "L": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1.0
+        },
+        "LF": {
+          "precision": 0.6,
+          "recall": 0.8571428571428571,
+          "f1-score": 0.7058823529411765,
+          "support": 7.0
+        },
+        "MN": {
+          "precision": 0.5,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.5714285714285714,
+          "support": 3.0
+        },
+        "O": {
+          "precision": 0.75,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.7058823529411765,
+          "support": 9.0
+        },
+        "PE": {
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1-score": 0.8571428571428571,
+          "support": 9.0
+        },
+        "PO": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "SC": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1-score": 0.8,
+          "support": 3.0
+        },
+        "SE": {
+          "precision": 0.875,
+          "recall": 0.7777777777777778,
+          "f1-score": 0.8235294117647058,
+          "support": 9.0
+        },
+        "US": {
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1-score": 0.8235294117647058,
+          "support": 10.0
+        },
+        "accuracy": 0.8255813953488372,
+        "macro avg": {
+          "precision": 0.7281635802469136,
+          "recall": 0.7276226965882139,
+          "f1-score": 0.7170712729536258,
+          "support": 86.0
+        },
+        "weighted avg": {
+          "precision": 0.8511735572782085,
+          "recall": 0.8255813953488372,
+          "f1-score": 0.8285334288754262,
+          "support": 86.0
+        }
+      },
+      "peak_cuda_mb": 1510.1,
+      "recorded_at": "2026-11-06T07:23:35.672367+00:00",
+      "dataset": "PROMISE NFR frozen dev split only (test untouched)",
+      "dev_csv_sha256": "20eac7f8ce71234ffed5ca51cf2099e308be3d126a18215828a4828f4712fdec",
+      "dev_internal_split": {
+        "seed": 20261106,
+        "validation_fraction": 0.2,
+        "stratified": true
+      },
+      "train_rows": 351,
+      "val_rows": 86,
+      "label_distribution_train": {
+        "A": 14,
+        "F": 118,
+        "FT": 8,
+        "L": 5,
+        "LF": 28,
+        "MN": 14,
+        "O": 37,
+        "PE": 36,
+        "PO": 1,
+        "SC": 14,
+        "SE": 34,
+        "US": 42
+      },
+      "note": "Classification subtask only; this is not the full critic (contextual gap detection supervision is separate work - see training/ANNOTATION_GUIDELINES.md)."
+    },
+    {
+      "backend": "distilbert-base-uncased",
+      "device": "cuda",
+      "epochs": 4,
+      "batch_size": 32,
+      "max_len": 128,
+      "lr": 3e-05,
+      "train_seconds": 12.801,
+      "peak_rss_mb": 1341.2,
+      "accuracy": 0.5233,
+      "macro_f1": 0.2352,
+      "per_class": {
+        "A": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 4.0
+        },
+        "F": {
+          "precision": 0.5384615384615384,
+          "recall": 0.9655172413793104,
+          "f1-score": 0.691358024691358,
+          "support": 29.0
+        },
+        "FT": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 2.0
+        },
+        "L": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0
+        },
+        "LF": {
+          "precision": 1.0,
+          "recall": 0.14285714285714285,
+          "f1-score": 0.25,
+          "support": 7.0
+        },
+        "MN": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 3.0
+        },
+        "O": {
+          "precision": 0.4666666666666667,
+          "recall": 0.7777777777777778,
+          "f1-score": 0.5833333333333334,
+          "support": 9.0
+        },
+        "PE": {
+          "precision": 1.0,
+          "recall": 0.5555555555555556,
+          "f1-score": 0.7142857142857143,
+          "support": 9.0
+        },
+        "PO": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "SC": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 3.0
+        },
+        "SE": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 9.0
+        },
+        "US": {
+          "precision": 0.3076923076923077,
+          "recall": 0.4,
+          "f1-score": 0.34782608695652173,
+          "support": 10.0
+        },
+        "accuracy": 0.5232558139534884,
+        "macro avg": {
+          "precision": 0.27606837606837603,
+          "recall": 0.2368089764641489,
+          "f1-score": 0.2155669299389106,
+          "support": 86.0
+        },
+        "weighted avg": {
+          "precision": 0.45223613595706624,
+          "recall": 0.5232558139534884,
+          "f1-score": 0.429723430397512,
+          "support": 86.0
+        }
+      },
+      "peak_cuda_mb": 2197.8,
+      "recorded_at": "2026-11-06T07:23:58.923548+00:00",
+      "dataset": "PROMISE NFR frozen dev split only (test untouched)",
+      "dev_csv_sha256": "20eac7f8ce71234ffed5ca51cf2099e308be3d126a18215828a4828f4712fdec",
+      "dev_internal_split": {
+        "seed": 20261106,
+        "validation_fraction": 0.2,
+        "stratified": true
+      },
+      "train_rows": 351,
+      "val_rows": 86,
+      "label_distribution_train": {
+        "A": 14,
+        "F": 118,
+        "FT": 8,
+        "L": 5,
+        "LF": 28,
+        "MN": 14,
+        "O": 37,
+        "PE": 36,
+        "PO": 1,
+        "SC": 14,
+        "SE": 34,
+        "US": 42
+      },
+      "note": "Classification subtask only; this is not the full critic (contextual gap detection supervision is separate work - see training/ANNOTATION_GUIDELINES.md)."
     }
   ]
 }
