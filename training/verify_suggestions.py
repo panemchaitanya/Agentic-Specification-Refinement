@@ -111,15 +111,44 @@ def verify_doc(item_id: str, annotator: str, split: str) -> dict:
         t = input("  text: ").strip()
         if t:
             added.append({"kind": k, "text": t})
+    # Implied NFR categories (H3 completeness ground truth): the reviewer
+    # verifies the LLM's suggestion or supplies the verified list. Without
+    # this, empty categories are unreviewed and the doc is ineligible for
+    # the H3 comparison (eval/scoring.py::h3_eligible).
+    ic = sugg.get("suggested_implied_categories", [])
+    print(f"\nImplied NFR categories suggested by the AI: {ic or 'none'}")
+    a = ask("  [a]ccept as listed / [e]dit (enter comma-separated kinds) / "
+            "[n]one (verified: this document implies NO NFR categories)? ",
+            {"a", "e", "n"})
+    if a == "a":
+        implied = list(ic)
+    elif a == "e":
+        raw = input("  categories (comma-separated, from "
+                    + ", ".join(NFR_CATEGORIES) + "): ").strip()
+        implied = [c.strip() for c in raw.split(",") if c.strip()]
+        bad = [c for c in implied if c not in NFR_CATEGORIES]
+        if bad:
+            print(f"  WARNING: unknown categories {bad} - recorded as typed")
+    else:
+        implied = []
+    # Explicit full-scope confirmation (recorded next to the page counter).
+    confirmed = ask(
+        f"\nYou were shown {presented} of {len(llm_scope)} chars of the "
+        "AI's scope. Did you read the complete AI scope for this document? "
+        "[y/n] ", {"y", "n"}) == "y"
     return {
         "item_id": item_id, "annotator": annotator, "split": split,
         "finished_at": datetime.now(timezone.utc).isoformat(),
         "verdicts": verdicts, "added_requirements": added,
+        "implied_categories": implied,
+        "implied_categories_reviewed": True,
         "review_scope": {
             "doc_chars_total": len(doc),
             "llm_scope_chars": len(llm_scope),
             "chars_presented_to_reviewer": presented,
-            "reviewer_read_full_llm_scope": presented >= len(llm_scope),
+            "reviewer_read_full_llm_scope":
+                presented >= len(llm_scope) and confirmed,
+            "reviewer_confirmed_full_read": confirmed,
         },
         "source_suggestion_file": f"data/frozen/gold_llm_suggestions/"
                                   f"{split}/{item_id}.llm_suggestions.json",

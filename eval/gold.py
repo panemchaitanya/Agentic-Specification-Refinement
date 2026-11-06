@@ -25,6 +25,31 @@ any future non-frozen marker) is rejected. Whitelist, not blacklist, so
 unknown future statuses fail closed. Only extracted, adjudicated, frozen
 gold loads.
 
+Scope gate (anchored-verification flow): when provenance carries a
+review_scope block, reviewer_read_full_llm_scope must be true - gold
+verified against only part of the reviewed source is incomplete and is
+rejected, not merely flagged. Gold produced outside that flow (pairs,
+synthetic) has no review_scope and loads normally.
+
+Extended provenance contract (anchored flow, merge_verdicts.py):
+  verified_by: [annotator names]
+  kappa_accept_reject: {pair: kappa} - ANCHORED verification agreement on
+      the shared subsample (not the proposal's independent-extraction
+      kappa; reported as such, see docs/evaluation.md D4)
+  review_scope: {doc_chars_total, llm_scope_chars,
+      chars_presented_to_reviewer, reviewer_read_full_llm_scope}
+  implied_categories_verified: true - required for H3 completeness
+      eligibility (eval/scoring.py::h3_eligible)
+  excluded: {"skipped": [...], "no_majority": [...], "rejected": [...]} -
+      suggestions not promoted to gold. "rejected" entries are
+      affirmative not-a-requirement judgments: they stay out of gold and
+      a prediction matching one still counts as a false positive. Every
+      other class ("skipped", "no_majority", contested-edit records) is
+      an UNRESOLVED judgment: its presence makes the whole document
+      ineligible for scoring - gold_doc_scorable() returns False and
+      eval/summarize.py::score_run refuses the document (fail-closed,
+      rubric rule R5). No partial-gold PRF is computed.
+
 Verdict file (one per scored item+run, produced by the rubric process):
 {
   "item_id": "kep-NNNN", "run_id": "...",
@@ -60,6 +85,13 @@ def load_gold(path: str) -> dict:
         raise ValueError(
             f"gold file {path} has an empty gold_requirements list - an "
             "unfilled skeleton is not valid gold")
+    scope = (gold.get("provenance") or {}).get("review_scope")
+    if scope is not None and not scope.get("reviewer_read_full_llm_scope"):
+        raise ValueError(
+            f"gold file {path} has incomplete review scope "
+            f"({scope.get('chars_presented_to_reviewer')}/"
+            f"{scope.get('llm_scope_chars')} chars reviewed) - partial "
+            "review is not complete gold; refusing to load")
     ids = set()
     for r in gold["gold_requirements"]:
         if r.get("kind") not in _KINDS:
@@ -75,6 +107,28 @@ def load_gold(path: str) -> dict:
     return gold
 
 
+def gold_doc_scorable(gold: dict) -> tuple:
+    """(scorable: bool, reason: str) for one loaded gold document.
+
+    Fail-closed document eligibility (rubric R5): if the gold file's
+    provenance.excluded records any UNRESOLVED suggestion - any class
+    other than "rejected" with at least one entry - the document is not
+    scored at all, because the remaining gold is provably incomplete and
+    PRF against it would mislabel unknowns as false positives/negatives.
+    "rejected" exclusions do not affect scorability: they are resolved
+    judgments, and matching predictions count against precision normally.
+    """
+    excluded = (gold.get("provenance") or {}).get("excluded") or {}
+    unresolved = {cls: ids for cls, ids in excluded.items()
+                  if cls != "rejected" and ids}
+    if unresolved:
+        detail = ", ".join(f"{cls}={len(ids)}" for cls, ids
+                           in sorted(unresolved.items()))
+        return False, (f"unresolved exclusions ({detail}); document "
+                       "ineligible for scoring under rubric R5")
+    return True, ""
+
+
 def load_verdicts(path: str) -> dict:
     with open(path, encoding="utf-8") as fh:
         v = json.load(fh)
@@ -85,3 +139,4 @@ def load_verdicts(path: str) -> dict:
         if not (isinstance(pair, list) and len(pair) == 2):
             raise ValueError(f"verdict {v['item_id']}: bad match pair {pair!r}")
     return v
+

@@ -14,9 +14,20 @@ boundary rules. Apply it verbatim - do not re-invent local variants.
 
 This lane's responsibility in Job 1 is the data side: frozen items to
 extract from (PURE test/dev documents, validated pairs) and assembling
-the gold files from the two independent extractions + adjudication in
-`eval/gold.py` format, with `provenance.extractor_agreement_kappa`
-recorded per item and `freeze_id` pointing at the freeze manifest.
+the gold files in `eval/gold.py` format, with `freeze_id` pointing at
+the freeze manifest. The mid-submission protocol (docs/evaluation.md D4)
+is ANCHORED verification, not two independent extractions: annotators
+review LLM-suggested labels against the paged 120k-char LLM scope in
+`training/verify_suggestions.py` (accept / reject / edit-kind /
+edit-text / skip per suggestion, add missed requirements, verify the
+implied NFR categories, and explicitly confirm the full scope was read).
+`training/merge_verdicts.py` promotes only fully-resolved documents to
+FROZEN gold (fail-closed R5: any skip, no-majority tie, contested edit
+or incomplete read makes the document REVIEW-INCOMPLETE and ineligible
+for scoring) and records the anchored accept/reject kappa
+(`provenance.kappa_accept_reject`, skips excluded). The skeleton's
+`provenance.extractor_agreement_kappa` is a two-MODEL pre-extraction
+agreement prior only - it is not the human verification kappa.
 
 ## Job 2: contextual critic supervision (SLM training labels)
 
@@ -60,7 +71,7 @@ per labelled finding, aligned to `src/specpipe/schemas.py` `Finding`:
 - Architecture: NO public label source exists. Hand annotation only.
 - LLM-assisted pre-labelling may draft candidates, but EVERY label is
   hand-verified before use; unverified model output is not training data.
-- Same two-labeller + adjudication + kappa protocol as Job 1.
+- Same anchored-verification + fail-closed merge protocol as Job 1 (two reviewers on a shared subsample, anchored kappa).
 
 ## What is NOT done yet (kept honest)
 

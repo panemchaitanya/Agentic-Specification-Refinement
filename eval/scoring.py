@@ -36,6 +36,13 @@ def score_item(gold_ids, pred_ids, matches) -> ItemScore:
     gold id counts; any further pred matched to the same gold is treated
     as unmatched (it still counts against precision) and the item is
     flagged many_to_one so the 20% hand-audit reviews those cases.
+
+    Every predicted id that is not matched counts against precision,
+    including predictions echoing suggestions annotators REJECTED: a
+    rejection is an affirmative judgment, so a matching extraction is a
+    genuine false positive. Documents with UNRESOLVED suggestions
+    (skipped, no majority, contested edits) are not scored at all - see
+    eval/gold.py::gold_doc_scorable (rubric rule R5, fail-closed).
     """
     gold = set(gold_ids)
     pred = set(pred_ids)
@@ -136,6 +143,22 @@ def h2_readout(slm_f1s, llm_f1s, slm_costs, llm_costs,
     }
 
 
+def h3_eligible(gold: dict) -> bool:
+    """Whether a gold item may enter the H3 completeness comparison.
+
+    Empty implied_categories with provenance.implied_categories_verified
+    true means annotators confirmed the PRD implies no NFR categories -
+    the item is eligible (completeness 1.0 by definition). Empty implied
+    categories WITHOUT that marker means the categories were never
+    reviewed: the item is excluded from H3 aggregation (and counted
+    separately), because a vacuous 1.0 would silently inflate the ratio.
+    """
+    if gold.get("implied_categories"):
+        return True
+    return bool((gold.get("provenance") or {}).get(
+        "implied_categories_verified"))
+
+
 def h3_readout(targeted_completeness, askall_completeness,
                targeted_questions, askall_questions) -> dict:
     """H3: targeted questioning vs ask-everything review, per-item paired.
@@ -166,3 +189,4 @@ def h3_readout(targeted_completeness, askall_completeness,
         "rule": ("supported iff mean targeted/ask-all completeness ratio "
                  ">= 0.95 and mean question reduction >= 0.50; fixed pre-data"),
     }
+

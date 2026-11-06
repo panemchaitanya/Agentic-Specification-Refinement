@@ -64,6 +64,19 @@ A generated requirement and a gold requirement **match** when ALL hold:
 - **R4 OPEN lines never match.** `OPEN:` placeholders carry no content;
   they are excluded from the predicted set for PRF and reported via
   `open_rate`.
+- **R5 Rejected extras stay false positives; unresolved items exclude
+  the whole document.** Suggestions annotators REJECTED are affirmative
+  not-a-requirement judgments: a generated requirement matching one is a
+  genuine false positive and counts against precision (exempting it
+  would reward hallucination). Suggestions left UNRESOLVED - skipped, no
+  annotator majority, or a contested edit (recorded in the gold file's
+  provenance.excluded under any class other than "rejected") - mean the
+  gold is provably incomplete for that document, so the document is
+  ineligible for scoring at all: `eval/gold.py::gold_doc_scorable`
+  returns False and `eval/summarize.py::score_run` refuses it
+  (fail-closed, reported as an excluded document). No partial-gold PRF
+  is computed; unresolved review never silently converts into precision
+  or recall distortion.
 
 Matching is one-to-one (`eval/scoring.py::score_item`): only the first
 pair for a gold id counts; extra preds matched to the same gold count as
@@ -123,6 +136,12 @@ before any evaluation data exists.
     ratios of aggregate sums; the per-item pairing matches the proposal's
     paired-test design. The 0/0 conventions are arbitrary but fixed here
     pre-data.
+  - Eligibility gate: an item enters the completeness comparison only if
+    its implied categories were actually reviewed - non-empty
+    implied_categories, or empty WITH provenance.
+    implied_categories_verified = true (`eval/scoring.py::h3_eligible`).
+    Unreviewed-empty items are excluded and counted separately; a vacuous
+    1.0 from never-annotated categories would silently inflate the ratio.
 
 Negative and null results are reported as measured; if H1 fails the
 critic ablations identify the responsible component (proposal section 5).
@@ -146,8 +165,9 @@ is the real-human check.
   by the datasets lane) BEFORE any experiment or prompt tuning. All
   prompt and design iteration happens on the dev split only.
 - Gold files and match-verdict files follow the formats in
-  `eval/gold.py`; gold carries extractor provenance including Cohen's
-  kappa from the two independent extractors.
+  `eval/gold.py`; gold carries review provenance including the anchored
+  accept/reject Cohen's kappa of the verifying annotators (D4) - not an
+  independent-extractor kappa.
 - Contamination guard (proposal): documents dated after the model's
   training cutoff are preferred and reported as a separate subset.
 - Bounded-scope rule (6 Nov 2026, D5 candidate): the LLM pre-labeler saw
@@ -164,6 +184,18 @@ is the real-human check.
   protocol above is unchanged and is the only protocol valid for the
   final TEST evaluation; the bound is a dev-stage correctness repair,
   not a protocol change.
+- IMPLEMENTED (evaluation lane, 6 Nov 2026): the bound is enforced in
+  code, not only documented. `eval/harness.py::ExperimentConfig.
+  input_scope_chars` truncates every item's PRD to the same prefix for
+  every baseline, labels the run log "bounded dev evaluation (prefix
+  scope)" and records input_scope_chars + input_bounded per run. Gate,
+  not metadata: `eval/gold.py::load_gold` REJECTS gold whose
+  provenance.review_scope has reviewer_read_full_llm_scope = false -
+  partial review is not complete gold and never reaches scoring.
+  TEST-split note: 5 of 18 frozen test documents exceed 120k chars
+  (EXTRACTION_REPORT.json), so the prefix-scoped prelabel/verify flow
+  CANNOT produce test gold for them; full-document coverage for those 5
+  is a recorded pre-final gate, not something to discover at Stage 4.
 
 ## 7. Run logs and reproducibility
 
@@ -246,16 +278,21 @@ traces itself is a coordinator core decision, flagged here pre-data.
   team verifies LLM-suggested labels instead (accept/reject/edit/add per
   suggestion, fixed guidelines in training/ANNOTATION_GUIDELINES.md),
   because pre-labels already exist for all 61 dev documents and anchored
-  review is ~12 min/doc vs hours per blind extraction. DECISION
+  review is ~15-20 min/doc (full paged reading of the LLM scope) vs hours
+  per blind extraction. DECISION
   (coordinator, 6 Nov 2026, pre-data): (a) suggestion files carry status
   "LLM-SUGGESTED - unverified" and are rejected fail-closed by
   eval/gold.py; (b) only verdict files from named human annotators
   (training/verify_suggestions.py) promote a document to FROZEN gold via
   training/merge_verdicts.py; (c) a length-stratified shared subsample of
-  8 dev documents (2 LLM-truncated) is verified independently by both
-  annotators; pairwise Cohen's kappa on accept/reject decisions is
-  computed and recorded in gold provenance, and shared-doc conflicts
-  resolve by majority vote (ties keep the item out); (d) a second free
+  8 dev documents (2 LLM-truncated) is verified by both annotators
+  (anchored: both review the SAME LLM suggestions against the same 120k-
+  char document scope, not independent extractions); pairwise Cohen's kappa
+  on accept/reject decisions (skips excluded) is computed and recorded in
+  gold provenance as kappa_accept_reject. Conflicts are fail-closed: any
+  skip, no-majority tie or contested edit records the item in provenance.
+  excluded and makes the whole document REVIEW-INCOMPLETE - ineligible for
+  scoring (gold_doc_scorable, R5) - never a partial-gold PRF; (d) a second free
   model (different model family version) re-extracts the shared 8 as a
   cross-check pre-filter and LLM-vs-LLM agreement prior; (e) coverage and
   the single- vs double-verified split are reported verbatim with any
@@ -293,3 +330,4 @@ traces itself is a coordinator core decision, flagged here pre-data.
 - Blocked on: frozen dev/test splits and gold extraction (datasets lane),
   an LLM budget/route/scale decision for real generation runs, and SLM
   critics for H2 (training lane).
+

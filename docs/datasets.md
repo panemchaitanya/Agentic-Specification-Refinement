@@ -68,7 +68,7 @@ IST). Output lands in `data/frozen/gold_llm_suggestions/<split>/` with
 provenance.status "LLM-SUGGESTED - unverified, not gold": eval/gold.py's
 whitelist rejects these, and only a human verification + adjudication
 pass (annotate_critic.py, two-extractor protocol, kappa recorded) can
-promote any of it to FROZEN gold. First pass: 61/61 dev docs, 1601
+promote any of it to FROZEN gold. Human promotion is anchored verification (training/verify_suggestions.py: accept/reject/edit /add over the LLM suggestions against the same 120k-char scope) merged by training/merge_verdicts.py with fail-closed eligibility (docs/evaluation.md R5) and anchored accept/reject kappa recorded in provenance - not the proposal's two-independent-extractor protocol. First pass: 61/61 dev docs, 1601
 suggestions, 18 docs truncated at 120k chars (flagged per file), logs in
 eval/runs/PRELABEL-dev-*. Labels are free-tier quality by declaration and
 upgradeable before 30 Nov.

@@ -422,3 +422,99 @@ def test_load_verdicts_requires_match_pairs():
     except ValueError:
         return
     raise AssertionError("expected ValueError")
+
+
+
+# --- Bounded-scope + incomplete-review gates (correctness repair) ----------
+
+from eval.scoring import h3_eligible
+from eval.harness import ExperimentConfig, run_experiment
+from specpipe.llm import MockLLM
+
+
+def test_rejected_extras_still_count_as_false_positives():
+    # R5: a prediction echoing a REJECTED suggestion is a genuine FP -
+    # score_item is pure PRF with no exclusion exemption
+    s = score_item({"G1"}, {"P1", "P9"}, [("G1", "P1")])
+    assert s.prf.precision == 0.5 and s.prf.recall == 1.0
+
+
+def test_gold_doc_scorable_gate():
+    from eval.gold import gold_doc_scorable
+    ok, _ = gold_doc_scorable({"provenance": {}})
+    assert ok
+    ok, _ = gold_doc_scorable({"provenance": {"excluded": {
+        "rejected": ["s-1", "s-2"]}}})
+    assert ok  # rejected = resolved judgments, doc still scorable
+    for cls in ("skipped", "no_majority", "contested_edit"):
+        scorable, reason = gold_doc_scorable({"provenance": {"excluded": {
+            cls: ["s-3"], "rejected": ["s-1"]}}})
+        assert not scorable and cls in reason
+
+
+def test_score_run_refuses_unresolved_exclusions():
+    gold = {"item_id": "kep-1",
+            "gold_requirements": [{"id": "G1", "kind": "FR", "text": "t"}],
+            "implied_categories": [],
+            "provenance": {"excluded": {"skipped": ["s-9"]}}}
+    verdicts = [{"item_id": "kep-1", "run_id": "r1",
+                 "pred_ids": ["P1"], "matches": [["G1", "P1"]]}]
+    try:
+        score_run([_run(item="kep-1")], gold, verdicts)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("expected ValueError for unresolved exclusions")
+    # same doc with only rejected exclusions scores normally
+    gold["provenance"]["excluded"] = {"rejected": ["s-9"]}
+    out = score_run([_run(item="kep-1")], gold, verdicts)
+    assert out["kep-1"]["precision"] == 1.0
+
+
+def test_load_gold_rejects_incomplete_review_scope():
+    partial = {**_GOLD, "provenance": {
+        "status": "FROZEN - human-verified (anchored, single annotator)",
+        "review_scope": {"doc_chars_total": 90000, "llm_scope_chars": 90000,
+                         "chars_presented_to_reviewer": 12000,
+                         "reviewer_read_full_llm_scope": False}}}
+    try:
+        load_gold(_write(partial))
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("expected ValueError")
+    complete = {**_GOLD, "provenance": {
+        "status": "FROZEN - human-verified (anchored, single annotator)",
+        "review_scope": {"doc_chars_total": 90000, "llm_scope_chars": 90000,
+                         "chars_presented_to_reviewer": 90000,
+                         "reviewer_read_full_llm_scope": True}}}
+    assert load_gold(_write(complete))["item_id"] == "x"
+
+
+def test_h3_eligible_gate():
+    assert h3_eligible({"implied_categories": ["security"]})
+    assert h3_eligible({"implied_categories": [],
+                        "provenance": {"implied_categories_verified": True}})
+    assert not h3_eligible({"implied_categories": [], "provenance": {}})
+    assert not h3_eligible({"implied_categories": []})
+
+
+def test_harness_input_scope_bounds_all_baselines(tmp_path):
+    items = [{"id": "it", "prd_text": "x" * 200}]
+    cfg = ExperimentConfig(baseline="B2", dataset_id="t", repeats=1,
+                           input_scope_chars=50)
+    log = run_experiment(cfg, items, MockLLM, str(tmp_path))
+    import json as _j
+    recs = [_j.loads(l) for l in open(log)]
+    run = next(r for r in recs if r["type"] == "run")
+    assert run["input_scope_chars"] == 50
+    assert run["input_bounded"] is True
+    header = recs[0]
+    assert header["scope_label"] == "bounded dev evaluation (prefix scope)"
+    # full-document default: no bound, no truncation
+    cfg2 = ExperimentConfig(baseline="B2", dataset_id="t2", repeats=1)
+    log2 = run_experiment(cfg2, items, MockLLM, str(tmp_path))
+    recs2 = [_j.loads(l) for l in open(log2)]
+    assert recs2[0]["scope_label"] == "full-document"
+    run2 = next(r for r in recs2 if r["type"] == "run")
+    assert run2["input_bounded"] is False

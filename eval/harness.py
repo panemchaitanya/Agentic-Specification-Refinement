@@ -42,6 +42,12 @@ class ExperimentConfig:
     critic_names: tuple = ALL_CRITICS  # subset for ablations
     code_version: str = field(default_factory=_code_version)
     note: str = ""
+    # Bounded-scope rule (docs/evaluation.md section 6): dev-split scoring
+    # against prefix-scoped gold MUST bound the pipeline input to the same
+    # prefix, identically for every baseline. Set input_scope_chars (e.g.
+    # 120_000) for bounded dev runs; leave None for full-document (the only
+    # valid scope for the final TEST evaluation).
+    input_scope_chars: int | None = None
 
 
 def run_experiment(config: ExperimentConfig, items: list, llm_factory,
@@ -63,9 +69,16 @@ def run_experiment(config: ExperimentConfig, items: list, llm_factory,
             "type": "header", "run_id": run_id,
             "config": {**asdict(config),
                        "critic_names": list(config.critic_names)},
+            "scope_label": ("bounded dev evaluation (prefix scope)"
+                            if config.input_scope_chars is not None
+                            else "full-document"),
             "started_utc": f"{datetime.now(timezone.utc):%Y-%m-%dT%H:%M:%SZ}",
         }) + "\n")
         for item in items:
+            scope = item.get("input_scope_chars", config.input_scope_chars)
+            prd_text = item["prd_text"]
+            if scope is not None:
+                prd_text = prd_text[:scope]
             for rep in range(config.repeats):
                 llm = LoggingLLM(llm_factory())
                 oracle = (ReferenceOracle(item.get("reference", []))
@@ -78,9 +91,9 @@ def run_experiment(config: ExperimentConfig, items: list, llm_factory,
                 if "meta" in params:
                     kwargs["meta"] = meta
                 if entry["oracle"]:
-                    spec = entry["fn"](item["prd_text"], llm, oracle, **kwargs)
+                    spec = entry["fn"](prd_text, llm, oracle, **kwargs)
                 else:
-                    spec = entry["fn"](item["prd_text"], llm, **kwargs)
+                    spec = entry["fn"](prd_text, llm, **kwargs)
                 rec = {
                     "type": "run", "run_id": run_id, "item_id": item["id"],
                     "repeat": rep, "baseline": config.baseline,
@@ -97,7 +110,10 @@ def run_experiment(config: ExperimentConfig, items: list, llm_factory,
                     "n_escalated": meta.get("n_escalated", 0),
                     "finding_kinds": meta.get("finding_kinds", {}),
                     "fr_trace_verbatim_rate": fr_trace_verbatim_rate(
-                        spec.requirements, item["prd_text"]),
+                        spec.requirements, prd_text),
+                    "input_scope_chars": scope,
+                    "input_bounded": scope is not None
+                    and len(item["prd_text"]) > scope,
                     "finding_trace_verbatim_rate": meta.get(
                         "finding_trace_verbatim_rate"),
                     "llm": llm.summary(),
@@ -109,3 +125,4 @@ def run_experiment(config: ExperimentConfig, items: list, llm_factory,
                     rec["oracle_audit"] = oracle.audit_report()
                 fh.write(json.dumps(rec) + "\n")
     return str(out_path)
+

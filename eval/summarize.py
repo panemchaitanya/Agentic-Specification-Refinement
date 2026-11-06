@@ -13,6 +13,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from .gold import gold_doc_scorable
 from .scoring import score_item
 
 
@@ -72,8 +73,15 @@ def score_run(runs: list, gold: dict, verdicts: list) -> dict:
 
     verdicts: list of verdict dicts (see eval/gold.py) for this run.
     Returns {item_id: ItemScore-as-dict}. Items without verdicts are
-    skipped (reported separately by the caller).
+    skipped (reported separately by the caller). Raises ValueError when
+    the gold document is not scorable (unresolved exclusions, R5).
     """
+    scorable, reason = gold_doc_scorable(gold)
+    if not scorable:
+        raise ValueError(
+            f"gold document {gold.get('item_id')!r} refused: {reason}. "
+            "Fail-closed: no partial-gold PRF is computed; the caller "
+            "must report this document as excluded from scoring.")
     gold_ids = [r["id"] for r in gold["gold_requirements"]]
     by_item = {}
     for v in verdicts:
@@ -94,3 +102,4 @@ def score_run(runs: list, gold: dict, verdicts: list) -> dict:
             "audited": bool(v.get("audited", False)),
         }
     return by_item
+

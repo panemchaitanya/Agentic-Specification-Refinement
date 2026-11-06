@@ -32,8 +32,10 @@ Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
   A human verification pass is underway with fixed guidelines
   (`training/ANNOTATION_GUIDELINES.md`, `training/verify_suggestions.py`,
   `docs/verification_assignment.md`); verified documents are promoted to
-  FROZEN gold by `training/merge_verdicts.py` with inter-annotator
-  agreement (Cohen's kappa) on a shared subsample. Until then, no gold
+  FROZEN gold by `training/merge_verdicts.py` (fail-closed: unresolved skips, ties
+  or contested edits make a document ineligible for scoring, never a
+  partial-gold PRF), with anchored accept/reject agreement (Cohen's kappa)
+  on a shared subsample. Until then, no gold
   claims are made.
 - **Training pilot (Stage 3, feasibility only):** NFR classification
   subtask on the frozen PROMISE dev split, dev-internal stratified holdout

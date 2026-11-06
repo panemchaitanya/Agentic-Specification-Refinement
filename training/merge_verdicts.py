@@ -1,20 +1,43 @@
 """Merge human verdicts over LLM suggestions into FROZEN gold files.
 
 Reads data/frozen/gold_verdicts/<split>/<item>.<annotator>.verdict.json
-files produced by verify_suggestions.py and promotes them to gold:
+files produced by verify_suggestions.py and promotes them to gold.
 
-- Single annotator: verdicts stand as-is; provenance marked
-  "single-verified".
-- Multiple annotators on the same item: pairwise Cohen's kappa on
-  accept/reject decisions (and on category of accepted items) is
-  computed and recorded; conflicts resolve by majority vote, ties keep
-  the suggestion out (conservative).
+FAIL-CLOSED document eligibility (docs/evaluation.md rubric R5, aligned
+with eval/gold.py::gold_doc_scorable): a document is promoted to
+"FROZEN - human-verified (anchored)" ONLY when every suggestion has a
+VERIFIED resolution and every annotator confirmed reading the full LLM
+scope:
 
-Output: rewrites data/frozen/gold/<split>/<item>.gold.json in place with
-status "FROZEN - human-verified (anchored)" and non-empty
-gold_requirements, which passes eval/gold.py's load_gold whitelist.
+- single annotator: accept/reject/edit verdicts stand; a skip is
+  UNRESOLVED.
+- two annotators: majority accept promotes (ties and disagreements are
+  UNRESOLVED "no_majority"); both reject is a verified rejection;
+  contested edits (accepts with differing new_kind/new_text) are
+  UNRESOLVED "contested_edit" - no last-wins.
+- any annotator who did not read/confirm the full LLM scope makes the
+  document REVIEW-INCOMPLETE.
+
+Unresolved suggestions are recorded in provenance.excluded under their
+class ("skipped", "no_majority", "contested_edit"); verified rejections
+are recorded under "rejected" (resolved - they do not affect
+eligibility, and a prediction matching one still counts as a false
+positive). ANY unresolved class makes the document REVIEW-INCOMPLETE:
+not FROZEN, refused by eval/gold.py, never scored. No partial-gold PRF.
+
+Kappa (kappa_accept_reject) is the ANCHORED verification agreement on
+accept/reject over items where BOTH annotators decided accept or
+reject; skips are excluded from kappa and recorded in excluded.
+
+Implied categories: when all annotators reviewed them (verdict field
+implied_categories_reviewed) and agree, the merged list is written to
+gold.implied_categories with provenance.implied_categories_verified =
+true (H3 eligibility, eval/scoring.py::h3_eligible). Unreviewed or
+disagreeing categories leave the document FROZEN for H1/H2 but
+ineligible for H3 (vacuous completeness would inflate the ratio).
+
 Original skeletons are backed up under data/frozen/gold/_skeleton_backup/
-on first promotion.
+on first write.
 
 Usage: python training/merge_verdicts.py --split dev [--dry-run]
 """
@@ -53,6 +76,36 @@ def load_item_verdicts(split: str, item_id: str) -> list[dict]:
     return out
 
 
+def _read_full_scope(v: dict) -> bool:
+    rs = v.get("review_scope") or {}
+    return bool(rs.get("reviewer_read_full_llm_scope"))
+
+
+def _aggregate_scope(vs: list[dict], full: bool) -> dict:
+    scopes = [v.get("review_scope") or {} for v in vs]
+    return {
+        "doc_chars_total": max((s.get("doc_chars_total") or 0)
+                               for s in scopes),
+        "llm_scope_chars": max((s.get("llm_scope_chars") or 0)
+                               for s in scopes),
+        "chars_presented_to_reviewer": min(
+            (s.get("chars_presented_to_reviewer") or 0) for s in scopes),
+        "reviewer_read_full_llm_scope": full,
+    }
+
+
+def _merge_implied(vs: list[dict], excluded: dict) -> tuple[list, bool]:
+    """Merged implied categories + verified flag (H3 eligibility)."""
+    if not all(v.get("implied_categories_reviewed") for v in vs):
+        return [], False
+    lists = [sorted(v.get("implied_categories") or []) for v in vs]
+    if any(l != lists[0] for l in lists):
+        excluded.setdefault("contested_implied", []).append(
+            "implied_categories")
+        return [], False
+    return lists[0], True
+
+
 def promote(split: str, item_id: str, dry: bool) -> dict | None:
     vs = load_item_verdicts(split, item_id)
     if not vs:
@@ -60,26 +113,41 @@ def promote(split: str, item_id: str, dry: bool) -> dict | None:
     sugg_path = ROOT / vs[0]["source_suggestion_file"]
     sugg = {r["id"]: r for r in json.loads(sugg_path.read_text())
             ["suggested_requirements"]}
+    skel_path = GOLD / split / f"{item_id}.gold.json"
+    skel = json.loads(skel_path.read_text())
+
+    excluded: dict[str, list] = {}
     gold_reqs = []
-    kappa_report = {}
+    blocked = []
+
+    # --- scope gate: every annotator must have read + confirmed the full
+    #     LLM scope (fail-closed; eval/gold.py enforces the same rule)
+    incomplete = [v["annotator"] for v in vs if not _read_full_scope(v)]
+    if incomplete:
+        blocked.append("incomplete review scope: " + ", ".join(incomplete))
+
+    # --- per-suggestion resolution
     for rid, r in sugg.items():
-        decisions = []
-        for v in vs:
-            d = next((x for x in v["verdicts"] if x["id"] == rid), None)
-            decisions.append(d)
-        accepts = sum(1 for d in decisions
-                      if d and d["decision"] == "a")
-        if len(decisions) > 1:
-            if accepts * 2 <= len(decisions):
-                continue  # no majority -> drop (conservative)
-        elif accepts == 0:
+        decisions = [next((x for x in v["verdicts"] if x["id"] == rid),
+                          None) for v in vs]
+        if any(d is None or d["decision"] == "s" for d in decisions):
+            excluded.setdefault("skipped", []).append(rid)
             continue
-        kind, text = r["kind"], r["text"]
-        for d in decisions:
-            if d and "new_kind" in d:
-                kind = d["new_kind"]
-            if d and "new_text" in d and d["new_text"]:
-                text = d["new_text"]
+        accepts = [d for d in decisions if d["decision"] == "a"]
+        if len(accepts) * 2 <= len(decisions):
+            if accepts:
+                excluded.setdefault("no_majority", []).append(rid)
+            else:
+                excluded.setdefault("rejected", []).append(rid)
+            continue
+        # majority accept: edits must agree across accepting annotators
+        kinds = {d.get("new_kind") for d in accepts}
+        texts = {d.get("new_text") for d in accepts}
+        if len(kinds) > 1 or len(texts) > 1:
+            excluded.setdefault("contested_edit", []).append(rid)
+            continue
+        kind = next(iter(kinds)) or r["kind"]
+        text = next(iter(texts)) or r["text"]
         gold_reqs.append({"id": rid, "kind": kind, "text": text,
                           "source": "llm-suggestion+human-verify"})
     added_ids = set()
@@ -93,37 +161,68 @@ def promote(split: str, item_id: str, dry: bool) -> dict | None:
                 "id": f"human-{len(added_ids):03d}",
                 "kind": a["kind"], "text": a["text"],
                 "source": f"human-added:{v['annotator']}"})
+
+    implied, implied_verified = _merge_implied(vs, excluded)
+
+    # --- anchored accept/reject kappa over items both annotators decided
+    kappa_report = {}
     if len(vs) > 1:
         ids = [r["id"] for r in sugg.values()]
         for va, vb in combinations(vs, 2):
-            da = [next((x["decision"] for x in va["verdicts"]
-                        if x["id"] == i), "s") for i in ids]
-            db = [next((x["decision"] for x in vb["verdicts"]
-                        if x["id"] == i), "s") for i in ids]
-            k = cohen_kappa(da, db)
+            da, db = ([next((x["decision"] for x in v["verdicts"]
+                             if x["id"] == i), None) for i in ids]
+                      for v in (va, vb))
+            keep = [(x, y) for x, y in zip(da, db)
+                    if x in ("a", "r") and y in ("a", "r")]
+            k = (cohen_kappa([x for x, _ in keep], [y for _, y in keep])
+                 if keep else None)
             kappa_report[f"{va['annotator']}~{vb['annotator']}"] = k
-    skel_path = GOLD / split / f"{item_id}.gold.json"
-    skel = json.loads(skel_path.read_text())
+
+    unresolved = {c: ids for c, ids in excluded.items()
+                  if c != "rejected" and ids}
+    if unresolved:
+        blocked.append("unresolved suggestions: " + ", ".join(
+            f"{c}={len(i)}" for c, i in sorted(unresolved.items())))
+    if not gold_reqs and not unresolved:
+        blocked.append("no verified requirements remain (all rejected, "
+                       "none added) - adjudicate or drop from scoring set")
+
+    prov = skel["provenance"]
+    prov["verified_by"] = [v["annotator"] for v in vs]
+    if kappa_report:
+        prov["kappa_accept_reject"] = kappa_report
+    prov["review_scope"] = _aggregate_scope(vs, not incomplete)
+    if excluded:
+        prov["excluded"] = excluded
+    if implied_verified:
+        skel["implied_categories"] = implied
+        prov["implied_categories_verified"] = True
+
+    n_ann = len(vs)
+    if blocked:
+        prov["status"] = "REVIEW-INCOMPLETE (anchored)"
+        prov["blocked_reasons"] = blocked
+        # partial gold kept as adjudication evidence only; the status is
+        # not FROZEN-prefixed, so eval/gold.py refuses to load it
+        skel["gold_requirements"] = gold_reqs
+    else:
+        prov["status"] = (
+            f"FROZEN - human-verified (anchored, "
+            f"{'single' if n_ann == 1 else str(n_ann)} annotator"
+            f"{'s' if n_ann > 1 else ''})")
+        skel["gold_requirements"] = gold_reqs
     if not dry:
         BACKUP.mkdir(exist_ok=True)
         bak = BACKUP / split / f"{item_id}.gold.json"
         if not bak.exists():
             bak.parent.mkdir(parents=True, exist_ok=True)
             bak.write_text(skel_path.read_text())
-    n_ann = len(vs)
-    skel["provenance"]["status"] = (
-        f"FROZEN - human-verified (anchored, "
-        f"{'single' if n_ann == 1 else str(n_ann)} annotator"
-        f"{'s' if n_ann > 1 else ''})")
-    skel["provenance"]["verified_by"] = [v["annotator"] for v in vs]
-    if kappa_report:
-        skel["provenance"]["kappa_accept_reject"] = kappa_report
-    skel["gold_requirements"] = gold_reqs
-    if not dry:
         skel_path.write_text(json.dumps(skel, indent=2) + "\n",
                              encoding="utf-8")
     return {"item_id": item_id, "annotators": n_ann,
-            "requirements": len(gold_reqs), "kappa": kappa_report}
+            "requirements": len(gold_reqs), "kappa": kappa_report,
+            "blocked": blocked,
+            "status": ("blocked" if blocked else "frozen")}
 
 
 def main() -> int:
@@ -139,8 +238,16 @@ def main() -> int:
         return 1
     done = [promote(args.split, i, args.dry_run) for i in items]
     done = [d for d in done if d]
-    print(json.dumps({"promoted": len(done), "dry_run": args.dry_run,
-                      "items": done}, indent=2))
+    frozen = [d for d in done if not d["blocked"]]
+    held = [d for d in done if d["blocked"]]
+    print(json.dumps({"promoted": len(frozen),
+                      "review_incomplete": len(held),
+                      "dry_run": args.dry_run, "items": done}, indent=2))
+    if held:
+        print("\nREVIEW-INCOMPLETE documents (need re-review or "
+              "adjudication before scoring):")
+        for d in held:
+            print(f"  {d['item_id']}: {'; '.join(d['blocked'])}")
     return 0
 
 
