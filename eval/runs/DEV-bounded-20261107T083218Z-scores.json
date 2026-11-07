@@ -1,0 +1,124 @@
+{
+  "run_id": "DEV-bounded-20261107T083218Z",
+  "label": "bounded dev evaluation (120k-char prefix scope); judged-matcher pilot evidence, audited=false - not hypothesis verdicts",
+  "scope_chars": 120000,
+  "matcher": "llm-rubric (gemini-3.1-flash-lite)",
+  "items": {
+    "B1": {
+      "pure-0000_-_cctns": {
+        "precision": 0.7,
+        "recall": 0.5,
+        "f1": 0.5833333333333334,
+        "n_gold": 28,
+        "n_pred": 20,
+        "n_matches": 14,
+        "many_to_one": false,
+        "audited": false
+      },
+      "pure-0000_-_gamma_j": {
+        "precision": 0.8095238095238095,
+        "recall": 0.68,
+        "f1": 0.7391304347826089,
+        "n_gold": 25,
+        "n_pred": 21,
+        "n_matches": 17,
+        "many_to_one": false,
+        "audited": false
+      },
+      "pure-1999_-_dii": {
+        "precision": 0.5555555555555556,
+        "recall": 0.2857142857142857,
+        "f1": 0.3773584905660377,
+        "n_gold": 35,
+        "n_pred": 18,
+        "n_matches": 10,
+        "many_to_one": false,
+        "audited": false
+      }
+    },
+    "B2": {
+      "pure-0000_-_cctns": {
+        "precision": 0.034482758620689655,
+        "recall": 0.07142857142857142,
+        "f1": 0.046511627906976744,
+        "n_gold": 28,
+        "n_pred": 58,
+        "n_matches": 2,
+        "many_to_one": false,
+        "audited": false
+      },
+      "pure-0000_-_gamma_j": {
+        "precision": 0.38235294117647056,
+        "recall": 0.52,
+        "f1": 0.4406779661016949,
+        "n_gold": 25,
+        "n_pred": 34,
+        "n_matches": 13,
+        "many_to_one": false,
+        "audited": false
+      },
+      "pure-1999_-_dii": {
+        "precision": 0.15,
+        "recall": 0.08571428571428572,
+        "f1": 0.10909090909090909,
+        "n_gold": 35,
+        "n_pred": 20,
+        "n_matches": 3,
+        "many_to_one": false,
+        "audited": false
+      }
+    },
+    "B3": {
+      "pure-0000_-_cctns": {
+        "precision": 0.034482758620689655,
+        "recall": 0.07142857142857142,
+        "f1": 0.046511627906976744,
+        "n_gold": 28,
+        "n_pred": 58,
+        "n_matches": 2,
+        "many_to_one": false,
+        "audited": false
+      },
+      "pure-0000_-_gamma_j": {
+        "precision": 0.3225806451612903,
+        "recall": 0.4,
+        "f1": 0.3571428571428571,
+        "n_gold": 25,
+        "n_pred": 31,
+        "n_matches": 10,
+        "many_to_one": false,
+        "audited": false
+      },
+      "pure-1999_-_dii": {
+        "precision": 0.15,
+        "recall": 0.08571428571428572,
+        "f1": 0.10909090909090909,
+        "n_gold": 35,
+        "n_pred": 20,
+        "n_matches": 3,
+        "many_to_one": false,
+        "audited": false
+      }
+    }
+  },
+  "mean_prf_by_baseline": {
+    "B1": {
+      "items": 3,
+      "mean_P": 0.6884,
+      "mean_R": 0.4886,
+      "mean_F1": 0.5666
+    },
+    "B2": {
+      "items": 3,
+      "mean_P": 0.1889,
+      "mean_R": 0.2257,
+      "mean_F1": 0.1988
+    },
+    "B3": {
+      "items": 3,
+      "mean_P": 0.169,
+      "mean_R": 0.1857,
+      "mean_F1": 0.1709
+    }
+  }
+}

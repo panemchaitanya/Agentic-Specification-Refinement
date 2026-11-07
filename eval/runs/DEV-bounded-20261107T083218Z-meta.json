@@ -1,0 +1,249 @@
+{
+  "run_id": "DEV-bounded-20261107T083218Z",
+  "label": "bounded dev evaluation (120k-char prefix scope)",
+  "scope_chars": 120000,
+  "eligible_items": [
+    "pure-0000_-_cctns",
+    "pure-0000_-_gamma_j",
+    "pure-1999_-_dii"
+  ],
+  "excluded": [
+    {
+      "item_id": "pure-0000_-_inventory",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-0000_-_inventory.gold.json has provenance.status 'REVIEW-INCOMPLETE (anchored)' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-1998_-_themas",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-1998_-_themas.gold.json has provenance.status 'REVIEW-INCOMPLETE (anchored)' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-1999_-_multi-mahjong",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-1999_-_multi-mahjong.gold.json has provenance.status 'REVIEW-INCOMPLETE (anchored)' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-1999_-_tcs",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-1999_-_tcs.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2000_-_nasa_x38",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2000_-_nasa_x38.gold.json has provenance.status 'REVIEW-INCOMPLETE (anchored)' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2001_-_ctc_network",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2001_-_ctc_network.gold.json has provenance.status 'REVIEW-INCOMPLETE (anchored)' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2001_-_hats",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2001_-_hats.gold.json has provenance.status 'REVIEW-INCOMPLETE (anchored)' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2001_-_libra",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2001_-_libra.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2001_-_space_fractions",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2001_-_space_fractions.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2001_-_telescope",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2001_-_telescope.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2002_-_evla_back",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2002_-_evla_back.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2002_-_evla_corr",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2002_-_evla_corr.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2002_-_sce_api",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2002_-_sce_api.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2003_-_pnnl",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2003_-_pnnl.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2003_-_qheadache",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2003_-_qheadache.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2003_-_tachonet",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2003_-_tachonet.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2004_-_colorcast",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2004_-_colorcast.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2004_-_e-procurement",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2004_-_e-procurement.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2004_-_grid_bgc",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2004_-_grid_bgc.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2004_-_ijis",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2004_-_ijis.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2004_-_jse",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2004_-_jse.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2004_-_rlcs",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2004_-_rlcs.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2004_-_sprat",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2004_-_sprat.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2005_-_clarus_low",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2005_-_clarus_low.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2005_-_grid_3D",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2005_-_grid_3D.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2005_-_microcare",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2005_-_microcare.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2005_-_nenios",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2005_-_nenios.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2005_-_pontis",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2005_-_pontis.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2005_-_triangle",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2005_-_triangle.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2005_-_znix",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2005_-_znix.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2006_-_eirene_sys_15",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2006_-_eirene_sys_15.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2006_-_stewards",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2006_-_stewards.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_central_trading_system",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_central_trading_system.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_ertms",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_ertms.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_get_real_0.2",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_get_real_0.2.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_mdot",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_mdot.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_nde",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_nde.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_nlm",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_nlm.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_puget_sound",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_puget_sound.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2007_-_water_use",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2007_-_water_use.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2008_-_caiso",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2008_-_caiso.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2008_-_peering",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2008_-_peering.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2008_-_viper",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2008_-_viper.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2008_-_virtual_ed",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2008_-_virtual_ed.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2008_-_vub",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2008_-_vub.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2009_-_gaia",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2009_-_gaia.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2009_-_inventory_2.0",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2009_-_inventory_2.0.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2009_-_library",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2009_-_library.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2009_-_peazip",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2009_-_peazip.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2009_-_peppol",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2009_-_peppol.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2009_-_video_search",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2009_-_video_search.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2009_-_warc_III",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2009_-_warc_III.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2010_-_fishing",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2010_-_fishing.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2010_-_gparted",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2010_-_gparted.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2010_-_home_1.3",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2010_-_home_1.3.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2010_-_mashboot",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2010_-_mashboot.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2010_-_split_merge",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2010_-_split_merge.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    },
+    {
+      "item_id": "pure-2011_-_opensg_0.1",
+      "reason": "load_gold refused: gold file /tmp/asr/data/frozen/gold/dev/pure-2011_-_opensg_0.1.gold.json has provenance.status 'SKELETON - not gold until two-extractor pass + adjudication + kappa are recorded' - only 'FROZEN...' statuses may be consumed in a run; refusing to load (fail-closed whitelist)"
+    }
+  ],
+  "logs": [
+    "/tmp/asr/eval/runs/B1-pure-dev-frozen-20261107T082828Z.jsonl",
+    "/tmp/asr/eval/runs/B2-pure-dev-frozen-20261107T082837Z.jsonl",
+    "/tmp/asr/eval/runs/B3-pure-dev-frozen-20261107T083116Z.jsonl"
+  ]
+}
