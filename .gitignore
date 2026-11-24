@@ -3,3 +3,20 @@ __pycache__/
 .env
 .streamlit/secrets.toml
 .pytest_cache/
+
+# Virtual environments & packaging artifacts
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Test coverage & property-testing outputs
+.coverage
+htmlcov/
+.hypothesis/
+
+# Local runtime sessions & OAuth/connector credentials
+.reqhq_sessions/
+credentials.json
+token.json
+
