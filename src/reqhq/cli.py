@@ -24,8 +24,14 @@ benchmark_app = typer.Typer(
     help="Run cross-domain / gap-injection benchmarks and compute inter-rater kappa.",
     no_args_is_help=True,
 )
+eval_app = typer.Typer(
+    name="eval",
+    help="Run Phase 4 Layers 1-4 evaluation, statistical analysis, reports, and release verification.",
+    no_args_is_help=True,
+)
 app.add_typer(adr_app, name="adr")
 app.add_typer(benchmark_app, name="benchmark")
+app.add_typer(eval_app, name="eval")
 
 
 def _build_router(
@@ -1561,6 +1567,242 @@ def benchmark_kappa_command(
     )
     if report.disagreed_ids:
         typer.echo(f"Disagreed IDs: {', '.join(report.disagreed_ids)}")
+
+
+def _parse_layers_option(raw_layers: str) -> list[int]:
+    """Parse a comma-separated layer specification (subset of 1,2,3,4)."""
+    tokens = [tok.strip() for tok in raw_layers.split(",") if tok.strip()]
+    if not tokens:
+        raise ValueError("layers must specify at least one layer in {1, 2, 3, 4}")
+    parsed: list[int] = []
+    for tok in tokens:
+        if tok not in ("1", "2", "3", "4"):
+            raise ValueError(f"Invalid layer {tok!r}: expected integers in {{1, 2, 3, 4}}")
+        val = int(tok)
+        if val not in parsed:
+            parsed.append(val)
+    return sorted(parsed)
+
+
+def _guard_eval_out_dir(out: Path) -> None:
+    """Refuse writing evaluation outputs into the repository Nygard ADR namespace."""
+    resolved_out = out.resolve()
+    parts_lower = [part.lower() for part in resolved_out.parts]
+    for idx in range(len(parts_lower) - 1):
+        if parts_lower[idx] == "docs" and parts_lower[idx + 1] == "adr":
+            raise ValueError(
+                f"Refusing to write evaluation output into repo Nygard ADR directory: {resolved_out}"
+            )
+
+
+@eval_app.command("run")
+def eval_run_command(
+    layers: Annotated[
+        str,
+        typer.Option("--layers", help="Comma-separated evaluation layers to execute (subset of 1,2,3,4)."),
+    ] = "1,2,3,4",
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for checkpoint.json, layer*.jsonl, and eval_manifest.json."),
+    ] = Path("eval_out"),
+    mode: Annotated[
+        Literal["mock", "live"],
+        typer.Option("--mode", help="Execution mode: mock (offline CI dry-run) or live."),
+    ] = "mock",
+    replicates: Annotated[
+        int,
+        typer.Option("--replicates", help="Number of seeded replicates per Layer 3 condition."),
+    ] = 2,
+    seed: Annotated[
+        int,
+        typer.Option("--seed", help="Deterministic random seed."),
+    ] = 42,
+    max_tasks: Annotated[
+        int | None,
+        typer.Option("--max-tasks", help="Optional limit on Layer 3 coding tasks."),
+    ] = None,
+) -> None:
+    """Run the Phase 4 Layers 1-4 evaluation orchestrator with atomic checkpointing."""
+    from reqhq.evaluation import (
+        EvalOrchestrator,
+        EvalRunConfig,
+        LiveExecutionUnavailableError,
+        RunMode,
+    )
+
+    try:
+        _guard_eval_out_dir(out)
+        parsed_layers = _parse_layers_option(layers)
+        config = EvalRunConfig(
+            out_dir=out,
+            layers=parsed_layers,
+            mode=RunMode(mode),
+            replicates=replicates,
+            seed=seed,
+            max_tasks=max_tasks,
+        )
+        manifest = EvalOrchestrator(config).run_all()
+    except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    counts = ", ".join(f"{k}={v}" for k, v in sorted(manifest.record_counts.items()))
+    typer.echo(
+        f"Evaluation complete: run_id={manifest.run_id} | mode={manifest.run_mode.value} | "
+        f"layers={manifest.layers_completed} | records=({counts})"
+    )
+    typer.echo(f"Manifest: {out / 'eval_manifest.json'}")
+
+
+@eval_app.command("resume")
+def eval_resume_command(
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Existing evaluation directory containing checkpoint.json."),
+    ],
+) -> None:
+    """Resume an interrupted Phase 4 evaluation run with zero duplicate records."""
+    from reqhq.evaluation import EvalOrchestrator, LiveExecutionUnavailableError
+
+    try:
+        manifest = EvalOrchestrator.resume(out)
+    except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    counts = ", ".join(f"{k}={v}" for k, v in sorted(manifest.record_counts.items()))
+    typer.echo(
+        f"Evaluation resumed: run_id={manifest.run_id} | mode={manifest.run_mode.value} | "
+        f"layers={manifest.layers_completed} | records=({counts})"
+    )
+
+
+@eval_app.command("analyze")
+def eval_analyze_command(
+    in_dir: Annotated[
+        Path,
+        typer.Option("--in", help="Input evaluation directory containing eval_manifest.json and layer*.jsonl."),
+    ],
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for analysis_summary.json and 4 SVG charts."),
+    ],
+    strict_live: Annotated[
+        bool,
+        typer.Option("--strict-live", help="Fail closed with non-zero exit if run is mock, incomplete, or tampered."),
+    ] = False,
+    seed: Annotated[
+        int,
+        typer.Option("--seed", help="Deterministic bootstrap seed."),
+    ] = 42,
+    resamples: Annotated[
+        int,
+        typer.Option("--resamples", help="Number of paired bootstrap resamples."),
+    ] = 2000,
+) -> None:
+    """Run pure-Python H1-H4 statistical evaluation, Pareto SVG charts, and 7-category error taxonomy."""
+    from reqhq.analysis import MockRunQuarantineError, analyze_evaluation
+
+    try:
+        _guard_eval_out_dir(out)
+        summary = analyze_evaluation(
+            in_dir,
+            out,
+            strict_live=strict_live,
+            seed=seed,
+            n_resamples=resamples,
+        )
+    except (FileNotFoundError, ValueError, MockRunQuarantineError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    verdicts = ", ".join(f"{h.hypothesis_id}={h.status.value}" for h in summary.hypotheses)
+    typer.echo(
+        f"Analysis complete: status={summary.verdict_status} | quarantined={summary.quarantined} | "
+        f"svgs={len(summary.svg_files)} | {verdicts}"
+    )
+    typer.echo(f"Summary: {out / 'analysis_summary.json'}")
+
+
+@eval_app.command("report")
+def eval_report_command(
+    in_dir: Annotated[
+        Path,
+        typer.Option("--in", help="Input analysis directory containing analysis_summary.json and SVGs."),
+    ],
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for FINAL_REPORT.md and/or tables_latex.tex."),
+    ],
+    fmt: Annotated[
+        Literal["md", "tex", "both"],
+        typer.Option("--format", help="Output report format: md, tex, or both."),
+    ] = "both",
+) -> None:
+    """Generate FINAL_REPORT.md and Overleaf-ready booktabs tables_latex.tex from analysis_summary.json."""
+    from reqhq.reporting import generate_final_report
+
+    try:
+        _guard_eval_out_dir(out)
+        result = generate_final_report(in_dir, out, fmt=fmt)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Report generated: status={result.verdict_status} | quarantined={result.quarantined} | "
+        f"md={result.report_md} | tex={result.tables_tex}"
+    )
+
+
+@eval_app.command("package")
+def eval_package_command(
+    in_dir: Annotated[
+        Path,
+        typer.Option("--in", help="Root directory containing eval logs, analysis summary, SVGs, and reports."),
+    ],
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for the tamper-evident release bundle."),
+    ],
+) -> None:
+    """Package evaluation logs, charts, and reports with SHA-256 artifacts_manifest.json."""
+    from reqhq.reporting import package_release_bundle
+
+    try:
+        _guard_eval_out_dir(out)
+        manifest = package_release_bundle(in_dir, out)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Packaged release bundle: run_id={manifest.run_id} | status={manifest.verdict_status} | "
+        f"artifacts={len(manifest.artifacts)}"
+    )
+    typer.echo(f"Manifest: {out / 'artifacts_manifest.json'}")
+
+
+@eval_app.command("verify-bundle")
+def eval_verify_bundle_command(
+    manifest_path: Annotated[
+        Path,
+        typer.Argument(help="Path to artifacts_manifest.json to verify."),
+    ],
+) -> None:
+    """Cryptographically verify every tracked file in a release bundle against artifacts_manifest.json."""
+    from reqhq.reporting import verify_bundle
+
+    result = verify_bundle(manifest_path, raise_on_error=False)
+    if not result.valid:
+        typer.echo(
+            f"Bundle verification FAILED: checked={result.checked_count} | "
+            f"errors={'; '.join(result.errors)}",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
+    typer.echo(f"Bundle verification PASSED: checked={result.checked_count}")
 
 
 def main() -> None:
