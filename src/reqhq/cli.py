@@ -1,10 +1,11 @@
-"""Typer CLI for ReqHQ v2: session lifecycle, hardware status, verification, export, and ADRs."""
+"""Typer CLI for ReqHQ v2: session lifecycle, elicitation, formal verification, export, and ADRs."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
 import typer
 
@@ -19,6 +20,196 @@ adr_app = typer.Typer(
     no_args_is_help=True,
 )
 app.add_typer(adr_app, name="adr")
+
+
+def _build_router(
+    *,
+    sessions_dir: Path,
+    strict_local: bool = False,
+    local_model: str = "qwen3:4b",
+    mock: bool = False,
+) -> Any:
+    """Construct a local-first ProviderRouter (offline MockProvider when mock=True)."""
+    from reqhq.config import ReqHQConfig
+    from reqhq.llm import MockProvider, OllamaLocalProvider, ProviderRouter
+
+    if mock:
+        return ProviderRouter(
+            local_provider=MockProvider(default_response=""),
+            strict_local=strict_local,
+            enable_cache=False,
+        )
+
+    cfg = ReqHQConfig.from_env()
+    cfg_sessions = ReqHQConfig(
+        sessions_dir=sessions_dir,
+        strict_local=strict_local or cfg.strict_local,
+        ollama_base_url=cfg.ollama_base_url,
+        alloy_jar_path=cfg.alloy_jar_path,
+        alloy_compat=cfg.alloy_compat,
+    )
+    return ProviderRouter(
+        local_provider=OllamaLocalProvider(
+            base_url=cfg_sessions.ollama_base_url,
+            default_model=local_model,
+        ),
+        strict_local=cfg_sessions.strict_local,
+    )
+
+
+def _build_alloy_analyzer(*, mock_alloy: bool = False) -> Any:
+    """Return MockAlloyAnalyzer when mock_alloy=True, else HeadlessAlloyRunner."""
+    from reqhq.alloy import HeadlessAlloyRunner, MockAlloyAnalyzer
+    from reqhq.config import ReqHQConfig
+
+    if mock_alloy:
+        return MockAlloyAnalyzer()
+    cfg = ReqHQConfig.from_env()
+    return HeadlessAlloyRunner(jar_path=cfg.alloy_jar_path)
+
+
+def _parse_answers_file(answers_file: Path) -> list[list[dict[str, str]]]:
+    """Load scripted turn answers from a JSON file into per-turn answer batches."""
+    raw = json.loads(answers_file.read_text(encoding="utf-8"))
+    if isinstance(raw, dict):
+        if "turns" in raw and isinstance(raw["turns"], list):
+            raw = raw["turns"]
+        elif "answers" in raw and isinstance(raw["answers"], list):
+            raw = [raw["answers"]]
+        else:
+            return [[{"question_id": str(k), "answer": str(v)} for k, v in raw.items()]]
+
+    if not isinstance(raw, list):
+        raise ValueError("Answers file must contain a JSON list or object")
+
+    if not raw:
+        return []
+
+    # List of turns (each turn is a list or dict) vs single flat list of answer objects/strings.
+    if all(isinstance(item, (list, dict)) and not ("question_id" in item or "answer" in item) for item in raw):
+        batches: list[list[dict[str, str]]] = []
+        for turn in raw:
+            if isinstance(turn, dict):
+                batches.append([{"question_id": str(k), "answer": str(v)} for k, v in turn.items()])
+            else:
+                batch: list[dict[str, str]] = []
+                for entry in turn:
+                    if isinstance(entry, str):
+                        batch.append({"answer": entry})
+                    elif isinstance(entry, dict):
+                        batch.append({str(k): str(v) for k, v in entry.items()})
+                batches.append(batch)
+        return batches
+
+    single_batch: list[dict[str, str]] = []
+    for entry in raw:
+        if isinstance(entry, str):
+            single_batch.append({"answer": entry})
+        elif isinstance(entry, dict):
+            single_batch.append({str(k): str(v) for k, v in entry.items()})
+    return [single_batch]
+
+
+def _bind_answers_to_questions(
+    raw_batch: list[dict[str, str]],
+    pending_questions: list[Any],
+) -> list[dict[str, str]]:
+    """Resolve positional answers against pending questions while preserving explicit IDs."""
+    bound: list[dict[str, str]] = []
+    for idx, entry in enumerate(raw_batch):
+        answer_text = str(entry.get("answer", "")).strip()
+        if not answer_text:
+            continue
+        qid = str(entry.get("question_id", "")).strip()
+        if not qid and idx < len(pending_questions):
+            qid = pending_questions[idx].question_id
+        if qid:
+            bound.append({"question_id": qid, "answer": answer_text})
+    return bound
+
+
+def _load_or_seed_elicitation(
+    *,
+    session_id: str,
+    sessions_dir: Path,
+    session_state: dict[str, Any],
+    engine: Any,
+) -> Any:
+    """Load persisted ElicitationState or initialize it from ingested chunks/snapshots/prompt."""
+    from reqhq.ingestion import (
+        ChunkingResult,
+        GlobalGlossary,
+        HierarchicalChunker,
+        SnapshotStore,
+        normalize_file,
+    )
+
+    try:
+        return engine.load_state(session_id)
+    except FileNotFoundError:
+        pass
+
+    chunks_file = sessions_dir / session_id / "chunking_results.json"
+    chunk_results: list[ChunkingResult] = []
+    if chunks_file.is_file():
+        loaded = json.loads(chunks_file.read_text(encoding="utf-8"))
+        chunk_results = [ChunkingResult.model_validate(item) for item in loaded]
+    else:
+        snapshot_store = SnapshotStore(sessions_dir)
+        snapshots = snapshot_store.list_snapshots(session_id)
+        if snapshots:
+            chunker = HierarchicalChunker()
+            for snap in snapshots:
+                if snap.snapshot_path.is_file():
+                    doc = normalize_file(snap.snapshot_path, source_sha256=snap.sha256)
+                    chunk_results.append(chunker.chunk(doc))
+
+    if chunk_results:
+        if len(chunk_results) == 1:
+            return engine.start_from_chunks(
+                session_id,
+                chunk_results[0],
+                source_uri=str(chunk_results[0].source_path),
+            )
+        merged_glossary = GlobalGlossary()
+        merged_chunks = []
+        total_chars = 0
+        covered_chars = 0
+        for cr in chunk_results:
+            merged_glossary = merged_glossary.merge(cr.glossary)
+            total_chars += cr.total_chars
+            covered_chars += cr.covered_chars
+            for chunk in cr.chunks:
+                merged_chunks.append(
+                    chunk.model_copy(
+                        update={
+                            "chunk_index": len(merged_chunks),
+                            "chunk_id": f"chunk-{len(merged_chunks):04d}",
+                        }
+                    )
+                )
+        combined = ChunkingResult(
+            source_sha256=chunk_results[0].source_sha256,
+            source_path=chunk_results[0].source_path,
+            total_chars=total_chars,
+            covered_chars=covered_chars,
+            truncation_ratio=0.0 if total_chars == 0 else (total_chars - covered_chars) / total_chars,
+            chunk_count=len(merged_chunks),
+            max_chunk_chars=chunk_results[0].max_chunk_chars,
+            overlap_chars=chunk_results[0].overlap_chars,
+            glossary=merged_glossary,
+            chunks=merged_chunks,
+        )
+        return engine.start_from_chunks(session_id, combined, source_uri=str(combined.source_path))
+
+    prompt = str((session_state.get("metadata") or {}).get("prompt") or "").strip()
+    if prompt:
+        return engine.start_from_prompt(session_id, prompt, source_uri="cli://prompt")
+
+    raise ValueError(
+        f"Session '{session_id}' has no prompt or ingested source documents. "
+        "Re-initialize with --prompt or --source."
+    )
 
 
 def _render_markdown_export(
@@ -80,6 +271,13 @@ def init_command(
             help="Source file(s) (.md, .txt, .pdf, .docx) to snapshot, normalize, and chunk.",
         ),
     ] = None,
+    prompt: Annotated[
+        str | None,
+        typer.Option(
+            "--prompt",
+            help="Optional 1-liner or short problem prompt to seed Stage 3 elicitation.",
+        ),
+    ] = None,
     sessions_dir: Annotated[
         Path,
         typer.Option("--sessions-dir", help="Directory for persistent session logs."),
@@ -105,7 +303,7 @@ def init_command(
         typer.Option("--session-id", help="Optional explicit session identifier."),
     ] = None,
 ) -> None:
-    """Initialize a new ReqHQ session and optionally ingest source documents."""
+    """Initialize a new ReqHQ session and optionally ingest source documents or a prompt."""
     from reqhq.ingestion import (
         SUPPORTED_EXTENSIONS,
         HierarchicalChunker,
@@ -128,24 +326,50 @@ def init_command(
             )
             raise typer.Exit(code=1)
 
+    cleaned_prompt = prompt.strip() if prompt is not None else None
+    if prompt is not None and not cleaned_prompt:
+        typer.echo("Error: --prompt must not be empty.", err=True)
+        raise typer.Exit(code=1)
+
     profile = HardwareProfiler.detect(tier_override=hardware_tier)
     model_spec = get_model_for_tier(profile.tier)
     event_log = SessionEventLog(sessions_dir)
 
-    metadata = {
+    metadata: dict[str, Any] = {
         "strict_local": strict_local,
         "hardware_tier": int(profile.tier),
         "hardware_profile": profile.model_dump(mode="json"),
         "local_model": model_spec.model_name,
     }
+    if cleaned_prompt:
+        metadata["prompt"] = cleaned_prompt
+
     try:
         created_id = event_log.create_session(session_id=session_id, metadata=metadata)
     except (FileExistsError, ValueError) as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1)
 
+    if cleaned_prompt:
+        prompt_sha = hashlib.sha256(cleaned_prompt.encode("utf-8")).hexdigest()
+        event_log.append_event(
+            created_id,
+            EventKind.SOURCE_INGESTED,
+            payload={
+                "filename": "cli_prompt.txt",
+                "source_uri": "cli://prompt",
+                "sha256": prompt_sha,
+                "parser_name": "cli_prompt",
+                "char_count": len(cleaned_prompt),
+                "chunk_count": 1,
+                "truncation_ratio": 0.0,
+                "prompt": cleaned_prompt,
+            },
+        )
+
     ingested_count = 0
     total_chunks = 0
+    chunk_dumps: list[dict[str, Any]] = []
     if source_paths:
         snapshot_store = SnapshotStore(sessions_dir)
         chunker = HierarchicalChunker()
@@ -160,6 +384,7 @@ def init_command(
             )
             doc = normalize_file(path, source_sha256=snap.sha256)
             chunk_result = chunker.chunk(doc)
+            chunk_dumps.append(chunk_result.model_dump(mode="json"))
             event_log.append_event(
                 created_id,
                 EventKind.SOURCE_INGESTED,
@@ -176,14 +401,181 @@ def init_command(
             ingested_count += 1
             total_chunks += chunk_result.chunk_count
 
+        chunks_file = sessions_dir / created_id / "chunking_results.json"
+        chunks_file.write_text(json.dumps(chunk_dumps, indent=2), encoding="utf-8")
+
     typer.echo(f"Initialized session: {created_id}")
     typer.echo(
         f"Hardware tier: TIER_{int(profile.tier)} ({profile.gpu_name}, {profile.vram_gb} GB VRAM)"
     )
     typer.echo(f"Local model: {model_spec.model_name} ({model_spec.quantization})")
     typer.echo(f"Strict local: {strict_local}")
+    if cleaned_prompt:
+        typer.echo(f"Prompt ingested ({len(cleaned_prompt)} chars).")
     if ingested_count:
         typer.echo(f"Ingested {ingested_count} source(s) into {total_chunks} chunk(s).")
+
+
+@app.command("elicit")
+def elicit_command(
+    session_id: Annotated[str, typer.Argument(help="Session ID to run elicitation on.")],
+    answers_file: Annotated[
+        Path | None,
+        typer.Option(
+            "--answers-file",
+            help="Optional JSON file with scripted turn answers for non-interactive runs.",
+        ),
+    ] = None,
+    max_turns: Annotated[
+        int,
+        typer.Option("--max-turns", min=1, max=20, help="Maximum elicitation turns to execute."),
+    ] = 3,
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use offline MockProvider for deterministic local runs."),
+    ] = False,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent session logs."),
+    ] = Path(".reqhq_sessions"),
+) -> None:
+    """Run Stage 3 iterative elicitation with 5 sequential local critics and delta convergence."""
+    from reqhq.elicitation import ElicitationEngine
+    from reqhq.store.event_log import SessionEventLog
+
+    event_log = SessionEventLog(sessions_dir)
+    try:
+        session_state = event_log.resume(session_id)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    scripted_batches: list[list[dict[str, str]]] | None = None
+    if answers_file is not None:
+        if not answers_file.is_file():
+            typer.echo(f"Error: answers file not found: {answers_file}", err=True)
+            raise typer.Exit(code=1)
+        try:
+            scripted_batches = _parse_answers_file(answers_file)
+        except Exception as exc:
+            typer.echo(f"Error: invalid answers file: {exc}", err=True)
+            raise typer.Exit(code=1)
+
+    meta = session_state.get("metadata") or {}
+    router = _build_router(
+        sessions_dir=sessions_dir,
+        strict_local=bool(meta.get("strict_local", False)),
+        local_model=str(meta.get("local_model", "qwen3:4b")),
+        mock=mock,
+    )
+    engine = ElicitationEngine(router, event_log)
+
+    try:
+        elicit_state = _load_or_seed_elicitation(
+            session_id=session_id,
+            sessions_dir=sessions_dir,
+            session_state=session_state,
+            engine=engine,
+        )
+    except Exception as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    turns_run = 0
+    if elicit_state.turn_count == 0:
+        elicit_state = engine.run_turn(elicit_state)
+        turns_run += 1
+
+    batch_idx = 0
+    while not elicit_state.converged and turns_run < max_turns and elicit_state.pending_questions:
+        if scripted_batches is not None:
+            if batch_idx >= len(scripted_batches):
+                break
+            bound_answers = _bind_answers_to_questions(
+                scripted_batches[batch_idx],
+                elicit_state.pending_questions,
+            )
+            batch_idx += 1
+        else:
+            bound_answers = []
+            typer.echo(
+                f"Turn {elicit_state.turn_count + 1} — "
+                f"{len(elicit_state.pending_questions)} question(s) (leave blank to stop):"
+            )
+            for q in elicit_state.pending_questions:
+                typer.echo(f"  [{q.severity.value.upper()}] ({q.question_id}) {q.prompt}")
+                response_text = typer.prompt("Answer", default="", show_default=False).strip()
+                if response_text.lower() in {"", "quit", "exit"}:
+                    break
+                bound_answers.append({"question_id": q.question_id, "answer": response_text})
+
+        if not bound_answers:
+            break
+        elicit_state = engine.run_turn(elicit_state, answers=bound_answers)
+        turns_run += 1
+
+    typer.echo(
+        f"Elicitation session '{session_id}': turns={elicit_state.turn_count} | "
+        f"requirements={len(elicit_state.graph.nodes)} | "
+        f"findings={len(elicit_state.findings)} | "
+        f"pending_questions={len(elicit_state.pending_questions)} | "
+        f"converged={elicit_state.converged}"
+    )
+    for q in elicit_state.pending_questions:
+        typer.echo(f"  Pending [{q.severity.value}] {q.question_id}: {q.prompt}")
+
+
+@app.command("finalize")
+def finalize_command(
+    session_id: Annotated[str, typer.Argument(help="Session ID to finalize.")],
+    accept_defaults: Annotated[
+        bool,
+        typer.Option(
+            "--accept-defaults",
+            help="Convert remaining BLOCKER/MAJOR findings into unconfirmed Assumption ADRs.",
+        ),
+    ] = False,
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use offline MockProvider when constructing engine."),
+    ] = False,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent session logs."),
+    ] = Path(".reqhq_sessions"),
+) -> None:
+    """Finalize Stage 3 elicitation once converged, or record explicit defaults as assumptions."""
+    from reqhq.elicitation import ConvergenceGateError, ElicitationEngine
+    from reqhq.store.event_log import SessionEventLog
+
+    event_log = SessionEventLog(sessions_dir)
+    try:
+        session_state = event_log.resume(session_id)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    meta = session_state.get("metadata") or {}
+    router = _build_router(
+        sessions_dir=sessions_dir,
+        strict_local=bool(meta.get("strict_local", False)),
+        local_model=str(meta.get("local_model", "qwen3:4b")),
+        mock=mock,
+    )
+    engine = ElicitationEngine(router, event_log)
+
+    try:
+        elicit_state = engine.load_state(session_id)
+        finalized = engine.finalize(elicit_state, accept_defaults=accept_defaults)
+    except (FileNotFoundError, ConvergenceGateError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Finalized session '{session_id}': converged={finalized.converged} | "
+        f"accepted_defaults={finalized.accepted_defaults} | "
+        f"assumptions={len(finalized.assumptions)}"
+    )
 
 
 @app.command("resume")
@@ -224,6 +616,17 @@ def revise_command(
         str,
         typer.Option("--note", help="Revision note or updated turn rationale."),
     ],
+    answers_file: Annotated[
+        Path | None,
+        typer.Option(
+            "--answers-file",
+            help="Optional JSON file with replacement answers for Stage 3 delta re-evaluation.",
+        ),
+    ] = None,
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use offline MockProvider for Stage 3 delta re-evaluation."),
+    ] = False,
     sessions_dir: Annotated[
         Path,
         typer.Option("--sessions-dir", help="Directory for persistent session logs."),
@@ -233,6 +636,72 @@ def revise_command(
     from reqhq.store.event_log import SessionEventLog
 
     event_log = SessionEventLog(sessions_dir)
+    elicit_state_path = sessions_dir / session_id / "elicitation_state.json"
+
+    if elicit_state_path.is_file():
+        from reqhq.elicitation import ElicitationEngine
+
+        try:
+            session_state = event_log.resume(session_id)
+            meta = session_state.get("metadata") or {}
+            router = _build_router(
+                sessions_dir=sessions_dir,
+                strict_local=bool(meta.get("strict_local", False)),
+                local_model=str(meta.get("local_model", "qwen3:4b")),
+                mock=mock,
+            )
+            engine = ElicitationEngine(router, event_log)
+            elicit_state = engine.load_state(session_id)
+
+            updated_answers: list[dict[str, str]] = []
+            if answers_file is not None:
+                if not answers_file.is_file():
+                    typer.echo(f"Error: answers file not found: {answers_file}", err=True)
+                    raise typer.Exit(code=1)
+                batches = _parse_answers_file(answers_file)
+                if batches:
+                    updated_answers = _bind_answers_to_questions(
+                        batches[0], elicit_state.pending_questions
+                    )
+            else:
+                turn_answers = [a for a in elicit_state.answers if a.turn_id == turn_id]
+                if turn_answers:
+                    updated_answers = [
+                        {"question_id": turn_answers[0].question_id, "answer": note}
+                    ]
+
+            state_before = event_log.resume(session_id)
+            updated_elicit = engine.apply_revision(
+                elicit_state,
+                turn_id,
+                updated_answers,
+                note=note,
+            )
+            state_after = event_log.resume(session_id)
+            prior_invalidated = set(state_before.get("invalidated_turns", []))
+            invalidated = [
+                tid
+                for tid in state_after.get("invalidated_turns", [])
+                if tid not in prior_invalidated
+            ]
+        except typer.Exit:
+            raise
+        except (FileNotFoundError, ValueError) as exc:
+            typer.echo(f"Error: {exc}", err=True)
+            raise typer.Exit(code=1)
+
+        typer.echo(f"Revised turn '{turn_id}' in session '{session_id}'.")
+        typer.echo(f"Note: {note}")
+        typer.echo(
+            f"Invalidated downstream turns ({len(invalidated)}): "
+            + (", ".join(invalidated) if invalidated else "none")
+        )
+        typer.echo(
+            f"Delta re-evaluation complete: pending_questions={len(updated_elicit.pending_questions)} | "
+            f"converged={updated_elicit.converged}"
+        )
+        return
+
     try:
         result = event_log.revise(session_id, turn_id, {"note": note})
     except (FileNotFoundError, ValueError) as exc:
@@ -339,12 +808,24 @@ def status_command(
 @app.command("verify")
 def verify_command(
     session_id: Annotated[str, typer.Argument(help="Session ID to verify.")],
+    alloy_compat: Annotated[
+        Literal["alloy6", "legacy"],
+        typer.Option("--alloy-compat", help="Alloy behavioral mode: alloy6 or legacy."),
+    ] = "alloy6",
+    mock_alloy: Annotated[
+        bool,
+        typer.Option("--mock-alloy", help="Use offline MockAlloyAnalyzer instead of Java JAR."),
+    ] = False,
+    max_scope: Annotated[
+        int,
+        typer.Option("--max-scope", min=1, max=8, help="Bounded Alloy verification scope."),
+    ] = 4,
     sessions_dir: Annotated[
         Path,
         typer.Option("--sessions-dir", help="Directory for persistent session logs."),
     ] = Path(".reqhq_sessions"),
 ) -> None:
-    """Verify session event-log parity and immutable snapshot SHA-256 integrity."""
+    """Verify session event-log parity, snapshot SHA-256 integrity, and Alloy formal gate."""
     from reqhq.ingestion import SnapshotStore
     from reqhq.store.event_log import EventKind, SessionEventLog
 
@@ -379,11 +860,63 @@ def verify_command(
         },
     )
 
+    elicit_state_path = sessions_dir / session_id / "elicitation_state.json"
+    alloy_outcome: Any = None
+    if elicit_state_path.is_file():
+        from reqhq.alloy import (
+            AlloyCompatMode,
+            AlloyRunStatus,
+            AlloySpecEmitter,
+            AlloyVerificationController,
+        )
+        from reqhq.elicitation import ElicitationState
+
+        elicit_state = ElicitationState.model_validate_json(
+            elicit_state_path.read_text(encoding="utf-8")
+        )
+        meta = state.get("metadata") or {}
+        router = _build_router(
+            sessions_dir=sessions_dir,
+            strict_local=bool(meta.get("strict_local", False)),
+            local_model=str(meta.get("local_model", "qwen3:4b")),
+            mock=mock_alloy,
+        )
+        analyzer = _build_alloy_analyzer(mock_alloy=mock_alloy)
+        compat_enum = AlloyCompatMode(alloy_compat)
+        spec_md = AlloySpecEmitter().emit_spec_md(
+            elicit_state.graph,
+            compat=compat_enum,
+            max_scope=max_scope,
+        )
+        controller = AlloyVerificationController(
+            router,
+            analyzer,
+            max_scope=max_scope,
+        )
+        alloy_outcome = controller.verify_spec(
+            spec_md,
+            elicit_state.graph,
+            compat=compat_enum,
+            event_log=event_log,
+            session_id=session_id,
+        )
+        alloy_ok = (
+            alloy_outcome.status == AlloyRunStatus.VERIFIED
+            and alloy_outcome.vacuity_checked
+        )
+        passed = passed and alloy_ok
+
     typer.echo(f"Verification for session '{session_id}': {'PASSED' if passed else 'FAILED'}")
     typer.echo(f"JSONL/SQLite parity: {'ok' if jsonl_ok else 'mismatch'}")
     typer.echo(
         f"Snapshots verified: {len(snapshots) - len(failed_snapshots)}/{len(snapshots)}"
     )
+    if alloy_outcome is not None:
+        typer.echo(
+            f"Alloy verification ({alloy_outcome.compat_mode.value}): "
+            f"{alloy_outcome.status.value} | vacuity_checked={alloy_outcome.vacuity_checked} | "
+            f"repairs={alloy_outcome.repair_attempts}"
+        )
     if not passed:
         raise typer.Exit(code=1)
 
@@ -391,20 +924,39 @@ def verify_command(
 @app.command("export")
 def export_command(
     session_id: Annotated[str, typer.Argument(help="Session ID to export.")],
+    out: Annotated[
+        Path | None,
+        typer.Option(
+            "--out",
+            help="Export full Phase 2 synthesis bundle (Spec.md, ADRs/, Design.md, Process_and_Training.md, traceability_matrix.json) into DIR.",
+        ),
+    ] = None,
+    alloy_compat: Annotated[
+        Literal["alloy6", "legacy"],
+        typer.Option("--alloy-compat", help="Alloy behavioral mode for Spec.md: alloy6 or legacy."),
+    ] = "alloy6",
+    mock_alloy: Annotated[
+        bool,
+        typer.Option("--mock-alloy", help="Use offline MockAlloyAnalyzer during bundle export."),
+    ] = False,
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use offline MockProvider for socio-technical triage."),
+    ] = False,
     format: Annotated[
         Literal["json", "md"],
-        typer.Option("--format", help="Export format: json or md."),
+        typer.Option("--format", help="Legacy session export format: json or md."),
     ] = "json",
     output: Annotated[
         Path | None,
-        typer.Option("--output", help="Optional output file path."),
+        typer.Option("--output", help="Optional output file path for legacy json/md export."),
     ] = None,
     sessions_dir: Annotated[
         Path,
         typer.Option("--sessions-dir", help="Directory for persistent session logs."),
     ] = Path(".reqhq_sessions"),
 ) -> None:
-    """Export a ReqHQ session as deterministic JSON or Markdown."""
+    """Export a ReqHQ session (Phase 1 json/md or Phase 2 full synthesis bundle via --out)."""
     from reqhq.ingestion import SnapshotStore
     from reqhq.store.event_log import EventKind, SessionEventLog
 
@@ -414,6 +966,100 @@ def export_command(
     except (FileNotFoundError, ValueError) as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1)
+
+    if out is not None:
+        from reqhq.alloy import (
+            AlloyCompatMode,
+            AlloyRunStatus,
+            AlloySpecEmitter,
+            AlloyVerificationController,
+        )
+        from reqhq.elicitation import ElicitationState
+        from reqhq.synthesis import (
+            SocioTechnicalTriager,
+            build_assumption_adrs,
+            build_routing_adrs,
+            write_synthesis_bundle,
+        )
+
+        elicit_state_path = sessions_dir / session_id / "elicitation_state.json"
+        if not elicit_state_path.is_file():
+            typer.echo(
+                f"Error: no elicitation state found for session '{session_id}'. "
+                "Run `reqhq elicit` first.",
+                err=True,
+            )
+            raise typer.Exit(code=1)
+
+        elicit_state = ElicitationState.model_validate_json(
+            elicit_state_path.read_text(encoding="utf-8")
+        )
+        meta = state.get("metadata") or {}
+        router = _build_router(
+            sessions_dir=sessions_dir,
+            strict_local=bool(meta.get("strict_local", False)),
+            local_model=str(meta.get("local_model", "qwen3:4b")),
+            mock=mock or mock_alloy,
+        )
+        plan = SocioTechnicalTriager(router).triage(
+            elicit_state.graph,
+            session_id=session_id,
+        )
+        preview_adrs = [
+            *build_routing_adrs(elicit_state.graph, plan),
+            *build_assumption_adrs(elicit_state.assumptions),
+        ]
+
+        compat_enum = AlloyCompatMode(alloy_compat)
+        raw_spec_md = AlloySpecEmitter().emit_spec_md(
+            elicit_state.graph,
+            triage_plan=plan,
+            adrs=preview_adrs,
+            compat=compat_enum,
+            max_scope=4,
+        )
+        analyzer = _build_alloy_analyzer(mock_alloy=mock_alloy)
+        outcome = AlloyVerificationController(router, analyzer, max_scope=4).verify_spec(
+            raw_spec_md,
+            elicit_state.graph,
+            compat=compat_enum,
+            event_log=event_log,
+            session_id=session_id,
+        )
+        try:
+            bundle = write_synthesis_bundle(
+                out,
+                session_id=session_id,
+                graph=elicit_state.graph,
+                plan=plan,
+                assumptions=elicit_state.assumptions,
+                alloy_refs=outcome.req_to_alloy_refs,
+                spec_markdown=outcome.spec_markdown,
+            )
+        except ValueError as exc:
+            typer.echo(f"Error: {exc}", err=True)
+            raise typer.Exit(code=1)
+
+        event_log.append_event(
+            session_id,
+            EventKind.EXPORT_COMPLETED,
+            payload={
+                "format": "synthesis_bundle",
+                "output": str(bundle.out_dir),
+                "alloy_compat": compat_enum.value,
+                "alloy_status": outcome.status.value,
+                "alloy_verified": outcome.status == AlloyRunStatus.VERIFIED,
+                "adr_count": len(bundle.adr_files),
+                "orphaned_req_ids": bundle.orphaned_req_ids,
+            },
+        )
+        typer.echo(f"Exported synthesis bundle for '{session_id}' to {bundle.out_dir}")
+        typer.echo(
+            f"Artifacts: Spec.md ({compat_enum.value}, {outcome.status.value}), "
+            f"{len(bundle.adr_files)} ADR(s), Design.md, Process_and_Training.md, "
+            f"traceability_matrix.json (orphans={len(bundle.orphaned_req_ids)})"
+        )
+        return
 
     snapshot_store = SnapshotStore(sessions_dir)
     snapshots = snapshot_store.list_snapshots(session_id)
