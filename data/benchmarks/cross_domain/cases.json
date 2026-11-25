@@ -1,0 +1,389 @@
+{
+  "version": "1.0.0",
+  "cases": [
+    {
+      "case_id": "FIN-01",
+      "domain": "fintech_settlements",
+      "input_kind": "one_liner",
+      "title": "Instant T+0 Wire Reconciliation Engine",
+      "prompt_text": "Build a real-time T+0 wire settlement reconciliation service with dual-control human exception sign-off and operations analyst certification.",
+      "gold_requirements": [
+        "R1: The reconciliation engine API shall validate idempotency keys and persist double-entry settlement ledger records with sub-200ms latency.",
+        "R2: Treasury exceptions exceeding $50,000 require a documented manual approval SOP and dual sign-off from a senior compliance officer before release.",
+        "R3: Settlement analysts must complete a role-based exception-handling training curriculum and pass a quarterly competency certification prior to production access.",
+        "R4: The system shall automated-flag mismatched wire batches in the reconciliation ledger while enforcing a human approval escalation workflow for dispute resolution."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify why double-entry ledger validation belongs in a deterministic Functional Core software module rather than manual spreadsheets.",
+        "Justify why >$50,000 dual-control sign-off is routed to a Process SOP with human compliance accountability rather than unattended automation.",
+        "Specify pre-go-live analyst certification prerequisites and rejected pure-software alternatives."
+      ]
+    },
+    {
+      "case_id": "FIN-02",
+      "domain": "fintech_settlements",
+      "input_kind": "one_liner",
+      "title": "FX Margin Call Auto-Throttle & Desk Governance",
+      "prompt_text": "Automate intraday FX margin calculations with an immutable audit ledger while keeping forced-liquidation pauses under risk committee governance.",
+      "gold_requirements": [
+        "R1: The FX margin engine shall compute real-time mark-to-market exposure and publish threshold alerts via an encrypted webhook service.",
+        "R2: Forced-liquidation overrides during market volatility require a formal risk committee governance review and manual sign-off under the trading floor runbook.",
+        "R3: Dealing desk operators must complete hands-on liquidity stress onboarding workshops before assuming live margin monitoring shifts.",
+        "R4: The system shall enforce automated position-limit throttling in the trading API while routing collateral waivers through a documented human approval escalation."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Separate real-time mark-to-market calculation (Software) from market-stress liquidation override governance (Process).",
+        "Document why unattended auto-liquidation override was rejected due to systemic liquidity risk.",
+        "Anchor desk readiness to onboarding workshop sign-off before enabling live throttles."
+      ]
+    },
+    {
+      "case_id": "FIN-03",
+      "domain": "fintech_settlements",
+      "input_kind": "multi_paragraph",
+      "title": "Cross-Border SEPA & ACH Batch Clearing Platform",
+      "prompt_text": "Context: Our retail banking platform clears 400,000 daily cross-border SEPA and domestic ACH payouts across 14 correspondent banks. Recent outages caused duplicate debit postings when partner gateways timed out during cutoff windows.\n\nFunctional & NFR Scope: We need a deterministic clearing state machine backed by an append-only ledger database that guarantees exactly-once settlement per payment instruction, encrypts all IBAN/routing payloads at rest with AES-256, and enforces 99.95% availability during clearing windows.\n\nOperational & Readiness Constraints: Sanctions false-positive holds above $10,000 cannot be auto-cleared by software; compliance officers must execute the quarterly sanctions review SOP and record written disposition rationales. All regional clearing coordinators must pass an annual AML sanctions refresher training and simulation assessment before receiving override credentials.",
+      "gold_requirements": [
+        "R1: The clearing state machine service shall guarantee exactly-once settlement semantics and persist encrypted IBAN payloads in an append-only ledger database.",
+        "R2: Compliance officers shall execute the documented sanctions disposition SOP and manual audit review for every held transfer exceeding $10,000.",
+        "R3: Regional clearing coordinators must complete the annual AML sanctions refresher training curriculum and pass a competency assessment before credential issuance.",
+        "R4: The platform shall provide an automated sanctions screening API integrated with a human compliance officer escalation queue for ambiguous name matches."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify Functional Core state machine isolation for exactly-once clearing invariants and Alloy verification scope.",
+        "Document regulatory liability reasons for rejecting automated sanctions false-positive clearance.",
+        "Bind go-live cutover to completed AML refresher training certification and documented compliance SOP."
+      ]
+    },
+    {
+      "case_id": "FIN-04",
+      "domain": "fintech_settlements",
+      "input_kind": "multi_paragraph",
+      "title": "Card Dispute & Chargeback Representment Hub",
+      "prompt_text": "Background: Merchant acquiring teams handle 18,000 monthly cardholder chargebacks under strict Visa and Mastercard representment deadlines. Missed evidence submission windows cost $1.4M annually in automatic write-offs.\n\nSystem Expectations: Build an automated evidence-intake API and deadline-tracking queue that ingests card network reason codes, validates PDF receipt schemas, and alerts merchants 72 hours prior to network cutoff.\n\nSocio-Technical Boundaries: High-value friendly-fraud disputes over $25,000 require manual review and written approval from the merchant risk governance committee before representment filing. New dispute specialists struggle with network reason-code taxonomy, so we need structured coaching workshops and a role-based user guide with proficiency checks prior to independent case handling.",
+      "gold_requirements": [
+        "R1: The dispute intake service shall validate evidence schemas, persist case deadlines in the database, and dispatch automated webhook alerts 72 hours before network cutoffs.",
+        "R2: Friendly-fraud representments exceeding $25,000 require manual review and formal sign-off by the merchant risk governance committee.",
+        "R3: Newly hired dispute specialists must complete reason-code coaching workshops and demonstrate skill proficiency using the updated user guide before independent assignment.",
+        "R4: The system shall assemble automated transaction evidence packets via API while enforcing manual approval sign-off from a specialist prior to card-network submission."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Distinguish deterministic deadline alerting (Software) from high-value representment governance (Process).",
+        "Explain why pure UI tooltips were rejected in favor of structured reason-code coaching workshops (Training).",
+        "Define the Hybrid contract between automated packet assembly and specialist sign-off."
+      ]
+    },
+    {
+      "case_id": "HLT-01",
+      "domain": "healthcare_operations",
+      "input_kind": "one_liner",
+      "title": "Emergency Triage Bed-Board & Nurse Handoff System",
+      "prompt_text": "Deliver an ER bed-availability tracking API with standardized bedside shift-handover protocols and clinical staff onboarding certification.",
+      "gold_requirements": [
+        "R1: The bed-board service shall persist real-time room occupancy state transitions and authenticate clinical staff via SSO with sub-second query latency.",
+        "R2: Incoming and outgoing charge nurses must follow a structured bedside shift handover SOP to verify isolation precautions and pending critical labs.",
+        "R3: All emergency department nurses must complete hands-on EHR bed-board onboarding training and pass a competency check before shift scheduling.",
+        "R4: The platform shall compute automated acuity-based bed recommendations in the triage engine while requiring manual approval from the charge nurse before bed assignment."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify deterministic room-state transitions in software while keeping clinical bedside shift handover as a Process SOP.",
+        "Document patient-safety rejection of unattended automated bed assignment.",
+        "Require nurse onboarding competency verification as a non-software go-live prerequisite."
+      ]
+    },
+    {
+      "case_id": "HLT-02",
+      "domain": "healthcare_operations",
+      "input_kind": "one_liner",
+      "title": "Controlled Substance Pharmacy Dispensing Guardrails",
+      "prompt_text": "Modernize automated dispensing cabinet inventory tracking with two-clinician witness waste procedures and annual narcotic handling refresher training.",
+      "gold_requirements": [
+        "R1: The dispensing service shall encrypt patient medication orders, validate dosage bounds against the formulary schema, and log every drawer event to an immutable database.",
+        "R2: Partial narcotic dose wastage requires an in-person two-clinician visual witness operational procedure and physical compliance sign-off.",
+        "R3: Pharmacists and floor nurses must complete annual controlled-substance handling refresher training and certification.",
+        "R4: The cabinet engine shall enforce automated discrepancy detection on pill counts while triggering an immediate pharmacy governance escalation and audit review."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Separate deterministic dosage-bound validation (Software) from physical narcotic waste witnessing (Process).",
+        "Explain why camera-only automation was rejected for DEA two-clinician waste attestation.",
+        "Tie discrepancy detection alerts to formal pharmacy audit escalation SOPs."
+      ]
+    },
+    {
+      "case_id": "HLT-03",
+      "domain": "healthcare_operations",
+      "input_kind": "multi_paragraph",
+      "title": "Diagnostic Lab Critical-Value Alerting & Escalation Network",
+      "prompt_text": "Clinical Context: Our regional hospital network processes 95,000 pathology and chemistry assays daily. Delayed physician acknowledgement of panic-level potassium or troponin results has led to avoidable adverse events.\n\nTechnical Requirements: The laboratory middleware shall expose an HL7/FHIR ingestion API that validates specimen identifiers, detects critical-value thresholds within 3 seconds of analyzer completion, and persists an immutable acknowledgement audit log with full HIPAA encryption.\n\nClinical Governance & Staff Enablement: When a primary ordering clinician does not acknowledge a critical alert within 15 minutes, the clinical call center must execute the documented verbal read-back escalation SOP to reach the attending physician or rapid-response team. Additionally, rotating medical residents require quarterly critical-value response workshops and role-based enablement guides so read-back expectations are uniformly understood across night shifts.",
+      "gold_requirements": [
+        "R1: The lab middleware API shall validate HL7 specimen schemas, evaluate panic-value thresholds within 3 seconds, and persist encrypted acknowledgement logs in the database.",
+        "R2: Unacknowledged critical values exceeding 15 minutes require clinical call-center operators to execute the verbal read-back escalation SOP and manual handoff to the attending physician.",
+        "R3: Rotating medical residents must attend quarterly critical-value response workshops and review the role-based enablement user guide before night-shift rotation.",
+        "R4: The alerting engine shall dispatch automated tiered pager notifications while requiring manual read-back verification sign-off under the hospital escalation runbook."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify sub-3-second threshold evaluation and encrypted audit persistence in software.",
+        "Document why automated SMS alone was rejected in favor of a verbal read-back escalation SOP.",
+        "Include resident workshop completion as an operational readiness gate across shift rotations."
+      ]
+    },
+    {
+      "case_id": "HLT-04",
+      "domain": "healthcare_operations",
+      "input_kind": "multi_paragraph",
+      "title": "Outpatient Oncology Infusion Scheduling & Consent Portal",
+      "prompt_text": "Problem Statement: Outpatient oncology infusion clinics experience 14% chair under-utilization alongside frequent same-day cancellations caused by incomplete pre-treatment lab checks and missing signed patient consent forms.\n\nPlatform Capabilities: Build a scheduling optimization service and patient portal API that verifies pre-infusion blood-panel recency, enforces chemotherapy chair capacity constraints, and prevents double-booking across infusion bays.\n\nHuman Workflow & Training Needs: Informed chemotherapy consent conversations and dose-delay clinical decisions must remain governed by the oncology nursing SOP and oncologist manual sign-off prior to drug mixing. Front-desk schedulers also need structured onboarding curriculum and coaching on oncology protocol timing windows so complex multi-day regimens are booked accurately.",
+      "gold_requirements": [
+        "R1: The scheduling engine shall validate pre-infusion lab recency against protocol rules and persist conflict-free chair reservations in the clinic database.",
+        "R2: Informed patient consent verification and dose-delay approvals must follow the oncology clinical governance SOP with manual oncologist sign-off prior to pharmacy compounding.",
+        "R3: Clinic schedulers must complete an oncology regimen booking training curriculum and hands-on coaching assessment before managing infusion templates.",
+        "R4: The system shall enforce automated pre-infusion safety checks via the portal API while gating final pharmacy compounding on nurse manual approval and competency certification."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Keep conflict-free chair scheduling and lab-recency checks in the deterministic software core.",
+        "Preserve oncologist manual sign-off for clinical consent and dose-delay decisions via Process SOP.",
+        "Prevent booking errors at the source with scheduler regimen-timing training curriculum."
+      ]
+    },
+    {
+      "case_id": "INV-01",
+      "domain": "inventory_logistics",
+      "input_kind": "one_liner",
+      "title": "Cold-Chain Pharmaceutical Warehouse Telemetry & Quarantine",
+      "prompt_text": "Track cold-storage freezer telemetry via an IoT ingestion service while managing excursion quarantines through QA SOPs and warehouse operator certification.",
+      "gold_requirements": [
+        "R1: The telemetry ingestion API shall validate sensor payloads, persist 60-second temperature readings in a time-series database, and trigger automated excursion alerts.",
+        "R2: Temperature excursions exceeding 15 minutes require physical pallet quarantine under the QA operational procedure and formal release sign-off by a quality compliance officer.",
+        "R3: Cold-storage warehouse associates must complete annual GDP cold-chain handling training and certification prior to forklift zone assignment.",
+        "R4: The system shall automated-lock compromised lot IDs in the inventory ledger while routing disposition decisions through a documented QA manual review workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Separate continuous telemetry ingestion and lot locking (Software) from physical quarantine QA disposition (Process).",
+        "Explain why automated lot release after excursion was rejected due to GDP patient-safety rules.",
+        "Require annual GDP warehouse operator certification as a prerequisite for cold-zone access."
+      ]
+    },
+    {
+      "case_id": "INV-02",
+      "domain": "inventory_logistics",
+      "input_kind": "one_liner",
+      "title": "Multi-Warehouse Cycle Count & Shrinkage Reconciliation",
+      "prompt_text": "Provide a barcode cycle-count API for regional fulfillment centers with supervisor shrinkage sign-off and handheld scanner operator onboarding.",
+      "gold_requirements": [
+        "R1: The cycle-count service shall validate scanned SKU barcodes, compute bin-level variance percentages, and persist stock adjustments in the inventory database.",
+        "R2: Inventory write-offs exceeding $2,500 require a physical recount operational procedure and manual approval sign-off by the regional warehouse manager.",
+        "R3: New fulfillment associates must complete handheld scanner onboarding training and a practical picking-accuracy competency check.",
+        "R4: The platform shall flag recurring SKU shrinkage anomalies via an automated analytics engine while enforcing a documented loss-prevention audit review escalation."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Isolate barcode validation and variance arithmetic in a pure Functional Core software module.",
+        "Route >$2,500 shrinkage write-offs to human manager physical verification SOP to deter internal theft.",
+        "Address mis-scan root causes through hands-on scanner onboarding rather than complex UI prompts."
+      ]
+    },
+    {
+      "case_id": "INV-03",
+      "domain": "inventory_logistics",
+      "input_kind": "multi_paragraph",
+      "title": "Hazardous Materials Freight Manifest & Dock Safety Platform",
+      "prompt_text": "Operational Overview: Our 3PL logistics network dispatches 1,200 daily LTL freight shipments containing lithium batteries and regulated industrial solvents across 22 cross-dock terminals. Improper segregation of incompatible UN hazard classes recently triggered a regulatory fine.\n\nSoftware Scope: Build a manifest validation engine and carrier EDI service that checks UN hazard class compatibility matrices, enforces maximum trailer weight limits, and blocks electronic bill-of-lading generation for incompatible loads with 99.9% uptime.\n\nProcess & Training Controls: Dock supervisors must perform a mandatory physical placard and load-securement inspection SOP before signing off trailer departure seals. Every dock loader and dispatcher must complete biennial DOT hazmat handling certification training and pass an emergency spill-response competency drill.",
+      "gold_requirements": [
+        "R1: The hazmat validation engine shall evaluate UN hazard class compatibility schemas, enforce trailer weight constraints, and persist validated EDI manifests in the database.",
+        "R2: Dock supervisors must execute the physical placard and load-securement inspection SOP and record manual departure sign-off prior to trailer seal placement.",
+        "R3: Dock loaders and dispatchers must complete biennial DOT hazmat training certification and pass a spill-response competency workshop.",
+        "R4: The system shall automated-block non-compliant bills of lading in the dispatch service while escalating emergency chemical rerouting through the incident response runbook."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Formally verify UN hazard class incompatibility invariants in software so invalid bills of lading cannot be issued.",
+        "Maintain physical trailer placard inspection as a non-delegable human dock-supervisor SOP.",
+        "Require biennial DOT hazmat certification for all dispatchers and loaders prior to rollout."
+      ]
+    },
+    {
+      "case_id": "INV-04",
+      "domain": "inventory_logistics",
+      "input_kind": "multi_paragraph",
+      "title": "Port Container Demurrage Predictor & Customs Brokerage Desk",
+      "prompt_text": "Business Challenge: Import operations incur $3.8M annually in port demurrage and detention fees when ocean containers stall in customs inspection holds or miss drayage appointment slots.\n\nSystem Scope: Develop a container-milestone ingestion service and event queue that normalizes AIS vessel arrivals, terminal gate timestamps, and free-time countdown timers, exposing a deterministic demurrage-risk API with p95 latency under 300ms.\n\nHuman Governance & Enablement: Disputed terminal detention invoices and customs broker priority reallocations must follow the trade-compliance escalation SOP with documented port operations committee approval. Regional import coordinators also require role-based customs tariff classification workshops and an updated play-by-play user guide to minimize Harmonized System coding errors.",
+      "gold_requirements": [
+        "R1: The milestone ingestion service shall normalize terminal gate webhooks, compute free-time countdown states in the database, and serve demurrage-risk API queries under 300ms latency.",
+        "R2: Disputed detention invoices and priority drayage reallocations require manual review and formal governance approval under the trade-compliance escalation SOP.",
+        "R3: Regional import coordinators must complete Harmonized System tariff classification workshops and competency enablement using the customs user guide.",
+        "R4: The platform shall dispatch automated 48-hour free-time expiry alerts via the queue service while enforcing human broker handoff and sign-off for customs exam holds."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Route deterministic free-time countdown calculation and webhook normalization to Software.",
+        "Justify keeping customs detention disputes and broker priority shifts in a documented Process SOP.",
+        "Target upstream tariff coding errors via coordinator workshops (Training) instead of fragile heuristics."
+      ]
+    },
+    {
+      "case_id": "ENT-01",
+      "domain": "enterprise_it_hr",
+      "input_kind": "one_liner",
+      "title": "Zero-Trust Employee Offboarding & Access Revocation Engine",
+      "prompt_text": "Automate SaaS token revocation upon HR termination events while preserving manager laptop-return checklists and security awareness onboarding.",
+      "gold_requirements": [
+        "R1: The identity revocation service shall consume HR termination webhooks, invalidate OAuth/SSO tokens across integrated APIs within 5 minutes, and persist an immutable audit trail.",
+        "R2: Departing employee hardware retrieval and legal-hold preservation require a documented HR-IT handoff SOP and manager sign-off checklist.",
+        "R3: People managers must complete annual offboarding security awareness training and review the role-based manager user guide.",
+        "R4: The platform shall automated-disable directory accounts via the IAM engine while routing involuntary-termination timing through a human HR compliance officer approval gate."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Enforce sub-5-minute token revocation deterministically in software to close insider-threat windows.",
+        "Keep physical laptop recovery and legal-hold sign-off in a cross-functional HR-IT Process SOP.",
+        "Gate involuntary-termination deactivation timing via Hybrid HR human approval to prevent premature lockouts."
+      ]
+    },
+    {
+      "case_id": "ENT-02",
+      "domain": "enterprise_it_hr",
+      "input_kind": "one_liner",
+      "title": "Privileged Cloud Break-Glass & Incident Escalation Portal",
+      "prompt_text": "Issue time-boxed JIT cloud admin credentials via API with post-incident blameless review SOPs and on-call SRE readiness drills.",
+      "gold_requirements": [
+        "R1: The JIT access engine shall authenticate requesters, mint time-boxed 60-minute IAM credentials via API, and automatically expire elevated sessions in the audit database.",
+        "R2: Every production break-glass elevation requires a documented post-incident audit review and blameless governance sign-off within 48 hours.",
+        "R3: Newly assigned on-call SREs must complete break-glass simulation training workshops and pass a readiness certification before joining the rotation.",
+        "R4: The system shall automated-provision scoped cloud roles while requiring peer human approval escalation under the incident response runbook for production root access."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Guarantee time-boxed 60-minute credential expiry in deterministic software with verifiable state transitions.",
+        "Route post-incident blameless audit review to a Process governance SOP.",
+        "Require SRE simulation workshop certification before granting on-call break-glass eligibility."
+      ]
+    },
+    {
+      "case_id": "ENT-03",
+      "domain": "enterprise_it_hr",
+      "input_kind": "multi_paragraph",
+      "title": "Global Payroll Exception & Tax Withholding Compliance Suite",
+      "prompt_text": "Enterprise Context: Our 12,000-employee multinational runs biweekly payroll across 19 tax jurisdictions. Last quarter, retroactive equity vesting adjustments caused withholding miscalculations and delayed statutory filings in three countries.\n\nTechnical Requirements: Build a deterministic payroll gross-to-net calculation service and encrypted tax-ledger database that validates statutory bracket schemas, detects >15% period-over-period net-pay anomalies, and guarantees reproducible batch checksums prior to bank file transmission.\n\nGovernance & Training Scope: Any off-cycle payroll adjustment exceeding $15,000 or affecting executive equity withholding must undergo a manual dual-control review SOP by the global payroll governance committee before ACH release. Regional HR business partners also need quarterly cross-border tax-change refresher training and coaching workshops so relocation events are logged accurately ahead of cutoff dates.",
+      "gold_requirements": [
+        "R1: The payroll calculation engine shall validate statutory tax bracket schemas, compute reproducible batch checksums, and persist encrypted ledger snapshots in the database.",
+        "R2: Off-cycle payroll adjustments exceeding $15,000 require manual review and dual-control sign-off by the global payroll governance committee under the release SOP.",
+        "R3: Regional HR business partners must complete quarterly cross-border tax refresher training and coaching workshops to maintain data-entry competency.",
+        "R4: The system shall automated-halt bank file generation on >15% net-pay variance anomalies while escalating exception clearance through a documented human approval runbook."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Isolate reproducible gross-to-net tax arithmetic and checksums in a pure Functional Core software module.",
+        "Preserve dual-control human governance committee approval for >$15,000 off-cycle disbursements.",
+        "Address cross-border relocation input errors via HR partner refresher training rather than guesswork heuristics."
+      ]
+    },
+    {
+      "case_id": "ENT-04",
+      "domain": "enterprise_it_hr",
+      "input_kind": "multi_paragraph",
+      "title": "Enterprise Vendor Security Review & Procurement Intake Hub",
+      "prompt_text": "Situation: Business units currently onboard 60+ third-party SaaS vendors per quarter through ad-hoc email threads, resulting in shadow IT purchases, missed SOC 2 renewals, and unreviewed DPA clauses.\n\nApplication Requirements: Implement a procurement intake API and vendor-risk state machine that enforces mandatory questionnaire schema validation, tracks SOC 2 certificate expiration dates in a central database, and blocks purchase-order webhook emission for unapproved vendors.\n\nGovernance & Enablement Boundaries: High-risk vendors processing regulated PII require a formal privacy and legal committee governance sign-off SOP prior to contract execution. Department budget owners frequently bypass intake channels due to unfamiliarity with risk tiers, so we require an executive-sponsored procurement onboarding curriculum and role-based enablement guide prior to policy enforcement.",
+      "gold_requirements": [
+        "R1: The procurement intake service shall validate vendor questionnaire schemas, persist SOC 2 expiry milestones in the database, and block purchase-order API webhooks for unapproved vendors.",
+        "R2: High-risk PII vendors require a formal privacy and legal committee audit review and manual contract sign-off under the third-party risk governance policy.",
+        "R3: Department budget owners must complete the procurement risk-tier onboarding curriculum and role-based enablement user guide before policy cutover.",
+        "R4: The platform shall automated-score vendor security questionnaires in the risk engine while routing conditional risk waivers through a documented compliance officer escalation SOP."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Enforce deterministic purchase-order webhook gating and SOC 2 expiry tracking in software.",
+        "Route regulated PII legal/privacy contract approvals to formal committee governance SOP.",
+        "Prevent shadow-IT policy bypass through budget-owner onboarding curriculum prior to enforcement."
+      ]
+    }
+  ]
+}
