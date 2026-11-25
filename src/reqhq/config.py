@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from collections.abc import Mapping
 from pathlib import Path
+from typing import Literal
 from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -35,6 +36,8 @@ class ReqHQConfig(BaseModel):
     quota_ceiling_ratio: float = Field(default=0.90, gt=0.0, le=1.0, allow_inf_nan=False)
     quota_db_path: Path | None = None
     cache_db_path: Path | None = None
+    alloy_jar_path: Path | None = None
+    alloy_compat: Literal["alloy6", "legacy"] = "alloy6"
 
     @field_validator("hardware_tier_override", mode="before")
     @classmethod
@@ -96,6 +99,10 @@ class ReqHQConfig(BaseModel):
             kwargs["quota_db_path"] = Path(raw_quota_db)
         if raw_cache_db := source.get("REQHQ_CACHE_DB_PATH", "").strip():
             kwargs["cache_db_path"] = Path(raw_cache_db)
+        if raw_alloy_jar := source.get("REQHQ_ALLOY_JAR_PATH", "").strip():
+            kwargs["alloy_jar_path"] = Path(raw_alloy_jar)
+        if raw_alloy_compat := source.get("REQHQ_ALLOY_COMPAT", "").strip():
+            kwargs["alloy_compat"] = raw_alloy_compat.lower()
 
         return cls.model_validate(kwargs)
 

@@ -53,3 +53,6 @@ include = ["reqhq*", "specpipe*"]
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+markers = [
+    "alloy_live: opt-in test requiring Java and REQHQ_ALLOY_JAR_PATH",
+]
