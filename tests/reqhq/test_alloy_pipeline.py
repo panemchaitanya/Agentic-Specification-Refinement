@@ -621,6 +621,37 @@ def test_parse_alloy_output_instance_relations() -> None:
     assert parsed.counterexample_trace[0]["HumanActor"] == "HumanActor$0"
 
 
+def test_parse_alloy6_tabular_stderr_verified_and_counterexample() -> None:
+    # Real Alloy 6 `exec` prints its summary table to stderr with stdout == "".
+    verified_stderr = (
+        "00. check SafetyAuthorizedOwnership     0       UNSAT\n"
+        "01. check LivenessReachableActivity     0       UNSAT\n"
+        "02. run   __vacuity_witness_SafetyAuthorizedOwnership     0         1/1     SAT\n"
+        "03. run   __vacuity_witness_LivenessReachableActivity     0         1/1     SAT\n"
+    )
+    verified = parse_alloy_output("", verified_stderr, 0, check_vacuity=True)
+    assert verified.status == AlloyRunStatus.VERIFIED
+    assert verified.vacuity_passed is True
+
+    ce_stderr = (
+        "00. check SafetyAuthorizedOwnership     0         1/1     SAT\n"
+        "01. check LivenessReachableActivity     0       UNSAT\n"
+        "02. run   __vacuity_witness_SafetyAuthorizedOwnership     0         1/1     SAT\n"
+        "03. run   __vacuity_witness_LivenessReachableActivity     0         1/1     SAT\n"
+    )
+    counterexample = parse_alloy_output("", ce_stderr, 0, check_vacuity=True)
+    assert counterexample.status == AlloyRunStatus.COUNTEREXAMPLE_FOUND
+    assert counterexample.vacuity_passed is True
+
+    vacuous_stderr = (
+        "00. check SafetyAuthorizedOwnership     0       UNSAT\n"
+        "01. run   __vacuity_witness_SafetyAuthorizedOwnership     0       UNSAT\n"
+    )
+    vacuous = parse_alloy_output("", vacuous_stderr, 0, check_vacuity=True)
+    assert vacuous.status == AlloyRunStatus.VACUOUS_UNSAT
+    assert vacuous.vacuity_passed is False
+
+
 # ---------------------------------------------------------------------------
 # 7. UNSAT core -> ConflictQuestion mapper
 # ---------------------------------------------------------------------------
