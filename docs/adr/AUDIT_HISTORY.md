@@ -2,8 +2,8 @@
 
 > Auto-generated from the append-only [`audit_log.jsonl`](./audit_log.jsonl) ledger. Do not delete historical events; append new lifecycle transitions via `ADRManager` or `reqhq adr`.
 
-- **Total Audit Events:** 28
-- **Created:** 14 | **Accepted:** 14 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
+- **Total Audit Events:** 34
+- **Created:** 17 | **Accepted:** 17 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
 
 | Timestamp (UTC) | Action | ADR | Transition | Author | Related | Path | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -35,3 +35,9 @@
 | 2026-11-25T11:59:05Z | `accepted` | ADR-0013 | Proposed -> Accepted | adr-architect | — | `0013-gap-injection-oracle-and-cross-domain-benchmark.md` | Accepted 20-40% gap-injection generator, leak-proof FrozenOracleSimulator, data/frozen bridge, 16-case benchmark, and Cohen kappa ADR-0013 |
 | 2026-11-25T11:59:06Z | `created` | ADR-0014 | Proposed | adr-architect | — | `0014-internal-pbt-and-post-swarm-verification-gate.md` | Drafted Phase 3 ADR-0014 on branch adr/0014-internal-pbt-and-post-swarm-verification-gate |
 | 2026-11-25T11:59:07Z | `accepted` | ADR-0014 | Proposed -> Accepted | adr-architect | — | `0014-internal-pbt-and-post-swarm-verification-gate.md` | Accepted mandatory internal Hypothesis PBT, independent post-swarm audit, and zero-failure live Alloy 6 verification gate ADR-0014 |
+| 2026-11-25T16:23:00Z | `created` | ADR-0015 | Proposed | adr-architect | — | `0015-fail-closed-empirical-runner-and-mock-quarantine.md` | Drafted Phase 4 ADR-0015 on branch adr/0015-fail-closed-empirical-runner-and-mock-quarantine |
+| 2026-11-25T16:23:01Z | `accepted` | ADR-0015 | Proposed -> Accepted | adr-architect | — | `0015-fail-closed-empirical-runner-and-mock-quarantine.md` | Accepted resumable Layer 1-4 runner, 6 coding tasks, Windows stdlib telemetry, and fail-closed Mock Quarantine ADR-0015 |
+| 2026-11-25T16:23:02Z | `created` | ADR-0016 | Proposed | adr-architect | — | `0016-pure-python-stats-pareto-and-error-taxonomy.md` | Drafted Phase 4 ADR-0016 on branch adr/0016-pure-python-stats-pareto-and-error-taxonomy |
+| 2026-11-25T16:23:03Z | `accepted` | ADR-0016 | Proposed -> Accepted | adr-architect | — | `0016-pure-python-stats-pareto-and-error-taxonomy.md` | Accepted pure-Python paired bootstrap/McNemar/Wilcoxon stats, pure-SVG Pareto charts with mock watermarks, and 7-category error taxonomy ADR-0016 |
+| 2026-11-25T16:23:04Z | `created` | ADR-0017 | Proposed | adr-architect | — | `0017-reproducible-report-pipeline-and-release-manifest.md` | Drafted Phase 4 ADR-0017 on branch adr/0017-reproducible-report-pipeline-and-release-manifest |
+| 2026-11-25T16:23:05Z | `accepted` | ADR-0017 | Proposed -> Accepted | adr-architect | — | `0017-reproducible-report-pipeline-and-release-manifest.md` | Accepted manifest-driven FINAL_REPORT.md, escaped booktabs tables_latex.tex, REPRODUCIBILITY.md, and SHA-256 artifacts_manifest.json verifier ADR-0017 |
