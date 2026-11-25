@@ -23,8 +23,8 @@ _VACUITY_UNSAT_RE = re.compile(
 )
 _GENERIC_UNSAT_RE = re.compile(r"\b(UNSAT|unsatisfiable)\b|UNSAT\s+core", re.IGNORECASE)
 _COUNTEREXAMPLE_RE = re.compile(
-    r"((?<!\bno\s)counterexample\s+found|may\s+be\s+violated|COUNTEREXAMPLE_FOUND|---INSTANCE---)",
-    re.IGNORECASE,
+    r"((?<!\bno\s)counterexample\s+found|may\s+be\s+violated|COUNTEREXAMPLE_FOUND|---INSTANCE---|^\s*\d+\.\s+check\s+\S+[^\r\n]*\bSAT\b)",
+    re.IGNORECASE | re.MULTILINE,
 )
 _LINE_NUM_RE = re.compile(
     r"(?:\bline\s+(\d+)|\.als:(\d+)|\bL(\d+)\b)",
@@ -149,7 +149,7 @@ def parse_alloy_output(
         )
 
     if _VACUITY_UNSAT_RE.search(combined) or (
-        check_vacuity and _GENERIC_UNSAT_RE.search(combined) and "SAT" not in stdout.replace("UNSAT", "")
+        check_vacuity and _GENERIC_UNSAT_RE.search(combined) and not re.search(r"\bSAT\b", combined)
     ):
         return AlloyRunResult(
             status=AlloyRunStatus.VACUOUS_UNSAT,
