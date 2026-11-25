@@ -19,7 +19,13 @@ adr_app = typer.Typer(
     help="Create and manage Architecture Decision Records (ADRs).",
     no_args_is_help=True,
 )
+benchmark_app = typer.Typer(
+    name="benchmark",
+    help="Run cross-domain / gap-injection benchmarks and compute inter-rater kappa.",
+    no_args_is_help=True,
+)
 app.add_typer(adr_app, name="adr")
+app.add_typer(benchmark_app, name="benchmark")
 
 
 def _build_router(
@@ -1233,6 +1239,328 @@ def adr_sync_index_command(
 
     summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
     typer.echo(f"Synced ADR index at {adr_dir}: {summary}")
+
+
+@app.command("pbt-export")
+def pbt_export_command(
+    session_id: Annotated[str, typer.Argument(help="Session ID to export PBT guardrails for.")],
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for PBT_Spec.yaml, guardrails/, tests/properties/, and pbt_lock.sha256."),
+    ],
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use offline MockProvider for deterministic local execution."),
+    ] = False,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent session logs."),
+    ] = Path(".reqhq_sessions"),
+) -> None:
+    """Emit strict PBT_Spec.yaml, Pydantic runtime guardrails, locked Hypothesis tests, and SHA-256 lock."""
+    from reqhq.alloy import AlloyCompatMode, AlloySpecEmitter
+    from reqhq.elicitation import ElicitationState
+    from reqhq.pbt import PBTSpecEmitter, export_pbt_bundle, verify_contract_lock
+    from reqhq.store.event_log import EventKind, SessionEventLog
+    from reqhq.synthesis import (
+        SocioTechnicalTriager,
+        build_assumption_adrs,
+        build_routing_adrs,
+        emit_design_md,
+    )
+
+    event_log = SessionEventLog(sessions_dir)
+    try:
+        state = event_log.resume(session_id)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    elicit_state_path = sessions_dir / session_id / "elicitation_state.json"
+    if not elicit_state_path.is_file():
+        typer.echo(
+            f"Error: no elicitation state found for session '{session_id}'. "
+            "Run `reqhq elicit` first.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
+    elicit_state = ElicitationState.model_validate_json(
+        elicit_state_path.read_text(encoding="utf-8")
+    )
+    meta = state.get("metadata") or {}
+    router = _build_router(
+        sessions_dir=sessions_dir,
+        strict_local=bool(meta.get("strict_local", False)),
+        local_model=str(meta.get("local_model", "qwen3:4b")),
+        mock=mock,
+    )
+    plan = SocioTechnicalTriager(router).triage(elicit_state.graph, session_id=session_id)
+    all_adrs = [
+        *build_routing_adrs(elicit_state.graph, plan),
+        *build_assumption_adrs(elicit_state.assumptions),
+    ]
+    design_md = emit_design_md(elicit_state.graph, plan, all_adrs)
+    spec_md = AlloySpecEmitter().emit_spec_md(
+        elicit_state.graph,
+        triage_plan=plan,
+        adrs=all_adrs,
+        compat=AlloyCompatMode.ALLOY6,
+        max_scope=4,
+    )
+    pbt_doc = PBTSpecEmitter(router=None if mock else router).emit_contract(
+        elicit_state.graph,
+        session_id=session_id,
+        spec_markdown=spec_md,
+        adrs=all_adrs,
+        design_markdown=design_md,
+    )
+    resolved_out = out.resolve()
+    parts_lower = [part.lower() for part in resolved_out.parts]
+    for idx in range(len(parts_lower) - 1):
+        if parts_lower[idx] == "docs" and parts_lower[idx + 1] == "adr":
+            typer.echo(
+                f"Error: Refusing to write target-system PBT bundle into repo Nygard ADR directory: {resolved_out}",
+                err=True,
+            )
+            raise typer.Exit(code=1)
+
+    bundle = export_pbt_bundle(pbt_doc, out)
+    verify_contract_lock(out)
+
+    event_log.append_event(
+        session_id,
+        EventKind.EXPORT_COMPLETED,
+        payload={
+            "format": "pbt_bundle",
+            "output": str(bundle.out_dir),
+            "property_count": len(pbt_doc.properties),
+            "guardrail_files": len(bundle.guardrail_files),
+            "test_files": len(bundle.test_files),
+            "lock_file": str(bundle.lock_file),
+        },
+    )
+    typer.echo(f"Exported PBT guardrail bundle for '{session_id}' to {bundle.out_dir}")
+    typer.echo(
+        f"Artifacts: PBT_Spec.yaml ({len(pbt_doc.properties)} properties), "
+        f"{len(bundle.guardrail_files)} guardrail file(s), "
+        f"{len(bundle.test_files)} PBT test file(s), pbt_lock.sha256 (verified)"
+    )
+
+
+@app.command("handoff")
+def handoff_command(
+    session_id: Annotated[str, typer.Argument(help="Session ID to package for Antigravity handoff.")],
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for the full Contract-First Antigravity handoff bundle."),
+    ],
+    alloy_compat: Annotated[
+        Literal["alloy6", "legacy"],
+        typer.Option("--alloy-compat", help="Alloy behavioral mode for Spec.md: alloy6 or legacy."),
+    ] = "alloy6",
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use offline MockProvider for deterministic local runs."),
+    ] = False,
+    mock_alloy: Annotated[
+        bool,
+        typer.Option("--mock-alloy", help="Use offline MockAlloyAnalyzer during handoff bundling."),
+    ] = False,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent session logs."),
+    ] = Path(".reqhq_sessions"),
+) -> None:
+    """Build a complete Contract-First Antigravity handoff bundle with locked PBT guardrails."""
+    from reqhq.alloy import (
+        AlloyCompatMode,
+        AlloySpecEmitter,
+        AlloyVerificationController,
+    )
+    from reqhq.elicitation import ElicitationState
+    from reqhq.harness import build_handoff_bundle
+    from reqhq.pbt import PBTSpecEmitter
+    from reqhq.store.event_log import EventKind, SessionEventLog
+    from reqhq.synthesis import (
+        SocioTechnicalTriager,
+        build_assumption_adrs,
+        build_routing_adrs,
+        emit_design_md,
+    )
+
+    event_log = SessionEventLog(sessions_dir)
+    try:
+        state = event_log.resume(session_id)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    elicit_state_path = sessions_dir / session_id / "elicitation_state.json"
+    if not elicit_state_path.is_file():
+        typer.echo(
+            f"Error: no elicitation state found for session '{session_id}'. "
+            "Run `reqhq elicit` first.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
+    elicit_state = ElicitationState.model_validate_json(
+        elicit_state_path.read_text(encoding="utf-8")
+    )
+    meta = state.get("metadata") or {}
+    use_mock_llm = mock or mock_alloy
+    router = _build_router(
+        sessions_dir=sessions_dir,
+        strict_local=bool(meta.get("strict_local", False)),
+        local_model=str(meta.get("local_model", "qwen3:4b")),
+        mock=use_mock_llm,
+    )
+    plan = SocioTechnicalTriager(router).triage(elicit_state.graph, session_id=session_id)
+    preview_adrs = [
+        *build_routing_adrs(elicit_state.graph, plan),
+        *build_assumption_adrs(elicit_state.assumptions),
+    ]
+    design_md = emit_design_md(elicit_state.graph, plan, preview_adrs)
+
+    compat_enum = AlloyCompatMode(alloy_compat)
+    raw_spec_md = AlloySpecEmitter().emit_spec_md(
+        elicit_state.graph,
+        triage_plan=plan,
+        adrs=preview_adrs,
+        compat=compat_enum,
+        max_scope=4,
+    )
+    analyzer = _build_alloy_analyzer(mock_alloy=mock_alloy)
+    outcome = AlloyVerificationController(router, analyzer, max_scope=4).verify_spec(
+        raw_spec_md,
+        elicit_state.graph,
+        compat=compat_enum,
+        event_log=event_log,
+        session_id=session_id,
+    )
+    pbt_doc = PBTSpecEmitter(router=None if use_mock_llm else router).emit_contract(
+        elicit_state.graph,
+        session_id=session_id,
+        spec_markdown=outcome.spec_markdown,
+        adrs=preview_adrs,
+        design_markdown=design_md,
+    )
+    try:
+        manifest = build_handoff_bundle(
+            out,
+            session_id=session_id,
+            graph=elicit_state.graph,
+            plan=plan,
+            spec_markdown=outcome.spec_markdown,
+            pbt_doc=pbt_doc,
+            assumptions=elicit_state.assumptions,
+            alloy_refs=outcome.req_to_alloy_refs,
+        )
+    except ValueError as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    event_log.append_event(
+        session_id,
+        EventKind.EXPORT_COMPLETED,
+        payload={
+            "format": "handoff_bundle",
+            "output": str(manifest.out_dir),
+            "alloy_compat": compat_enum.value,
+            "alloy_status": outcome.status.value,
+            "adr_count": len(manifest.adr_files),
+            "property_count": len(pbt_doc.properties),
+            "lock_file": str(manifest.lock_file),
+        },
+    )
+    typer.echo(f"Exported Antigravity handoff bundle for '{session_id}' to {manifest.out_dir}")
+    typer.echo(
+        f"Artifacts: HANDOFF_INSTRUCTIONS.md, Spec.md ({compat_enum.value}, {outcome.status.value}), "
+        f"{len(manifest.adr_files)} ADR(s), PBT_Spec.yaml ({len(pbt_doc.properties)} properties), "
+        f"pbt_lock.sha256"
+    )
+
+
+@benchmark_app.command("run")
+def benchmark_run_command(
+    suite: Annotated[
+        Literal["cross_domain", "gap_injection"],
+        typer.Option("--suite", help="Benchmark suite to run: cross_domain or gap_injection."),
+    ] = "cross_domain",
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Directory where deterministic benchmark results JSON is written."),
+    ] = Path("benchmark_out"),
+    seed: Annotated[
+        int,
+        typer.Option("--seed", help="Deterministic random seed."),
+    ] = 42,
+    mock: Annotated[
+        bool,
+        typer.Option("--mock", help="Use offline MockProvider for deterministic local runs."),
+    ] = True,
+) -> None:
+    """Run the 16-case cross-domain or gap-injection oracle benchmark suite."""
+    from reqhq.benchmark import (
+        load_cross_domain_suite,
+        run_cross_domain_benchmark,
+        run_gap_injection_benchmark,
+    )
+
+    loaded_suite = load_cross_domain_suite()
+    if suite == "cross_domain":
+        router = _build_router(
+            sessions_dir=out,
+            strict_local=True,
+            mock=mock,
+        )
+        report = run_cross_domain_benchmark(loaded_suite, router=router, seed=seed)
+        metric_line = (
+            f"route_accuracy={report['overall_route_accuracy']:.4f} "
+            f"({report['matched_routes']}/{report['total_routes']})"
+        )
+    else:
+        report = run_gap_injection_benchmark(loaded_suite, seed=seed)
+        metric_line = (
+            f"mean_gap_recall={report['mean_gap_recall']:.4f} | "
+            f"mean_f1={report['mean_f1']:.4f} | "
+            f"leakage_verified={report['all_leakage_verified']}"
+        )
+
+    out.mkdir(parents=True, exist_ok=True)
+    report_path = out / f"{suite}_results.json"
+    with report_path.open("w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(report, indent=2, sort_keys=True) + "\n")
+
+    typer.echo(
+        f"Benchmark '{suite}' complete: cases={report['total_cases']} | {metric_line}"
+    )
+    typer.echo(f"Report: {report_path}")
+
+
+@benchmark_app.command("kappa")
+def benchmark_kappa_command(
+    file_a: Annotated[Path, typer.Argument(help="First annotator JSON/JSONL file.")],
+    file_b: Annotated[Path, typer.Argument(help="Second annotator JSON/JSONL file.")],
+) -> None:
+    """Compute fail-closed dual-annotator Cohen's kappa from two annotation files."""
+    from reqhq.benchmark import compute_kappa_from_files
+
+    try:
+        report = compute_kappa_from_files(file_a, file_b)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Cohen's kappa: {report.kappa:.4f} | "
+        f"observed={report.observed_agreement:.4f} | "
+        f"expected={report.expected_agreement:.4f} | "
+        f"agreed={report.agreed_count}/{report.shared_count}"
+    )
+    if report.disagreed_ids:
+        typer.echo(f"Disagreed IDs: {', '.join(report.disagreed_ids)}")
 
 
 def main() -> None:
