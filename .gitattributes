@@ -1,2 +1,3 @@
 docs/adr/**/*.md text eol=lf
 docs/adr/**/*.jsonl text eol=lf
+data/benchmarks/**/*.json text eol=lf
