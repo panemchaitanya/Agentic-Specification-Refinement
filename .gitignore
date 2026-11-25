@@ -20,3 +20,8 @@ htmlcov/
 credentials.json
 token.json
 
+# Local check-in runbooks & archived scratch docs
+CHECKIN_PLAN*.md
+archived_donotmerge/
+
+
