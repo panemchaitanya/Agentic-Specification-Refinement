@@ -1,0 +1,19 @@
+{
+  "task_id": "refund_sla_engine",
+  "domain": "fintech_settlements",
+  "title": "Refund SLA Auto-Approval & Dual-Control Escalation Engine",
+  "target_module": "refund_sla_engine",
+  "entry_symbol": "evaluate_refund_sla",
+  "required_invariants": [
+    "Refund requests with non-positive amount or negative elapsed_hours must raise ValueError.",
+    "Auto-approval is allowed only when amount_cents <= 50000 and elapsed_hours <= 72 and not is_chargeback.",
+    "Chargeback disputes or refunds exceeding 50000 cents must route to dual_control_review.",
+    "Evaluating the same refund payload twice must be idempotent and deterministic."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

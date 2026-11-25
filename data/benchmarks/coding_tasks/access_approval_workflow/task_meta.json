@@ -1,0 +1,19 @@
+{
+  "task_id": "access_approval_workflow",
+  "domain": "enterprise_it_hr",
+  "title": "Privileged Access Separation-of-Duties & Break-Glass Approval Workflow",
+  "target_module": "access_approval_workflow",
+  "entry_symbol": "decide_access_request",
+  "required_invariants": [
+    "Self-approval (requester_id == approver_id) must always be rejected regardless of role.",
+    "Requested duration_hours must be within [1, 168]; values outside this range raise ValueError.",
+    "Production admin privileges require both manager_approved and security_approved unless break_glass with ticket_id is set.",
+    "Non-privileged read-only access with manager_approved and valid approver must be granted."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

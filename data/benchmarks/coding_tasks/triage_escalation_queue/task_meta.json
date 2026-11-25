@@ -1,0 +1,19 @@
+{
+  "task_id": "triage_escalation_queue",
+  "domain": "healthcare_operations",
+  "title": "Emergency Triage Acuity Queue & Charge-Nurse Escalation Gate",
+  "target_module": "triage_escalation_queue",
+  "entry_symbol": "route_triage_patient",
+  "required_invariants": [
+    "Acuity score must lie in [1, 5] and wait_minutes must be non-negative; invalid values raise ValueError.",
+    "Acuity 1 or 2 patients must always route to immediate_resuscitation regardless of bed capacity.",
+    "Acuity 3 patients waiting > 30 minutes must escalate to charge_nurse_review.",
+    "Bed assignment when available_beds == 0 must never return direct_bed_assign for acuity >= 3."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

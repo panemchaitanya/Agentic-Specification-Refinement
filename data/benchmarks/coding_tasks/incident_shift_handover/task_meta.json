@@ -1,0 +1,19 @@
+{
+  "task_id": "incident_shift_handover",
+  "domain": "operations_sre",
+  "title": "On-Call SEV-1 Incident Shift Handover & Acknowledgement Gate",
+  "target_module": "incident_shift_handover",
+  "entry_symbol": "validate_shift_handover",
+  "required_invariants": [
+    "Outgoing and incoming on-call engineers must be distinct non-empty IDs; invalid inputs raise ValueError.",
+    "Handover cannot complete if any open SEV-1 incident lacks an explicit incoming acknowledgement.",
+    "Incoming engineer must have completed current on-call readiness certification.",
+    "When all SEV-1 incidents are acknowledged and incoming engineer is certified, handover status is complete."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}
