@@ -2,8 +2,8 @@
 
 > Auto-generated from the append-only [`audit_log.jsonl`](./audit_log.jsonl) ledger. Do not delete historical events; append new lifecycle transitions via `ADRManager` or `reqhq adr`.
 
-- **Total Audit Events:** 12
-- **Created:** 6 | **Accepted:** 6 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
+- **Total Audit Events:** 20
+- **Created:** 10 | **Accepted:** 10 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
 
 | Timestamp (UTC) | Action | ADR | Transition | Author | Related | Path | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -19,3 +19,11 @@
 | 2026-11-24T08:42:09Z | `accepted` | ADR-0005 | Proposed -> Accepted | adr-architect | — | `0005-resumable-event-log-and-strict-pydantic-schemas.md` | Accepted Pydantic v2 extra=forbid schemas and append-only SQLite+JSONL event log ADR-0005 |
 | 2026-11-24T08:42:10Z | `created` | ADR-0006 | Proposed | adr-architect | — | `0006-abstract-system-context-for-brownfield-readiness.md` | Drafted foundational ADR-0006 on branch adr/0006-abstract-system-context-for-brownfield-readiness |
 | 2026-11-24T08:42:11Z | `accepted` | ADR-0006 | Proposed -> Accepted | adr-architect | — | `0006-abstract-system-context-for-brownfield-readiness.md` | Accepted GreenfieldEmptyContext / SystemContext seam ADR-0006 for Phase 2 brownfield readiness |
+| 2026-11-24T10:25:00Z | `created` | ADR-0007 | Proposed | adr-architect | — | `0007-iterative-delta-critic-convergence-engine.md` | Drafted Phase 2 ADR-0007 on branch adr/0007-iterative-delta-critic-convergence-engine |
+| 2026-11-24T10:25:01Z | `accepted` | ADR-0007 | Proposed -> Accepted | adr-architect | — | `0007-iterative-delta-critic-convergence-engine.md` | Accepted TIER_0 sequential 5-critic delta convergence and Assumption ADR gate ADR-0007 |
+| 2026-11-24T10:25:02Z | `created` | ADR-0008 | Proposed | adr-architect | — | `0008-socio-technical-triage-and-routing-adr-synthesis.md` | Drafted Phase 2 ADR-0008 on branch adr/0008-socio-technical-triage-and-routing-adr-synthesis |
+| 2026-11-24T10:25:03Z | `accepted` | ADR-0008 | Proposed -> Accepted | adr-architect | — | `0008-socio-technical-triage-and-routing-adr-synthesis.md` | Accepted socio-technical triad partitioning, namespace separation, Design.md, and Process_and_Training.md ADR-0008 |
+| 2026-11-24T10:25:04Z | `created` | ADR-0009 | Proposed | adr-architect | — | `0009-two-layer-literate-alloy6-and-legacy-compat.md` | Drafted Phase 2 ADR-0009 on branch adr/0009-two-layer-literate-alloy6-and-legacy-compat |
+| 2026-11-24T10:25:05Z | `accepted` | ADR-0009 | Proposed -> Accepted | adr-architect | — | `0009-two-layer-literate-alloy6-and-legacy-compat.md` | Accepted two-layer core_domain + behavior Alloy 6 default and --alloy-compat=legacy lowering ADR-0009 |
+| 2026-11-24T10:25:06Z | `created` | ADR-0010 | Proposed | adr-architect | — | `0010-headless-alloy-verification-and-vacuity-gate.md` | Drafted Phase 2 ADR-0010 on branch adr/0010-headless-alloy-verification-and-vacuity-gate |
+| 2026-11-24T10:25:07Z | `accepted` | ADR-0010 | Proposed -> Accepted | adr-architect | — | `0010-headless-alloy-verification-and-vacuity-gate.md` | Accepted headless Alloy runner, mandatory vacuity gate, UNSAT/counterexample mapping, and repair loop ADR-0010 |
