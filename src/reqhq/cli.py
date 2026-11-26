@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
+import sys
 from pathlib import Path
 from typing import Annotated, Any, Literal
 
@@ -29,9 +31,15 @@ eval_app = typer.Typer(
     help="Run Phase 4 Layers 1-4 evaluation, statistical analysis, reports, and release verification.",
     no_args_is_help=True,
 )
+auth_app = typer.Typer(
+    name="auth",
+    help="Manage encrypted local credentials (Windows DPAPI / PBKDF2-Fernet vault).",
+    no_args_is_help=True,
+)
 app.add_typer(adr_app, name="adr")
 app.add_typer(benchmark_app, name="benchmark")
 app.add_typer(eval_app, name="eval")
+app.add_typer(auth_app, name="auth")
 
 
 def _build_router(
@@ -42,8 +50,19 @@ def _build_router(
     mock: bool = False,
 ) -> Any:
     """Construct a local-first ProviderRouter (offline MockProvider when mock=True)."""
+    import os
+
     from reqhq.config import ReqHQConfig
-    from reqhq.llm import MockProvider, OllamaLocalProvider, ProviderRouter
+    from reqhq.llm import (
+        GeminiFreeProvider,
+        GroqFreeProvider,
+        MockProvider,
+        OllamaLocalProvider,
+        ProviderRouter,
+        QuotaLedger,
+    )
+    from reqhq.security import is_valid_credential_value
+    from reqhq.store import PromptCache
 
     if mock:
         return ProviderRouter(
@@ -57,14 +76,38 @@ def _build_router(
         sessions_dir=sessions_dir,
         strict_local=strict_local or cfg.strict_local,
         ollama_base_url=cfg.ollama_base_url,
+        quota_ceiling_ratio=cfg.quota_ceiling_ratio,
+        quota_db_path=cfg.quota_db_path,
+        cache_db_path=cfg.cache_db_path,
+        gemini_model=cfg.gemini_model,
         alloy_jar_path=cfg.alloy_jar_path,
         alloy_compat=cfg.alloy_compat,
     )
+    cloud_providers: list[Any] = []
+    if not cfg_sessions.strict_local:
+        gemini_key = os.environ.get("GEMINI_API_KEY", "").strip()
+        if gemini_key and is_valid_credential_value("GEMINI_API_KEY", gemini_key)[0]:
+            cloud_providers.append(
+                GeminiFreeProvider(
+                    api_key=gemini_key,
+                    default_model=cfg_sessions.gemini_model,
+                )
+            )
+        groq_key = os.environ.get("GROQ_API_KEY", "").strip()
+        if groq_key and is_valid_credential_value("GROQ_API_KEY", groq_key)[0]:
+            cloud_providers.append(GroqFreeProvider(api_key=groq_key))
+
     return ProviderRouter(
         local_provider=OllamaLocalProvider(
             base_url=cfg_sessions.ollama_base_url,
             default_model=local_model,
         ),
+        cloud_providers=cloud_providers,
+        quota_ledger=QuotaLedger(
+            cfg_sessions.resolved_quota_db_path(),
+            ceiling_ratio=cfg_sessions.quota_ceiling_ratio,
+        ),
+        prompt_cache=PromptCache(cfg_sessions.resolved_cache_db_path()),
         strict_local=cfg_sessions.strict_local,
     )
 
@@ -474,6 +517,11 @@ def elicit_command(
             raise typer.Exit(code=1)
 
     meta = session_state.get("metadata") or {}
+    if not mock:
+        _run_live_startup_preflight(
+            sessions_dir=sessions_dir,
+            strict_local=bool(meta.get("strict_local", False)),
+        )
     router = _build_router(
         sessions_dir=sessions_dir,
         strict_local=bool(meta.get("strict_local", False)),
@@ -568,6 +616,11 @@ def finalize_command(
         raise typer.Exit(code=1)
 
     meta = session_state.get("metadata") or {}
+    if not mock:
+        _run_live_startup_preflight(
+            sessions_dir=sessions_dir,
+            strict_local=bool(meta.get("strict_local", False)),
+        )
     router = _build_router(
         sessions_dir=sessions_dir,
         strict_local=bool(meta.get("strict_local", False)),
@@ -1007,11 +1060,17 @@ def export_command(
             elicit_state_path.read_text(encoding="utf-8")
         )
         meta = state.get("metadata") or {}
+        use_mock_llm = mock or mock_alloy
+        if not use_mock_llm:
+            _run_live_startup_preflight(
+                sessions_dir=sessions_dir,
+                strict_local=bool(meta.get("strict_local", False)),
+            )
         router = _build_router(
             sessions_dir=sessions_dir,
             strict_local=bool(meta.get("strict_local", False)),
             local_model=str(meta.get("local_model", "qwen3:4b")),
-            mock=mock or mock_alloy,
+            mock=use_mock_llm,
         )
         plan = SocioTechnicalTriager(router).triage(
             elicit_state.graph,
@@ -1416,6 +1475,11 @@ def handoff_command(
     )
     meta = state.get("metadata") or {}
     use_mock_llm = mock or mock_alloy
+    if not use_mock_llm:
+        _run_live_startup_preflight(
+            sessions_dir=sessions_dir,
+            strict_local=bool(meta.get("strict_local", False)),
+        )
     router = _build_router(
         sessions_dir=sessions_dir,
         strict_local=bool(meta.get("strict_local", False)),
@@ -1641,6 +1705,11 @@ def eval_run_command(
             seed=seed,
             max_tasks=max_tasks,
         )
+        if config.mode == RunMode.LIVE:
+            _run_live_startup_preflight(
+                sessions_dir=Path(".reqhq_sessions"),
+                strict_local=config.strict_local,
+            )
         manifest = EvalOrchestrator(config).run_all()
     except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
         typer.echo(f"Error: {exc}", err=True)
@@ -1803,6 +1872,393 @@ def eval_verify_bundle_command(
         raise typer.Exit(code=1)
 
     typer.echo(f"Bundle verification PASSED: checked={result.checked_count}")
+
+
+def _resolve_vault(
+    sessions_dir: Path,
+    vault_path: Path | None = None,
+) -> Any:
+    """Resolve the EncryptedCredentialVault path from CLI options or environment."""
+    from reqhq.config import ReqHQConfig
+    from reqhq.security import EncryptedCredentialVault
+
+    env_cfg = ReqHQConfig.from_env()
+    effective_cfg = ReqHQConfig(
+        sessions_dir=sessions_dir,
+        vault_path=vault_path if vault_path is not None else env_cfg.vault_path,
+    )
+    return EncryptedCredentialVault(effective_cfg.resolved_vault_path())
+
+
+def _parse_credential_keys(raw_keys: str) -> list[str]:
+    """Parse a comma-separated list of credential key names into unique uppercase keys."""
+    keys: list[str] = []
+    for tok in raw_keys.split(","):
+        cleaned = tok.strip().upper()
+        if cleaned and cleaned not in keys:
+            keys.append(cleaned)
+    if not keys:
+        raise ValueError("keys must specify at least one credential key name")
+    return keys
+
+
+def _prompt_secret(key_name: str) -> str:
+    """Securely prompt for a credential without echoing characters to the terminal."""
+    return str(
+        typer.prompt(
+            f"Enter {key_name} (leave blank to skip)",
+            default="",
+            hide_input=True,
+            show_default=False,
+        )
+    )
+
+
+def _is_interactive_tty() -> bool:
+    """Return True when stdin is attached to an interactive terminal."""
+    return bool(getattr(sys.stdin, "isatty", lambda: False)())
+
+
+def _run_live_startup_preflight(
+    *,
+    sessions_dir: Path,
+    strict_local: bool = False,
+) -> None:
+    """Verify/bootstrap local Ollama and encrypted cloud credentials before live LLM commands."""
+    from reqhq.config import ReqHQConfig
+    from reqhq.llm import OllamaRuntimeError, ensure_ollama_ready
+    from reqhq.security import VaultDecryptionError, ensure_credentials_ready
+
+    cfg = ReqHQConfig.from_env()
+    effective_strict_local = strict_local or cfg.strict_local
+
+    try:
+        ensure_ollama_ready(
+            base_url=cfg.ollama_base_url,
+            tier=cfg.hardware_tier_override,
+            auto_start=cfg.auto_start_ollama,
+            warmup=True,
+            raise_on_unready=True,
+        )
+    except OllamaRuntimeError as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    if effective_strict_local:
+        return
+
+    vault = _resolve_vault(sessions_dir)
+    interactive = _is_interactive_tty()
+    try:
+        cred_report = ensure_credentials_ready(
+            vault,
+            strict_local=False,
+            interactive=interactive,
+            prompt_fn=_prompt_secret if interactive else None,
+            export_to_env=True,
+        )
+    except VaultDecryptionError as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    if cred_report.prompted_keys:
+        typer.echo(
+            f"Saved encrypted credential(s) to {cred_report.vault_path}: "
+            f"{', '.join(cred_report.prompted_keys)}"
+        )
+    if not cred_report.all_required_ready:
+        missing = [item.key_name for item in cred_report.items if not item.valid]
+        typer.echo(
+            f"Note: cloud credential(s) not configured ({', '.join(missing)}). "
+            "Run 'reqhq auth setup' or pass '--strict-local' for local-only mode."
+        )
+
+
+@app.command("doctor")
+def doctor_command(
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent session logs and default vault."),
+    ] = Path(".reqhq_sessions"),
+    hardware_tier: Annotated[
+        int | None,
+        typer.Option("--hardware-tier", min=0, max=3, help="Override detected hardware tier (0-3)."),
+    ] = None,
+    auto_start: Annotated[
+        bool,
+        typer.Option(
+            "--auto-start/--no-auto-start",
+            help="Automatically start local Ollama daemon if installed and stopped.",
+        ),
+    ] = True,
+    auto_pull: Annotated[
+        bool,
+        typer.Option("--auto-pull", help="Opt in to automatically pulling missing tier models."),
+    ] = False,
+    warmup: Annotated[
+        bool,
+        typer.Option("--warmup", help="Warm up the active primary tier model (keep_alive=10m)."),
+    ] = False,
+    strict_local: Annotated[
+        bool,
+        typer.Option("--strict-local", help="Verify local-only readiness without requiring cloud keys."),
+    ] = False,
+    verify_live: Annotated[
+        bool,
+        typer.Option(
+            "--verify-live",
+            help="Opt in to live HTTP authentication probes for configured cloud API keys.",
+        ),
+    ] = False,
+) -> None:
+    """Diagnose HardwareTier, local Ollama runtime/models, encrypted vault, Java 21, and Alloy 6.2."""
+    from reqhq.config import ReqHQConfig
+    from reqhq.llm import ensure_ollama_ready
+    from reqhq.llm.hardware_profiler import HardwareProfiler
+    from reqhq.security import (
+        CredentialSource,
+        VaultDecryptionError,
+        ensure_credentials_ready,
+        verify_credential_live,
+    )
+
+    cfg = ReqHQConfig.from_env()
+    effective_strict_local = strict_local or cfg.strict_local
+    effective_tier = hardware_tier if hardware_tier is not None else cfg.hardware_tier_override
+    profile = HardwareProfiler.detect(tier_override=effective_tier)
+
+    typer.echo(
+        f"Hardware: TIER_{int(profile.tier)} | {profile.gpu_name} | "
+        f"{profile.vram_gb} GB VRAM | {profile.ram_gb} GB RAM | {profile.cpu_cores} cores"
+    )
+
+    ollama_report = ensure_ollama_ready(
+        base_url=cfg.ollama_base_url,
+        tier=profile.tier,
+        auto_start=auto_start,
+        auto_pull=auto_pull,
+        warmup=warmup,
+        raise_on_unready=False,
+    )
+    typer.echo(
+        f"Ollama: ready={ollama_report.ready} | running={ollama_report.daemon_running} | "
+        f"auto_started={ollama_report.daemon_auto_started} | active={ollama_report.active_model} | "
+        f"warmed_up={ollama_report.warmed_up}"
+    )
+    if ollama_report.missing_models:
+        typer.echo(f"Ollama missing models: {', '.join(ollama_report.missing_models)}")
+
+    vault = _resolve_vault(sessions_dir)
+    vault_ok = True
+    try:
+        cred_report = ensure_credentials_ready(
+            vault,
+            strict_local=effective_strict_local,
+            interactive=False,
+            validator_fn=verify_credential_live if verify_live else None,
+            export_to_env=False,
+        )
+        typer.echo(
+            f"Vault: path={cred_report.vault_path} | backend={cred_report.protector_backend} | "
+            f"strict_local={cred_report.strict_local} | ready={cred_report.all_required_ready}"
+        )
+        for item in cred_report.items:
+            masked_tag = f" ({item.masked_value})" if item.masked_value else ""
+            detail_tag = f" [{item.message}]" if verify_live and item.configured else ""
+            typer.echo(
+                f"  - {item.key_name}: source={item.source.value} | valid={item.valid}{masked_tag}{detail_tag}"
+            )
+            if verify_live and item.source == CredentialSource.INVALID:
+                vault_ok = False
+    except VaultDecryptionError as exc:
+        vault_ok = False
+        typer.echo(f"Vault: ERROR ({exc})", err=True)
+
+    java_bin = shutil.which("java")
+    alloy_jar = cfg.alloy_jar_path
+    alloy_present = alloy_jar is not None and alloy_jar.is_file()
+    typer.echo(f"Java: {java_bin or 'not found'}")
+    typer.echo(
+        f"Alloy 6.2 JAR: {alloy_jar if alloy_present else 'not configured / missing'}"
+    )
+
+    if ollama_report.guidance:
+        typer.echo("Guidance:")
+        for step in ollama_report.guidance:
+            typer.echo(f"  - {step}")
+
+    if not ollama_report.ready or not vault_ok:
+        raise typer.Exit(code=1)
+
+
+@auth_app.command("setup")
+def auth_setup_command(
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for default encrypted credential vault."),
+    ] = Path(".reqhq_sessions"),
+    vault_path: Annotated[
+        Path | None,
+        typer.Option("--vault-path", help="Explicit encrypted credential vault file path."),
+    ] = None,
+    keys: Annotated[
+        str,
+        typer.Option("--keys", help="Comma-separated credential keys to verify/provision."),
+    ] = "GEMINI_API_KEY,GROQ_API_KEY",
+    non_interactive: Annotated[
+        bool,
+        typer.Option("--non-interactive", help="Fail closed without prompting when keys are missing/invalid."),
+    ] = False,
+    verify_live: Annotated[
+        bool,
+        typer.Option(
+            "--verify-live",
+            help="Opt in to live HTTP authentication probes before saving credentials.",
+        ),
+    ] = False,
+) -> None:
+    """Provision missing or invalid credentials into the encrypted local vault."""
+    from reqhq.security import VaultDecryptionError, ensure_credentials_ready, verify_credential_live
+
+    try:
+        key_list = _parse_credential_keys(keys)
+        vault = _resolve_vault(sessions_dir, vault_path=vault_path)
+        report = ensure_credentials_ready(
+            vault,
+            required_keys=key_list,
+            strict_local=False,
+            interactive=not non_interactive,
+            prompt_fn=None if non_interactive else _prompt_secret,
+            validator_fn=verify_credential_live if verify_live else None,
+            export_to_env=False,
+        )
+    except (ValueError, VaultDecryptionError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(f"Credential vault: {report.vault_path} ({report.protector_backend})")
+    for item in report.items:
+        masked_tag = f" [{item.masked_value}]" if item.masked_value else ""
+        typer.echo(
+            f"  - {item.key_name}: source={item.source.value} | valid={item.valid}{masked_tag}"
+        )
+    if not report.all_required_ready:
+        raise typer.Exit(code=1)
+
+
+@auth_app.command("status")
+def auth_status_command(
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for default encrypted credential vault."),
+    ] = Path(".reqhq_sessions"),
+    vault_path: Annotated[
+        Path | None,
+        typer.Option("--vault-path", help="Explicit encrypted credential vault file path."),
+    ] = None,
+    verify_live: Annotated[
+        bool,
+        typer.Option(
+            "--verify-live",
+            help="Opt in to live HTTP authentication probes for configured cloud API keys.",
+        ),
+    ] = False,
+) -> None:
+    """Display masked status for all supported credentials (never prints plaintext secrets)."""
+    from reqhq.security import (
+        CREDENTIAL_SPECS,
+        VaultDecryptionError,
+        ensure_credentials_ready,
+        verify_credential_live,
+    )
+
+    vault = _resolve_vault(sessions_dir, vault_path=vault_path)
+    try:
+        report = ensure_credentials_ready(
+            vault,
+            required_keys=list(CREDENTIAL_SPECS.keys()),
+            strict_local=False,
+            interactive=False,
+            validator_fn=verify_credential_live if verify_live else None,
+            export_to_env=False,
+        )
+    except VaultDecryptionError as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Credential vault: {report.vault_path} | exists={vault.exists()} | "
+        f"backend={report.protector_backend}"
+    )
+    for item in report.items:
+        masked_tag = f" [{item.masked_value}]" if item.masked_value else ""
+        detail_tag = f" ({item.message})" if verify_live and item.configured else ""
+        typer.echo(
+            f"  - {item.key_name}: source={item.source.value} | valid={item.valid}{masked_tag}{detail_tag}"
+        )
+
+
+@auth_app.command("rotate")
+def auth_rotate_command(
+    key_name: Annotated[str, typer.Argument(help="Credential key name to rotate (e.g. GEMINI_API_KEY).")],
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for default encrypted credential vault."),
+    ] = Path(".reqhq_sessions"),
+    vault_path: Annotated[
+        Path | None,
+        typer.Option("--vault-path", help="Explicit encrypted credential vault file path."),
+    ] = None,
+) -> None:
+    """Securely prompt for and update a single key inside the encrypted local vault."""
+    from reqhq.security import VaultError, mask_secret
+
+    normalized_key = key_name.strip().upper()
+    vault = _resolve_vault(sessions_dir, vault_path=vault_path)
+    secret_value = _prompt_secret(normalized_key)
+    try:
+        vault.set(normalized_key, secret_value)
+    except (ValueError, VaultError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Rotated {normalized_key} in {vault.vault_path} [{mask_secret(secret_value)}]"
+    )
+
+
+@auth_app.command("clear")
+def auth_clear_command(
+    key: Annotated[
+        str | None,
+        typer.Option("--key", help="Optional single credential key name to delete; omits to clear entire vault."),
+    ] = None,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for default encrypted credential vault."),
+    ] = Path(".reqhq_sessions"),
+    vault_path: Annotated[
+        Path | None,
+        typer.Option("--vault-path", help="Explicit encrypted credential vault file path."),
+    ] = None,
+) -> None:
+    """Remove a single credential or clear the encrypted local vault file."""
+    from reqhq.security import VaultDecryptionError
+
+    vault = _resolve_vault(sessions_dir, vault_path=vault_path)
+    if key is not None:
+        normalized_key = key.strip().upper()
+        try:
+            removed = vault.delete(normalized_key)
+        except VaultDecryptionError as exc:
+            typer.echo(f"Error: {exc}", err=True)
+            raise typer.Exit(code=1)
+        status_label = "Removed" if removed else "Not found"
+        typer.echo(f"{status_label}: {normalized_key} ({vault.vault_path})")
+        return
+
+    vault.clear()
+    typer.echo(f"Cleared credential vault: {vault.vault_path}")
 
 
 def main() -> None:

@@ -17,6 +17,8 @@ htmlcov/
 
 # Local runtime sessions & OAuth/connector credentials
 .reqhq_sessions/
+.reqhq/
+*.vault.enc
 credentials.json
 token.json
 
