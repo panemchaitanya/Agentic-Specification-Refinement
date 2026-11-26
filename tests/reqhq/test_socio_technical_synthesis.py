@@ -590,6 +590,18 @@ class TestSocioTechnicalTriager:
         assert len(hybrid.rejected_alternatives) == 2
         assert len(hybrid.prerequisites) == 2
 
+    def test_triage_falls_back_to_heuristic_on_provider_error(self) -> None:
+        from reqhq.llm import ProviderError
+
+        graph = _make_four_track_graph()
+        failing_mock = MockProvider(
+            responses=[ProviderError("transient 503", provider="ollama")] * 4
+        )
+        router = ProviderRouter(local_provider=failing_mock, strict_local=True, enable_cache=False)
+        plan = SocioTechnicalTriager(router, batch_size=2).triage(graph, session_id="sess-err")
+        assert len(plan.items) == 4
+        assert all(item.cloud_verified is False for item in plan.items)
+
     def test_triage_heuristic_fallback_when_mock_returns_generic_json(self) -> None:
         graph = _make_four_track_graph()
         # Add a pure Process + Training hybrid requirement to exercise that branch too
