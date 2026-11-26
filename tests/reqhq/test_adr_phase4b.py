@@ -194,6 +194,38 @@ class TestPhase4bNygardADRsReadOnly:
         assert (copied / "AUDIT_HISTORY.md").read_bytes() == before_history
         assert (copied / "audit_log.jsonl").read_bytes() == before_log
 
+    def test_adr_0020_documents_live_provider_short_circuit_and_probing_decisions(self) -> None:
+        mgr = ADRManager(REAL_ADR_DIR)
+        records = mgr.list_adrs(include_archived=False)
+        by_num = {rec.number: rec for rec in records}
+        assert len(records) >= 20
+        assert "0020" in by_num
+        rec20 = by_num["0020"]
+        assert rec20.status == "Accepted"
+        assert rec20.archived is False
+        content = rec20.path.read_text(encoding="utf-8")
+        for token in (
+            "DEF-P4B-003",
+            "DEF-P4B-004",
+            "DEF-P4B-005",
+            "DEF-P4B-006",
+            '"think": False',
+            "responseJsonSchema",
+            "gemini-3.1-flash-lite",
+            "REQHQ_GEMINI_MODEL",
+            "max_transient_retries=1",
+            "_build_router()",
+            "_escalate_to_cloud()",
+            "SocioTechnicalTriager.triage()",
+            "MAX_FALLBACK_NODES_TOTAL=24",
+            "verify_credential_live()",
+            "--verify-live",
+        ):
+            assert token in content, f"ADR-0020 missing required decision detail: {token}"
+        entries = mgr.audit.read_entries()
+        assert len(entries) >= 40
+        assert [e.action for e in entries if e.adr_number == "0020"] == ["created", "accepted"]
+
 
 class TestPhase4bADRManagerHypothesisPBT:
     """Deterministic Hypothesis PBT extending Phase 4b ADR lifecycle governance invariants."""
