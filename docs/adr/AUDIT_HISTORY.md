@@ -2,8 +2,8 @@
 
 > Auto-generated from the append-only [`audit_log.jsonl`](./audit_log.jsonl) ledger. Do not delete historical events; append new lifecycle transitions via `ADRManager` or `reqhq adr`.
 
-- **Total Audit Events:** 34
-- **Created:** 17 | **Accepted:** 17 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
+- **Total Audit Events:** 38
+- **Created:** 19 | **Accepted:** 19 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
 
 | Timestamp (UTC) | Action | ADR | Transition | Author | Related | Path | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -41,3 +41,7 @@
 | 2026-11-25T16:23:03Z | `accepted` | ADR-0016 | Proposed -> Accepted | adr-architect | — | `0016-pure-python-stats-pareto-and-error-taxonomy.md` | Accepted pure-Python paired bootstrap/McNemar/Wilcoxon stats, pure-SVG Pareto charts with mock watermarks, and 7-category error taxonomy ADR-0016 |
 | 2026-11-25T16:23:04Z | `created` | ADR-0017 | Proposed | adr-architect | — | `0017-reproducible-report-pipeline-and-release-manifest.md` | Drafted Phase 4 ADR-0017 on branch adr/0017-reproducible-report-pipeline-and-release-manifest |
 | 2026-11-25T16:23:05Z | `accepted` | ADR-0017 | Proposed -> Accepted | adr-architect | — | `0017-reproducible-report-pipeline-and-release-manifest.md` | Accepted manifest-driven FINAL_REPORT.md, escaped booktabs tables_latex.tex, REPRODUCIBILITY.md, and SHA-256 artifacts_manifest.json verifier ADR-0017 |
+| 2026-11-25T18:50:00Z | `created` | ADR-0018 | Proposed | adr-author | — | `0018-local-ollama-auto-bootstrap-and-readiness-gate.md` | Drafted Phase 4b ADR-0018 on branch adr/0018-local-ollama-auto-bootstrap-and-readiness-gate |
+| 2026-11-25T18:50:01Z | `accepted` | ADR-0018 | Proposed -> Accepted | adr-author | — | `0018-local-ollama-auto-bootstrap-and-readiness-gate.md` | Accepted local Ollama auto-bootstrap, detached Windows serve, tier model inventory, single-model warm-up, and reqhq doctor ADR-0018 |
+| 2026-11-25T18:50:02Z | `created` | ADR-0019 | Proposed | adr-author | — | `0019-encrypted-local-credential-vault-and-first-run-provisioning.md` | Drafted Phase 4b ADR-0019 on branch adr/0019-encrypted-local-credential-vault-and-first-run-provisioning |
+| 2026-11-25T18:50:03Z | `accepted` | ADR-0019 | Proposed -> Accepted | adr-author | — | `0019-encrypted-local-credential-vault-and-first-run-provisioning.md` | Accepted zero-plaintext Fernet+DPAPI/PBKDF2 credential vault, masking, placeholder rejection, reqhq auth, and live first-run provisioning ADR-0019 |
