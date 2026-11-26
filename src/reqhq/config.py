@@ -36,6 +36,9 @@ class ReqHQConfig(BaseModel):
     quota_ceiling_ratio: float = Field(default=0.90, gt=0.0, le=1.0, allow_inf_nan=False)
     quota_db_path: Path | None = None
     cache_db_path: Path | None = None
+    vault_path: Path | None = None
+    auto_start_ollama: bool = True
+    gemini_model: str = "gemini-3.1-flash-lite"
     alloy_jar_path: Path | None = None
     alloy_compat: Literal["alloy6", "legacy"] = "alloy6"
 
@@ -66,6 +69,12 @@ class ReqHQConfig(BaseModel):
         if self.cache_db_path is not None:
             return self.cache_db_path
         return self.sessions_dir / "prompt_cache.db"
+
+    def resolved_vault_path(self) -> Path:
+        """Return explicit encrypted credential vault path or default under sessions_dir."""
+        if self.vault_path is not None:
+            return self.vault_path
+        return self.sessions_dir / "credentials.vault.enc"
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> ReqHQConfig:
@@ -99,6 +108,12 @@ class ReqHQConfig(BaseModel):
             kwargs["quota_db_path"] = Path(raw_quota_db)
         if raw_cache_db := source.get("REQHQ_CACHE_DB_PATH", "").strip():
             kwargs["cache_db_path"] = Path(raw_cache_db)
+        if raw_vault_path := source.get("REQHQ_VAULT_PATH", "").strip():
+            kwargs["vault_path"] = Path(raw_vault_path)
+        if raw_auto_start := source.get("REQHQ_AUTO_START_OLLAMA", "").strip():
+            kwargs["auto_start_ollama"] = _parse_bool(raw_auto_start, "REQHQ_AUTO_START_OLLAMA")
+        if raw_gemini_model := source.get("REQHQ_GEMINI_MODEL", "").strip():
+            kwargs["gemini_model"] = raw_gemini_model
         if raw_alloy_jar := source.get("REQHQ_ALLOY_JAR_PATH", "").strip():
             kwargs["alloy_jar_path"] = Path(raw_alloy_jar)
         if raw_alloy_compat := source.get("REQHQ_ALLOY_COMPAT", "").strip():

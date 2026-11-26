@@ -2,6 +2,13 @@
 
 from __future__ import annotations
 
+from reqhq.llm.ollama_runtime import (
+    OllamaReadinessReport,
+    OllamaRuntimeError,
+    OllamaRuntimeManager,
+    ensure_ollama_ready,
+    normalize_model_tag,
+)
 from reqhq.llm.pii_scrubber import PIIScrubber
 from reqhq.llm.providers import (
     GeminiFreeProvider,
@@ -31,10 +38,15 @@ __all__ = [
     "LLMResponse",
     "MockProvider",
     "OllamaLocalProvider",
+    "OllamaReadinessReport",
+    "OllamaRuntimeError",
+    "OllamaRuntimeManager",
     "PIIScrubber",
     "ProviderError",
     "ProviderQuotaLimits",
     "ProviderRouter",
     "QuotaLedger",
     "RateLimitError",
+    "ensure_ollama_ready",
+    "normalize_model_tag",
 ]
