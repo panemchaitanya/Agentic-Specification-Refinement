@@ -248,7 +248,7 @@ def test_ollama_provider_json_schema_and_gbnf_grammar() -> None:
     assert isinstance(provider, LLMProvider)
     assert provider.is_local is True
 
-    # 1. JSON schema constrained decoding
+    # 1. JSON schema constrained decoding disables thinking by default (DEF-P4B-003)
     resp = provider.generate(
         LLMRequest(
             prompt="Generate spec",
@@ -260,14 +260,28 @@ def test_ollama_provider_json_schema_and_gbnf_grammar() -> None:
     assert resp.cloud_verified is False
     assert resp.total_tokens == 40
     assert "format" in captured[0]
+    assert captured[0]["think"] is False
     assert captured[0]["system"] == "Be concise"
 
-    # 2. GBNF grammar takes precedence over format
+    # 2. GBNF grammar takes precedence over format and disables thinking by default
     provider.generate(
         LLMRequest(prompt="Use grammar", gbnf_grammar='root ::= "ok"')
     )
     assert captured[1]["grammar"] == 'root ::= "ok"'
     assert "format" not in captured[1]
+    assert captured[1]["think"] is False
+
+    # 3. Unconstrained prompt omits `think`; explicit metadata bool overrides it
+    provider.generate(LLMRequest(prompt="Plain unconstrained prompt"))
+    assert "think" not in captured[2]
+    provider.generate(
+        LLMRequest(
+            prompt="Explicit think override",
+            response_schema=_SampleSpec,
+            metadata={"think": True},
+        )
+    )
+    assert captured[3]["think"] is True
 
     # Error handling
     with pytest.raises(ProviderError):
@@ -288,12 +302,33 @@ def test_gemini_and_groq_providers_offline_http_and_429(monkeypatch: pytest.Monk
     with pytest.raises(ProviderError, match="GROQ_API_KEY"):
         GroqFreeProvider().generate(LLMRequest(prompt="hello"))
 
+    gemini_captured: list[dict] = []
+    gemini_503_attempts = 0
+
     def gemini_handler(req: httpx.Request) -> httpx.Response:
+        nonlocal gemini_503_attempts
         assert req.headers["x-goog-api-key"] == "test-gemini-key"
         body = json.loads(req.content.decode("utf-8"))
+        gemini_captured.append(body)
         text_in = body["contents"][0]["parts"][0]["text"]
         if text_in == "429":
             return httpx.Response(429, headers={"Retry-After": "12"}, text="quota")
+        if text_in == "503-recover":
+            gemini_503_attempts += 1
+            if gemini_503_attempts == 1:
+                return httpx.Response(503, text="high demand")
+            return httpx.Response(
+                200,
+                json={
+                    "candidates": [
+                        {
+                            "content": {"parts": [{"text": '{"title": "Recovered", "owner": "u"}'}]},
+                            "finishReason": "STOP",
+                        }
+                    ],
+                    "usageMetadata": {"promptTokenCount": 5, "candidatesTokenCount": 5, "totalTokenCount": 10},
+                },
+            )
         if text_in == "500":
             return httpx.Response(500, text="server error")
         if text_in == "malformed":
@@ -303,7 +338,12 @@ def test_gemini_and_groq_providers_offline_http_and_429(monkeypatch: pytest.Monk
             json={
                 "candidates": [
                     {
-                        "content": {"parts": [{"text": '{"title": "G", "owner": "u"}'}]},
+                        "content": {
+                            "parts": [
+                                {"thought": True, "text": "internal chain of thought"},
+                                {"text": '{"title": "G", "owner": "u"}'},
+                            ]
+                        },
                         "finishReason": "STOP",
                     }
                 ],
@@ -316,12 +356,24 @@ def test_gemini_and_groq_providers_offline_http_and_429(monkeypatch: pytest.Monk
         )
 
     g_client = httpx.Client(transport=httpx.MockTransport(gemini_handler))
-    gemini = GeminiFreeProvider(api_key="test-gemini-key", client=g_client)
+    gemini = GeminiFreeProvider(
+        api_key="test-gemini-key",
+        client=g_client,
+        max_transient_retries=1,
+        transient_retry_delay_seconds=0.001,
+    )
+    assert gemini.default_model == "gemini-3.1-flash-lite"
     g_resp = gemini.generate(
         LLMRequest(prompt="ok", system_prompt="sys", response_schema=_SampleSpec)
     )
     assert g_resp.cloud_verified is True
     assert g_resp.total_tokens == 30
+    assert g_resp.text == '{"title": "G", "owner": "u"}'
+    assert "responseJsonSchema" in gemini_captured[0]["generationConfig"]
+    assert "responseSchema" not in gemini_captured[0]["generationConfig"]
+    rec_resp = gemini.generate(LLMRequest(prompt="503-recover"))
+    assert rec_resp.text == '{"title": "Recovered", "owner": "u"}'
+    assert gemini_503_attempts == 2
     with pytest.raises(RateLimitError) as rl_info:
         gemini.generate(LLMRequest(prompt="429"))
     assert rl_info.value.retry_after == 12.0
@@ -465,6 +517,27 @@ def test_router_strict_local_never_calls_cloud() -> None:
     assert resp.escalated is False
     assert resp.raw_metadata["strict_local"] is True
 
+    # Valid local response under strict_local + explicit escalation still stays local and caches
+    valid_local = MockProvider(
+        "ollama", is_local=True, default_response='{"title": "OK", "owner": "u"}'
+    )
+    valid_strict = ProviderRouter(valid_local, [cloud], strict_local=True)
+    ok_resp = valid_strict.route(
+        LLMRequest(prompt="Valid audit", response_schema=_SampleSpec),
+        escalation_reason=EscalationReason.FINAL_AUDIT,
+    )
+    assert ok_resp.provider == "ollama" and ok_resp.parsed == {"title": "OK", "owner": "u"}
+
+    # Implicit schema-retry exhaustion where cloud also fails degrades gracefully to local output
+    bad_local = MockProvider("ollama", is_local=True, responses=["bad-json"])
+    bad_cloud = MockProvider("gemini", is_local=False, responses=[ProviderError("503", provider="gemini")])
+    implicit_fallback = ProviderRouter(bad_local, [bad_cloud], max_local_retries=0)
+    deg = implicit_fallback.route(LLMRequest(prompt="Implicit retry", response_schema=_SampleSpec))
+    assert deg.provider == "ollama"
+    assert deg.cloud_verified is False
+    assert deg.raw_metadata["cloud_fallback"] is True
+    assert deg.escalation_reason == EscalationReason.SCHEMA_RETRY_EXHAUSTED.value
+
 
 def test_router_429_failover_gemini_to_groq_and_graceful_degradation(tmp_path: Path) -> None:
     clock = _MutableClock()
@@ -482,7 +555,7 @@ def test_router_429_failover_gemini_to_groq_and_graceful_degradation(tmp_path: P
     )
     router = ProviderRouter(local, [gemini, groq], quota_ledger=ledger)
 
-    # 1. Explicit escalation: Gemini 429s -> failover to Groq
+    # 1. Explicit escalation: Gemini 429s -> failover to Groq (short-circuits past local: 0 local calls!)
     resp = router.route(
         LLMRequest(prompt="Final audit", response_schema=_SampleSpec),
         escalation_reason=EscalationReason.FINAL_AUDIT,
@@ -491,6 +564,7 @@ def test_router_429_failover_gemini_to_groq_and_graceful_degradation(tmp_path: P
     assert resp.cloud_verified is True
     assert resp.escalated is True
     assert resp.escalation_reason == EscalationReason.FINAL_AUDIT.value
+    assert len(local.calls) == 0
     assert ledger.get_status("gemini")["gemini"]["cooldown_active"] is True
 
     # 2. Both cloud providers unavailable -> degrades gracefully to local with cloud_verified=False
@@ -503,9 +577,21 @@ def test_router_429_failover_gemini_to_groq_and_graceful_degradation(tmp_path: P
     assert degraded.cloud_verified is False
     assert degraded.escalated is False
     assert degraded.parsed == {"title": "LocalDraft", "owner": "local"}
+    assert len(local.calls) == 1
     assert degraded.raw_metadata["cloud_fallback"] is True
     assert "gemini" in degraded.raw_metadata["cloud_failures"]
     assert "groq" in degraded.raw_metadata["cloud_failures"]
+
+    # 3. Explicit escalation where both cloud AND local fallback fail -> raises ProviderError
+    both_fail_router = ProviderRouter(
+        MockProvider("ollama", is_local=True, responses=[ProviderError("local down", provider="ollama")]),
+        [MockProvider("gemini", is_local=False, responses=[ProviderError("gemini 503", provider="gemini")])],
+    )
+    with pytest.raises(ProviderError, match="Cloud escalation failed"):
+        both_fail_router.route(
+            LLMRequest(prompt="Must audit"),
+            escalation_reason=EscalationReason.FINAL_AUDIT,
+        )
 
 
 def test_router_provider_error_paths() -> None:

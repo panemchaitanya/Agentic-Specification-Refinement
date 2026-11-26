@@ -307,6 +307,33 @@ class ProviderRouter:
             if cached_payload is not None:
                 return LLMResponse.model_validate({**cached_payload, "cached": True})
 
+        # Explicit audited escalations short-circuit directly to cloud when permitted,
+        # falling back to local only if all cloud free-tier providers fail/rate-limit.
+        if escalation_reason is not None and not self.strict_local and self.cloud_providers:
+            cloud_resp, cloud_failures = self._escalate_to_cloud(request, escalation_reason)
+            if cloud_resp is not None:
+                self._store_cache(cache_key, cloud_resp)
+                return cloud_resp
+            local_resp, _local_valid, local_err = self._run_local_with_retries(request)
+            if local_resp is not None:
+                return local_resp.model_copy(
+                    update={
+                        "cloud_verified": False,
+                        "escalated": False,
+                        "escalation_reason": escalation_reason.value,
+                        "raw_metadata": {
+                            **local_resp.raw_metadata,
+                            "cloud_fallback": True,
+                            "cloud_failures": cloud_failures,
+                            "local_error": local_err,
+                        },
+                    }
+                )
+            raise ProviderError(
+                f"Cloud escalation failed ({cloud_failures}) and local fallback failed: {local_err}",
+                provider="router",
+            )
+
         local_resp, local_valid, local_err = self._run_local_with_retries(request)
 
         effective_reason: EscalationReason | None = escalation_reason

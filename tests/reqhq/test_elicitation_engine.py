@@ -1599,4 +1599,107 @@ def test_engine_direct_req_answers_missing_node_guard_and_assumption_sha_fallbac
     assert "Assume default resolution for REQ-002" in by_req["REQ-002"].statement
 
 
+def test_chunk_fallback_filters_pdf_frontmatter_noise_and_bounds_extraction() -> None:
+    """Verify DEF-P4B-002: offline chunk fallback filters cover/TOC/code noise and bounds output."""
+    from reqhq.elicitation.decomposer import (
+        MAX_FALLBACK_NODES_TOTAL,
+        _extract_chunk_fallback_clauses,
+        _split_clauses_deterministic,
+    )
+
+    # Zero-budget call returns empty immediately; tiny non-empty text triggers _split_clauses fallback.
+    assert _extract_chunk_fallback_clauses("The system shall log events.", max_clauses=0) == []
+    assert _split_clauses_deterministic("OK") == [("OK", 0, 2)]
+
+    noisy_srs = (
+        "E-GOVERNANCE\n"
+        "FUNCTIONAL REQUIREMENTS SPECIFICATION\n"
+        "Team Members:\n"
+        "Table of Contents\n"
+        "1. Introduction .................................................... 4\n"
+        "Ministry of Home Affairs          Draft Core Scope          Page 2 of 19\n"
+        "\x0cE-Governance Project Running Header\n"
+        "| Col A | Col B |\n"
+        "| --- | --- |\n"
+        "```python\n"
+        "def should_be_ignored():\n"
+        "    return True\n"
+        "```\n"
+        "= * Non-alphanumeric grammar entry that must be ignored.\n"
+        "Plain descriptive remark about weather in summer afternoons.\n\n"
+        "               Once the audit trail functionality has been activated, the System must track\n"
+        "     2.        events without manual intervention and store audit metadata.\n\n"
+        "               The System must maintain the audit trail for as long as required, which will be at\n"
+        "     3.\n"
+        "               least for the life of the case to which it refers.\n\n"
+        "The portal enables authorized operators to inspect case history securely.\n\n"
+        "The system must\n"
+        "verify cryptographic signatures on all exported bundles.\n"
+    )
+    clauses = _extract_chunk_fallback_clauses(noisy_srs, max_clauses=5)
+    assert len(clauses) == 4
+    joined_stmts = "\n".join(c[0] for c in clauses)
+    assert "E-GOVERNANCE" not in joined_stmts
+    assert "Table of Contents" not in joined_stmts
+    assert "should_be_ignored" not in joined_stmts
+    assert "Running Header" not in joined_stmts
+    assert "weather in summer" not in joined_stmts
+    assert "events without manual intervention" in joined_stmts
+    assert "least for the life of the case" in joined_stmts
+    assert "enables authorized operators" in joined_stmts
+    assert "verify cryptographic signatures" in joined_stmts
+
+    # Verify multi-chunk document fallback is bounded cleanly to <= MAX_FALLBACK_NODES_TOTAL.
+    many_reqs = "\n\n".join(
+        f"## Section {i}\n"
+        + "\n".join(
+            f"The subsystem S{i:02d} shall enforce rule R{i:02d}-{j:02d} with deterministic auditability."
+            for j in range(1, 15)
+        )
+        for i in range(1, 7)
+    )
+    doc_many = NormalizedDocument(
+        source_path=Path("many.md"),
+        source_sha256=hashlib.sha256(many_reqs.encode("utf-8")).hexdigest(),
+        media_type="text/markdown",
+        parser_name="markdown-passthrough",
+        markdown=many_reqs,
+        char_count=len(many_reqs),
+        anchors=[],
+    )
+    chunks_many = HierarchicalChunker(max_chunk_chars=1200, overlap_chars=0).chunk(doc_many)
+    plain_router = ProviderRouter(
+        MockProvider("m-plain-many", default_response="plain"),
+        strict_local=True,
+        max_local_retries=0,
+        enable_cache=False,
+    )
+    bounded_graph = RequirementDecomposer(plain_router).decompose_chunks(
+        chunks_many,
+        session_id="sess-bounded",
+    )
+    assert 1 <= len(bounded_graph.nodes) <= MAX_FALLBACK_NODES_TOTAL
+    assert bounded_graph.validate_traceability(require_all=True) == []
+
+    # Safety net: a non-empty document with zero modal/action cues still emits 1 traceable node.
+    plain_only = "Alpha beta gamma delta epsilon zeta eta theta iota kappa."
+    doc_plain = NormalizedDocument(
+        source_path=Path("plain.md"),
+        source_sha256=hashlib.sha256(plain_only.encode("utf-8")).hexdigest(),
+        media_type="text/markdown",
+        parser_name="markdown-passthrough",
+        markdown=plain_only,
+        char_count=len(plain_only),
+        anchors=[],
+    )
+    chunks_plain = HierarchicalChunker(max_chunk_chars=500, overlap_chars=0).chunk(doc_plain)
+    safety_graph = RequirementDecomposer(plain_router).decompose_chunks(
+        chunks_plain,
+        session_id="sess-safety",
+    )
+    assert len(safety_graph.nodes) == 1
+    assert safety_graph.validate_traceability(require_all=True) == []
+
+
+
 

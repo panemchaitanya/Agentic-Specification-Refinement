@@ -22,13 +22,44 @@ from reqhq.schemas.requirements import (
 )
 
 MAX_DECOMPOSE_PROMPT_CHARS = 5500
+MAX_FALLBACK_NODES_PER_CHUNK = 6
+MAX_FALLBACK_NODES_TOTAL = 24
 _MAX_GLOSSARY_HEADER_CHARS = 1400
 _MAX_CHUNK_EXCERPT_CHARS = 3600
 
 _SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?;])\s+|\n+")
-_BULLET_PREFIX_RE = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s+")
+_PARA_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?;])\s+")
+_BULLET_PREFIX_RE = re.compile(r"^\s*(?:[-*+•▪◦]|\d+[.)])\s+")
+_LIST_START_RE = re.compile(
+    r"^\s*(?:[-*+•▪◦]\s+|(?:\d+(?:\.\d+)*[.)]|[A-Z]{1,4}-\d+(?:\.\d+)?[:.]|R\d+[:.])\s+)"
+)
+_INLINE_ROW_NUM_CONT_RE = re.compile(r"^\d+[.)]\s{2,}([a-z].*)$")
+_PURE_NUMBER_LINE_RE = re.compile(r"^\d+[.)]?$")
 _HEADING_RE = re.compile(r"^#{1,6}\s+")
 _ANCHOR_ONLY_RE = re.compile(r"^\[(?:page|section):[^\]]+\]$")
+_MD_TABLE_ROW_RE = re.compile(r"^\|.*\|$")
+_TOC_LEADER_RE = re.compile(r"\.{4,}|(?:\.\s){4,}")
+_PAGE_NUMBER_FOOTER_RE = re.compile(r"\bpage\s+\d+(?:\s+of\s+\d+)?\b", re.IGNORECASE)
+_WIDE_TRAILING_PAGE_RE = re.compile(r"\s{3,}\d+\s*$")
+_FRONTMATTER_LABEL_RE = re.compile(
+    r"^(?:table\s+of\s+contents|s\.?\s*no\.?\s+contents|appendix\s+[a-z]\b|team\s+members\b)",
+    re.IGNORECASE,
+)
+_REQ_MODAL_RE = re.compile(
+    r"\b(?:shall|must|should|cannot|will\s+(?:not\s+)?(?:be|have|provide|support|allow|enable|"
+    r"enforce|require|store|maintain|validate|verify|send|display|log|handle|process|generate|"
+    r"restrict|ensure|operate|use|contain|confirm|manage|track|record|capture|protect|prevent|"
+    r"guarantee))\b",
+    re.IGNORECASE,
+)
+_REQ_ACTION_RE = re.compile(
+    r"\b(?:requires?|enforces?|supports?|allows?|enables?|provides?|ensures?|validates?|verifies?|"
+    r"maintains?|guarantees?|prevents?|restricts?|persists?|logs?|tracks?|records?|monitors?|"
+    r"authenticates?|authorizes?|encrypts?|exports?|imports?|notifies?|approves?|assigns?|"
+    r"manages?|configures?|audits?|handles?|processes?|publishes?|applies?|apply|"
+    r"controls?|facilitates?|automates?)\b",
+    re.IGNORECASE,
+)
 
 _SECURITY_KW = ("auth", "audit", "encrypt", "rbac", "permission", "approval", "security", "pii", "token")
 _NFR_KW = ("latency", "uptime", "sla", "throughput", "p95", "p99", "availability", "performance", "scalab", "ms", "rps")
@@ -158,6 +189,137 @@ def _split_clauses_deterministic(text: str) -> list[tuple[str, int, int]]:
         stripped = text.strip()
         return [(stripped, 0, len(stripped))]
     return results
+
+
+def _is_noise_line(line: str, *, after_page_break: bool = False) -> bool:
+    """Return True for structural/front-matter lines that are not requirements."""
+    if _HEADING_RE.match(line) or _ANCHOR_ONLY_RE.match(line) or _MD_TABLE_ROW_RE.match(line):
+        return True
+    if (
+        _TOC_LEADER_RE.search(line)
+        or _PAGE_NUMBER_FOOTER_RE.search(line)
+        or _WIDE_TRAILING_PAGE_RE.search(line)
+    ):
+        return True
+    has_upper = any(ch.isupper() for ch in line)
+    has_lower = any(ch.islower() for ch in line)
+    if has_upper and not has_lower:
+        return True
+    if _FRONTMATTER_LABEL_RE.match(line) and not _REQ_MODAL_RE.search(line):
+        return True
+    if (
+        after_page_break
+        and not line.endswith((".", "!", "?", ";"))
+        and not _REQ_MODAL_RE.search(line)
+    ):
+        return True
+    return False
+
+
+def _score_requirement_clause(clause: str) -> int:
+    """Score requirement likelihood: 2=normative modal, 1=action/capability, 0=non-requirement."""
+    if _REQ_MODAL_RE.search(clause):
+        return 2
+    if _REQ_ACTION_RE.search(clause):
+        return 1
+    return 0
+
+
+def _extract_chunk_fallback_clauses(
+    text: str,
+    *,
+    max_clauses: int = MAX_FALLBACK_NODES_PER_CHUNK,
+) -> list[tuple[str, int, int]]:
+    """Extract compact, noise-filtered requirement clauses and verbatim spans from a chunk."""
+    if max_clauses <= 0:
+        return []
+
+    paragraphs: list[tuple[str, int, int]] = []
+    para_parts: list[str] = []
+    para_start: int | None = None
+    para_end = 0
+    in_code_fence = False
+    after_page_break = False
+    offset = 0
+
+    def _flush() -> None:
+        nonlocal para_parts, para_start, para_end
+        if para_parts and para_start is not None:
+            joined = re.sub(r"\s+", " ", " ".join(para_parts)).strip()
+            if joined:
+                paragraphs.append((joined, para_start, para_end))
+        para_parts = []
+        para_start = None
+
+    for raw_line in text.splitlines(keepends=True):
+        line_start = offset
+        offset += len(raw_line)
+        if "\x0c" in raw_line:
+            _flush()
+            after_page_break = True
+        body = raw_line.replace("\x0c", "")
+        stripped = body.strip()
+
+        if stripped.startswith("```"):
+            _flush()
+            in_code_fence = not in_code_fence
+            after_page_break = False
+            continue
+        if in_code_fence or not stripped:
+            if not in_code_fence:
+                _flush()
+            continue
+        if _PURE_NUMBER_LINE_RE.match(stripped):
+            continue
+        is_page_header = after_page_break
+        after_page_break = False
+        if _is_noise_line(stripped, after_page_break=is_page_header):
+            _flush()
+            continue
+
+        cont_match = (
+            _INLINE_ROW_NUM_CONT_RE.match(stripped)
+            if para_parts and not para_parts[-1].endswith((".", "!", "?", ";", ":"))
+            else None
+        )
+        if cont_match is not None:
+            stripped = cont_match.group(1).strip()
+        elif _LIST_START_RE.match(stripped):
+            _flush()
+
+        if para_start is None:
+            para_start = line_start + (len(body) - len(body.lstrip()))
+        para_parts.append(stripped)
+        para_end = line_start + len(body.rstrip())
+    _flush()
+
+    scored: list[tuple[int, int, str, int, int]] = []
+    for para_text, p_start, p_end in paragraphs:
+        for sent in _PARA_SENTENCE_SPLIT_RE.split(para_text):
+            cleaned = _BULLET_PREFIX_RE.sub("", sent.strip()).strip()
+            if not cleaned or not cleaned[0].isalnum():
+                continue
+            alpha_words = re.findall(r"[A-Za-z]{2,}", cleaned)
+            if len(cleaned) < 20 or len(alpha_words) < 4:
+                continue
+            score = _score_requirement_clause(cleaned)
+            if score <= 0:
+                continue
+            probe = cleaned[: min(len(cleaned), 40)]
+            rel = text.find(probe, p_start, p_end)
+            if rel >= 0:
+                s_start = rel
+                s_end = min(p_end, rel + min(len(cleaned), 240))
+            else:
+                s_start = p_start
+                s_end = min(p_end, p_start + 240)
+            scored.append((score, len(scored), cleaned, s_start, s_end))
+
+    chosen = [item for item in scored if item[0] == 2][:max_clauses]
+    if len(chosen) < max_clauses:
+        chosen.extend([item for item in scored if item[0] == 1][: max_clauses - len(chosen)])
+    chosen.sort(key=lambda item: item[1])
+    return [(stmt, start, end) for _, _, stmt, start, end in chosen]
 
 
 def _try_parse_payload(raw_text: str, parsed: dict | None) -> _DecompositionPayload | None:
@@ -335,18 +497,70 @@ class RequirementDecomposer:
         next_index = 1
 
         ordered_chunks = sorted(chunking_result.chunks, key=lambda c: c.chunk_index)
+        per_chunk_fallback_limit = max(
+            1,
+            min(
+                MAX_FALLBACK_NODES_PER_CHUNK,
+                MAX_FALLBACK_NODES_TOTAL // len(ordered_chunks),
+            ),
+        )
+        fallback_nodes_emitted = 0
+
         for chunk in ordered_chunks:
-            chunk_nodes, chunk_edges, chunk_id_map, next_index = self._decompose_single_chunk(
-                chunk=chunk,
-                glossary_header=glossary_header,
-                session_id=session_id,
-                source_uri=source_uri,
-                start_index=next_index,
-                seen_statements=seen_statements,
+            chunk_fallback_budget = min(
+                per_chunk_fallback_limit,
+                max(0, MAX_FALLBACK_NODES_TOTAL - fallback_nodes_emitted),
             )
+            chunk_nodes, chunk_edges, chunk_id_map, next_index, used_fallback = (
+                self._decompose_single_chunk(
+                    chunk=chunk,
+                    glossary_header=glossary_header,
+                    session_id=session_id,
+                    source_uri=source_uri,
+                    start_index=next_index,
+                    seen_statements=seen_statements,
+                    max_fallback_nodes=chunk_fallback_budget,
+                )
+            )
+            if used_fallback:
+                fallback_nodes_emitted += len(chunk_nodes)
             nodes.extend(chunk_nodes)
             for edge_item in chunk_edges:
                 raw_edges.append((edge_item, chunk_id_map))
+
+        # Safety net: if every chunk fell back and noise filtering left zero nodes for a
+        # non-empty document, extract one verbatim fallback clause from the first chunk.
+        if not nodes:
+            for chunk in ordered_chunks:
+                raw_clauses = _split_clauses_deterministic(chunk.text)
+                if raw_clauses:
+                    clause, start, end = raw_clauses[0]
+                    heading_label = " > ".join(chunk.heading_path) if chunk.heading_path else chunk.chunk_id
+                    anchor = chunk.anchors[0] if chunk.anchors else heading_label
+                    excerpt = chunk.text[start:end].strip() or chunk.text[:240]
+                    nodes.append(
+                        RequirementNode(
+                            req_id=f"REQ-{next_index:03d}",
+                            title=_make_title(clause, next_index),
+                            statement=clause,
+                            kind=_infer_kind(clause),
+                            status=RequirementStatus.DRAFT,
+                            priority="P1",
+                            acceptance_criteria=[],
+                            trace_links=[
+                                TraceLink(
+                                    source_sha256=chunk.source_sha256,
+                                    source_uri=source_uri,
+                                    anchor=anchor,
+                                    excerpt=excerpt[:240],
+                                    chunk_id=chunk.chunk_id,
+                                )
+                            ],
+                            tags=[chunk.chunk_id],
+                            rationale=f"Deterministic extraction from {heading_label}.",
+                        )
+                    )
+                    break
 
         global_id_map: dict[str, str] = {n.req_id: n.req_id for n in nodes}
         collected_edges: list[RequirementEdge] = []
@@ -390,7 +604,8 @@ class RequirementDecomposer:
         source_uri: str,
         start_index: int,
         seen_statements: set[str],
-    ) -> tuple[list[RequirementNode], list[_RawEdgeItem], dict[str, str], int]:
+        max_fallback_nodes: int = MAX_FALLBACK_NODES_PER_CHUNK,
+    ) -> tuple[list[RequirementNode], list[_RawEdgeItem], dict[str, str], int, bool]:
         heading_label = " > ".join(chunk.heading_path) if chunk.heading_path else chunk.chunk_id
         anchor = chunk.anchors[0] if chunk.anchors else heading_label
         llm_prompt = (
@@ -449,39 +664,43 @@ class RequirementDecomposer:
                     )
                 )
             edges.extend(payload.edges)
-        else:
-            for clause, start, end in _split_clauses_deterministic(chunk.text):
-                norm_stmt = re.sub(r"\s+", " ", clause.strip().lower())
-                if norm_stmt in seen_statements:
-                    continue
-                seen_statements.add(norm_stmt)
-                req_id = f"REQ-{idx:03d}"
-                idx += 1
-                excerpt = chunk.text[start:end].strip() or chunk.text[:240]
-                nodes.append(
-                    RequirementNode(
-                        req_id=req_id,
-                        title=_make_title(clause, idx - 1),
-                        statement=clause,
-                        kind=_infer_kind(clause),
-                        status=RequirementStatus.DRAFT,
-                        priority="P1",
-                        acceptance_criteria=[],
-                        trace_links=[
-                            TraceLink(
-                                source_sha256=chunk.source_sha256,
-                                source_uri=source_uri,
-                                anchor=anchor,
-                                excerpt=excerpt[:240],
-                                chunk_id=chunk.chunk_id,
-                            )
-                        ],
-                        tags=[chunk.chunk_id],
-                        rationale=f"Deterministic extraction from {heading_label}.",
-                    )
-                )
+            return nodes, edges, id_map, idx, False
 
-        return nodes, edges, id_map, idx
+        for clause, start, end in _extract_chunk_fallback_clauses(
+            chunk.text,
+            max_clauses=max_fallback_nodes,
+        ):
+            norm_stmt = re.sub(r"\s+", " ", clause.strip().lower())
+            if norm_stmt in seen_statements:
+                continue
+            seen_statements.add(norm_stmt)
+            req_id = f"REQ-{idx:03d}"
+            idx += 1
+            excerpt = chunk.text[start:end].strip() or chunk.text[:240]
+            nodes.append(
+                RequirementNode(
+                    req_id=req_id,
+                    title=_make_title(clause, idx - 1),
+                    statement=clause,
+                    kind=_infer_kind(clause),
+                    status=RequirementStatus.DRAFT,
+                    priority="P1",
+                    acceptance_criteria=[],
+                    trace_links=[
+                        TraceLink(
+                            source_sha256=chunk.source_sha256,
+                            source_uri=source_uri,
+                            anchor=anchor,
+                            excerpt=excerpt[:240],
+                            chunk_id=chunk.chunk_id,
+                        )
+                    ],
+                    tags=[chunk.chunk_id],
+                    rationale=f"Deterministic extraction from {heading_label}.",
+                )
+            )
+
+        return nodes, edges, id_map, idx, True
 
     @staticmethod
     def _safe_edges(
@@ -519,5 +738,7 @@ class RequirementDecomposer:
 
 __all__ = [
     "MAX_DECOMPOSE_PROMPT_CHARS",
+    "MAX_FALLBACK_NODES_PER_CHUNK",
+    "MAX_FALLBACK_NODES_TOTAL",
     "RequirementDecomposer",
 ]

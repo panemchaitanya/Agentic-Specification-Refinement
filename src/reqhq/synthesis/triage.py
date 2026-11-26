@@ -7,7 +7,7 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from reqhq.llm.providers.base import LLMRequest
+from reqhq.llm.providers.base import LLMRequest, ProviderError
 from reqhq.llm.router import ProviderRouter
 from reqhq.schemas.requirements import (
     RequirementGraph,
@@ -437,9 +437,15 @@ class SocioTechnicalTriager:
                     "req_ids": [n.req_id for n in batch],
                 },
             )
-            response = self.router.route(request)
+            try:
+                response = self.router.route(request)
+                cloud_verified = response.cloud_verified
+            except ProviderError:
+                response = None
+                cloud_verified = False
+
             parsed_by_id: dict[str, _LLMTriageEntry] = {}
-            if response.parsed is not None:
+            if response is not None and response.parsed is not None:
                 parsed_model = _BatchTriageResponse.model_validate(response.parsed)
                 for entry in parsed_model.items:
                     parsed_by_id[entry.req_id.strip()] = entry
@@ -450,12 +456,12 @@ class SocioTechnicalTriager:
                     item = _normalize_llm_entry(
                         entry,
                         node,
-                        cloud_verified=response.cloud_verified,
+                        cloud_verified=cloud_verified,
                     )
                 else:
                     item = _heuristic_triage_item(
                         node,
-                        cloud_verified=response.cloud_verified,
+                        cloud_verified=cloud_verified,
                     )
                 triaged_items.append(item)
 

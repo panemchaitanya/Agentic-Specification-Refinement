@@ -55,4 +55,5 @@ pythonpath = ["src"]
 testpaths = ["tests"]
 markers = [
     "alloy_live: opt-in test requiring Java and REQHQ_ALLOY_JAR_PATH",
+    "live_system: opt-in live system test requiring local Ollama server",
 ]

@@ -53,6 +53,14 @@ class OllamaLocalProvider:
             schema = request.resolved_json_schema()
             if schema is not None:
                 payload["format"] = schema
+        think_override = request.metadata.get("think")
+        if isinstance(think_override, bool):
+            payload["think"] = think_override
+        elif "grammar" in payload or "format" in payload:
+            # Reasoning models (e.g., qwen3:4b/8b/14b/32b) otherwise exhaust
+            # num_predict on internal thinking tokens and return empty `response`
+            # under constrained JSON/GBNF decoding (DEF-P4B-003).
+            payload["think"] = False
         return payload
 
     def generate(self, request: LLMRequest) -> LLMResponse:
