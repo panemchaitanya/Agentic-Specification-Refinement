@@ -1427,3 +1427,19 @@ def test_edge_cases_across_pbt_modules(tmp_path: Path, monkeypatch: pytest.Monke
     assert fallback_err_reports[0].property_id == "PBT-004-STATEFUL"
     assert "Hypothesis falsified" in fallback_err_reports[0].assertion_error
 
+
+def test_export_pbt_bundle_and_write_contract_lock_with_relative_out_dir(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Regression for DEF-P5-002: relative out_dir must not double-prefix paths in write_contract_lock."""
+    monkeypatch.chdir(tmp_path)
+    rel_out = Path("eval_live_full") / "bundles" / "refund_sla_engine"
+    doc = _build_executable_contract()
+    bundle = export_pbt_bundle(doc, rel_out)
+    assert bundle.lock_file.is_file()
+    verified = verify_contract_lock(rel_out)
+    assert "PBT_Spec.yaml" in verified
+    assert len(verified) >= 3
+
+
