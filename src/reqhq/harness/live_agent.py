@@ -188,8 +188,12 @@ class LiveLLMCodingAgent:
         pythonpath_entries: list[Path],
         timeout_seconds: float,
     ) -> tuple[int, str]:
+        resolved_cwd = Path(cwd).resolve()
+        resolved_targets = [Path(t).resolve() for t in test_targets]
+        resolved_pythonpath = [Path(p).resolve() for p in pythonpath_entries]
+
         env = os.environ.copy()
-        extra_pp = os.pathsep.join(str(p) for p in pythonpath_entries)
+        extra_pp = os.pathsep.join(str(p) for p in resolved_pythonpath)
         existing_pp = env.get("PYTHONPATH", "")
         env["PYTHONPATH"] = f"{extra_pp}{os.pathsep}{existing_pp}" if existing_pp else extra_pp
 
@@ -199,12 +203,12 @@ class LiveLLMCodingAgent:
             "pytest",
             "-q",
             "--tb=short",
-            *(str(t) for t in test_targets),
+            *(str(t) for t in resolved_targets),
         ]
         try:
             proc = subprocess.run(
                 cmd,
-                cwd=str(cwd),
+                cwd=str(resolved_cwd),
                 env=env,
                 capture_output=True,
                 text=True,
@@ -240,16 +244,18 @@ class LiveLLMCodingAgent:
         if task is None or task.task_dir is None:
             raise KeyError(f"Unknown coding task_id for LiveLLMCodingAgent: {case_id!r}")
 
-        workspace_dir.mkdir(parents=True, exist_ok=True)
+        resolved_workspace = Path(workspace_dir).resolve()
+        resolved_bundle = Path(bundle_dir).resolve() if bundle_dir is not None else None
+        resolved_workspace.mkdir(parents=True, exist_ok=True)
         module_rel = f"{task.target_module}.py"
         test_rel = f"test_{task.target_module}.py"
-        module_path = workspace_dir / module_rel
-        test_path = workspace_dir / test_rel
+        module_path = resolved_workspace / module_rel
+        test_path = resolved_workspace / test_rel
 
         system_prompt, base_prompt = self.build_condition_prompt(
             case_id=case_id,
             condition=condition,
-            bundle_dir=bundle_dir,
+            bundle_dir=resolved_bundle,
         )
 
         logs: list[str] = [
@@ -298,11 +304,13 @@ class LiveLLMCodingAgent:
                 logs.append(f"[round {round_idx}] ProviderError: {exc}\n")
                 break
 
-            total_requests += 1
-            total_tokens += resp.total_tokens
+            if resp.cloud_verified:
+                total_requests += 1
+                total_tokens += resp.total_tokens
             logs.append(
                 f"[round {round_idx}] provider={resp.provider}({resp.model}) "
-                f"tokens={resp.total_tokens} escalated={resp.escalated}\n"
+                f"tokens={resp.total_tokens} escalated={resp.escalated} "
+                f"cloud_verified={resp.cloud_verified}\n"
             )
 
             cand_mod, cand_test = extract_code_payload(resp.text, resp.parsed)
@@ -342,8 +350,8 @@ class LiveLLMCodingAgent:
             # Execute agent's own unit tests
             unit_rc, unit_out = self._run_pytest(
                 [test_path],
-                cwd=workspace_dir,
-                pythonpath_entries=[workspace_dir],
+                cwd=resolved_workspace,
+                pythonpath_entries=[resolved_workspace],
                 timeout_seconds=timeout_seconds,
             )
             test_output = unit_out
@@ -351,13 +359,13 @@ class LiveLLMCodingAgent:
             # For Condition C, also execute the read-only locked PBT suite in bundle_dir!
             pbt_rc = unit_rc
             pbt_out = unit_out
-            if condition == ExperimentCondition.COND_C and bundle_dir is not None:
-                pbt_props_dir = Path(bundle_dir) / "tests" / "properties"
+            if condition == ExperimentCondition.COND_C and resolved_bundle is not None:
+                pbt_props_dir = resolved_bundle / "tests" / "properties"
                 if pbt_props_dir.is_dir():
                     pbt_rc, pbt_out = self._run_pytest(
                         [pbt_props_dir],
-                        cwd=workspace_dir,
-                        pythonpath_entries=[workspace_dir, Path(bundle_dir)],
+                        cwd=resolved_workspace,
+                        pythonpath_entries=[resolved_workspace, resolved_bundle],
                         timeout_seconds=timeout_seconds,
                     )
             pbt_output = pbt_out
@@ -381,12 +389,12 @@ class LiveLLMCodingAgent:
 
         # Post-generation ONLY: run unseen hidden acceptance suite (zero leakage to prompts!)
         hidden_pass = False
-        hidden_test_path = task.task_dir / "hidden_tests" / "test_acceptance.py"
+        hidden_test_path = (task.task_dir / "hidden_tests" / "test_acceptance.py").resolve()
         if module_path.is_file():
             hidden_rc, hidden_out = self._run_pytest(
                 [hidden_test_path],
-                cwd=workspace_dir,
-                pythonpath_entries=[workspace_dir],
+                cwd=resolved_workspace,
+                pythonpath_entries=[resolved_workspace],
                 timeout_seconds=timeout_seconds,
             )
             hidden_pass = hidden_rc == 0

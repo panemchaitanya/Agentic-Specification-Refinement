@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -344,9 +344,10 @@ class EvalOrchestrator:
         live_alloy_analyzer: AlloyAnalyzer | None = None,
         use_real_mutator: bool = False,
         run_id: str | None = None,
+        progress_callback: Callable[[str], None] | None = None,
     ) -> None:
         self.config = config
-        self.out_dir = Path(config.out_dir)
+        self.out_dir = Path(config.out_dir).resolve()
         self.out_dir.mkdir(parents=True, exist_ok=True)
         self.frozen_root = Path(frozen_root)
         self.cross_domain_path = cross_domain_path
@@ -355,6 +356,7 @@ class EvalOrchestrator:
         self.live_coding_agent = live_coding_agent
         self.live_alloy_analyzer = live_alloy_analyzer
         self.use_real_mutator = bool(use_real_mutator)
+        self.progress_callback = progress_callback
 
         self.quota_ledger: QuotaLedger | None = (
             QuotaLedger(quota_db_path) if quota_db_path is not None else None
@@ -373,6 +375,11 @@ class EvalOrchestrator:
         self._gold_verified: bool = False
 
         self._hydrate_existing_state()
+
+    def _emit_progress(self, message: str) -> None:
+        """Emit an optional single-line live progress update to caller-provided sink."""
+        if self.progress_callback is not None:
+            self.progress_callback(message)
 
     def _derive_run_id(self) -> str:
         fingerprint = (
@@ -564,6 +571,11 @@ class EvalOrchestrator:
             _append_jsonl(log_path, record)
             self._completed_units.add(unit_key)
             self._save_checkpoint()
+            self._emit_progress(
+                f"[L1 {idx + 1}/{len(docs)}] {doc.item_id} | "
+                f"recall={record.iterative_recall:.3f} q={record.questions_asked} "
+                f"cloud_reqs={record.cloud_requests} ({record.wall_clock_sec:.2f}s)"
+            )
 
         return _read_jsonl(log_path, Layer1Record)
 
@@ -595,7 +607,7 @@ class EvalOrchestrator:
         )
         compat = AlloyCompatMode(self.config.alloy_compat)
 
-        for case in suite.cases:
+        for idx, case in enumerate(suite.cases, start=1):
             unit_key = make_unit_key(2, case.case_id)
             if unit_key in self._completed_units:
                 continue
@@ -664,6 +676,11 @@ class EvalOrchestrator:
             _append_jsonl(log_path, record)
             self._completed_units.add(unit_key)
             self._save_checkpoint()
+            self._emit_progress(
+                f"[L2 {idx}/{len(suite.cases)}] {case.case_id} | "
+                f"route_acc={record.route_accuracy:.2f} alloy={outcome.status.value} "
+                f"({record.wall_clock_sec:.2f}s)"
+            )
 
         return _read_jsonl(log_path, Layer2Record)
 
@@ -699,11 +716,12 @@ class EvalOrchestrator:
         harness = ExperimentHarness(
             agent=agent,
             mutation_runner=mutation_runner,
-            quota_ledger=self.quota_ledger,
+            quota_ledger=None if self.config.mode == RunMode.LIVE else self.quota_ledger,
             timeout_seconds=30.0,
             run_mutation=True,
         )
         compat = AlloyCompatMode(self.config.alloy_compat)
+        total_trials = len(tasks) * len(CONDITION_SPEC) * self.config.replicates
 
         for task_idx, task in enumerate(tasks):
             pending_units = [
@@ -715,6 +733,10 @@ class EvalOrchestrator:
             if not pending_units:
                 continue
 
+            self._emit_progress(
+                f"[L3 task {task_idx + 1}/{len(tasks)}] {task.task_id} | "
+                "building Alloy 6 + locked PBT bundle..."
+            )
             # Build verified Alloy + locked PBT handoff bundle once per task (for Cond C).
             bundle_dir = self.out_dir / "bundles" / task.task_id
             graph = _graph_from_coding_task(task)
@@ -746,12 +768,17 @@ class EvalOrchestrator:
                 alloy_refs=alloy_outcome.req_to_alloy_refs,
             )
 
-            for cond_label, exp_cond in CONDITION_SPEC:
+            for cond_idx, (cond_label, exp_cond) in enumerate(CONDITION_SPEC):
                 for replicate in range(1, self.config.replicates + 1):
                     unit_key = make_unit_key(3, task.task_id, cond_label, replicate)
                     if unit_key in self._completed_units:
                         continue
 
+                    trial_num = (
+                        task_idx * len(CONDITION_SPEC) * self.config.replicates
+                        + cond_idx * self.config.replicates
+                        + replicate
+                    )
                     trial_seed = self.config.seed + replicate * 101 + task_idx * 17
                     trial_row = harness.run_trial(
                         case_id=task.task_id,
@@ -795,6 +822,12 @@ class EvalOrchestrator:
                     _append_jsonl(log_path, record)
                     self._completed_units.add(unit_key)
                     self._save_checkpoint()
+                    self._emit_progress(
+                        f"[L3 {trial_num}/{total_trials}] {task.task_id} | {cond_label} | r{replicate} | "
+                        f"hidden_pass={record.hidden_pass_at_1} pbt={record.pbt_pass_rate:.2f} "
+                        f"mut={record.mutation_score:.2f} cloud_reqs={record.cloud_requests} "
+                        f"({record.wall_clock_sec:.1f}s)"
+                    )
 
         return _read_jsonl(log_path, Layer3Record)
 
@@ -893,10 +926,16 @@ class EvalOrchestrator:
                 all_cloud_baseline_tokens=int(spec["all_cloud_baseline_tokens"]),
                 wall_clock_sec=float(spec["wall_clock_sec"]),
                 error_events=list(spec["error_events"]),
+                include_ledger_delta=False,
             )
             _append_jsonl(log_path, record)
             self._completed_units.add(unit_key)
             self._save_checkpoint()
+            self._emit_progress(
+                f"[L4] {stage_name} | local_only={record.local_only_pct:.1f}% "
+                f"cloud_red={record.cloud_reduction_pct:.1f}% "
+                f"cloud_reqs={record.cloud_requests}/{record.all_cloud_baseline_requests}"
+            )
 
         return _read_jsonl(log_path, Layer4TelemetryRecord)
 
@@ -973,9 +1012,10 @@ class EvalOrchestrator:
         live_coding_agent: CodingAgent | None = None,
         live_alloy_analyzer: AlloyAnalyzer | None = None,
         use_real_mutator: bool = False,
+        progress_callback: Callable[[str], None] | None = None,
     ) -> EvalBundleManifest:
         """Resume an interrupted evaluation run from `<out_dir>/checkpoint.json` with zero dupes."""
-        target_dir = Path(out_dir)
+        target_dir = Path(out_dir).resolve()
         ckpt_path = target_dir / "checkpoint.json"
         if not ckpt_path.is_file():
             raise FileNotFoundError(f"Evaluation checkpoint not found: {ckpt_path}")
@@ -994,6 +1034,7 @@ class EvalOrchestrator:
             live_alloy_analyzer=live_alloy_analyzer,
             use_real_mutator=use_real_mutator,
             run_id=ckpt.run_id,
+            progress_callback=progress_callback,
         )
         return orchestrator.run_all()
 

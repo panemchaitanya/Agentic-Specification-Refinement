@@ -1,7 +1,7 @@
 # 0020. Live Provider Decoding, Escalation Short-Circuit, Fallbacks and Live Probing
 
 - **Date:** 2026-11-26
-- **Status:** Accepted
+- **Status:** Deprecated
 - **PR / Branch:** `adr/0020-live-provider-decoding-short-circuit-and-live-probes`
 - **Supersedes:** None
 
@@ -39,3 +39,7 @@ We extend the local-first LLM routing (ADR-0003), Ollama runtime (ADR-0018), and
 - **Positive:** Opt-in `--verify-live` catches revoked or mistyped API keys immediately via `reqhq doctor` / `reqhq auth` without slowing down offline CI or leaking secrets.
 - **Trade-off:** Disabling thinking by default on constrained Ollama calls trades internal chain-of-thought depth for deterministic JSON compliance within tight `TIER_0` token budgets; callers requiring reasoning on a specific call may opt back in via `metadata={"think": True}`.
 - **Obligation:** All five invariants must remain covered at 100% line coverage via offline `httpx.MockTransport` unit tests and re-verified live whenever provider adapters or router logic change.
+
+## Deprecation Note
+
+Consolidated into ADR-0023 (Hardware-Aware Local SLM, Free-Tier Router, Live Decoding & Escalation Short-Circuit (v2)) alongside superseded ADR-0003 to eliminate routing-policy clashes.

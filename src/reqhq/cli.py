@@ -1695,6 +1695,11 @@ def _build_live_eval_hooks(
     }
 
 
+def _echo_eval_progress(message: str) -> None:
+    """Stream per-unit evaluation progress to stderr so long live runs stay observable."""
+    typer.echo(message, err=True)
+
+
 @eval_app.command("run")
 def eval_run_command(
     layers: Annotated[
@@ -1761,7 +1766,11 @@ def eval_run_command(
                 sessions_dir=sessions_dir,
                 strict_local=config.strict_local,
             )
-        manifest = EvalOrchestrator(config, **hooks).run_all()
+        manifest = EvalOrchestrator(
+            config,
+            progress_callback=_echo_eval_progress,
+            **hooks,
+        ).run_all()
     except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1)
@@ -1803,7 +1812,11 @@ def eval_resume_command(
                     sessions_dir=sessions_dir,
                     strict_local=ckpt.config.strict_local,
                 )
-        manifest = EvalOrchestrator.resume(out, **hooks)
+        manifest = EvalOrchestrator.resume(
+            out,
+            progress_callback=_echo_eval_progress,
+            **hooks,
+        )
     except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1)

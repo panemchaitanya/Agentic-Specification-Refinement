@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -201,7 +202,7 @@ def test_live_coding_agent_cond_a_b_c_isolation_repair_and_zero_hidden_leakage(
     )
     assert res_b.hidden_pass_at_1 is True
     assert res_b.stall_count == 1
-    assert res_b.quota_requests_used == 2
+    assert res_b.quota_requests_used == 1  # Only cloud_b counts; local ollama round 0 is local-only
 
     # 3. Condition C with read-only bundle_dir + failing round 0 -> repair round 1 passes locked PBT!
     bundle_dir = tmp_path / "bundle_c"
@@ -432,6 +433,54 @@ def test_eval_split_dev_vs_all_layer1_provider_error_and_cli_live_hooks(
     assert "Evaluation resumed:" in res_resume.output
 
 
+def test_live_coding_agent_relative_paths_and_cloud_only_quota(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Regression (DEF-P5-003/004): CWD-relative workspace/bundle paths resolve cleanly & local calls count 0 cloud."""
+    real_tasks_root = Path("data/benchmarks/coding_tasks").resolve()
+    monkeypatch.chdir(tmp_path)
+
+    rel_bundle = Path("rel_eval/bundles/refund_sla_engine")
+    props_dir = rel_bundle / "tests" / "properties"
+    props_dir.mkdir(parents=True, exist_ok=True)
+    (rel_bundle / "SPEC.md").write_text("# Alloy SPEC\n", encoding="utf-8")
+    (props_dir / "test_locked_pbt.py").write_text(
+        "import pytest\n"
+        "from refund_sla_engine import evaluate_refund_sla\n\n"
+        "def test_locked_rejects_negative() -> None:\n"
+        "    with pytest.raises(ValueError):\n"
+        "        evaluate_refund_sla(-1, 1, False, 'k1')\n",
+        encoding="utf-8",
+    )
+
+    local_only = MockProvider(
+        "ollama",
+        is_local=True,
+        responses=[json.dumps({"module_code": _GOOD_REFUND_MODULE, "test_code": _GOOD_REFUND_TESTS})],
+    )
+    agent = LiveLLMCodingAgent(
+        ProviderRouter(local_only, strict_local=True, enable_cache=False),
+        tasks_root=real_tasks_root,
+        max_repair_rounds=1,
+    )
+    res = agent.run_trial(
+        case_id="refund_sla_engine",
+        condition=ExperimentCondition.COND_C,
+        seed=42,
+        workspace_dir=Path("rel_eval/trials/r1/workspace"),
+        bundle_dir=rel_bundle,
+        timeout_seconds=20.0,
+    )
+    assert res.hidden_pass_at_1 is True
+    assert res.pbt_pass_rate == 1.0
+    assert res.stall_count == 0
+    assert res.quota_requests_used == 0
+    assert res.quota_tokens_used == 0
+    assert "not found" not in res.test_output.lower()
+    assert "not found" not in res.pbt_output.lower()
+
+
 # ---------------------------------------------------------------------------
 # Deterministic Hypothesis PBTs (ADR-0014 & ADR-0021)
 # ---------------------------------------------------------------------------
@@ -508,3 +557,45 @@ def test_pbt_condition_prompts_never_leak_hidden_tests(
     combined = sys_p + "\n" + user_p
     for fn_name in hidden_test_names:
         assert fn_name not in combined, f"Hidden test {fn_name!r} leaked into {condition.value} prompt!"
+
+
+@settings(derandomize=True, max_examples=50, deadline=None)
+@given(
+    segments=st.lists(
+        st.from_regex(r"[a-z][a-z0-9_]{1,8}", fullmatch=True),
+        min_size=1,
+        max_size=3,
+    ),
+)
+def test_pbt_run_pytest_always_resolves_relative_paths(segments: list[str]) -> None:
+    """PBT (DEF-P5-003): _run_pytest always resolves cwd, targets, and PYTHONPATH to absolute paths."""
+    agent = LiveLLMCodingAgent(
+        ProviderRouter(MockProvider(), strict_local=True, enable_cache=False)
+    )
+    rel_dir = Path(*segments)
+    rel_target = rel_dir / "test_mod.py"
+    captured: dict[str, Any] = {}
+
+    def _fake_run(cmd: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+        captured["cmd"] = cmd
+        captured["cwd"] = kwargs["cwd"]
+        captured["pythonpath"] = kwargs["env"]["PYTHONPATH"]
+        return subprocess.CompletedProcess(cmd, 0, stdout="1 passed in 0.01s\n", stderr="")
+
+    mp = pytest.MonkeyPatch()
+    try:
+        mp.setattr(subprocess, "run", _fake_run)
+        rc, out = agent._run_pytest(
+            [rel_target],
+            cwd=rel_dir,
+            pythonpath_entries=[rel_dir],
+            timeout_seconds=10.0,
+        )
+    finally:
+        mp.undo()
+
+    assert rc == 0
+    assert "1 passed" in out
+    assert Path(captured["cwd"]).is_absolute()
+    assert Path(captured["cmd"][-1]).is_absolute()
+    assert Path(captured["pythonpath"].split(os.pathsep)[0]).is_absolute()

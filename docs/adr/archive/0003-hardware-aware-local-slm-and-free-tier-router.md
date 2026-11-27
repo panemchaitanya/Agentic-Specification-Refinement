@@ -1,9 +1,10 @@
 # 0003. Hardware-Aware Local SLM and Free-Tier Router
 
 - **Date:** 2026-11-24
-- **Status:** Accepted
+- **Status:** Superseded
 - **PR / Branch:** `adr/0003-hardware-aware-local-slm-and-free-tier-router`
 - **Supersedes:** None
+- **Superseded By:** ADR-0023
 
 ## Context
 
@@ -40,3 +41,7 @@ We implement a **local-first, hardware-aware LLM execution and gated free-tier r
 - **Positive:** Sensitive PRD identifiers never reach third-party free-tier APIs in raw form, and `--strict-local` provides an enforceable zero-egress guarantee for regulated or air-gapped environments.
 - **Trade-off:** Local 4B–8B quantized SLMs have lower reasoning depth than frontier models on complex multi-constraint synthesis, which is explicitly surfaced via `cloud_verified=False` whenever cloud verification is skipped or unavailable.
 - **Trade-off:** Regex-based PII scrubbing cannot catch arbitrary contextual secrets (e.g., unnamed proprietary codenames); users with strict confidentiality requirements should run with `--strict-local`.
+
+## Supersession Note
+
+Superseded by ADR-0023 (Hardware-Aware Local SLM, Free-Tier Router, Live Decoding & Escalation Short-Circuit (v2)) on 2026-11-27.

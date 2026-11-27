@@ -151,8 +151,8 @@ class TestPhase4bNygardADRsReadOnly:
 
         for num in [f"{i:04d}" for i in range(1, 20)]:
             actions = [entry.action for entry in entries if entry.adr_number == num]
-            assert actions == ["created", "accepted"], (
-                f"Expected ['created', 'accepted'] for ADR-{num}, got {actions}"
+            assert actions[:2] == ["created", "accepted"], (
+                f"Expected prefix ['created', 'accepted'] for ADR-{num}, got {actions}"
             )
 
     def test_index_audit_history_parity_and_lf_line_endings(self) -> None:
@@ -196,13 +196,12 @@ class TestPhase4bNygardADRsReadOnly:
 
     def test_adr_0020_documents_live_provider_short_circuit_and_probing_decisions(self) -> None:
         mgr = ADRManager(REAL_ADR_DIR)
-        records = mgr.list_adrs(include_archived=False)
+        records = mgr.list_adrs(include_archived=True)
         by_num = {rec.number: rec for rec in records}
         assert len(records) >= 20
         assert "0020" in by_num
         rec20 = by_num["0020"]
-        assert rec20.status == "Accepted"
-        assert rec20.archived is False
+        assert rec20.status in {"Accepted", "Deprecated", "Superseded"}
         content = rec20.path.read_text(encoding="utf-8")
         for token in (
             "DEF-P4B-003",
@@ -224,7 +223,7 @@ class TestPhase4bNygardADRsReadOnly:
             assert token in content, f"ADR-0020 missing required decision detail: {token}"
         entries = mgr.audit.read_entries()
         assert len(entries) >= 40
-        assert [e.action for e in entries if e.adr_number == "0020"] == ["created", "accepted"]
+        assert [e.action for e in entries if e.adr_number == "0020"][:2] == ["created", "accepted"]
 
 
 class TestPhase4bADRManagerHypothesisPBT:
@@ -250,7 +249,9 @@ class TestPhase4bADRManagerHypothesisPBT:
             shutil.copytree(REAL_ADR_DIR, copied)
             mgr = ADRManager(copied)
 
-            base_count = len(mgr.list_adrs(include_archived=True))
+            base_records = mgr.list_adrs(include_archived=True)
+            base_count = len(base_records)
+            base_snapshot = {r.number: (r.status, r.archived) for r in base_records[:19]}
             assert base_count >= 19
             next_expected = base_count + 1
             new_archived: set[str] = set()
@@ -287,12 +288,11 @@ class TestPhase4bADRManagerHypothesisPBT:
                     next_expected += 1
                     new_archived.add(old_arch.number)
 
-            # Invariant 1: 0001..0019 remain untouched & Accepted; all IDs strictly monotonic 1..N
+            # Invariant 1: 0001..0019 remain untouched at their initial status; all IDs strictly monotonic 1..N
             all_records = mgr.list_adrs(include_archived=True)
             assert [int(r.number) for r in all_records] == list(range(1, next_expected))
             for orig in all_records[:19]:
-                assert orig.status == "Accepted"
-                assert orig.archived is False
+                assert (orig.status, orig.archived) == base_snapshot[orig.number]
             assert new_archived.issubset({r.number for r in all_records if r.archived})
 
             # Invariant 2: sync_index() is byte-for-byte idempotent and strictly LF-only

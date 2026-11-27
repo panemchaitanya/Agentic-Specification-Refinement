@@ -420,7 +420,7 @@ class TestFoundationalRepoADRsReadOnly:
 
     def test_foundational_adrs_0001_to_0006_conform_to_nygard_standard(self) -> None:
         mgr = ADRManager(REAL_ADR_DIR)
-        records = mgr.list_adrs(include_archived=False)
+        records = mgr.list_adrs(include_archived=True)
         expected_branches = {
             "0001": "adr/0001-record-architecture-decisions",
             "0002": "adr/0002-isolate-v2-engine-under-src-reqhq",
@@ -434,10 +434,10 @@ class TestFoundationalRepoADRsReadOnly:
         for num, branch in expected_branches.items():
             assert num in by_num, f"Missing foundational ADR-{num}"
             rec = by_num[num]
-            assert rec.status == "Accepted"
+            assert rec.status in {"Accepted", "Superseded", "Deprecated"}
             assert rec.pr_branch == branch
             assert rec.date == "2026-11-24"
-            assert rec.archived is False
+            assert rec.archived == (rec.status in {"Superseded", "Deprecated"})
 
             content = rec.path.read_text(encoding="utf-8")
             assert "## Context" in content

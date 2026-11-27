@@ -605,6 +605,71 @@ def test_edge_branches_error_events_and_helpers(tmp_path: Path) -> None:
     assert manifest_missing_log.log_files == {}
 
 
+def test_layer4_no_cross_layer_quota_triple_counting_and_progress_callback(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Regression (DEF-P5-004): Layer 4 does not add shared QuotaLedger deltas onto L1/L2/L3 & streams progress."""
+    real_frozen = Path("data/frozen").resolve()
+    real_cross = Path("data/benchmarks/cross_domain/cases.json").resolve()
+    real_tasks = Path("data/benchmarks/coding_tasks").resolve()
+    monkeypatch.chdir(tmp_path)
+
+    quota_db = tmp_path / "quota.sqlite"
+    ledger = QuotaLedger(quota_db)
+    # Seed ledger activity during Layer 3 to ensure Layer 1 & Layer 2 are never contaminated!
+    router = ProviderRouter(
+        local_provider=MockProvider("ollama", is_local=True, default_response="What SLA applies?"),
+        strict_local=True,
+        max_local_retries=0,
+        enable_cache=False,
+        quota_ledger=ledger,
+    )
+    progress_lines: list[str] = []
+    cfg = EvalRunConfig(
+        out_dir=Path("rel_eval_live"),
+        layers=[1, 2, 3, 4],
+        mode=RunMode.LIVE,
+        replicates=1,
+        max_tasks=1,
+    )
+    orch = EvalOrchestrator(
+        cfg,
+        frozen_root=real_frozen,
+        cross_domain_path=real_cross,
+        coding_tasks_root=real_tasks,
+        quota_db_path=quota_db,
+        hardware_profiler=_fast_profiler(),
+        live_router=router,
+        live_coding_agent=MockCodingAgent(),
+        live_alloy_analyzer=MockAlloyAnalyzer(default_status=AlloyRunStatus.VERIFIED),
+        progress_callback=progress_lines.append,
+    )
+    assert orch.out_dir.is_absolute()
+
+    l1_recs = orch.run_layer1()
+    orch.run_layer2()
+    # Simulate 25 cloud requests logged to the shared QuotaLedger during Layer 3
+    for _ in range(25):
+        ledger.record_usage("gemini", prompt_tokens=500, completion_tokens=200)
+    l3_recs = orch.run_layer3()
+    l4_recs = orch.run_layer4()
+
+    by_stage = {r.stage: r for r in l4_recs}
+    assert by_stage["layer1_elicitation"].cloud_requests == sum(r.cloud_requests for r in l1_recs)
+    assert by_stage["layer1_elicitation"].cloud_tokens == sum(r.cloud_tokens for r in l1_recs)
+    assert by_stage["layer2_cross_domain"].cloud_requests == max(1, 16 // 4)
+    assert by_stage["layer3_coding_guardrails"].cloud_requests == sum(
+        r.cloud_requests for r in l3_recs
+    )
+
+    assert any(line.startswith("[L1 ") for line in progress_lines)
+    assert any(line.startswith("[L2 ") for line in progress_lines)
+    assert any(line.startswith("[L3 task ") for line in progress_lines)
+    assert any(line.startswith("[L3 1/") for line in progress_lines)
+    assert any(line.startswith("[L4] ") for line in progress_lines)
+
+
 # ---------------------------------------------------------------------------
 # 6. Mandatory deterministic Hypothesis PBTs
 # ---------------------------------------------------------------------------

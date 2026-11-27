@@ -135,8 +135,8 @@ class TestPhase2NygardADRsReadOnly:
         expected_ids = [f"{i:04d}" for i in range(1, 11)]
         for num in expected_ids:
             actions = [entry.action for entry in entries if entry.adr_number == num]
-            assert actions == ["created", "accepted"], (
-                f"Expected ['created', 'accepted'] for ADR-{num}, got {actions}"
+            assert actions[:2] == ["created", "accepted"], (
+                f"Expected prefix ['created', 'accepted'] for ADR-{num}, got {actions}"
             )
 
     def test_index_audit_history_parity_and_lf_line_endings(self) -> None:
