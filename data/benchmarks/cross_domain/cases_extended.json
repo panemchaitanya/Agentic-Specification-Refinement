@@ -1,0 +1,1157 @@
+{
+  "version": "2.0.0",
+  "cases": [
+    {
+      "case_id": "FIN-01",
+      "domain": "fintech_settlements",
+      "input_kind": "one_liner",
+      "title": "Instant T+0 Wire Reconciliation Engine",
+      "prompt_text": "Build a real-time T+0 wire settlement reconciliation service with dual-control human exception sign-off and operations analyst certification.",
+      "gold_requirements": [
+        "R1: The reconciliation engine API shall validate idempotency keys and persist double-entry settlement ledger records with sub-200ms latency.",
+        "R2: Treasury exceptions exceeding $50,000 require a documented manual approval SOP and dual sign-off from a senior compliance officer before release.",
+        "R3: Settlement analysts must complete a role-based exception-handling training curriculum and pass a quarterly competency certification prior to production access.",
+        "R4: The system shall automated-flag mismatched wire batches in the reconciliation ledger while enforcing a human approval escalation workflow for dispute resolution."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify why double-entry ledger validation belongs in a deterministic Functional Core software module rather than manual spreadsheets.",
+        "Justify why >$50,000 dual-control sign-off is routed to a Process SOP with human compliance accountability rather than unattended automation.",
+        "Specify pre-go-live analyst certification prerequisites and rejected pure-software alternatives."
+      ]
+    },
+    {
+      "case_id": "FIN-02",
+      "domain": "fintech_settlements",
+      "input_kind": "one_liner",
+      "title": "FX Margin Call Auto-Throttle & Desk Governance",
+      "prompt_text": "Automate intraday FX margin calculations with an immutable audit ledger while keeping forced-liquidation pauses under risk committee governance.",
+      "gold_requirements": [
+        "R1: The FX margin engine shall compute real-time mark-to-market exposure and publish threshold alerts via an encrypted webhook service.",
+        "R2: Forced-liquidation overrides during market volatility require a formal risk committee governance review and manual sign-off under the trading floor runbook.",
+        "R3: Dealing desk operators must complete hands-on liquidity stress onboarding workshops before assuming live margin monitoring shifts.",
+        "R4: The system shall enforce automated position-limit throttling in the trading API while routing collateral waivers through a documented human approval escalation."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Separate real-time mark-to-market calculation (Software) from market-stress liquidation override governance (Process).",
+        "Document why unattended auto-liquidation override was rejected due to systemic liquidity risk.",
+        "Anchor desk readiness to onboarding workshop sign-off before enabling live throttles."
+      ]
+    },
+    {
+      "case_id": "FIN-03",
+      "domain": "fintech_settlements",
+      "input_kind": "multi_paragraph",
+      "title": "Cross-Border SEPA & ACH Batch Clearing Platform",
+      "prompt_text": "Context: Our retail banking platform clears 400,000 daily cross-border SEPA and domestic ACH payouts across 14 correspondent banks. Recent outages caused duplicate debit postings when partner gateways timed out during cutoff windows.\n\nFunctional & NFR Scope: We need a deterministic clearing state machine backed by an append-only ledger database that guarantees exactly-once settlement per payment instruction, encrypts all IBAN/routing payloads at rest with AES-256, and enforces 99.95% availability during clearing windows.\n\nOperational & Readiness Constraints: Sanctions false-positive holds above $10,000 cannot be auto-cleared by software; compliance officers must execute the quarterly sanctions review SOP and record written disposition rationales. All regional clearing coordinators must pass an annual AML sanctions refresher training and simulation assessment before receiving override credentials.",
+      "gold_requirements": [
+        "R1: The clearing state machine service shall guarantee exactly-once settlement semantics and persist encrypted IBAN payloads in an append-only ledger database.",
+        "R2: Compliance officers shall execute the documented sanctions disposition SOP and manual audit review for every held transfer exceeding $10,000.",
+        "R3: Regional clearing coordinators must complete the annual AML sanctions refresher training curriculum and pass a competency assessment before credential issuance.",
+        "R4: The platform shall provide an automated sanctions screening API integrated with a human compliance officer escalation queue for ambiguous name matches."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify Functional Core state machine isolation for exactly-once clearing invariants and Alloy verification scope.",
+        "Document regulatory liability reasons for rejecting automated sanctions false-positive clearance.",
+        "Bind go-live cutover to completed AML refresher training certification and documented compliance SOP."
+      ]
+    },
+    {
+      "case_id": "FIN-04",
+      "domain": "fintech_settlements",
+      "input_kind": "multi_paragraph",
+      "title": "Card Dispute & Chargeback Representment Hub",
+      "prompt_text": "Background: Merchant acquiring teams handle 18,000 monthly cardholder chargebacks under strict Visa and Mastercard representment deadlines. Missed evidence submission windows cost $1.4M annually in automatic write-offs.\n\nSystem Expectations: Build an automated evidence-intake API and deadline-tracking queue that ingests card network reason codes, validates PDF receipt schemas, and alerts merchants 72 hours prior to network cutoff.\n\nSocio-Technical Boundaries: High-value friendly-fraud disputes over $25,000 require manual review and written approval from the merchant risk governance committee before representment filing. New dispute specialists struggle with network reason-code taxonomy, so we need structured coaching workshops and a role-based user guide with proficiency checks prior to independent case handling.",
+      "gold_requirements": [
+        "R1: The dispute intake service shall validate evidence schemas, persist case deadlines in the database, and dispatch automated webhook alerts 72 hours before network cutoffs.",
+        "R2: Friendly-fraud representments exceeding $25,000 require manual review and formal sign-off by the merchant risk governance committee.",
+        "R3: Newly hired dispute specialists must complete reason-code coaching workshops and demonstrate skill proficiency using the updated user guide before independent assignment.",
+        "R4: The system shall assemble automated transaction evidence packets via API while enforcing manual approval sign-off from a specialist prior to card-network submission."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Distinguish deterministic deadline alerting (Software) from high-value representment governance (Process).",
+        "Explain why pure UI tooltips were rejected in favor of structured reason-code coaching workshops (Training).",
+        "Define the Hybrid contract between automated packet assembly and specialist sign-off."
+      ]
+    },
+    {
+      "case_id": "HLT-01",
+      "domain": "healthcare_operations",
+      "input_kind": "one_liner",
+      "title": "Emergency Triage Bed-Board & Nurse Handoff System",
+      "prompt_text": "Deliver an ER bed-availability tracking API with standardized bedside shift-handover protocols and clinical staff onboarding certification.",
+      "gold_requirements": [
+        "R1: The bed-board service shall persist real-time room occupancy state transitions and authenticate clinical staff via SSO with sub-second query latency.",
+        "R2: Incoming and outgoing charge nurses must follow a structured bedside shift handover SOP to verify isolation precautions and pending critical labs.",
+        "R3: All emergency department nurses must complete hands-on EHR bed-board onboarding training and pass a competency check before shift scheduling.",
+        "R4: The platform shall compute automated acuity-based bed recommendations in the triage engine while requiring manual approval from the charge nurse before bed assignment."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify deterministic room-state transitions in software while keeping clinical bedside shift handover as a Process SOP.",
+        "Document patient-safety rejection of unattended automated bed assignment.",
+        "Require nurse onboarding competency verification as a non-software go-live prerequisite."
+      ]
+    },
+    {
+      "case_id": "HLT-02",
+      "domain": "healthcare_operations",
+      "input_kind": "one_liner",
+      "title": "Controlled Substance Pharmacy Dispensing Guardrails",
+      "prompt_text": "Modernize automated dispensing cabinet inventory tracking with two-clinician witness waste procedures and annual narcotic handling refresher training.",
+      "gold_requirements": [
+        "R1: The dispensing service shall encrypt patient medication orders, validate dosage bounds against the formulary schema, and log every drawer event to an immutable database.",
+        "R2: Partial narcotic dose wastage requires an in-person two-clinician visual witness operational procedure and physical compliance sign-off.",
+        "R3: Pharmacists and floor nurses must complete annual controlled-substance handling refresher training and certification.",
+        "R4: The cabinet engine shall enforce automated discrepancy detection on pill counts while triggering an immediate pharmacy governance escalation and audit review."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Separate deterministic dosage-bound validation (Software) from physical narcotic waste witnessing (Process).",
+        "Explain why camera-only automation was rejected for DEA two-clinician waste attestation.",
+        "Tie discrepancy detection alerts to formal pharmacy audit escalation SOPs."
+      ]
+    },
+    {
+      "case_id": "HLT-03",
+      "domain": "healthcare_operations",
+      "input_kind": "multi_paragraph",
+      "title": "Diagnostic Lab Critical-Value Alerting & Escalation Network",
+      "prompt_text": "Clinical Context: Our regional hospital network processes 95,000 pathology and chemistry assays daily. Delayed physician acknowledgement of panic-level potassium or troponin results has led to avoidable adverse events.\n\nTechnical Requirements: The laboratory middleware shall expose an HL7/FHIR ingestion API that validates specimen identifiers, detects critical-value thresholds within 3 seconds of analyzer completion, and persists an immutable acknowledgement audit log with full HIPAA encryption.\n\nClinical Governance & Staff Enablement: When a primary ordering clinician does not acknowledge a critical alert within 15 minutes, the clinical call center must execute the documented verbal read-back escalation SOP to reach the attending physician or rapid-response team. Additionally, rotating medical residents require quarterly critical-value response workshops and role-based enablement guides so read-back expectations are uniformly understood across night shifts.",
+      "gold_requirements": [
+        "R1: The lab middleware API shall validate HL7 specimen schemas, evaluate panic-value thresholds within 3 seconds, and persist encrypted acknowledgement logs in the database.",
+        "R2: Unacknowledged critical values exceeding 15 minutes require clinical call-center operators to execute the verbal read-back escalation SOP and manual handoff to the attending physician.",
+        "R3: Rotating medical residents must attend quarterly critical-value response workshops and review the role-based enablement user guide before night-shift rotation.",
+        "R4: The alerting engine shall dispatch automated tiered pager notifications while requiring manual read-back verification sign-off under the hospital escalation runbook."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify sub-3-second threshold evaluation and encrypted audit persistence in software.",
+        "Document why automated SMS alone was rejected in favor of a verbal read-back escalation SOP.",
+        "Include resident workshop completion as an operational readiness gate across shift rotations."
+      ]
+    },
+    {
+      "case_id": "HLT-04",
+      "domain": "healthcare_operations",
+      "input_kind": "multi_paragraph",
+      "title": "Outpatient Oncology Infusion Scheduling & Consent Portal",
+      "prompt_text": "Problem Statement: Outpatient oncology infusion clinics experience 14% chair under-utilization alongside frequent same-day cancellations caused by incomplete pre-treatment lab checks and missing signed patient consent forms.\n\nPlatform Capabilities: Build a scheduling optimization service and patient portal API that verifies pre-infusion blood-panel recency, enforces chemotherapy chair capacity constraints, and prevents double-booking across infusion bays.\n\nHuman Workflow & Training Needs: Informed chemotherapy consent conversations and dose-delay clinical decisions must remain governed by the oncology nursing SOP and oncologist manual sign-off prior to drug mixing. Front-desk schedulers also need structured onboarding curriculum and coaching on oncology protocol timing windows so complex multi-day regimens are booked accurately.",
+      "gold_requirements": [
+        "R1: The scheduling engine shall validate pre-infusion lab recency against protocol rules and persist conflict-free chair reservations in the clinic database.",
+        "R2: Informed patient consent verification and dose-delay approvals must follow the oncology clinical governance SOP with manual oncologist sign-off prior to pharmacy compounding.",
+        "R3: Clinic schedulers must complete an oncology regimen booking training curriculum and hands-on coaching assessment before managing infusion templates.",
+        "R4: The system shall enforce automated pre-infusion safety checks via the portal API while gating final pharmacy compounding on nurse manual approval and competency certification."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Keep conflict-free chair scheduling and lab-recency checks in the deterministic software core.",
+        "Preserve oncologist manual sign-off for clinical consent and dose-delay decisions via Process SOP.",
+        "Prevent booking errors at the source with scheduler regimen-timing training curriculum."
+      ]
+    },
+    {
+      "case_id": "INV-01",
+      "domain": "inventory_logistics",
+      "input_kind": "one_liner",
+      "title": "Cold-Chain Pharmaceutical Warehouse Telemetry & Quarantine",
+      "prompt_text": "Track cold-storage freezer telemetry via an IoT ingestion service while managing excursion quarantines through QA SOPs and warehouse operator certification.",
+      "gold_requirements": [
+        "R1: The telemetry ingestion API shall validate sensor payloads, persist 60-second temperature readings in a time-series database, and trigger automated excursion alerts.",
+        "R2: Temperature excursions exceeding 15 minutes require physical pallet quarantine under the QA operational procedure and formal release sign-off by a quality compliance officer.",
+        "R3: Cold-storage warehouse associates must complete annual GDP cold-chain handling training and certification prior to forklift zone assignment.",
+        "R4: The system shall automated-lock compromised lot IDs in the inventory ledger while routing disposition decisions through a documented QA manual review workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Separate continuous telemetry ingestion and lot locking (Software) from physical quarantine QA disposition (Process).",
+        "Explain why automated lot release after excursion was rejected due to GDP patient-safety rules.",
+        "Require annual GDP warehouse operator certification as a prerequisite for cold-zone access."
+      ]
+    },
+    {
+      "case_id": "INV-02",
+      "domain": "inventory_logistics",
+      "input_kind": "one_liner",
+      "title": "Multi-Warehouse Cycle Count & Shrinkage Reconciliation",
+      "prompt_text": "Provide a barcode cycle-count API for regional fulfillment centers with supervisor shrinkage sign-off and handheld scanner operator onboarding.",
+      "gold_requirements": [
+        "R1: The cycle-count service shall validate scanned SKU barcodes, compute bin-level variance percentages, and persist stock adjustments in the inventory database.",
+        "R2: Inventory write-offs exceeding $2,500 require a physical recount operational procedure and manual approval sign-off by the regional warehouse manager.",
+        "R3: New fulfillment associates must complete handheld scanner onboarding training and a practical picking-accuracy competency check.",
+        "R4: The platform shall flag recurring SKU shrinkage anomalies via an automated analytics engine while enforcing a documented loss-prevention audit review escalation."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Isolate barcode validation and variance arithmetic in a pure Functional Core software module.",
+        "Route >$2,500 shrinkage write-offs to human manager physical verification SOP to deter internal theft.",
+        "Address mis-scan root causes through hands-on scanner onboarding rather than complex UI prompts."
+      ]
+    },
+    {
+      "case_id": "INV-03",
+      "domain": "inventory_logistics",
+      "input_kind": "multi_paragraph",
+      "title": "Hazardous Materials Freight Manifest & Dock Safety Platform",
+      "prompt_text": "Operational Overview: Our 3PL logistics network dispatches 1,200 daily LTL freight shipments containing lithium batteries and regulated industrial solvents across 22 cross-dock terminals. Improper segregation of incompatible UN hazard classes recently triggered a regulatory fine.\n\nSoftware Scope: Build a manifest validation engine and carrier EDI service that checks UN hazard class compatibility matrices, enforces maximum trailer weight limits, and blocks electronic bill-of-lading generation for incompatible loads with 99.9% uptime.\n\nProcess & Training Controls: Dock supervisors must perform a mandatory physical placard and load-securement inspection SOP before signing off trailer departure seals. Every dock loader and dispatcher must complete biennial DOT hazmat handling certification training and pass an emergency spill-response competency drill.",
+      "gold_requirements": [
+        "R1: The hazmat validation engine shall evaluate UN hazard class compatibility schemas, enforce trailer weight constraints, and persist validated EDI manifests in the database.",
+        "R2: Dock supervisors must execute the physical placard and load-securement inspection SOP and record manual departure sign-off prior to trailer seal placement.",
+        "R3: Dock loaders and dispatchers must complete biennial DOT hazmat training certification and pass a spill-response competency workshop.",
+        "R4: The system shall automated-block non-compliant bills of lading in the dispatch service while escalating emergency chemical rerouting through the incident response runbook."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Formally verify UN hazard class incompatibility invariants in software so invalid bills of lading cannot be issued.",
+        "Maintain physical trailer placard inspection as a non-delegable human dock-supervisor SOP.",
+        "Require biennial DOT hazmat certification for all dispatchers and loaders prior to rollout."
+      ]
+    },
+    {
+      "case_id": "INV-04",
+      "domain": "inventory_logistics",
+      "input_kind": "multi_paragraph",
+      "title": "Port Container Demurrage Predictor & Customs Brokerage Desk",
+      "prompt_text": "Business Challenge: Import operations incur $3.8M annually in port demurrage and detention fees when ocean containers stall in customs inspection holds or miss drayage appointment slots.\n\nSystem Scope: Develop a container-milestone ingestion service and event queue that normalizes AIS vessel arrivals, terminal gate timestamps, and free-time countdown timers, exposing a deterministic demurrage-risk API with p95 latency under 300ms.\n\nHuman Governance & Enablement: Disputed terminal detention invoices and customs broker priority reallocations must follow the trade-compliance escalation SOP with documented port operations committee approval. Regional import coordinators also require role-based customs tariff classification workshops and an updated play-by-play user guide to minimize Harmonized System coding errors.",
+      "gold_requirements": [
+        "R1: The milestone ingestion service shall normalize terminal gate webhooks, compute free-time countdown states in the database, and serve demurrage-risk API queries under 300ms latency.",
+        "R2: Disputed detention invoices and priority drayage reallocations require manual review and formal governance approval under the trade-compliance escalation SOP.",
+        "R3: Regional import coordinators must complete Harmonized System tariff classification workshops and competency enablement using the customs user guide.",
+        "R4: The platform shall dispatch automated 48-hour free-time expiry alerts via the queue service while enforcing human broker handoff and sign-off for customs exam holds."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Route deterministic free-time countdown calculation and webhook normalization to Software.",
+        "Justify keeping customs detention disputes and broker priority shifts in a documented Process SOP.",
+        "Target upstream tariff coding errors via coordinator workshops (Training) instead of fragile heuristics."
+      ]
+    },
+    {
+      "case_id": "ENT-01",
+      "domain": "enterprise_it_hr",
+      "input_kind": "one_liner",
+      "title": "Zero-Trust Employee Offboarding & Access Revocation Engine",
+      "prompt_text": "Automate SaaS token revocation upon HR termination events while preserving manager laptop-return checklists and security awareness onboarding.",
+      "gold_requirements": [
+        "R1: The identity revocation service shall consume HR termination webhooks, invalidate OAuth/SSO tokens across integrated APIs within 5 minutes, and persist an immutable audit trail.",
+        "R2: Departing employee hardware retrieval and legal-hold preservation require a documented HR-IT handoff SOP and manager sign-off checklist.",
+        "R3: People managers must complete annual offboarding security awareness training and review the role-based manager user guide.",
+        "R4: The platform shall automated-disable directory accounts via the IAM engine while routing involuntary-termination timing through a human HR compliance officer approval gate."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Enforce sub-5-minute token revocation deterministically in software to close insider-threat windows.",
+        "Keep physical laptop recovery and legal-hold sign-off in a cross-functional HR-IT Process SOP.",
+        "Gate involuntary-termination deactivation timing via Hybrid HR human approval to prevent premature lockouts."
+      ]
+    },
+    {
+      "case_id": "ENT-02",
+      "domain": "enterprise_it_hr",
+      "input_kind": "one_liner",
+      "title": "Privileged Cloud Break-Glass & Incident Escalation Portal",
+      "prompt_text": "Issue time-boxed JIT cloud admin credentials via API with post-incident blameless review SOPs and on-call SRE readiness drills.",
+      "gold_requirements": [
+        "R1: The JIT access engine shall authenticate requesters, mint time-boxed 60-minute IAM credentials via API, and automatically expire elevated sessions in the audit database.",
+        "R2: Every production break-glass elevation requires a documented post-incident audit review and blameless governance sign-off within 48 hours.",
+        "R3: Newly assigned on-call SREs must complete break-glass simulation training workshops and pass a readiness certification before joining the rotation.",
+        "R4: The system shall automated-provision scoped cloud roles while requiring peer human approval escalation under the incident response runbook for production root access."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Guarantee time-boxed 60-minute credential expiry in deterministic software with verifiable state transitions.",
+        "Route post-incident blameless audit review to a Process governance SOP.",
+        "Require SRE simulation workshop certification before granting on-call break-glass eligibility."
+      ]
+    },
+    {
+      "case_id": "ENT-03",
+      "domain": "enterprise_it_hr",
+      "input_kind": "multi_paragraph",
+      "title": "Global Payroll Exception & Tax Withholding Compliance Suite",
+      "prompt_text": "Enterprise Context: Our 12,000-employee multinational runs biweekly payroll across 19 tax jurisdictions. Last quarter, retroactive equity vesting adjustments caused withholding miscalculations and delayed statutory filings in three countries.\n\nTechnical Requirements: Build a deterministic payroll gross-to-net calculation service and encrypted tax-ledger database that validates statutory bracket schemas, detects >15% period-over-period net-pay anomalies, and guarantees reproducible batch checksums prior to bank file transmission.\n\nGovernance & Training Scope: Any off-cycle payroll adjustment exceeding $15,000 or affecting executive equity withholding must undergo a manual dual-control review SOP by the global payroll governance committee before ACH release. Regional HR business partners also need quarterly cross-border tax-change refresher training and coaching workshops so relocation events are logged accurately ahead of cutoff dates.",
+      "gold_requirements": [
+        "R1: The payroll calculation engine shall validate statutory tax bracket schemas, compute reproducible batch checksums, and persist encrypted ledger snapshots in the database.",
+        "R2: Off-cycle payroll adjustments exceeding $15,000 require manual review and dual-control sign-off by the global payroll governance committee under the release SOP.",
+        "R3: Regional HR business partners must complete quarterly cross-border tax refresher training and coaching workshops to maintain data-entry competency.",
+        "R4: The system shall automated-halt bank file generation on >15% net-pay variance anomalies while escalating exception clearance through a documented human approval runbook."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Isolate reproducible gross-to-net tax arithmetic and checksums in a pure Functional Core software module.",
+        "Preserve dual-control human governance committee approval for >$15,000 off-cycle disbursements.",
+        "Address cross-border relocation input errors via HR partner refresher training rather than guesswork heuristics."
+      ]
+    },
+    {
+      "case_id": "ENT-04",
+      "domain": "enterprise_it_hr",
+      "input_kind": "multi_paragraph",
+      "title": "Enterprise Vendor Security Review & Procurement Intake Hub",
+      "prompt_text": "Situation: Business units currently onboard 60+ third-party SaaS vendors per quarter through ad-hoc email threads, resulting in shadow IT purchases, missed SOC 2 renewals, and unreviewed DPA clauses.\n\nApplication Requirements: Implement a procurement intake API and vendor-risk state machine that enforces mandatory questionnaire schema validation, tracks SOC 2 certificate expiration dates in a central database, and blocks purchase-order webhook emission for unapproved vendors.\n\nGovernance & Enablement Boundaries: High-risk vendors processing regulated PII require a formal privacy and legal committee governance sign-off SOP prior to contract execution. Department budget owners frequently bypass intake channels due to unfamiliarity with risk tiers, so we require an executive-sponsored procurement onboarding curriculum and role-based enablement guide prior to policy enforcement.",
+      "gold_requirements": [
+        "R1: The procurement intake service shall validate vendor questionnaire schemas, persist SOC 2 expiry milestones in the database, and block purchase-order API webhooks for unapproved vendors.",
+        "R2: High-risk PII vendors require a formal privacy and legal committee audit review and manual contract sign-off under the third-party risk governance policy.",
+        "R3: Department budget owners must complete the procurement risk-tier onboarding curriculum and role-based enablement user guide before policy cutover.",
+        "R4: The platform shall automated-score vendor security questionnaires in the risk engine while routing conditional risk waivers through a documented compliance officer escalation SOP."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Enforce deterministic purchase-order webhook gating and SOC 2 expiry tracking in software.",
+        "Route regulated PII legal/privacy contract approvals to formal committee governance SOP.",
+        "Prevent shadow-IT policy bypass through budget-owner onboarding curriculum prior to enforcement."
+      ]
+    },
+    {
+      "case_id": "FIN-05",
+      "domain": "fintech_settlements",
+      "input_kind": "one_liner",
+      "title": "Real-Time Chargeback Dispute Reserve Engine",
+      "prompt_text": "Automate cardholder chargeback reserve calculations while requiring finance director SOP sign-off on reserve releases and merchant ops training.",
+      "gold_requirements": [
+        "R1: The fintech_settlements core service API shall deterministically enforce primary domain invariants for Real-Time Chargeback Dispute Reserve Engine with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Real-Time Chargeback Dispute Reserve Engine require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based fintech_settlements training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Real-Time Chargeback Dispute Reserve Engine in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "FIN-06",
+      "domain": "fintech_settlements",
+      "input_kind": "multi_paragraph",
+      "title": "Cross-Currency Treasury Sweep & Sanctions Hold",
+      "prompt_text": "Context: Multi-entity corporate treasury sweeps execute nightly across 12 currencies.\n\nFunctional Scope: The sweep API shall enforce atomic double-entry transfers with idempotency keys and sub-250ms ledger writes.\n\nOperational & Readiness: Transfers exceeding $250,000 require documented manual dual-control SOP sign-off by Treasury Risk, and new treasury analysts must pass annual FX compliance training before production access.",
+      "gold_requirements": [
+        "R1: The fintech_settlements core service API shall deterministically enforce primary domain invariants for Cross-Currency Treasury Sweep & Sanctions Hold with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Cross-Currency Treasury Sweep & Sanctions Hold require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based fintech_settlements training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Cross-Currency Treasury Sweep & Sanctions Hold in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "HLT-05",
+      "domain": "healthcare_operations",
+      "input_kind": "one_liner",
+      "title": "Controlled Substance Dispensing Audit Gate",
+      "prompt_text": "Track narcotic pharmacy dispenses in an immutable clinical ledger with pharmacist-in-charge manual discrepancy SOP review and ward nurse safety certification.",
+      "gold_requirements": [
+        "R1: The healthcare_operations core service API shall deterministically enforce primary domain invariants for Controlled Substance Dispensing Audit Gate with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Controlled Substance Dispensing Audit Gate require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based healthcare_operations training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Controlled Substance Dispensing Audit Gate in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "HLT-06",
+      "domain": "healthcare_operations",
+      "input_kind": "multi_paragraph",
+      "title": "Pediatric ICU Alarm Escalation & Bed Transfer",
+      "prompt_text": "Context: Regional hospital networks route critical telemetry alerts across ICU nursing stations.\n\nFunctional Scope: The alert service shall deterministically escalate unacknowledged critical alarms within 60 seconds with encrypted audit trails.\n\nOperational & Readiness: Manual diversion to overflow wards requires charge-nurse governance SOP approval, and all ICU nurses must complete annual alarm-fatigue training certification.",
+      "gold_requirements": [
+        "R1: The healthcare_operations core service API shall deterministically enforce primary domain invariants for Pediatric ICU Alarm Escalation & Bed Transfer with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Pediatric ICU Alarm Escalation & Bed Transfer require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based healthcare_operations training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Pediatric ICU Alarm Escalation & Bed Transfer in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "INV-05",
+      "domain": "inventory_logistics",
+      "input_kind": "one_liner",
+      "title": "Hazardous Materials Dock Quarantine Controller",
+      "prompt_text": "Enforce automated hazmat segregation rules in warehouse slot APIs while keeping chemical spill overrides under EHS safety officer SOPs and forklift handler training.",
+      "gold_requirements": [
+        "R1: The inventory_logistics core service API shall deterministically enforce primary domain invariants for Hazardous Materials Dock Quarantine Controller with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Hazardous Materials Dock Quarantine Controller require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based inventory_logistics training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Hazardous Materials Dock Quarantine Controller in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "INV-06",
+      "domain": "inventory_logistics",
+      "input_kind": "multi_paragraph",
+      "title": "Cross-Dock Perishable Recall & Lot Traceability",
+      "prompt_text": "Context: National food distributors track cold-chain lot numbers from port to retail.\n\nFunctional Scope: The traceability API shall block shipments for recalled lot IDs with deterministic idempotent state transitions.\n\nOperational & Readiness: Physical quarantine release requires QA inspector manual sign-off SOP, and depot supervisors must complete annual food-safety recall drill training.",
+      "gold_requirements": [
+        "R1: The inventory_logistics core service API shall deterministically enforce primary domain invariants for Cross-Dock Perishable Recall & Lot Traceability with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Cross-Dock Perishable Recall & Lot Traceability require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based inventory_logistics training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Cross-Dock Perishable Recall & Lot Traceability in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ENT-05",
+      "domain": "enterprise_it_hr",
+      "input_kind": "one_liner",
+      "title": "Privileged Production Database Break-Glass Portal",
+      "prompt_text": "Issue time-bounded 30-minute database credentials via an automated IAM service with security-lead manual approval SOPs and annual SRE least-privilege training.",
+      "gold_requirements": [
+        "R1: The enterprise_it_hr core service API shall deterministically enforce primary domain invariants for Privileged Production Database Break-Glass Portal with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Privileged Production Database Break-Glass Portal require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based enterprise_it_hr training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Privileged Production Database Break-Glass Portal in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ENT-06",
+      "domain": "enterprise_it_hr",
+      "input_kind": "multi_paragraph",
+      "title": "Global Employee Offboarding & Legal Hold Orchestrator",
+      "prompt_text": "Context: Enterprise HR and IT revoke access within 15 minutes of involuntary separation.\n\nFunctional Scope: The identity orchestrator shall deterministically disable SSO tokens and archive mailbox snapshots via an encrypted API.\n\nOperational & Readiness: Legal-hold overrides require General Counsel manual SOP authorization, and HR partners must complete quarterly privacy offboarding training.",
+      "gold_requirements": [
+        "R1: The enterprise_it_hr core service API shall deterministically enforce primary domain invariants for Global Employee Offboarding & Legal Hold Orchestrator with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Global Employee Offboarding & Legal Hold Orchestrator require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based enterprise_it_hr training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Global Employee Offboarding & Legal Hold Orchestrator in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ECO-01",
+      "domain": "ecommerce_payments",
+      "input_kind": "one_liner",
+      "title": "Marketplace Split-Payout Escrow Engine",
+      "prompt_text": "Automate multi-vendor checkout escrow splits with sub-150ms idempotent ledger writes while keeping fraud freeze releases under trust-and-safety SOPs and agent training.",
+      "gold_requirements": [
+        "R1: The ecommerce_payments core service API shall deterministically enforce primary domain invariants for Marketplace Split-Payout Escrow Engine with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Marketplace Split-Payout Escrow Engine require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based ecommerce_payments training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Marketplace Split-Payout Escrow Engine in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ECO-02",
+      "domain": "ecommerce_payments",
+      "input_kind": "one_liner",
+      "title": "Promo Coupon Stacking & Abuse Throttle",
+      "prompt_text": "Enforce deterministic single-coupon stacking limits in the cart pricing API while routing VIP goodwill overrides through customer-care SOPs and support staff training.",
+      "gold_requirements": [
+        "R1: The ecommerce_payments core service API shall deterministically enforce primary domain invariants for Promo Coupon Stacking & Abuse Throttle with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Promo Coupon Stacking & Abuse Throttle require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based ecommerce_payments training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Promo Coupon Stacking & Abuse Throttle in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ECO-03",
+      "domain": "ecommerce_payments",
+      "input_kind": "one_liner",
+      "title": "High-Value Luxury Return Inspection Gate",
+      "prompt_text": "Track automated return RMA state machines in the commerce API while requiring manual authenticator inspection SOP sign-off and warehouse grading certification.",
+      "gold_requirements": [
+        "R1: The ecommerce_payments core service API shall deterministically enforce primary domain invariants for High-Value Luxury Return Inspection Gate with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for High-Value Luxury Return Inspection Gate require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based ecommerce_payments training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for High-Value Luxury Return Inspection Gate in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ECO-04",
+      "domain": "ecommerce_payments",
+      "input_kind": "multi_paragraph",
+      "title": "Omnichannel Buy-Online-Pickup-In-Store Inventory Reservation",
+      "prompt_text": "Context: Retail chains serve 120,000 daily BOPIS orders across 400 stores.\n\nFunctional Scope: The reservation API shall atomically decrement store stock with idempotent expiry timers and immutable event logs.\n\nOperational & Readiness: Out-of-stock substitution waivers require store manager manual approval SOPs, and store associates must complete omnichannel fulfillment training before shift assignment.",
+      "gold_requirements": [
+        "R1: The ecommerce_payments core service API shall deterministically enforce primary domain invariants for Omnichannel Buy-Online-Pickup-In-Store Inventory Reservation with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Omnichannel Buy-Online-Pickup-In-Store Inventory Reservation require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based ecommerce_payments training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Omnichannel Buy-Online-Pickup-In-Store Inventory Reservation in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ECO-05",
+      "domain": "ecommerce_payments",
+      "input_kind": "multi_paragraph",
+      "title": "Subscription Dunning Retry & Grace-Period Controller",
+      "prompt_text": "Context: SaaS billing systems manage recurring card retries across 80 countries.\n\nFunctional Scope: The dunning service shall deterministically schedule retry backoff windows and persist encrypted payment-attempt ledgers.\n\nOperational & Readiness: Enterprise account grace extensions above 30 days require Finance VP manual SOP sign-off, and billing specialists must pass PCI-DSS renewal training.",
+      "gold_requirements": [
+        "R1: The ecommerce_payments core service API shall deterministically enforce primary domain invariants for Subscription Dunning Retry & Grace-Period Controller with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Subscription Dunning Retry & Grace-Period Controller require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based ecommerce_payments training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Subscription Dunning Retry & Grace-Period Controller in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "ECO-06",
+      "domain": "ecommerce_payments",
+      "input_kind": "multi_paragraph",
+      "title": "Cross-Border VAT Invoice Calculation & Tax Audit Engine",
+      "prompt_text": "Context: Global marketplaces collect destination-based VAT and GST at checkout.\n\nFunctional Scope: The tax calculation microservice shall deterministically apply jurisdiction rate tables with verifiable audit receipts.\n\nOperational & Readiness: Retroactive tax-exemption credits require Tax Compliance Officer manual SOP review, and merchant onboarding teams must complete annual VAT compliance training.",
+      "gold_requirements": [
+        "R1: The ecommerce_payments core service API shall deterministically enforce primary domain invariants for Cross-Border VAT Invoice Calculation & Tax Audit Engine with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Cross-Border VAT Invoice Calculation & Tax Audit Engine require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based ecommerce_payments training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Cross-Border VAT Invoice Calculation & Tax Audit Engine in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "AVN-01",
+      "domain": "aviation_safety",
+      "input_kind": "one_liner",
+      "title": "Runway Incursion Clearance Interlock Service",
+      "prompt_text": "Enforce deterministic runway-occupancy mutual exclusion in ATC decision support APIs while keeping emergency priority overrides under tower supervisor SOPs and controller simulation training.",
+      "gold_requirements": [
+        "R1: The aviation_safety core service API shall deterministically enforce primary domain invariants for Runway Incursion Clearance Interlock Service with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Runway Incursion Clearance Interlock Service require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based aviation_safety training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Runway Incursion Clearance Interlock Service in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "AVN-02",
+      "domain": "aviation_safety",
+      "input_kind": "one_liner",
+      "title": "Aircraft Weight-and-Balance Loadsheet Validator",
+      "prompt_text": "Compute center-of-gravity envelope bounds automatically in dispatch APIs while requiring captain manual sign-off SOP on last-minute cargo shifts and loadmaster certification.",
+      "gold_requirements": [
+        "R1: The aviation_safety core service API shall deterministically enforce primary domain invariants for Aircraft Weight-and-Balance Loadsheet Validator with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Aircraft Weight-and-Balance Loadsheet Validator require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based aviation_safety training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Aircraft Weight-and-Balance Loadsheet Validator in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "AVN-03",
+      "domain": "aviation_safety",
+      "input_kind": "one_liner",
+      "title": "Minimum Equipment List Dispatch Deferral Tracker",
+      "prompt_text": "Validate MEL airworthiness deferral expiry limits via an immutable fleet API while keeping maintenance release sign-offs under licensed engineer SOPs and crew recurrent training.",
+      "gold_requirements": [
+        "R1: The aviation_safety core service API shall deterministically enforce primary domain invariants for Minimum Equipment List Dispatch Deferral Tracker with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Minimum Equipment List Dispatch Deferral Tracker require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based aviation_safety training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Minimum Equipment List Dispatch Deferral Tracker in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "AVN-04",
+      "domain": "aviation_safety",
+      "input_kind": "multi_paragraph",
+      "title": "Flight Crew Duty-Time Fatigue Limit Enforcement",
+      "prompt_text": "Context: Commercial airlines schedule 3,500 daily crew pairings under strict civil aviation duty regulations.\n\nFunctional Scope: The rostering engine shall deterministically reject crew assignments exceeding legal flight-duty thresholds with immutable audit logs.\n\nOperational & Readiness: Commander discretion extensions require documented Chief Pilot post-flight review SOPs, and dispatchers must pass annual fatigue-risk management training.",
+      "gold_requirements": [
+        "R1: The aviation_safety core service API shall deterministically enforce primary domain invariants for Flight Crew Duty-Time Fatigue Limit Enforcement with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Flight Crew Duty-Time Fatigue Limit Enforcement require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based aviation_safety training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Flight Crew Duty-Time Fatigue Limit Enforcement in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "AVN-05",
+      "domain": "aviation_safety",
+      "input_kind": "multi_paragraph",
+      "title": "De-Icing Holdover Time Expiration Monitor",
+      "prompt_text": "Context: Winter hub airports track wing de-icing fluid holdover times prior to takeoff.\n\nFunctional Scope: The ramp telemetry service shall compute fluid holdover countdowns deterministically and alert cockpit/dispatch endpoints before expiry.\n\nOperational & Readiness: Visual pre-takeoff contamination checks require ground-crew manual inspection SOP sign-off, and ramp leads must complete annual winter-ops certification.",
+      "gold_requirements": [
+        "R1: The aviation_safety core service API shall deterministically enforce primary domain invariants for De-Icing Holdover Time Expiration Monitor with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for De-Icing Holdover Time Expiration Monitor require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based aviation_safety training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for De-Icing Holdover Time Expiration Monitor in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "AVN-06",
+      "domain": "aviation_safety",
+      "input_kind": "multi_paragraph",
+      "title": "Dangerous Goods Lithium Battery Cargo Screening Gate",
+      "prompt_text": "Context: Air cargo carriers screen high-density lithium-ion consignments under IATA regulations.\n\nFunctional Scope: The manifest validation API shall reject incompatible hazmat stowage combinations deterministically.\n\nOperational & Readiness: Special-permit exemptions require Dangerous Goods Officer manual approval SOPs, and cargo acceptance agents must maintain active IATA hazmat certification.",
+      "gold_requirements": [
+        "R1: The aviation_safety core service API shall deterministically enforce primary domain invariants for Dangerous Goods Lithium Battery Cargo Screening Gate with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Dangerous Goods Lithium Battery Cargo Screening Gate require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based aviation_safety training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Dangerous Goods Lithium Battery Cargo Screening Gate in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "IAM-01",
+      "domain": "cloud_iam_security",
+      "input_kind": "one_liner",
+      "title": "Zero-Trust Just-in-Time Production SSH Broker",
+      "prompt_text": "Mint short-lived cryptographic SSH certificates via an automated IAM broker while enforcing dual-reviewer security SOPs for root access and engineer security onboarding.",
+      "gold_requirements": [
+        "R1: The cloud_iam_security core service API shall deterministically enforce primary domain invariants for Zero-Trust Just-in-Time Production SSH Broker with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Zero-Trust Just-in-Time Production SSH Broker require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based cloud_iam_security training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Zero-Trust Just-in-Time Production SSH Broker in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "IAM-02",
+      "domain": "cloud_iam_security",
+      "input_kind": "one_liner",
+      "title": "KMS Hardware Key Rotation & Escrow Controller",
+      "prompt_text": "Automate 90-day envelope key rotation in the KMS API while keeping root HSM ceremony recoveries under quorum custodian SOPs and key-custodian annual drill training.",
+      "gold_requirements": [
+        "R1: The cloud_iam_security core service API shall deterministically enforce primary domain invariants for KMS Hardware Key Rotation & Escrow Controller with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for KMS Hardware Key Rotation & Escrow Controller require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based cloud_iam_security training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for KMS Hardware Key Rotation & Escrow Controller in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "IAM-03",
+      "domain": "cloud_iam_security",
+      "input_kind": "one_liner",
+      "title": "Multi-Tenant API Secret Leak Auto-Revoker",
+      "prompt_text": "Revoke leaked bearer tokens within 5 seconds via deterministic webhook automation while routing customer breach disclosures through incident-commander SOPs and on-call training.",
+      "gold_requirements": [
+        "R1: The cloud_iam_security core service API shall deterministically enforce primary domain invariants for Multi-Tenant API Secret Leak Auto-Revoker with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Multi-Tenant API Secret Leak Auto-Revoker require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based cloud_iam_security training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Multi-Tenant API Secret Leak Auto-Revoker in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "IAM-04",
+      "domain": "cloud_iam_security",
+      "input_kind": "multi_paragraph",
+      "title": "Cross-Account Cloud IAM Policy Drift Guard",
+      "prompt_text": "Context: Cloud security teams govern 600 production accounts across hybrid clouds.\n\nFunctional Scope: The policy engine shall deterministically block wildcard admin grants and persist immutable SHA-256 policy diff logs.\n\nOperational & Readiness: Temporary break-glass exceptions require CISO delegate manual SOP sign-off, and cloud engineers must complete annual least-privilege IAM training.",
+      "gold_requirements": [
+        "R1: The cloud_iam_security core service API shall deterministically enforce primary domain invariants for Cross-Account Cloud IAM Policy Drift Guard with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Cross-Account Cloud IAM Policy Drift Guard require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based cloud_iam_security training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Cross-Account Cloud IAM Policy Drift Guard in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "IAM-05",
+      "domain": "cloud_iam_security",
+      "input_kind": "multi_paragraph",
+      "title": "Customer Data Deletion & Right-to-Erasure Orchestrator",
+      "prompt_text": "Context: Privacy engineering executes GDPR and DPDP erasure requests within 30-day statutory windows.\n\nFunctional Scope: The erasure orchestrator shall deterministically purge user PII across primary stores and record verifiable deletion proofs.\n\nOperational & Readiness: Statutory legal-hold exemptions require Data Protection Officer manual SOP approval, and support leads must complete semi-annual privacy-rights training.",
+      "gold_requirements": [
+        "R1: The cloud_iam_security core service API shall deterministically enforce primary domain invariants for Customer Data Deletion & Right-to-Erasure Orchestrator with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Customer Data Deletion & Right-to-Erasure Orchestrator require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based cloud_iam_security training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Customer Data Deletion & Right-to-Erasure Orchestrator in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "IAM-06",
+      "domain": "cloud_iam_security",
+      "input_kind": "multi_paragraph",
+      "title": "Production CI/CD Artifact Signing & Provenance Gate",
+      "prompt_text": "Context: Release engineering enforces SLSA cryptographic provenance on every production deployment.\n\nFunctional Scope: The admission controller API shall reject unsigned container digests deterministically with audit logging.\n\nOperational & Readiness: Emergency hotfix bypasses require VP Engineering manual post-mortem SOP review, and release managers must complete supply-chain security training.",
+      "gold_requirements": [
+        "R1: The cloud_iam_security core service API shall deterministically enforce primary domain invariants for Production CI/CD Artifact Signing & Provenance Gate with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Production CI/CD Artifact Signing & Provenance Gate require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based cloud_iam_security training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Production CI/CD Artifact Signing & Provenance Gate in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "TEL-01",
+      "domain": "telecom_sla_ops",
+      "input_kind": "one_liner",
+      "title": "5G Network Slice QoS Admission & Throttle Engine",
+      "prompt_text": "Enforce deterministic emergency-service bandwidth reservation in 5G slice APIs while keeping national-disaster spectrum overrides under NOC director SOPs and RF engineer training.",
+      "gold_requirements": [
+        "R1: The telecom_sla_ops core service API shall deterministically enforce primary domain invariants for 5G Network Slice QoS Admission & Throttle Engine with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for 5G Network Slice QoS Admission & Throttle Engine require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based telecom_sla_ops training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for 5G Network Slice QoS Admission & Throttle Engine in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "TEL-02",
+      "domain": "telecom_sla_ops",
+      "input_kind": "one_liner",
+      "title": "SIM-Swap Fraud Velocity Lock & Verification Gate",
+      "prompt_text": "Auto-block high-velocity SIM port requests in the provisioning API while routing identity recovery unlocks through fraud-desk manual SOPs and retail agent security training.",
+      "gold_requirements": [
+        "R1: The telecom_sla_ops core service API shall deterministically enforce primary domain invariants for SIM-Swap Fraud Velocity Lock & Verification Gate with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for SIM-Swap Fraud Velocity Lock & Verification Gate require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based telecom_sla_ops training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for SIM-Swap Fraud Velocity Lock & Verification Gate in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "TEL-03",
+      "domain": "telecom_sla_ops",
+      "input_kind": "one_liner",
+      "title": "Subsea Fiber Cut Traffic Reroute Controller",
+      "prompt_text": "Execute automated BGP traffic rerouting within 500ms while keeping carrier peering capacity leases under capacity-committee SOPs and NOC shift-lead certification.",
+      "gold_requirements": [
+        "R1: The telecom_sla_ops core service API shall deterministically enforce primary domain invariants for Subsea Fiber Cut Traffic Reroute Controller with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Subsea Fiber Cut Traffic Reroute Controller require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based telecom_sla_ops training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Subsea Fiber Cut Traffic Reroute Controller in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "TEL-04",
+      "domain": "telecom_sla_ops",
+      "input_kind": "multi_paragraph",
+      "title": "Enterprise SLA Credit Calculation & Outage Adjudication",
+      "prompt_text": "Context: Carrier networks guarantee 99.99% uptime SLAs to 2,000 enterprise WAN customers.\n\nFunctional Scope: The telemetry billing engine shall deterministically compute downtime minutes and tiered SLA credit percentages with idempotent ledgers.\n\nOperational & Readiness: Force-majeure outage exclusions require Network Ops Director manual SOP sign-off, and account managers must complete annual SLA governance training.",
+      "gold_requirements": [
+        "R1: The telecom_sla_ops core service API shall deterministically enforce primary domain invariants for Enterprise SLA Credit Calculation & Outage Adjudication with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Enterprise SLA Credit Calculation & Outage Adjudication require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based telecom_sla_ops training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Enterprise SLA Credit Calculation & Outage Adjudication in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "TEL-05",
+      "domain": "telecom_sla_ops",
+      "input_kind": "multi_paragraph",
+      "title": "Emergency E911 Call Location Accuracy Routing",
+      "prompt_text": "Context: Mobile carriers route emergency calls to regional PSAP dispatch centers with strict location precision mandates.\n\nFunctional Scope: The location-routing API shall deterministically prioritize high-confidence GPS coordinates with sub-100ms failover.\n\nOperational & Readiness: Regional PSAP outage reroutes require public-safety liaison manual SOP coordination, and switch engineers must pass annual E911 compliance training.",
+      "gold_requirements": [
+        "R1: The telecom_sla_ops core service API shall deterministically enforce primary domain invariants for Emergency E911 Call Location Accuracy Routing with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for Emergency E911 Call Location Accuracy Routing require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based telecom_sla_ops training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for Emergency E911 Call Location Accuracy Routing in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    },
+    {
+      "case_id": "TEL-06",
+      "domain": "telecom_sla_ops",
+      "input_kind": "multi_paragraph",
+      "title": "IoT Roaming Bill-Shock Usage Cap Enforcer",
+      "prompt_text": "Context: Connected-fleet operators deploy 500,000 roaming cellular IoT SIMs globally.\n\nFunctional Scope: The charging gateway shall deterministically throttle non-telemetry traffic once monthly roaming byte caps are reached.\n\nOperational & Readiness: Emergency fleet cap-lift waivers require Enterprise Support Lead manual SOP approval, and NOC analysts must complete roaming-policy onboarding training.",
+      "gold_requirements": [
+        "R1: The telecom_sla_ops core service API shall deterministically enforce primary domain invariants for IoT Roaming Bill-Shock Usage Cap Enforcer with sub-250ms latency and immutable audit logging.",
+        "R2: High-impact exception overrides for IoT Roaming Bill-Shock Usage Cap Enforcer require a documented manual governance SOP and dual sign-off from an accountable operations officer.",
+        "R3: Operators and support staff must complete role-based telecom_sla_ops training curriculum and pass competency certification before production access.",
+        "R4: The system shall automate threshold detection in the core API while routing policy exceptions through a documented human approval escalation workflow."
+      ],
+      "expected_routes": {
+        "R1": "software",
+        "R2": "process",
+        "R3": "training",
+        "R4": "hybrid"
+      },
+      "adr_rubric_anchors": [
+        "Justify placing deterministic core invariant enforcement for IoT Roaming Bill-Shock Usage Cap Enforcer in a Functional Core software module.",
+        "Justify routing exception overrides to a documented human Process SOP rather than unattended automation.",
+        "Document mandatory pre-go-live role training and rejected software-only alternatives."
+      ]
+    }
+  ]
+}

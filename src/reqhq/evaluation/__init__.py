@@ -1,7 +1,24 @@
-"""Phase 4 Layers 1-4 evaluation orchestrator, telemetry, and greenfield coding tasks."""
+"""Phase 4/5 Layers 1-4 evaluation orchestrator, corpus scalability, ablations, telemetry, and coding tasks."""
 
 from __future__ import annotations
 
+from reqhq.evaluation.ablations import (
+    ABLATION_ARMS,
+    AblationArmName,
+    AblationArmSummary,
+    AblationItemRecord,
+    AblationReport,
+    AblationRunner,
+    build_critics_for_arm,
+    summarize_ablation_records,
+)
+from reqhq.evaluation.corpus_bench import (
+    CorpusBenchmarkRunner,
+    CorpusBenchSummary,
+    CorpusDocRecord,
+    V1_TRUNCATION_THRESHOLD_CHARS,
+    summarize_corpus_records,
+)
 from reqhq.evaluation.models import (
     CodingTaskMeta,
     EvalBundleManifest,
@@ -24,6 +41,9 @@ from reqhq.evaluation.runner import (
 from reqhq.evaluation.tasks import (
     DEFAULT_CODING_TASKS_DIR,
     EXPECTED_TASK_IDS,
+    EXTENDED_CODING_TASKS_DIR,
+    EXTENDED_TASK_IDS,
+    load_coding_suite,
     load_coding_tasks,
 )
 from reqhq.evaluation.telemetry import (
@@ -34,13 +54,23 @@ from reqhq.evaluation.telemetry import (
 )
 
 __all__ = [
+    "ABLATION_ARMS",
+    "AblationArmName",
+    "AblationArmSummary",
+    "AblationItemRecord",
+    "AblationReport",
+    "AblationRunner",
     "CONDITION_SPEC",
     "CodingTaskMeta",
+    "CorpusBenchSummary",
+    "CorpusBenchmarkRunner",
+    "CorpusDocRecord",
     "DEFAULT_CODING_TASKS_DIR",
     "EXPECTED_TASK_IDS",
+    "EXTENDED_CODING_TASKS_DIR",
+    "EXTENDED_TASK_IDS",
     "EvalBundleManifest",
     "EvalCheckpoint",
-    "EvalOrchestrator",
     "EvalRunConfig",
     "LAYER_LOG_FILENAMES",
     "Layer1Record",
@@ -50,10 +80,15 @@ __all__ = [
     "LiveExecutionUnavailableError",
     "RunMode",
     "StageTelemetryCollector",
+    "V1_TRUNCATION_THRESHOLD_CHARS",
+    "build_critics_for_arm",
     "compute_cloud_reduction_pct",
     "compute_local_only_pct",
     "get_process_peak_ram_mb",
+    "load_coding_suite",
     "load_coding_tasks",
     "make_unit_key",
     "sha256_file",
+    "summarize_ablation_records",
+    "summarize_corpus_records",
 ]

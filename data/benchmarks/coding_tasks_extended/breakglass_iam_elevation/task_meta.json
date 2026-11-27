@@ -1,0 +1,19 @@
+{
+  "task_id": "breakglass_iam_elevation",
+  "domain": "cloud_iam_security",
+  "title": "Just-in-Time Break-Glass IAM Elevation Gate",
+  "target_module": "breakglass_iam_elevation",
+  "entry_symbol": "evaluate_iam_elevation",
+  "required_invariants": [
+    "duration_min <= 0 or blank principal or blank ticket_id must raise ValueError.",
+    "If mfa_verified is False or training_current is False, deny immediately.",
+    "If duration_min > 60 or target_env == 'prod', require dual_approval_count >= 2.",
+    "Otherwise approve when dual_approval_count >= 1."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

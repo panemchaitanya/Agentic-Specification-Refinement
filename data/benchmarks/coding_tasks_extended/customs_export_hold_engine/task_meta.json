@@ -1,0 +1,19 @@
+{
+  "task_id": "customs_export_hold_engine",
+  "domain": "supply_chain_compliance",
+  "title": "Export Control & Dual-Use Customs Hold Gate",
+  "target_module": "customs_export_hold_engine",
+  "entry_symbol": "evaluate_export_clearance",
+  "required_invariants": [
+    "declared_value_usd <= 0 or blank destination_country must raise ValueError.",
+    "If destination_country in sanctioned_countries, return decision='blocked_sanctions'.",
+    "If is_dual_use and not has_export_license, return decision='compliance_hold'.",
+    "If declared_value_usd > 100000 and not dual_signed, return decision='compliance_hold'; else 'cleared'."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

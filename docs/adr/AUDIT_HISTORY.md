@@ -2,8 +2,8 @@
 
 > Auto-generated from the append-only [`audit_log.jsonl`](./audit_log.jsonl) ledger. Do not delete historical events; append new lifecycle transitions via `ADRManager` or `reqhq adr`.
 
-- **Total Audit Events:** 52
-- **Created:** 23 | **Accepted:** 23 | **Deprecated:** 1 | **Superseded:** 2 | **Archived:** 3
+- **Total Audit Events:** 58
+- **Created:** 26 | **Accepted:** 26 | **Deprecated:** 1 | **Superseded:** 2 | **Archived:** 3
 
 | Timestamp (UTC) | Action | ADR | Transition | Author | Related | Path | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -59,3 +59,9 @@
 | 2026-11-27T04:38:00Z | `accepted` | ADR-0023 | Proposed -> Accepted | cli | — | `0023-hardware-aware-local-slm-free-tier-router-live-decoding-escalation-short-circuit-v2.md` | Accepted consolidated v2 Routing & Live Provider ADR superseding ADR-0003 and consolidating ADR-0020 |
 | 2026-11-27T04:38:00Z | `deprecated` | ADR-0020 | Accepted -> Deprecated | cli | — | `archive/0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md` | Consolidated into ADR-0023 (Hardware-Aware Local SLM, Free-Tier Router, Live Decoding & Escalation Short-Circuit (v2)) alongside superseded ADR-0003 to eliminate routing-policy clashes. |
 | 2026-11-27T04:38:00Z | `archived` | ADR-0020 | Deprecated -> Deprecated | cli | — | `archive/0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md` | Archived ADR-0020 to archive/0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md |
+| 2026-11-27T09:09:56Z | `created` | ADR-0024 | Proposed | research-lead | — | `0024-large-scale-promise-nfr-layer-1-61-doc-pure-corpus-benchmark-extended-benchmarks-and-critic-ablations.md` | Created ADR-0024: Large-Scale PROMISE NFR Layer 1, 61-Doc PURE Corpus Benchmark, Extended Benchmarks, and Critic Ablations |
+| 2026-11-27T09:09:56Z | `accepted` | ADR-0024 | Proposed -> Accepted | research-lead | — | `0024-large-scale-promise-nfr-layer-1-61-doc-pure-corpus-benchmark-extended-benchmarks-and-critic-ablations.md` | Accepted ADR-0024 after implementing Stage A/B modules, extended datasets, and 100%-coverage unit + PBT suites. |
+| 2026-11-27T14:37:38Z | `created` | ADR-0025 | Proposed | research-lead | — | `0025-standalone-deterministic-pre-llm-pdf-srs-text-cleaner-and-human-verification-studio.md` | Created ADR-0025: Standalone Deterministic Pre-LLM PDF/SRS Text Cleaner and Human Verification Studio |
+| 2026-11-27T14:37:39Z | `accepted` | ADR-0025 | Proposed -> Accepted | research-lead | — | `0025-standalone-deterministic-pre-llm-pdf-srs-text-cleaner-and-human-verification-studio.md` | Accepted ADR-0025 after 15-doc PURE dev audit (-44.94% chars, 0 normative lines removed), 100%-coverage unit/PBT suite, and interactive Review Studio. |
+| 2026-11-27T16:11:01Z | `created` | ADR-0026 | Proposed | research-lead | — | `0026-cleaner-v2-refinements-srs-heading-promotion-section-role-triage-and-tf-idf-semantic-chunking.md` | Created ADR-0026: Cleaner v2 Refinements, SRS Heading Promotion, Section-Role Triage, and TF-IDF Semantic Chunking |
+| 2026-11-27T16:11:02Z | `accepted` | ADR-0026 | Proposed -> Accepted | research-lead | — | `0026-cleaner-v2-refinements-srs-heading-promotion-section-role-triage-and-tf-idf-semantic-chunking.md` | Accepted ADR-0026 after human-verified Cleaner v2 fixes, TF-IDF semantic chunking (-49.98% combined Raw->LLM reduction across 15 PURE dev SRS docs), and 100%-coverage unit + PBT suites. |

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440">
+  <rect x="0" y="0" width="760" height="440" fill="#ffffff"/>
+  <text x="380.0" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#0f172a">7-Category Evaluation Error Taxonomy</text>
+  <text x="380.0" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">Total failures: 18</text>
+  <rect x="195.0" y="62.0" width="470.0" height="322.0" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="195.0" y1="62.0" x2="195.0" y2="384.0" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="195.0" y="402.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#475569">0.0</text>
+  <line x1="312.5" y1="62.0" x2="312.5" y2="384.0" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="312.5" y="402.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#475569">4.5</text>
+  <line x1="430.0" y1="62.0" x2="430.0" y2="384.0" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="430.0" y="402.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#475569">9.0</text>
+  <line x1="547.5" y1="62.0" x2="547.5" y2="384.0" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="547.5" y="402.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#475569">13.5</text>
+  <line x1="665.0" y1="62.0" x2="665.0" y2="384.0" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="665.0" y="402.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#475569">18.0</text>
+  <text x="185.0" y="89.0" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">SCHEMA_DRIFT</text>
+  <rect x="195.0" y="72.0" width="0.0" height="26.0" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.6"/>
+  <text x="201.0" y="89.0" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">0 (0.0%)</text>
+  <text x="185.0" y="135.0" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">ALLOY_SYNTAX</text>
+  <rect x="195.0" y="118.0" width="0.0" height="26.0" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.6"/>
+  <text x="201.0" y="135.0" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">0 (0.0%)</text>
+  <text x="185.0" y="181.0" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">ALLOY_VACUOUS</text>
+  <rect x="195.0" y="164.0" width="0.0" height="26.0" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.6"/>
+  <text x="201.0" y="181.0" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">0 (0.0%)</text>
+  <text x="185.0" y="227.0" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">UNSAT_CONTRADICTION</text>
+  <rect x="195.0" y="210.0" width="0.0" height="26.0" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.6"/>
+  <text x="201.0" y="227.0" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">0 (0.0%)</text>
+  <text x="185.0" y="273.0" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">ROUTING_AMBIGUITY</text>
+  <rect x="195.0" y="256.0" width="0.0" height="26.0" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.6"/>
+  <text x="201.0" y="273.0" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">0 (0.0%)</text>
+  <text x="185.0" y="319.0" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">PBT_COUNTEREXAMPLE</text>
+  <rect x="195.0" y="302.0" width="470.0" height="26.0" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.6"/>
+  <text x="671.0" y="319.0" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">18 (100.0%)</text>
+  <text x="185.0" y="365.0" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">QUOTA_FALLBACK</text>
+  <rect x="195.0" y="348.0" width="0.0" height="26.0" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.6"/>
+  <text x="201.0" y="365.0" font-family="Arial, sans-serif" font-size="11" fill="#1e293b">0 (0.0%)</text>
+  <text x="430.0" y="426.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1e293b">Failure Event Count</text>
+</svg>

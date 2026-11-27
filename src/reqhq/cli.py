@@ -36,10 +36,16 @@ auth_app = typer.Typer(
     help="Manage encrypted local credentials (Windows DPAPI / PBKDF2-Fernet vault).",
     no_args_is_help=True,
 )
+clean_app = typer.Typer(
+    name="clean",
+    help="Run standalone deterministic PDF/SRS text cleaning trials and generate the interactive verification UI.",
+    no_args_is_help=True,
+)
 app.add_typer(adr_app, name="adr")
 app.add_typer(benchmark_app, name="benchmark")
 app.add_typer(eval_app, name="eval")
 app.add_typer(auth_app, name="auth")
+app.add_typer(clean_app, name="clean")
 
 
 def _build_router(
@@ -1728,8 +1734,29 @@ def eval_run_command(
     ] = None,
     split: Annotated[
         Literal["dev", "all"],
-        typer.Option("--split", help="Frozen PURE gold split: dev (default safe pilot) or all (dev+test)."),
+        typer.Option("--split", help="Frozen gold split: dev (default safe pilot) or all (dev+test)."),
     ] = "dev",
+    include_promise: Annotated[
+        bool,
+        typer.Option(
+            "--include-promise",
+            help="Include human-labeled PROMISE NFR projects (11 dev / 4 test) in Layer 1 alongside PURE.",
+        ),
+    ] = False,
+    cross_domain_suite: Annotated[
+        Literal["canonical", "extended"],
+        typer.Option(
+            "--cross-domain-suite",
+            help="Layer 2 cross-domain suite: canonical (16 projects) or extended (48 projects).",
+        ),
+    ] = "canonical",
+    coding_suite: Annotated[
+        Literal["canonical", "extended"],
+        typer.Option(
+            "--coding-suite",
+            help="Layer 3 greenfield coding suite: canonical (6 tasks) or extended (12 tasks).",
+        ),
+    ] = "canonical",
     strict_local: Annotated[
         bool,
         typer.Option("--strict-local", help="Forbid outbound cloud escalation during live evaluation."),
@@ -1758,6 +1785,9 @@ def eval_run_command(
             seed=seed,
             max_tasks=max_tasks,
             split=split,
+            include_promise=include_promise,
+            cross_domain_suite=cross_domain_suite,
+            coding_suite=coding_suite,
             strict_local=strict_local,
         )
         hooks: dict[str, Any] = {}
@@ -1825,6 +1855,142 @@ def eval_resume_command(
     typer.echo(
         f"Evaluation resumed: run_id={manifest.run_id} | mode={manifest.run_mode.value} | "
         f"layers={manifest.layers_completed} | records=({counts})"
+    )
+
+
+@eval_app.command("corpus-bench")
+def eval_corpus_bench_command(
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for corpus_bench.jsonl and corpus_summary.json."),
+    ],
+    mode: Annotated[
+        Literal["mock", "live"],
+        typer.Option("--mode", help="Execution mode: mock (offline CI) or live (Ollama + Alloy 6.2)."),
+    ] = "mock",
+    split: Annotated[
+        Literal["dev", "all"],
+        typer.Option("--split", help="PURE SRS text split: dev (61 docs) or all (79 docs)."),
+    ] = "dev",
+    max_docs: Annotated[
+        int | None,
+        typer.Option("--max-docs", help="Optional cap on number of PURE documents to run."),
+    ] = None,
+    seed: Annotated[
+        int,
+        typer.Option("--seed", help="Deterministic seed for PBT contract generation."),
+    ] = 42,
+    strict_local: Annotated[
+        bool,
+        typer.Option("--strict-local", help="Forbid cloud escalation during live corpus benchmark."),
+    ] = False,
+    smart_frontend: Annotated[
+        bool,
+        typer.Option(
+            "--smart-frontend/--raw-frontend",
+            help="Enable deterministic PDF cleaning, section triage & TF-IDF semantic chunking (ADR-0025/0026).",
+        ),
+    ] = True,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent quota, cache, and vault."),
+    ] = Path(".reqhq_sessions"),
+) -> None:
+    """Run the checkpointed 61-doc PURE dev (or 79-doc all) industrial SRS scalability benchmark."""
+    from reqhq.evaluation import CorpusBenchmarkRunner, LiveExecutionUnavailableError, RunMode
+
+    try:
+        _guard_eval_out_dir(out)
+        run_mode = RunMode(mode)
+        extra_kwargs: dict[str, Any] = {}
+        if run_mode == RunMode.LIVE:
+            hooks = _build_live_eval_hooks(sessions_dir=sessions_dir, strict_local=strict_local)
+            extra_kwargs["live_router"] = hooks["live_router"]
+            extra_kwargs["live_alloy_analyzer"] = hooks["live_alloy_analyzer"]
+
+        runner_obj = CorpusBenchmarkRunner(
+            out,
+            mode=run_mode,
+            split=split,
+            max_docs=max_docs,
+            seed=seed,
+            use_smart_frontend=smart_frontend,
+            progress_callback=_echo_eval_progress,
+            **extra_kwargs,
+        )
+        summary = runner_obj.run()
+    except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Corpus benchmark complete: mode={summary.run_mode.value} | split={summary.split} | "
+        f"docs={summary.total_docs} (over_120k={summary.over_120k_docs}) | "
+        f"zero_trunc={summary.zero_truncation_rate:.2%} | "
+        f"alloy_non_vacuous={summary.alloy_non_vacuous_rate:.2%} | "
+        f"lock_verified={summary.lock_verified_rate:.2%}"
+    )
+
+
+@eval_app.command("ablate")
+def eval_ablate_command(
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for ablation_records.jsonl and ablation_summary.json."),
+    ],
+    mode: Annotated[
+        Literal["mock", "live"],
+        typer.Option("--mode", help="Execution mode: mock (offline CI) or live."),
+    ] = "mock",
+    split: Annotated[
+        Literal["dev", "all"],
+        typer.Option("--split", help="Frozen gold split: dev (14 projects) or all (18 projects)."),
+    ] = "dev",
+    include_promise: Annotated[
+        bool,
+        typer.Option("--include-promise/--no-include-promise", help="Include 11 dev / 4 test PROMISE NFR projects."),
+    ] = True,
+    seed: Annotated[
+        int,
+        typer.Option("--seed", help="Deterministic gap-injection seed."),
+    ] = 42,
+    strict_local: Annotated[
+        bool,
+        typer.Option("--strict-local", help="Forbid cloud escalation during live ablation study."),
+    ] = False,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent quota, cache, and vault."),
+    ] = Path(".reqhq_sessions"),
+) -> None:
+    """Run Proposal B3 (zero-human) and leave-one-critic-out 5-critic ablations."""
+    from reqhq.evaluation import AblationRunner, LiveExecutionUnavailableError, RunMode
+
+    try:
+        _guard_eval_out_dir(out)
+        run_mode = RunMode(mode)
+        extra_kwargs: dict[str, Any] = {}
+        if run_mode == RunMode.LIVE:
+            hooks = _build_live_eval_hooks(sessions_dir=sessions_dir, strict_local=strict_local)
+            extra_kwargs["live_router"] = hooks["live_router"]
+
+        runner_obj = AblationRunner(
+            out,
+            mode=run_mode,
+            split=split,
+            include_promise=include_promise,
+            seed=seed,
+            progress_callback=_echo_eval_progress,
+            **extra_kwargs,
+        )
+        report = runner_obj.run()
+    except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Ablation study complete: mode={report.run_mode.value} | split={report.split} | "
+        f"records={report.total_records} | arms={len(report.arms)}"
     )
 
 
@@ -2341,6 +2507,52 @@ def auth_clear_command(
 
     vault.clear()
     typer.echo(f"Cleared credential vault: {vault.vault_path}")
+
+
+@clean_app.command("trial")
+def clean_trial_command(
+    in_path: Annotated[
+        Path,
+        typer.Option("--in", help="Input .txt/.md file or directory (e.g., data/frozen/pure/text/dev)."),
+    ] = Path("data/frozen/pure/text/dev"),
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Output directory for raw/, cleaned/, audits/, batch_summary.json, and review_ui.html."),
+    ] = Path("eval_cleaner_trial"),
+    limit: Annotated[
+        int,
+        typer.Option("--limit", help="Maximum number of documents to clean in this trial batch."),
+    ] = 15,
+    stratified: Annotated[
+        bool,
+        typer.Option("--stratified/--no-stratified", help="Select a size-stratified sample across small, medium, and large docs."),
+    ] = True,
+    reflow: Annotated[
+        bool,
+        typer.Option("--reflow/--no-reflow", help="Join safe mid-sentence PDF line wraps and de-hyphenate words."),
+    ] = True,
+) -> None:
+    """Run standalone deterministic PDF/SRS text cleaning trial and generate interactive HTML review UI."""
+    from reqhq.ingestion import CleanerConfig, PDFTextCleaner, select_stratified_files
+
+    try:
+        _guard_eval_out_dir(out)
+        files = select_stratified_files(in_path, limit=limit, stratified=stratified)
+        cleaner = PDFTextCleaner(CleanerConfig(reflow_pdf_wraps=reflow))
+        summary = cleaner.clean_batch(files, out, generate_ui=True)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1)
+
+    typer.echo(
+        f"Cleaning trial complete: docs={summary.total_docs} | "
+        f"chars={summary.total_raw_chars:,} -> {summary.total_cleaned_chars:,} "
+        f"(-{summary.overall_reduction_pct:.2f}%) | "
+        f"est_tokens_saved={summary.total_est_tokens_saved:,} | "
+        f"chunks={summary.total_chunks_before} -> {summary.total_chunks_after} | "
+        f"normative_removed={summary.total_normative_removed}"
+    )
+    typer.echo(f"Review UI: {summary.review_ui_path}")
 
 
 def main() -> None:
