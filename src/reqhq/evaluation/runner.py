@@ -22,7 +22,7 @@ from reqhq.alloy.models import AlloyCompatMode, AlloyRunStatus
 from reqhq.alloy.repair_loop import AlloyVerificationController
 from reqhq.alloy.runner import AlloyAnalyzer
 from reqhq.benchmark.adjudication import cohens_kappa
-from reqhq.benchmark.cross_domain import load_cross_domain_suite, run_cross_domain_benchmark
+from reqhq.benchmark.cross_domain import load_cross_domain_suite
 from reqhq.benchmark.gap_injector import GapInjector
 from reqhq.benchmark.models import CrossDomainCase, FrozenGoldDocument, GapCategory, GapClause
 from reqhq.benchmark.oracle_sim import FrozenOracleSimulator
@@ -52,7 +52,7 @@ from reqhq.harness.models import (
 )
 from reqhq.harness.mutation import MutationRunner
 from reqhq.llm.hardware_profiler import HardwareProfiler
-from reqhq.llm.providers.base import LLMRequest
+from reqhq.llm.providers.base import LLMRequest, ProviderError
 from reqhq.llm.providers.mock import MockProvider
 from reqhq.llm.quota_ledger import QuotaLedger
 from reqhq.llm.router import ProviderRouter
@@ -438,11 +438,12 @@ class EvalOrchestrator:
 
     def _load_verified_gold_documents(self) -> list[FrozenGoldDocument]:
         docs = load_frozen_pure_gold(self.frozen_root, split="dev", strict_fail_closed=False)
-        test_dir = self.frozen_root / "gold" / "test"
-        if test_dir.is_dir():
-            docs.extend(
-                load_frozen_pure_gold(self.frozen_root, split="test", strict_fail_closed=False)
-            )
+        if self.config.split == "all":
+            test_dir = self.frozen_root / "gold" / "test"
+            if test_dir.is_dir():
+                docs.extend(
+                    load_frozen_pure_gold(self.frozen_root, split="test", strict_fail_closed=False)
+                )
         if not docs:
             raise ValueError(
                 f"Fail-closed Layer 1 refusal: zero human-verified FROZEN gold documents in {self.frozen_root}"
@@ -499,22 +500,27 @@ class EvalOrchestrator:
             cloud_tokens = 0
 
             if router is not None:
-                resp = router.route(
-                    LLMRequest(
-                        prompt=(
-                            f"Identify missing requirements for {doc.item_id} from degraded PRD:\n"
-                            f"{injected.degraded_prd[:2000]}"
-                        ),
-                        system_prompt="Return concise clarifying questions, one per line.",
-                        temperature=0.0,
-                        max_tokens=512,
+                try:
+                    resp = router.route(
+                        LLMRequest(
+                            prompt=(
+                                f"Identify missing requirements for {doc.item_id} from degraded PRD:\n"
+                                f"{injected.degraded_prd[:2000]}"
+                            ),
+                            system_prompt="Return concise clarifying questions, one per line.",
+                            temperature=0.0,
+                            max_tokens=512,
+                        )
                     )
-                )
-                questions = [line.strip() for line in resp.text.splitlines() if line.strip()]
-                for q in questions:
-                    iter_oracle.answer_question(q)
-                cloud_requests = 1 if resp.cloud_verified else 0
-                cloud_tokens = resp.total_tokens if resp.cloud_verified else 0
+                    questions = [line.strip() for line in resp.text.splitlines() if line.strip()]
+                    for q in questions:
+                        iter_oracle.answer_question(q)
+                    cloud_requests = 1 if resp.cloud_verified else 0
+                    cloud_tokens = resp.total_tokens if resp.cloud_verified else 0
+                except ProviderError as exc:
+                    error_events.append(f"QUOTA_FALLBACK: {exc}")
+                    cloud_requests = 0
+                    cloud_tokens = 0
             else:
                 for hidden in injected.manifest.stripped_clauses:
                     iter_oracle.answer_question(
@@ -579,9 +585,7 @@ class EvalOrchestrator:
             analyzer = MockAlloyAnalyzer(default_status=AlloyRunStatus.VERIFIED)
 
         self.telemetry.start_stage("layer2_cross_domain")
-        bench_report = run_cross_domain_benchmark(suite, router=router, seed=self.config.seed)
-        case_report_map = {entry["case_id"]: entry for entry in bench_report["cases"]}
-
+        triager = SocioTechnicalTriager(router)
         emitter = AlloySpecEmitter()
         controller = AlloyVerificationController(
             router=router,
@@ -597,16 +601,26 @@ class EvalOrchestrator:
                 continue
 
             started = time.perf_counter()
-            report_entry = case_report_map[case.case_id]
-            expected_routes: dict[str, str] = report_entry["expected_routes"]
-            predicted_routes: dict[str, str] = report_entry["predicted_routes"]
+            graph = _graph_from_cross_domain_case(case)
+            plan = triager.triage(graph, session_id=f"bench-{case.case_id}-{self.config.seed}")
+            expected_routes: dict[str, str] = dict(case.expected_routes)
+            predicted_routes: dict[str, str] = {
+                item.req_id: item.track.value for item in plan.items
+            }
+            matched_routes = sum(
+                1
+                for req_id, exp_track in expected_routes.items()
+                if predicted_routes.get(req_id) == exp_track
+            )
+            route_acc = (
+                round(matched_routes / len(expected_routes), 4) if expected_routes else 0.0
+            )
 
             ordered_keys = sorted(expected_routes.keys())
             labels_expected = [expected_routes[k] for k in ordered_keys]
             labels_predicted = [predicted_routes.get(k, "software") for k in ordered_keys]
             kappa_val = round(cohens_kappa(labels_expected, labels_predicted), 4)
 
-            graph = _graph_from_cross_domain_case(case)
             spec_md = emitter.emit_spec_md(graph, compat=compat)
             outcome = controller.verify_spec(spec_md, graph, compat=compat)
             alloy_verified = outcome.status == AlloyRunStatus.VERIFIED
@@ -623,7 +637,6 @@ class EvalOrchestrator:
             llm_only_caught = 1 if case.input_kind == "multi_paragraph" and alloy_verified else 0
 
             anchor_coverage = min(1.0, len(case.adr_rubric_anchors) / 3.0)
-            route_acc = float(report_entry["route_accuracy"])
             routing_rubric = round(min(1.0, 0.5 * route_acc + 0.5 * anchor_coverage), 4)
             software_count = sum(1 for v in expected_routes.values() if v == "software")
             software_only_rubric = round(
@@ -693,6 +706,15 @@ class EvalOrchestrator:
         compat = AlloyCompatMode(self.config.alloy_compat)
 
         for task_idx, task in enumerate(tasks):
+            pending_units = [
+                make_unit_key(3, task.task_id, cond_label, replicate)
+                for cond_label, _exp_cond in CONDITION_SPEC
+                for replicate in range(1, self.config.replicates + 1)
+                if make_unit_key(3, task.task_id, cond_label, replicate) not in self._completed_units
+            ]
+            if not pending_units:
+                continue
+
             # Build verified Alloy + locked PBT handoff bundle once per task (for Cond C).
             bundle_dir = self.out_dir / "bundles" / task.task_id
             graph = _graph_from_coding_task(task)

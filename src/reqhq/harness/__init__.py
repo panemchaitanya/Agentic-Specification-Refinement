@@ -12,6 +12,11 @@ from reqhq.harness.experiment import (
     read_trial_results_csv,
 )
 from reqhq.harness.handoff import build_handoff_bundle
+from reqhq.harness.live_agent import (
+    LiveLLMCodingAgent,
+    extract_code_payload,
+    parse_pytest_pass_rate,
+)
 from reqhq.harness.models import (
     RESULTS_CSV_FIELDNAMES,
     ExperimentCondition,
@@ -31,6 +36,7 @@ __all__ = [
     "ExperimentCondition",
     "ExperimentHarness",
     "HandoffBundleManifest",
+    "LiveLLMCodingAgent",
     "MockCodingAgent",
     "MutantCandidate",
     "MutantOutcome",
@@ -43,7 +49,9 @@ __all__ = [
     "append_trial_result_csv",
     "build_handoff_bundle",
     "compute_mutation_score",
+    "extract_code_payload",
     "generate_mutants",
+    "parse_pytest_pass_rate",
     "read_trial_results_csv",
     "select_mutation_runner",
 ]
