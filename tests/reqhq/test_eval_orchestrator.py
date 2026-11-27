@@ -799,3 +799,37 @@ def test_pbt_checkpoint_unit_dedup_idempotency(precompleted_indices: list[int]) 
         assert len(final_ids) == 6
         assert len(set(final_ids)) == 6
         assert set(final_ids) == {r.record_id for r in all_records}
+
+
+def test_layer1_disables_ollama_thinking_and_escalates_on_empty_response(tmp_path: Path) -> None:
+    """DEF-P5-005 regression: Layer 1 must pass think=False and escalate if local returns empty."""
+    seen_think_flags: list[object] = []
+
+    class _EmptyLocalProvider(MockProvider):
+        def generate(self, request):  # type: ignore[override]
+            seen_think_flags.append(request.metadata.get("think"))
+            return super().generate(request)
+
+    local_empty = _EmptyLocalProvider(default_response="   ")
+    cloud_ok = MockProvider(
+        name="gemini",
+        is_local=False,
+        default_response="What authentication controls are required?\nWhat audit retention applies?",
+    )
+    router = ProviderRouter(
+        local_provider=local_empty,
+        cloud_providers=[cloud_ok],
+        strict_local=False,
+        max_local_retries=0,
+        enable_cache=False,
+    )
+    cfg = EvalRunConfig(
+        out_dir=tmp_path / "l1_think_fix",
+        layers=[1],
+        mode=RunMode.LIVE,
+        seed=42,
+    )
+    recs = EvalOrchestrator(cfg, hardware_profiler=_fast_profiler(), live_router=router).run_layer1()
+    assert len(recs) == 3
+    assert seen_think_flags and all(flag is False for flag in seen_think_flags)
+    assert all(r.questions_asked == 2 and r.cloud_requests == 1 for r in recs)

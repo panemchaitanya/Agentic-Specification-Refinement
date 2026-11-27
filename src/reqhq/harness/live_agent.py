@@ -130,6 +130,8 @@ class LiveLLMCodingAgent:
         system_prompt = (
             "You are a senior Python 3.15 software engineer. "
             "Implement clean, deterministic, self-contained stdlib-only Python code and pytest unit tests. "
+            "Format module_code and test_code with standard multi-line Python indentation using \\n newlines; "
+            "never collapse multiple statements onto a single line. "
             "Return ONLY valid JSON matching the schema with keys `module_code` and `test_code`."
         )
 

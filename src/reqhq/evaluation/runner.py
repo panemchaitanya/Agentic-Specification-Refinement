@@ -61,7 +61,7 @@ from reqhq.llm.hardware_profiler import HardwareProfiler
 from reqhq.llm.providers.base import LLMRequest, ProviderError
 from reqhq.llm.providers.mock import MockProvider
 from reqhq.llm.quota_ledger import QuotaLedger
-from reqhq.llm.router import ProviderRouter
+from reqhq.llm.router import EscalationReason, ProviderRouter
 from reqhq.pbt.emitter import PBTSpecEmitter
 from reqhq.schemas.requirements import (
     RequirementGraph,
@@ -518,18 +518,24 @@ class EvalOrchestrator:
 
             if router is not None:
                 try:
-                    resp = router.route(
-                        LLMRequest(
-                            prompt=(
-                                f"Identify missing requirements for {doc.item_id} from degraded PRD:\n"
-                                f"{injected.degraded_prd[:2000]}"
-                            ),
-                            system_prompt="Return concise clarifying questions, one per line.",
-                            temperature=0.0,
-                            max_tokens=512,
-                        )
+                    l1_request = LLMRequest(
+                        prompt=(
+                            f"Identify missing requirements for {doc.item_id} from degraded PRD:\n"
+                            f"{injected.degraded_prd[:2000]}"
+                        ),
+                        system_prompt="Return concise clarifying questions, one per line.",
+                        temperature=0.0,
+                        max_tokens=512,
+                        metadata={"stage": "layer1_elicitation", "think": False},
                     )
+                    resp = router.route(l1_request)
                     questions = [line.strip() for line in resp.text.splitlines() if line.strip()]
+                    if not questions:
+                        resp = router.route(
+                            l1_request,
+                            escalation_reason=EscalationReason.SCHEMA_RETRY_EXHAUSTED,
+                        )
+                        questions = [line.strip() for line in resp.text.splitlines() if line.strip()]
                     for q in questions:
                         iter_oracle.answer_question(q)
                     cloud_requests = 1 if resp.cloud_verified else 0
