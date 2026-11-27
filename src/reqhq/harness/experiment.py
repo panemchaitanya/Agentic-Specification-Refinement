@@ -308,13 +308,13 @@ class ExperimentHarness:
         if eff_timeout <= 0.0:
             raise ValueError("timeout_seconds must be > 0")
 
-        out_root = Path(out_dir)
+        out_root = Path(out_dir).resolve()
         resolved_trial_id = trial_id or f"{case_id}__{condition.value}__seed{seed}"
         artifacts_dir = out_root / "trials" / resolved_trial_id
         workspace_dir = artifacts_dir / "workspace"
         workspace_dir.mkdir(parents=True, exist_ok=True)
 
-        bundle_path = Path(bundle_dir) if bundle_dir is not None else None
+        bundle_path = Path(bundle_dir).resolve() if bundle_dir is not None else None
         tokens_before, reqs_before = self._snapshot_quota_totals()
         started = time.perf_counter()
 

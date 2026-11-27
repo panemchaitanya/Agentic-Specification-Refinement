@@ -2,8 +2,8 @@
 
 > Auto-generated from the append-only [`audit_log.jsonl`](./audit_log.jsonl) ledger. Do not delete historical events; append new lifecycle transitions via `ADRManager` or `reqhq adr`.
 
-- **Total Audit Events:** 42
-- **Created:** 21 | **Accepted:** 21 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
+- **Total Audit Events:** 52
+- **Created:** 23 | **Accepted:** 23 | **Deprecated:** 1 | **Superseded:** 2 | **Archived:** 3
 
 | Timestamp (UTC) | Action | ADR | Transition | Author | Related | Path | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -49,3 +49,13 @@
 | 2026-11-26T16:41:48Z | `accepted` | ADR-0020 | Proposed -> Accepted | coordinator | — | `0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md` | Accepted ADR-0020: Live Provider Decoding, Escalation Short-Circuit, Fallbacks and Live Probing |
 | 2026-11-26T16:49:11Z | `created` | ADR-0021 | Proposed | coordinator | — | `0021-live-llm-coding-agent-and-verified-live-evaluation-pipeline.md` | Created ADR-0021: Live LLM Coding Agent and VERIFIED_LIVE Evaluation Pipeline |
 | 2026-11-26T16:49:11Z | `accepted` | ADR-0021 | Proposed -> Accepted | coordinator | — | `0021-live-llm-coding-agent-and-verified-live-evaluation-pipeline.md` | Accepted ADR-0021: Live LLM Coding Agent and VERIFIED_LIVE Evaluation Pipeline |
+| 2026-11-27T04:38:00Z | `created` | ADR-0022 | Proposed | cli | ADR-0021 | `0022-live-llm-coding-agent-verified-live-evaluation-pipeline-path-resolution-telemetry-v2.md` | Created ADR-0022: Live LLM Coding Agent, VERIFIED_LIVE Evaluation Pipeline, Path Resolution & Telemetry (v2) |
+| 2026-11-27T04:38:00Z | `superseded` | ADR-0021 | Accepted -> Superseded | cli | ADR-0022 | `archive/0021-live-llm-coding-agent-and-verified-live-evaluation-pipeline.md` | Superseded by ADR-0022: Live LLM Coding Agent, VERIFIED_LIVE Evaluation Pipeline, Path Resolution & Telemetry (v2) |
+| 2026-11-27T04:38:00Z | `archived` | ADR-0021 | Superseded -> Superseded | cli | ADR-0022 | `archive/0021-live-llm-coding-agent-and-verified-live-evaluation-pipeline.md` | Archived superseded ADR-0021 to archive/0021-live-llm-coding-agent-and-verified-live-evaluation-pipeline.md |
+| 2026-11-27T04:38:00Z | `accepted` | ADR-0022 | Proposed -> Accepted | cli | — | `0022-live-llm-coding-agent-verified-live-evaluation-pipeline-path-resolution-telemetry-v2.md` | Accepted consolidated v2 Phase 5 Live Eval ADR superseding ADR-0021 |
+| 2026-11-27T04:38:00Z | `created` | ADR-0023 | Proposed | cli | ADR-0003 | `0023-hardware-aware-local-slm-free-tier-router-live-decoding-escalation-short-circuit-v2.md` | Created ADR-0023: Hardware-Aware Local SLM, Free-Tier Router, Live Decoding & Escalation Short-Circuit (v2) |
+| 2026-11-27T04:38:00Z | `superseded` | ADR-0003 | Accepted -> Superseded | cli | ADR-0023 | `archive/0003-hardware-aware-local-slm-and-free-tier-router.md` | Superseded by ADR-0023: Hardware-Aware Local SLM, Free-Tier Router, Live Decoding & Escalation Short-Circuit (v2) |
+| 2026-11-27T04:38:00Z | `archived` | ADR-0003 | Superseded -> Superseded | cli | ADR-0023 | `archive/0003-hardware-aware-local-slm-and-free-tier-router.md` | Archived superseded ADR-0003 to archive/0003-hardware-aware-local-slm-and-free-tier-router.md |
+| 2026-11-27T04:38:00Z | `accepted` | ADR-0023 | Proposed -> Accepted | cli | — | `0023-hardware-aware-local-slm-free-tier-router-live-decoding-escalation-short-circuit-v2.md` | Accepted consolidated v2 Routing & Live Provider ADR superseding ADR-0003 and consolidating ADR-0020 |
+| 2026-11-27T04:38:00Z | `deprecated` | ADR-0020 | Accepted -> Deprecated | cli | — | `archive/0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md` | Consolidated into ADR-0023 (Hardware-Aware Local SLM, Free-Tier Router, Live Decoding & Escalation Short-Circuit (v2)) alongside superseded ADR-0003 to eliminate routing-policy clashes. |
+| 2026-11-27T04:38:00Z | `archived` | ADR-0020 | Deprecated -> Deprecated | cli | — | `archive/0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md` | Archived ADR-0020 to archive/0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md |

@@ -157,6 +157,7 @@ class StageTelemetryCollector:
         wall_clock_sec: float | None = None,
         peak_vram_mb: float | None = None,
         error_events: Sequence[str] = (),
+        include_ledger_delta: bool = True,
     ) -> Layer4TelemetryRecord:
         """Finalize and record a Layer4TelemetryRecord for a completed evaluation stage."""
         cleaned = stage.strip()
@@ -164,12 +165,16 @@ class StageTelemetryCollector:
             raise ValueError("stage name must not be blank")
 
         start_info = self._stage_starts.pop(cleaned, None)
-        reqs_now, toks_now = self.snapshot_quota()
         if start_info is not None:
             started_at, reqs_before, toks_before = start_info
             elapsed = max(0.0, time.perf_counter() - started_at)
-            ledger_reqs_delta = max(0, reqs_now - reqs_before)
-            ledger_toks_delta = max(0, toks_now - toks_before)
+            if include_ledger_delta:
+                reqs_now, toks_now = self.snapshot_quota()
+                ledger_reqs_delta = max(0, reqs_now - reqs_before)
+                ledger_toks_delta = max(0, toks_now - toks_before)
+            else:
+                ledger_reqs_delta = 0
+                ledger_toks_delta = 0
         else:
             elapsed = 0.0
             ledger_reqs_delta = 0

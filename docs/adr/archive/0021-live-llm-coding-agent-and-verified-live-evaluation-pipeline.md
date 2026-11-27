@@ -1,9 +1,10 @@
 # 0021. Live LLM Coding Agent and VERIFIED_LIVE Evaluation Pipeline
 
 - **Date:** 2026-11-26
-- **Status:** Accepted
+- **Status:** Superseded
 - **PR / Branch:** `adr/0021-live-llm-coding-agent-and-verified-live-eval-pipeline`
 - **Supersedes:** None
+- **Superseded By:** ADR-0022
 
 ## Context
 
@@ -35,3 +36,7 @@ We implement a production **Live LLM Coding Agent and `VERIFIED_LIVE` Evaluation
 - **Positive:** Enforces airtight scientific validity: zero hidden-test leakage, strict Condition A/B/C isolation, read-only Condition C contract locks, dev-split default hygiene, and fail-closed live Alloy/LLM guards.
 - **Trade-off:** Live Condition C runs execute real subprocess pytest/Hypothesis and AST mutation passes per replicate, increasing wall-clock duration on `TIER_0` hardware; atomic per-unit checkpointing (`eval resume`) ensures zero lost progress.
 - **Obligation:** `src/reqhq/harness/live_agent.py` and all updated evaluation/CLI modules must maintain 100.00% offline line coverage with deterministic Hypothesis PBTs verifying zero hidden-test leakage and bounded `pbt_pass_rate` parsing.
+
+## Supersession Note
+
+Superseded by ADR-0022 (Live LLM Coding Agent, VERIFIED_LIVE Evaluation Pipeline, Path Resolution & Telemetry (v2)) on 2026-11-27.
