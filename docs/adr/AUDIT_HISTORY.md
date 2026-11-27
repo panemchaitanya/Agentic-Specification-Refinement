@@ -2,8 +2,8 @@
 
 > Auto-generated from the append-only [`audit_log.jsonl`](./audit_log.jsonl) ledger. Do not delete historical events; append new lifecycle transitions via `ADRManager` or `reqhq adr`.
 
-- **Total Audit Events:** 40
-- **Created:** 20 | **Accepted:** 20 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
+- **Total Audit Events:** 42
+- **Created:** 21 | **Accepted:** 21 | **Deprecated:** 0 | **Superseded:** 0 | **Archived:** 0
 
 | Timestamp (UTC) | Action | ADR | Transition | Author | Related | Path | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -47,3 +47,5 @@
 | 2026-11-25T18:50:03Z | `accepted` | ADR-0019 | Proposed -> Accepted | adr-author | — | `0019-encrypted-local-credential-vault-and-first-run-provisioning.md` | Accepted zero-plaintext Fernet+DPAPI/PBKDF2 credential vault, masking, placeholder rejection, reqhq auth, and live first-run provisioning ADR-0019 |
 | 2026-11-26T16:41:48Z | `created` | ADR-0020 | Proposed | coordinator | — | `0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md` | Created ADR-0020: Live Provider Decoding, Escalation Short-Circuit, Fallbacks and Live Probing |
 | 2026-11-26T16:41:48Z | `accepted` | ADR-0020 | Proposed -> Accepted | coordinator | — | `0020-live-provider-decoding-escalation-short-circuit-fallbacks-and-live-probing.md` | Accepted ADR-0020: Live Provider Decoding, Escalation Short-Circuit, Fallbacks and Live Probing |
+| 2026-11-26T16:49:11Z | `created` | ADR-0021 | Proposed | coordinator | — | `0021-live-llm-coding-agent-and-verified-live-evaluation-pipeline.md` | Created ADR-0021: Live LLM Coding Agent and VERIFIED_LIVE Evaluation Pipeline |
+| 2026-11-26T16:49:11Z | `accepted` | ADR-0021 | Proposed -> Accepted | coordinator | — | `0021-live-llm-coding-agent-and-verified-live-evaluation-pipeline.md` | Accepted ADR-0021: Live LLM Coding Agent and VERIFIED_LIVE Evaluation Pipeline |
