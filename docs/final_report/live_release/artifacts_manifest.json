@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "eval-live-s42-2c6d69c92e53",
+  "run_mode": "live",
+  "verdict_status": "VERIFIED_LIVE",
+  "created_at": "2026-11-27T06:11:38.682167+00:00",
+  "seed": 42,
+  "pinned_models": {
+    "TIER_0": "qwen3:4b (Q4_K_M, fallback=phi4-mini)",
+    "TIER_1": "qwen3:8b (Q4_K_M, fallback=qwen3:4b)",
+    "TIER_2": "qwen3:14b (Q4_K_M, fallback=qwen3:8b)",
+    "TIER_3": "gpt-oss:20b (Q4_K_M, fallback=qwen3:14b)"
+  },
+  "frozen_dataset_hashes": {
+    "pure/FREEZE.json": "44c8e018a73b3fe93be5c77f8dfbd936d73edb5c8540fa02e0b8d220b4001a43",
+    "promise_nfr/FREEZE.json": "0f774dc8452817f2e73226afa0bb589930e55cc258238d29d685f8f564f2bff4"
+  },
+  "artifacts": [
+    {
+      "rel_path": "analysis/analysis_summary.json",
+      "sha256": "5973719832a8c0c5b0420930ea5bf100d1e3436ec0e4e11fe41364353a795aae",
+      "bytes": 8745,
+      "category": "analysis_summary"
+    },
+    {
+      "rel_path": "analysis/cond_abc_comparison.svg",
+      "sha256": "6cabf67469799ded78f8b82ea60aa0d2ca73be2e2442ba2efa2d802e4bdd80ca",
+      "bytes": 4868,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "analysis/error_taxonomy_bar.svg",
+      "sha256": "6e6325676703c39bfa059ee067dad25d41c509745651ff75dbe54fc046cba250",
+      "bytes": 4183,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "analysis/pareto_quality_vs_cloud_cost.svg",
+      "sha256": "dc5122d528dcdae967d1757162b9dc6b98fcbd1d272ce42a84e55d162f174767",
+      "bytes": 4507,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "analysis/pareto_quality_vs_latency.svg",
+      "sha256": "c4423b64677a0d3f36d07b45c8623d69a4b956a4b4a3f4d9412241b03c7afbd1",
+      "bytes": 4322,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "eval_manifest.json",
+      "sha256": "443fe9dcf093b6b8f23f727f616914d1e8c66bb0970e5ba3407877de4a7b09d0",
+      "bytes": 1083,
+      "category": "eval_manifest"
+    },
+    {
+      "rel_path": "layer1.jsonl",
+      "sha256": "a797ed3aaedede175ae8c20df657ccdae6e1409a61ffbbc9bef82bb6e22f88b8",
+      "bytes": 1435,
+      "category": "layer_log"
+    },
+    {
+      "rel_path": "layer2.jsonl",
+      "sha256": "69094d84d38f3a2a757a9ffc7a86c15a569f248b911fca3b14a50203258ea3d3",
+      "bytes": 6494,
+      "category": "layer_log"
+    },
+    {
+      "rel_path": "layer3.jsonl",
+      "sha256": "e3c7e8e6df0a8b4fae964d022eb667fe9dc4bc7b0927fa9d66de319c9198baf6",
+      "bytes": 15842,
+      "category": "layer_log"
+    },
+    {
+      "rel_path": "layer4_telemetry.jsonl",
+      "sha256": "7d2c77c2b1660f82266413774bdd69375d59ae0028d0d54b2f50e9ecc3ebe09c",
+      "bytes": 1446,
+      "category": "layer_log"
+    },
+    {
+      "rel_path": "report/FINAL_REPORT.md",
+      "sha256": "be9c5cd7066a62f758e623dbf39f4f3d4b8683e30e42bd8033750f78ed28a0a3",
+      "bytes": 12952,
+      "category": "report_markdown"
+    },
+    {
+      "rel_path": "report/cond_abc_comparison.svg",
+      "sha256": "6cabf67469799ded78f8b82ea60aa0d2ca73be2e2442ba2efa2d802e4bdd80ca",
+      "bytes": 4868,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "report/error_taxonomy_bar.svg",
+      "sha256": "6e6325676703c39bfa059ee067dad25d41c509745651ff75dbe54fc046cba250",
+      "bytes": 4183,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "report/pareto_quality_vs_cloud_cost.svg",
+      "sha256": "dc5122d528dcdae967d1757162b9dc6b98fcbd1d272ce42a84e55d162f174767",
+      "bytes": 4507,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "report/pareto_quality_vs_latency.svg",
+      "sha256": "c4423b64677a0d3f36d07b45c8623d69a4b956a4b4a3f4d9412241b03c7afbd1",
+      "bytes": 4322,
+      "category": "figure_svg"
+    },
+    {
+      "rel_path": "report/tables_latex.tex",
+      "sha256": "3b7b3a65ce919f2409c1675ad1b481832266d42fc932ebca198b1678cdbe9335",
+      "bytes": 4121,
+      "category": "report_latex"
+    }
+  ]
+}
