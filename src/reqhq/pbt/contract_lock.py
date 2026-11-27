@@ -52,7 +52,10 @@ def write_contract_lock(
     for file_path in files:
         candidate = Path(file_path)
         if not candidate.is_absolute():
-            candidate = root_path / candidate
+            try:
+                candidate.resolve().relative_to(root_resolved)
+            except ValueError:
+                candidate = root_path / candidate
         rel_posix = _normalize_relative_posix(root_resolved, candidate)
         entries[rel_posix] = _sha256_bytes(candidate.resolve())
 
