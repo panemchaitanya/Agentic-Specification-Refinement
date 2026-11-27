@@ -220,6 +220,49 @@ class CrossDomainSuite(BaseModel):
         return self
 
 
+class ExtendedCrossDomainCase(BaseModel):
+    """Benchmark scenario in an extended multi-domain socio-technical suite (e.g., 48 cases / 8 domains)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    case_id: str = Field(..., min_length=1)
+    domain: str = Field(..., min_length=1)
+    input_kind: InputKind
+    title: str = Field(..., min_length=1)
+    prompt_text: str = Field(..., min_length=1)
+    gold_requirements: list[str] = Field(..., min_length=1)
+    expected_routes: dict[str, RouteTrack] = Field(..., min_length=1)
+    adr_rubric_anchors: list[str] = Field(..., min_length=1)
+
+    @field_validator("case_id", "domain", "title", "prompt_text")
+    @classmethod
+    def _validate_strings(cls, value: str) -> str:
+        return _require_non_empty(value)
+
+
+class ExtendedCrossDomainSuite(BaseModel):
+    """Validated extended cross-domain socio-technical benchmark suite (>=16 unique cases, 50/50 split)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    version: str = Field(..., min_length=1)
+    cases: list[ExtendedCrossDomainCase] = Field(..., min_length=16)
+
+    @model_validator(mode="after")
+    def _validate_extended_balance(self) -> ExtendedCrossDomainSuite:
+        case_ids = [c.case_id for c in self.cases]
+        if len(set(case_ids)) != len(case_ids):
+            raise ValueError("ExtendedCrossDomainSuite case_id values must be unique")
+        one_liners = sum(1 for c in self.cases if c.input_kind == "one_liner")
+        multi_para = sum(1 for c in self.cases if c.input_kind == "multi_paragraph")
+        if one_liners != multi_para:
+            raise ValueError(
+                f"ExtendedCrossDomainSuite must balance one_liner ({one_liners}) and "
+                f"multi_paragraph ({multi_para}) cases equally"
+            )
+        return self
+
+
 class AnnotationItem(BaseModel):
     """Single annotator label record used for inter-rater adjudication and Cohen's kappa."""
 
@@ -283,6 +326,8 @@ __all__ = [
     "CrossDomainSuite",
     "DomainName",
     "EXPECTED_DOMAINS",
+    "ExtendedCrossDomainCase",
+    "ExtendedCrossDomainSuite",
     "FrozenGoldDocument",
     "GapCategory",
     "GapClause",

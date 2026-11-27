@@ -13,6 +13,7 @@ from reqhq.benchmark.models import (
     CrossDomainCase,
     CrossDomainSuite,
     EXPECTED_DOMAINS,
+    ExtendedCrossDomainSuite,
     GapCategory,
     GapClause,
 )
@@ -36,6 +37,14 @@ DEFAULT_CROSS_DOMAIN_PATH = (
     / "cases.json"
 )
 
+EXTENDED_CROSS_DOMAIN_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "data"
+    / "benchmarks"
+    / "cross_domain"
+    / "cases_extended.json"
+)
+
 _REQ_PREFIX_RE = re.compile(r"^\s*([A-Za-z][A-Za-z0-9_-]*)\s*:\s*(.+)$")
 _TOKEN_RE = re.compile(r"[a-zA-Z0-9]+")
 
@@ -47,6 +56,15 @@ def load_cross_domain_suite(path: Path | None = None) -> CrossDomainSuite:
         raise FileNotFoundError(f"Cross-domain benchmark suite not found: {target}")
     raw = json.loads(target.read_text(encoding="utf-8"))
     return CrossDomainSuite.model_validate(raw)
+
+
+def load_extended_cross_domain_suite(path: Path | None = None) -> ExtendedCrossDomainSuite:
+    """Load and strictly validate the 48-case (8-domain) extended cross-domain suite."""
+    target = path if path is not None else EXTENDED_CROSS_DOMAIN_PATH
+    if not target.exists():
+        raise FileNotFoundError(f"Extended cross-domain benchmark suite not found: {target}")
+    raw = json.loads(target.read_text(encoding="utf-8"))
+    return ExtendedCrossDomainSuite.model_validate(raw)
 
 
 def _extract_req_id_and_statement(text: str, fallback_id: str) -> tuple[str, str]:
@@ -322,7 +340,9 @@ def run_gap_injection_benchmark(
 
 __all__ = [
     "DEFAULT_CROSS_DOMAIN_PATH",
+    "EXTENDED_CROSS_DOMAIN_PATH",
     "load_cross_domain_suite",
+    "load_extended_cross_domain_suite",
     "run_cross_domain_benchmark",
     "run_gap_injection_benchmark",
 ]

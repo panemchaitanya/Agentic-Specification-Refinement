@@ -1,4 +1,4 @@
-"""Public exports for reqhq ingestion connectors, snapshots, normalization, and chunking."""
+"""Public exports for reqhq ingestion connectors, snapshots, normalization, cleaning, and chunking."""
 
 from reqhq.ingestion.chunker import (
     ChunkingResult,
@@ -6,6 +6,16 @@ from reqhq.ingestion.chunker import (
     GlobalGlossary,
     GlossaryEntry,
     HierarchicalChunker,
+)
+from reqhq.ingestion.cleaner import (
+    BatchCleanSummary,
+    CleanerConfig,
+    DocumentCleanResult,
+    NoiseCategory,
+    PDFTextCleaner,
+    RemovedLineAudit,
+    render_cleaning_review_ui,
+    select_stratified_files,
 )
 from reqhq.ingestion.connectors import (
     GDRIVE_READONLY_SCOPE,
@@ -37,6 +47,21 @@ from reqhq.ingestion.normalizer import (
     normalize_file,
     slugify_heading,
 )
+from reqhq.ingestion.semantic_chunker import (
+    SectionRole,
+    SemanticChunk,
+    SemanticChunkConfig,
+    SemanticChunkPlan,
+    SemanticSRSChunker,
+    TFIDFConceptVectorizer,
+    TextEmbedder,
+    TriagedSection,
+    classify_section_role,
+    cluster_requirements_into_batches,
+    cosine_similarity,
+    deduplicate_requirements,
+    promote_srs_headings,
+)
 from reqhq.ingestion.snapshot import (
     SnapshotIntegrityError,
     SnapshotRecord,
@@ -45,11 +70,14 @@ from reqhq.ingestion.snapshot import (
 )
 
 __all__ = [
+    "BatchCleanSummary",
     "ChunkingResult",
+    "CleanerConfig",
     "ConnectorError",
     "DoclingParser",
     "DocumentAnchor",
     "DocumentChunk",
+    "DocumentCleanResult",
     "DocumentParser",
     "GDRIVE_READONLY_SCOPE",
     "GDriveConnector",
@@ -58,26 +86,43 @@ __all__ = [
     "GlossaryEntry",
     "HierarchicalChunker",
     "LocalFileLoader",
+    "NoiseCategory",
     "NormalizedDocument",
+    "PDFTextCleaner",
     "ParserRegistry",
     "PlainTextMarkdownParser",
     "PyMuPDFParser",
     "PyPdfParser",
     "PythonDocxParser",
+    "RemovedLineAudit",
     "SHAREPOINT_ALLOWED_SCOPES",
     "SHAREPOINT_READONLY_SCOPE",
     "SUPPORTED_EXTENSIONS",
     "ScopeViolationError",
-    "SharePointConnector",
+    "SectionRole",
+    "SemanticChunk",
+    "SemanticChunkConfig",
+    "SemanticChunkPlan",
+    "SemanticSRSChunker",
     "SnapshotIntegrityError",
     "SnapshotRecord",
     "SnapshotStore",
     "SourceDocument",
+    "TFIDFConceptVectorizer",
+    "TextEmbedder",
+    "TriagedSection",
     "UnsupportedFileTypeError",
+    "classify_section_role",
+    "cluster_requirements_into_batches",
     "compute_sha256",
+    "cosine_similarity",
+    "deduplicate_requirements",
     "extract_anchors",
     "infer_media_type",
     "normalize_file",
+    "promote_srs_headings",
+    "render_cleaning_review_ui",
     "sanitize_filename",
+    "select_stratified_files",
     "slugify_heading",
 ]

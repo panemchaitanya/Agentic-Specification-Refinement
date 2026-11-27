@@ -18,7 +18,17 @@ ADR_0022_FILE = (
 ADR_0023_FILE = (
     "0023-hardware-aware-local-slm-free-tier-router-live-decoding-escalation-short-circuit-v2.md"
 )
+ADR_0024_FILE = (
+    "0024-large-scale-promise-nfr-layer-1-61-doc-pure-corpus-benchmark-extended-benchmarks-and-critic-ablations.md"
+)
+ADR_0025_FILE = (
+    "0025-standalone-deterministic-pre-llm-pdf-srs-text-cleaner-and-human-verification-studio.md"
+)
+ADR_0026_FILE = (
+    "0026-cleaner-v2-refinements-srs-heading-promotion-section-role-triage-and-tf-idf-semantic-chunking.md"
+)
 PHASE5_V2_BRANCH = "fix/p5-live-eval-paths-telemetry-progress"
+LARGE_SCALE_BRANCH = "feat/large-scale-eval-promise-corpus-ablations"
 
 
 class TestPhase5NygardADRReadOnly:
@@ -169,4 +179,93 @@ class TestPhase5NygardADRReadOnly:
         copied_mgr = ADRManager(copied)
         c1 = copied_mgr.sync_index()
         c2 = copied_mgr.sync_index()
-        assert c1 == c2 and c1["total"] >= 23 and c1["archived"] >= 3
+        assert c1 == c2 and c1["total"] >= 24 and c1["archived"] >= 3
+
+    def test_adr_0024_large_scale_eval_corpus_and_ablations_accepted(self) -> None:
+        mgr = ADRManager(REAL_ADR_DIR)
+        by_num = {rec.number: rec for rec in mgr.list_adrs(include_archived=True)}
+        assert "0024" in by_num
+        rec24 = by_num["0024"]
+        assert rec24.path.name == ADR_0024_FILE
+        assert rec24.status == "Accepted"
+        assert rec24.pr_branch == LARGE_SCALE_BRANCH
+        assert rec24.archived is False
+
+        entries = mgr.audit.read_entries()
+        assert [e.action for e in entries if e.adr_number == "0024"] == ["created", "accepted"]
+
+        content24 = rec24.path.read_text(encoding="utf-8")
+        for token in (
+            "load_frozen_promise_nfr_gold()",
+            "--include-promise",
+            "CorpusBenchmarkRunner",
+            "reqhq eval corpus-bench",
+            "cases_extended.json",
+            "load_extended_cross_domain_suite()",
+            "load_coding_suite",
+            "AblationRunner",
+            "reqhq eval ablate",
+            "b3_no_human",
+            "minus_functional",
+            "--split all",
+        ):
+            assert token in content24, f"ADR-0024 missing required decision detail: {token}"
+
+    def test_adr_0025_pdf_cleaner_and_review_ui_accepted(self) -> None:
+        mgr = ADRManager(REAL_ADR_DIR)
+        by_num = {rec.number: rec for rec in mgr.list_adrs(include_archived=True)}
+        assert "0025" in by_num
+        rec25 = by_num["0025"]
+        assert rec25.path.name == ADR_0025_FILE
+        assert rec25.status == "Accepted"
+        assert rec25.pr_branch == LARGE_SCALE_BRANCH
+        assert rec25.archived is False
+
+        entries = mgr.audit.read_entries()
+        assert [e.action for e in entries if e.adr_number == "0025"] == ["created", "accepted"]
+
+        content25 = rec25.path.read_text(encoding="utf-8")
+        for token in (
+            "src/reqhq/ingestion/cleaner.py",
+            "PDFTextCleaner",
+            "CleanerConfig",
+            "NoiseCategory",
+            "protect_normative_lines=True",
+            "render_cleaning_review_ui()",
+            "reqhq clean trial",
+            "review_ui.html",
+            "human_review_verdicts.json",
+            "No Runtime LLM Calls",
+        ):
+            assert token in content25, f"ADR-0025 missing required decision detail: {token}"
+
+    def test_adr_0026_cleaner_v2_and_semantic_chunking_accepted(self) -> None:
+        mgr = ADRManager(REAL_ADR_DIR)
+        by_num = {rec.number: rec for rec in mgr.list_adrs(include_archived=True)}
+        assert "0026" in by_num
+        rec26 = by_num["0026"]
+        assert rec26.path.name == ADR_0026_FILE
+        assert rec26.status == "Accepted"
+        assert rec26.pr_branch == LARGE_SCALE_BRANCH
+        assert rec26.archived is False
+
+        entries = mgr.audit.read_entries()
+        assert [e.action for e in entries if e.adr_number == "0026"] == ["created", "accepted"]
+
+        content26 = rec26.path.read_text(encoding="utf-8")
+        for token in (
+            "src/reqhq/ingestion/semantic_chunker.py",
+            "promote_srs_headings",
+            "SectionRole",
+            "GLOSSARY_ONLY",
+            "BACKGROUND_REFERENCE",
+            "TFIDFConceptVectorizer",
+            "TextEmbedder",
+            "SemanticSRSChunker",
+            "cluster_requirements_into_batches()",
+            "deduplicate_requirements()",
+            "TABLE_RECONSTRUCTION",
+            "_hoist_mid_block_row_numbers_in_block",
+            "49.98%",
+        ):
+            assert token in content26, f"ADR-0026 missing required decision detail: {token}"

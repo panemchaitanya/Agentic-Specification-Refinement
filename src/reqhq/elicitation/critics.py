@@ -16,6 +16,7 @@ from reqhq.elicitation.models import (
     CriticFinding,
     FindingSeverity,
 )
+from reqhq.ingestion.semantic_chunker import cluster_requirements_into_batches
 from reqhq.llm import EscalationReason, LLMRequest, ProviderError, ProviderRouter
 from reqhq.schemas.requirements import (
     EdgeKind,
@@ -166,8 +167,7 @@ class BaseCritic:
         all_findings: list[CriticFinding] = []
         explicit_conflicts: dict[str, CriticDomain] = {}
 
-        for start in range(0, len(nodes), _BATCH_SIZE):
-            batch = nodes[start : start + _BATCH_SIZE]
+        for batch in cluster_requirements_into_batches(nodes, batch_size=_BATCH_SIZE):
             prompt = _format_nodes_compact(batch, glossary_header)
             request = LLMRequest(
                 prompt=prompt,

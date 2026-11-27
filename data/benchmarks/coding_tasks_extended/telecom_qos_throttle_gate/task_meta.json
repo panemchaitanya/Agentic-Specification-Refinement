@@ -1,0 +1,19 @@
+{
+  "task_id": "telecom_qos_throttle_gate",
+  "domain": "telecom_sla_ops",
+  "title": "5G Network Slice QoS Admission & Emergency Priority Gate",
+  "target_module": "telecom_qos_throttle_gate",
+  "entry_symbol": "evaluate_slice_qos",
+  "required_invariants": [
+    "requested_mbps <= 0 or available_mbps < 0 or reserved_emergency_mbps < 0 must raise ValueError.",
+    "Emergency slice ('emergency') may consume up to full available_mbps.",
+    "Non-emergency slices ('enterprise','consumer') may only use max(0, available_mbps - reserved_emergency_mbps).",
+    "Consumer slices exceeding usable headroom are throttled; enterprise slices exceeding headroom are queued."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

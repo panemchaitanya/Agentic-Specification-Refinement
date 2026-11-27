@@ -80,16 +80,43 @@ Verification \& Governance & 87 legacy unit tests; unscored dev pre-gen & 440 le
 \end{tabular}
 \end{table}
 
-\section{System Architecture}
-ReqHQ v2 is organized into eight decoupled subsystems under \texttt{src/reqhq/}:
-\begin{enumerate}
-    \item \textbf{Dual-Path Hardware-Aware Router \& Credential Vault (\texttt{llm/}, \texttt{security/}, \texttt{ADR-0018/0019/0023 v2}):} \texttt{HardwareProfiler} maps detected VRAM (\texttt{DirectML/DXGI} on Windows) to quantized local SLMs (\texttt{TIER\_0}: \texttt{qwen3:4b} with \texttt{phi4-mini} fallback). Routine calls run locally with \texttt{"think": False} under JSON/GBNF constrained decoding. Explicit audited escalations (\texttt{FINAL\_AUDIT}, \texttt{CRITIC\_DISAGREEMENT}, \texttt{ALLOY\_REPAIR\_EXHAUSTED}) short-circuit directly to PII-scrubbed cloud free tiers (\texttt{gemini-3.1-flash-lite} with \texttt{responseJsonSchema}, thought-part filtering, and 1 transient HTTP~503 retry; \texttt{groq} 429 failover), reducing \texttt{TIER\_0} \texttt{FINAL\_AUDIT} latency from 22.42\,s to 1.43\,s.
-    \item \textbf{Lossless Ingestion \& Event-Sourced Store (\texttt{ingestion/}, \texttt{store/}, \texttt{ADR-0004/0005}):} Read-only local, Google Drive (\texttt{drive.readonly}), and SharePoint (\texttt{Files.Read.All}) loaders write immutable SHA-256 snapshots normalized into Markdown and split by \texttt{HierarchicalChunker} with a shared \texttt{GlobalGlossary} (0\% truncation verified on $>160$K characters). Every turn and non-destructive revision persists to dual SQLite + JSONL logs.
-    \item \textbf{Iterative 5-Critic Delta Convergence \& Socio-Technical Synthesis (\texttt{elicitation/}, \texttt{synthesis/}, \texttt{ADR-0007/0008}):} Five sequential critics (Functional, NFR, Logical Consistency, Process/Ops, Training) prioritize findings into 3--5 batched questions per turn and re-critique only stale requirement subgraphs upon revision. Converged graphs are triaged into \texttt{Software}, \texttt{Process}, \texttt{Training}, or \texttt{Hybrid} tracks with strict namespace isolation between repository Nygard ADRs (\texttt{docs/adr/}) and exported target-system ADRs (\texttt{<export>/ADRs/ADR-RXXX.md}).
-    \item \textbf{Two-Layer Literate Alloy~6 Verification \& Locked PBT Guardrails (\texttt{alloy/}, \texttt{pbt/}, \texttt{harness/}, \texttt{ADR-0009--0012/0022 v2}):} Software requirements compile into a statically linted version-agnostic \texttt{core\_domain} module plus a \texttt{behavior} module (Alloy~6 \texttt{var}/LTL or \texttt{--alloy-compat=legacy}). Headless Java~21 / Alloy~6.2 verifies paired \texttt{\_\_vacuity\_witness\_*} \texttt{run} commands (\texttt{SAT}) before trusting \texttt{check} passes (\texttt{UNSAT}). Verified invariants lower into \texttt{PBT\_Spec.yaml}, runtime Pydantic guards, deterministic Hypothesis suites, and a fail-closed \texttt{pbt\_lock.sha256} manifest.
-\end{enumerate}
+\section{System Architecture, Decomposition Flow \& The Five Specialist Critics}
+Figure~\ref{fig:decomp} illustrates the complete requirements decomposition pipeline from raw input to tamper-locked code verification, and Figure~\ref{fig:critics} details the internal five-critic delta convergence loop.
 
-\section{Experimental Setup}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_decomposition_flow.png}
+\caption{Overall Requirements Decomposition and End-to-End ReqHQ v2 Pipeline.}
+\label{fig:decomp}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_5_critics_delta_loop.png}
+\caption{Internal Architecture of the Five Sequential Specialist Critics, Inter-Critic Disagreement Arbitration, and Delta-Subgraph Convergence Loop.}
+\label{fig:critics}
+\end{figure}
+
+\subsection{How the Five Sequential Critics Work}
+To run cleanly inside a 2.0\,GB VRAM \texttt{TIER\_0} laptop without multi-model memory thrashing, \texttt{CriticPanel} (\texttt{src/reqhq/elicitation/critics.py}) evaluates requirements sequentially in compact batches ($\le 5$ nodes, $\le 5{,}500$ chars) against a single loaded Ollama model (\texttt{qwen3:4b}, \texttt{"think": False}) across five specialist rubrics: (1)~\textbf{Functional Completeness} (missing acceptance criteria/boundaries, \texttt{BLOCKER/MAJOR}), (2)~\textbf{Non-Functional Quality} (missing numeric SLAs/latency/security controls, \texttt{MAJOR}), (3)~\textbf{Logical Consistency} (contradictions and \texttt{CONFLICTS\_WITH} edges, \texttt{BLOCKER}), (4)~\textbf{Process \& Operational} (missing human SOPs and escalation owners, \texttt{MAJOR}), and (5)~\textbf{Training \& Adoption} (missing role certification/onboarding, \texttt{MINOR}). Every critic degrades cleanly to deterministic heuristics on \texttt{ProviderError}. When \texttt{\_findings\_conflict()} detects an inter-critic disagreement (explicit \texttt{conflicts\_with}, conflict markers, or opposing polarity antonyms such as \texttt{sync/async}), \texttt{ProviderRouter} short-circuits directly to PII-scrubbed cloud arbitration (\texttt{EscalationReason.CRITIC\_DISAGREEMENT}, $\approx 1.7$\,s). Findings are clustered into 3--5 high-gain questions per turn, and \texttt{DeltaDependencyTracker} traverses graph edges so subsequent turns re-critique \emph{only} the impacted subgraph.
+
+\section{Experimental Setup: Conditions A, B, C, Proposal Mapping (B1--B4) \& Deviations}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_cond_abc_experiment.png}
+\caption{Layer 3 Experimental Conditions (Condition A, Condition B, Condition C), Zero-Leakage Scoring Gate, and Mapping from Original Proposal Baselines B1--B4.}
+\label{fig:cond_abc}
+\end{figure}
+
+\subsection{Exact Definitions of Conditions A, B, C (and Why There Is No Condition D)}
+In Layer~3, the exact same \texttt{LiveLLMCodingAgent} and 6 unseen greenfield coding tasks execute under three strictly isolated input arms (Figure~\ref{fig:cond_abc}):
+\begin{itemize}
+    \item \textbf{Condition A (\texttt{raw\_prd}, status-quo baseline):} Sees \emph{only} the ambiguous \texttt{raw\_prd.md} and minimal module/symbol contract (maps to original proposal baseline \textbf{B1}).
+    \item \textbf{Condition B (\texttt{single\_pass\_nl\_spec}, prose-spec baseline):} Sees \emph{only} a single-pass natural-language specification without formal Alloy models, ADRs, or locked PBT guardrails.
+    \item \textbf{Condition C (\texttt{reqhq\_full\_bundle}, our treatment arm):} Sees the read-only ReqHQ v2 handoff bundle (\texttt{SPEC.md} verified non-vacuous in Alloy~6.2, \texttt{DESIGN.md}, \texttt{PBT\_Spec.yaml}, \texttt{HANDOFF\_INSTRUCTIONS.md}, and locked \texttt{tests/properties/} guarded by \texttt{pbt\_lock.sha256}).
+    \item \textbf{No Condition D in v2:} ReqHQ v2 evaluates three downstream arms (A, B, C); a future Condition~D is reserved for human-expert gold specs or brownfield repo contexts (\texttt{SystemContextBase}). Original proposal baselines \textbf{B2} (all-cloud critics) and \textbf{B4} (ask-everything human review) are evaluated in Layers~1 and~4; standalone \textbf{B3} (zero-human-input arm), leave-one-critic-out ablations, 3-replicate runs (2 run in \texttt{eval\_live\_v2}), KEP/RFC corpora, and the optional classmate user study are explicitly documented as proposal deviations and future work.
+\end{itemize}
+
 We evaluate four hypotheses (\textbf{H1}--\textbf{H4}) across four orthogonal, resumable layers (\texttt{src/reqhq/evaluation/}, \texttt{seed=42}) on Windows~11 (\texttt{TIER\_0}, AMD Radeon 660M, 2.0\,GB VRAM, 13.35\,GB RAM, Python 3.15.0):
 \begin{itemize}
     \item \textbf{Layer 1 (Gap Elicitation):} 3 human-verified \texttt{FROZEN} PURE dev documents (\texttt{cctns}, \texttt{gamma\_j}, \texttt{dii}; \texttt{--split dev} strictly forbids touching \texttt{data/frozen/*/test/}), 30\% seeded \texttt{GapInjector} with zero verbatim leakage, and leak-proof \texttt{FrozenOracleSimulator}.
@@ -191,7 +218,25 @@ Aggregate Cloud Token Savings & 45.8\% & \textbf{76.83\%} & Zero cross-layer L4 
 \end{table}
 
 \subsection{Governance Ledger and Verification Metrics}
-An audit across all repository Nygard ADRs consolidated two behavioral clashes via official Nygard supersession and archival: \texttt{ADR-0022 (v2)} supersedes archived \texttt{ADR-0021}, and \texttt{ADR-0023 (v2)} supersedes archived \texttt{ADR-0003} while consolidating archived \texttt{ADR-0020}. The resulting ledger holds \textbf{23 total ADRs (20 active, 3 archived, 0 active clashes)}, verified by 45 ADR governance tests, 440 legacy+unit/PBT tests (\textbf{12{,}671/12{,}671 = 100.00\% line coverage} across all 95 modules), and 12 cross-phase system tests with zero warnings.
+An audit across all repository Nygard ADRs consolidated two behavioral clashes via official Nygard supersession and archival (\texttt{ADR-0022 (v2)} supersedes archived \texttt{ADR-0021}; \texttt{ADR-0023 (v2)} supersedes archived \texttt{ADR-0003} and consolidates archived \texttt{ADR-0020}) and added \texttt{ADR-0024} (high-power PROMISE NFR scaling, 61-doc PURE corpus benchmark, 48-case/12-task extended suites, and Proposal B3/leave-one-critic-out ablations), \texttt{ADR-0025} (standalone deterministic pre-LLM PDF cleaner and HTML Verification Studio), and \texttt{ADR-0026} (Cleaner v2 refinements, SRS heading promotion, section-role triage, and TF-IDF semantic chunking). The ledger holds \textbf{26 total ADRs (23 active, 3 archived, 0 active clashes)}, verified at \textbf{100.00\% line coverage} with zero warnings.
+
+\subsection{Pre-LLM Intelligent Ingestion, PDF Cleaning, and Semantic Chunking Study (\texttt{ADR-0024}--\texttt{0026})}
+Live Layer~1 scaling with human-labeled PROMISE NFR (\texttt{--include-promise}, $n=14$ gold projects, 437 additional requirements) confirmed iterative elicitation superiority on \textbf{14/14 projects} (57.6\% vs.\ 12.6\% recall; Wilcoxon $p \approx 0.00012$) with only 1 cloud call per project ($\approx 93\%$ cloud request reduction). To eliminate \texttt{TIER\_0} context waste on large 100--456\,KB PURE PDF conversions without spending runtime LLM tokens on noise, we built two standalone deterministic modules---\texttt{src/reqhq/ingestion/cleaner.py} (11 empirically derived noise/reconstruction rules plus an interactive HTML Verification Studio \texttt{review\_ui.html}) and \texttt{src/reqhq/ingestion/semantic\_chunker.py} (IEEE-830 heading promotion, 4-role section triage skipping zero-normative \texttt{GLOSSARY\_ONLY}/\texttt{BACKGROUND\_REFERENCE} sections, pure-Python TF-IDF + RE concept synonym cosine-valley splitting into prompt-matched 3{,}400-char chunks, semantic 5-node critic batch co-location, and trace-preserving near-duplicate merging). Manual review in the Verification Studio resolved five PDF edge cases (pipe-table reconstruction, heading-aware cross-page reflow, strict date+edge URL footer filtering, duplicate-section TOC exit, and mid-sentence row-number hoisting in \texttt{cctns}).
+
+\begin{table}[h]
+\centering
+\caption{Pre-LLM Deterministic Cleaning and Semantic Triage Trial Across 15 Stratified PURE \texttt{dev} SRS Documents (10.7--456.2\,KB, 1--176 Pages).}
+\label{tab:prellm-cleaning-semantic}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Pipeline Stage} & \textbf{Characters} & \textbf{Reduction vs.\ Raw} & \textbf{Normative Loss} \\
+\midrule
+Raw PURE \texttt{dev} PDF-to-Text (15 docs) & 1{,}649{,}072 & --- & --- \\
+After Deterministic Cleaner v2 (\texttt{ADR-0025/0026}) & 924{,}219 & $-43.96\%$ & \textbf{0} \\
+After Section-Role Triage (\texttt{GLOSSARY}/\texttt{BACKGROUND} skip) & \textbf{824{,}945} & \textbf{$-49.98\%$} (up to $-64.4\%$) & \textbf{0} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Threats to Validity & Brownfield Extension Seam}
 \textbf{Internal validity} is bounded by Layer~1's cooperative \texttt{FrozenOracleSimulator} and mitigated via deterministic seeding (\texttt{seed=42}) and SHA-256 log verification. \textbf{External validity} spans six application domains and 16 cross-domain cases, while blinded \texttt{--split all} test-split evaluation and large brownfield repositories remain future work. \textbf{Construct validity} benefits from combining hidden acceptance suites with locked PBT contracts rather than relying on self-written unit tests alone. \textbf{Conclusion validity} is protected by non-parametric inference and fail-closed Mock Quarantine. For future brownfield evolution, \texttt{src/reqhq/schemas/system\_context.py} (\texttt{ADR-0006}) embeds \texttt{SystemContextBase} and SHA-256-tracked \texttt{BrownfieldArtifactRef} descriptors ready to ingest \texttt{ARCHITECTURE.md}, AST symbol maps, legacy \texttt{.als} models, and archived ADRs from \texttt{docs/adr/archive/}.

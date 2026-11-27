@@ -10,6 +10,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from reqhq.ingestion.chunker import ChunkingResult, DocumentChunk
+from reqhq.ingestion.semantic_chunker import deduplicate_requirements
 from reqhq.llm import LLMRequest, ProviderError, ProviderRouter
 from reqhq.schemas.requirements import (
     EdgeKind,
@@ -485,6 +486,7 @@ class RequirementDecomposer:
         *,
         session_id: str,
         source_uri: str = "file://prd",
+        deduplicate_near_duplicates: bool = False,
     ) -> RequirementGraph:
         """Sequentially decompose chunks prepending GlobalGlossary with verbatim TraceLinks."""
         if not chunking_result.chunks:
@@ -561,6 +563,9 @@ class RequirementDecomposer:
                         )
                     )
                     break
+
+        if deduplicate_near_duplicates and len(nodes) > 1:
+            nodes, _merged = deduplicate_requirements(nodes, similarity_threshold=0.85)
 
         global_id_map: dict[str, str] = {n.req_id: n.req_id for n in nodes}
         collected_edges: list[RequirementEdge] = []

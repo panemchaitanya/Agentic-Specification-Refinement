@@ -22,11 +22,17 @@ from reqhq.alloy.models import AlloyCompatMode, AlloyRunStatus
 from reqhq.alloy.repair_loop import AlloyVerificationController
 from reqhq.alloy.runner import AlloyAnalyzer
 from reqhq.benchmark.adjudication import cohens_kappa
-from reqhq.benchmark.cross_domain import load_cross_domain_suite
+from reqhq.benchmark.cross_domain import load_cross_domain_suite, load_extended_cross_domain_suite
 from reqhq.benchmark.gap_injector import GapInjector
-from reqhq.benchmark.models import CrossDomainCase, FrozenGoldDocument, GapCategory, GapClause
+from reqhq.benchmark.models import (
+    CrossDomainCase,
+    ExtendedCrossDomainCase,
+    FrozenGoldDocument,
+    GapCategory,
+    GapClause,
+)
 from reqhq.benchmark.oracle_sim import FrozenOracleSimulator
-from reqhq.benchmark.pure_bridge import load_frozen_pure_gold
+from reqhq.benchmark.pure_bridge import load_frozen_promise_nfr_gold, load_frozen_pure_gold
 from reqhq.evaluation.models import (
     CodingTaskMeta,
     EvalBundleManifest,
@@ -38,7 +44,7 @@ from reqhq.evaluation.models import (
     Layer4TelemetryRecord,
     RunMode,
 )
-from reqhq.evaluation.tasks import load_coding_tasks
+from reqhq.evaluation.tasks import load_coding_suite, load_coding_tasks
 from reqhq.evaluation.telemetry import StageTelemetryCollector
 from reqhq.harness.ast_mutator import ASTMutantEngine, generate_mutants
 from reqhq.harness.experiment import CodingAgent, ExperimentHarness, MockCodingAgent
@@ -179,7 +185,7 @@ def _build_offline_router(*, strict_local: bool = True) -> ProviderRouter:
     )
 
 
-def _graph_from_cross_domain_case(case: CrossDomainCase) -> RequirementGraph:
+def _graph_from_cross_domain_case(case: CrossDomainCase | ExtendedCrossDomainCase) -> RequirementGraph:
     digest = hashlib.sha256(case.prompt_text.encode("utf-8")).hexdigest()
     nodes: list[RequirementNode] = []
     expected_keys = list(case.expected_routes.keys())
@@ -451,6 +457,10 @@ class EvalOrchestrator:
                 docs.extend(
                     load_frozen_pure_gold(self.frozen_root, split="test", strict_fail_closed=False)
                 )
+        if self.config.include_promise:
+            docs.extend(load_frozen_promise_nfr_gold(self.frozen_root, split="dev"))
+            if self.config.split == "all":
+                docs.extend(load_frozen_promise_nfr_gold(self.frozen_root, split="test"))
         if not docs:
             raise ValueError(
                 f"Fail-closed Layer 1 refusal: zero human-verified FROZEN gold documents in {self.frozen_root}"
@@ -580,8 +590,13 @@ class EvalOrchestrator:
         return _read_jsonl(log_path, Layer1Record)
 
     def run_layer2(self) -> list[Layer2Record]:
-        """Run Layer 2 (16-case cross-domain socio-technical triage, Alloy check & ADR rubric)."""
-        suite = load_cross_domain_suite(self.cross_domain_path)
+        """Run Layer 2 (16-case canonical or 48-case extended cross-domain triage & Alloy check)."""
+        if self.cross_domain_path is not None:
+            suite: Any = load_cross_domain_suite(self.cross_domain_path)
+        elif self.config.cross_domain_suite == "extended":
+            suite = load_extended_cross_domain_suite()
+        else:
+            suite = load_cross_domain_suite()
         log_path = self.out_dir / LAYER_LOG_FILENAMES["layer2"]
 
         if self.config.mode == RunMode.LIVE:
@@ -685,8 +700,11 @@ class EvalOrchestrator:
         return _read_jsonl(log_path, Layer2Record)
 
     def run_layer3(self) -> list[Layer3Record]:
-        """Run Layer 3 (Condition A/B/C across 6 greenfield coding tasks x replicates)."""
-        tasks = load_coding_tasks(self.coding_tasks_root, max_tasks=self.config.max_tasks)
+        """Run Layer 3 (Condition A/B/C across 6 canonical or 12 extended coding tasks x replicates)."""
+        if self.coding_tasks_root is not None:
+            tasks = load_coding_tasks(self.coding_tasks_root, max_tasks=self.config.max_tasks)
+        else:
+            tasks = load_coding_suite(self.config.coding_suite, max_tasks=self.config.max_tasks)
         log_path = self.out_dir / LAYER_LOG_FILENAMES["layer3"]
 
         if self.config.mode == RunMode.LIVE:

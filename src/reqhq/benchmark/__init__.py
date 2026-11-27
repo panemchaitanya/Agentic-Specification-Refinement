@@ -9,7 +9,9 @@ from reqhq.benchmark.adjudication import (
 )
 from reqhq.benchmark.cross_domain import (
     DEFAULT_CROSS_DOMAIN_PATH,
+    EXTENDED_CROSS_DOMAIN_PATH,
     load_cross_domain_suite,
+    load_extended_cross_domain_suite,
     run_cross_domain_benchmark,
     run_gap_injection_benchmark,
 )
@@ -20,6 +22,8 @@ from reqhq.benchmark.models import (
     CrossDomainSuite,
     DomainName,
     EXPECTED_DOMAINS,
+    ExtendedCrossDomainCase,
+    ExtendedCrossDomainSuite,
     FrozenGoldDocument,
     GapCategory,
     GapClause,
@@ -34,6 +38,7 @@ from reqhq.benchmark.models import (
 from reqhq.benchmark.oracle_sim import FrozenOracleSimulator, NOT_SPECIFIED_REPLY
 from reqhq.benchmark.pure_bridge import (
     load_frozen_promise_manifest,
+    load_frozen_promise_nfr_gold,
     load_frozen_pure_gold,
     load_frozen_pure_manifest,
     validate_gold_record_dict,
@@ -46,6 +51,9 @@ __all__ = [
     "DEFAULT_CROSS_DOMAIN_PATH",
     "DomainName",
     "EXPECTED_DOMAINS",
+    "EXTENDED_CROSS_DOMAIN_PATH",
+    "ExtendedCrossDomainCase",
+    "ExtendedCrossDomainSuite",
     "FrozenGoldDocument",
     "FrozenOracleSimulator",
     "GapCategory",
@@ -63,7 +71,9 @@ __all__ = [
     "cohens_kappa",
     "compute_kappa_from_files",
     "load_cross_domain_suite",
+    "load_extended_cross_domain_suite",
     "load_frozen_promise_manifest",
+    "load_frozen_promise_nfr_gold",
     "load_frozen_pure_gold",
     "load_frozen_pure_manifest",
     "run_cross_domain_benchmark",

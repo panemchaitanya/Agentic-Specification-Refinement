@@ -80,6 +80,9 @@ class EvalRunConfig(BaseModel):
     strict_local: bool = False
     alloy_compat: Literal["alloy6", "legacy"] = "alloy6"
     split: Literal["dev", "all"] = "dev"
+    include_promise: bool = False
+    cross_domain_suite: Literal["canonical", "extended"] = "canonical"
+    coding_suite: Literal["canonical", "extended"] = "canonical"
 
     @field_validator("layers")
     @classmethod

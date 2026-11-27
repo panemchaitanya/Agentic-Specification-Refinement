@@ -13,7 +13,11 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from reqhq.evaluation.tasks import DEFAULT_CODING_TASKS_DIR, load_coding_tasks
+from reqhq.evaluation.tasks import (
+    DEFAULT_CODING_TASKS_DIR,
+    EXTENDED_CODING_TASKS_DIR,
+    load_coding_tasks,
+)
 from reqhq.harness.experiment import AgentRunResult
 from reqhq.harness.models import ExperimentCondition
 from reqhq.llm.providers.base import LLMRequest, ProviderError
@@ -107,6 +111,9 @@ class LiveLLMCodingAgent:
         self.python_executable = python_executable or sys.executable
         self.escalate_repairs = bool(escalate_repairs)
         self._task_index = {task.task_id: task for task in load_coding_tasks(self.tasks_root)}
+        if tasks_root is None and EXTENDED_CODING_TASKS_DIR.is_dir():
+            for ext_task in load_coding_tasks(EXTENDED_CODING_TASKS_DIR):
+                self._task_index[ext_task.task_id] = ext_task
 
     def build_condition_prompt(
         self,

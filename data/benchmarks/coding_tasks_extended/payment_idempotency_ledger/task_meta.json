@@ -1,0 +1,19 @@
+{
+  "task_id": "payment_idempotency_ledger",
+  "domain": "ecommerce_payments",
+  "title": "Payment Idempotency & Risk Hold Ledger Gate",
+  "target_module": "payment_idempotency_ledger",
+  "entry_symbol": "authorize_payment_entry",
+  "required_invariants": [
+    "amount_cents <= 0 or blank idempotency_key or currency not in {'USD','EUR','INR'} must raise ValueError.",
+    "If idempotency_key is already in seen_keys, return status='duplicate_noop' without charging.",
+    "If risk_score >= 80 or amount_cents > 250000, return status='manual_risk_hold'.",
+    "Otherwise return status='captured' with deterministic normalized fields."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "task_id": "clinical_dosage_guard",
+  "domain": "healthcare_safety",
+  "title": "Pediatric Clinical Dosage Safety & Dual-Signoff Guard",
+  "target_module": "clinical_dosage_guard",
+  "entry_symbol": "evaluate_dosage_order",
+  "required_invariants": [
+    "weight_kg <= 0 or dose_mg <= 0 or max_mg_per_kg <= 0 must raise ValueError.",
+    "If patient_has_allergy is True, return status='blocked_allergy'.",
+    "If dose_mg > weight_kg * max_mg_per_kg, return status='blocked_overdose'.",
+    "If dose_mg > 0.8 * weight_kg * max_mg_per_kg, return status='pharmacist_dual_check'; else 'approved'."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

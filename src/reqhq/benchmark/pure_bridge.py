@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 from pathlib import Path
@@ -208,6 +209,63 @@ def load_frozen_promise_manifest(
     return manifest
 
 
+def load_frozen_promise_nfr_gold(
+    frozen_root: Path = Path("data/frozen"),
+    *,
+    split: Literal["dev", "test"] = "dev",
+    verify_hashes: bool = True,
+) -> list[FrozenGoldDocument]:
+    """Read-only loader grouping human-labeled PROMISE NFR rows by project into FrozenGoldDocuments.
+
+    Defaults to split="dev" (11 projects, 437 requirements) so the 4 held-out test projects
+    (185 requirements) remain untouched until explicit blinded evaluation.
+    """
+    if split not in ("dev", "test"):
+        raise ValueError(f"Unsupported split {split!r}; expected 'dev' or 'test'")
+
+    load_frozen_promise_manifest(frozen_root, verify_hashes=verify_hashes)
+    csv_path = frozen_root / "promise_nfr" / f"{split}.csv"
+    csv_sha = _sha256_file(csv_path)
+
+    grouped: dict[int, list[dict[str, str]]] = {}
+    with csv_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            pid = int(str(row["project_id"]).strip())
+            text = str(row["text"]).strip()
+            category = str(row["category"]).strip() or "FR"
+            if not text:
+                continue
+            grouped.setdefault(pid, []).append({"text": text, "category": category})
+
+    docs: list[FrozenGoldDocument] = []
+    for pid in sorted(grouped.keys()):
+        rows = grouped[pid]
+        reqs = [
+            {
+                "id": f"P{pid:02d}-R{idx:03d}",
+                "kind": item["category"],
+                "text": item["text"],
+                "source": "human-added:promise-nfr-2007",
+            }
+            for idx, item in enumerate(rows, start=1)
+        ]
+        implied = sorted({item["category"] for item in rows if item["category"].upper() != "FR"})
+        docs.append(
+            FrozenGoldDocument(
+                item_id=f"promise-nfr-proj-{pid:02d}",
+                split=split,
+                prd_path=f"data/frozen/promise_nfr/{split}.csv#project_{pid}",
+                source_sha256=csv_sha,
+                status="FROZEN - human-verified (PROMISE NFR, Cleland-Huang et al. 2007)",
+                verified_by=["promise-nfr-2007"],
+                implied_categories=implied,
+                requirements=reqs,
+            )
+        )
+    return docs
+
+
 def load_frozen_pure_manifest(
     frozen_root: Path = Path("data/frozen"),
 ) -> dict[str, Any]:
@@ -224,6 +282,7 @@ def load_frozen_pure_manifest(
 
 __all__ = [
     "load_frozen_promise_manifest",
+    "load_frozen_promise_nfr_gold",
     "load_frozen_pure_gold",
     "load_frozen_pure_manifest",
     "validate_gold_record_dict",

@@ -15,6 +15,13 @@ DEFAULT_CODING_TASKS_DIR: Path = (
     / "coding_tasks"
 )
 
+EXTENDED_CODING_TASKS_DIR: Path = (
+    Path(__file__).resolve().parents[3]
+    / "data"
+    / "benchmarks"
+    / "coding_tasks_extended"
+)
+
 EXPECTED_TASK_IDS: tuple[str, ...] = (
     "refund_sla_engine",
     "triage_escalation_queue",
@@ -22,6 +29,15 @@ EXPECTED_TASK_IDS: tuple[str, ...] = (
     "access_approval_workflow",
     "loan_disbursement_gate",
     "incident_shift_handover",
+)
+
+EXTENDED_TASK_IDS: tuple[str, ...] = (
+    "payment_idempotency_ledger",
+    "runway_clearance_interlock",
+    "breakglass_iam_elevation",
+    "telecom_qos_throttle_gate",
+    "clinical_dosage_guard",
+    "customs_export_hold_engine",
 )
 
 _REQUIRED_FILES: tuple[str, ...] = (
@@ -92,8 +108,27 @@ def load_coding_tasks(
     return tasks
 
 
+def load_coding_suite(
+    suite: str = "canonical",
+    *,
+    max_tasks: int | None = None,
+) -> list[CodingTaskMeta]:
+    """Load canonical (6 tasks) or extended (12 tasks = 6 canonical + 6 extended) coding suite."""
+    if suite == "canonical":
+        return load_coding_tasks(DEFAULT_CODING_TASKS_DIR, max_tasks=max_tasks)
+    if suite == "extended":
+        combined = load_coding_tasks(DEFAULT_CODING_TASKS_DIR) + load_coding_tasks(
+            EXTENDED_CODING_TASKS_DIR
+        )
+        return combined[:max_tasks] if max_tasks is not None else combined
+    raise ValueError(f"Unsupported coding_suite {suite!r}; expected 'canonical' or 'extended'")
+
+
 __all__ = [
     "DEFAULT_CODING_TASKS_DIR",
     "EXPECTED_TASK_IDS",
+    "EXTENDED_CODING_TASKS_DIR",
+    "EXTENDED_TASK_IDS",
+    "load_coding_suite",
     "load_coding_tasks",
 ]
