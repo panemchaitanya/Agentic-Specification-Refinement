@@ -79,6 +79,7 @@ class EvalRunConfig(BaseModel):
     hardware_tier_override: int | None = Field(default=None, ge=0, le=3)
     strict_local: bool = False
     alloy_compat: Literal["alloy6", "legacy"] = "alloy6"
+    split: Literal["dev", "all"] = "dev"
 
     @field_validator("layers")
     @classmethod

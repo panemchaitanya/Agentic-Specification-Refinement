@@ -1659,6 +1659,42 @@ def _guard_eval_out_dir(out: Path) -> None:
             )
 
 
+def _build_live_eval_hooks(
+    *,
+    sessions_dir: Path,
+    strict_local: bool = False,
+) -> dict[str, Any]:
+    """Run startup preflight and build fail-closed live hooks for `reqhq eval --mode live`."""
+    from reqhq.config import ReqHQConfig
+    from reqhq.evaluation import LiveExecutionUnavailableError
+    from reqhq.harness import LiveLLMCodingAgent
+
+    _run_live_startup_preflight(
+        sessions_dir=sessions_dir,
+        strict_local=strict_local,
+    )
+    cfg = ReqHQConfig.from_env()
+    effective_strict = strict_local or cfg.strict_local
+    analyzer = _build_alloy_analyzer(mock_alloy=False)
+    if not analyzer.is_available():
+        raise LiveExecutionUnavailableError(
+            "Live evaluation requires Java 21 and the Alloy 6.2 JAR (set REQHQ_ALLOY_JAR_PATH); "
+            "silent fallback to MockAlloyAnalyzer is forbidden."
+        )
+    router = _build_router(
+        sessions_dir=sessions_dir,
+        strict_local=effective_strict,
+        mock=False,
+    )
+    return {
+        "live_router": router,
+        "live_coding_agent": LiveLLMCodingAgent(router=router),
+        "live_alloy_analyzer": analyzer,
+        "quota_db_path": cfg.resolved_quota_db_path(),
+        "use_real_mutator": True,
+    }
+
+
 @eval_app.command("run")
 def eval_run_command(
     layers: Annotated[
@@ -1685,8 +1721,20 @@ def eval_run_command(
         int | None,
         typer.Option("--max-tasks", help="Optional limit on Layer 3 coding tasks."),
     ] = None,
+    split: Annotated[
+        Literal["dev", "all"],
+        typer.Option("--split", help="Frozen PURE gold split: dev (default safe pilot) or all (dev+test)."),
+    ] = "dev",
+    strict_local: Annotated[
+        bool,
+        typer.Option("--strict-local", help="Forbid outbound cloud escalation during live evaluation."),
+    ] = False,
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent quota, cache, and encrypted vault."),
+    ] = Path(".reqhq_sessions"),
 ) -> None:
-    """Run the Phase 4 Layers 1-4 evaluation orchestrator with atomic checkpointing."""
+    """Run the Phase 4/5 Layers 1-4 evaluation orchestrator with atomic checkpointing."""
     from reqhq.evaluation import (
         EvalOrchestrator,
         EvalRunConfig,
@@ -1704,13 +1752,16 @@ def eval_run_command(
             replicates=replicates,
             seed=seed,
             max_tasks=max_tasks,
+            split=split,
+            strict_local=strict_local,
         )
+        hooks: dict[str, Any] = {}
         if config.mode == RunMode.LIVE:
-            _run_live_startup_preflight(
-                sessions_dir=Path(".reqhq_sessions"),
+            hooks = _build_live_eval_hooks(
+                sessions_dir=sessions_dir,
                 strict_local=config.strict_local,
             )
-        manifest = EvalOrchestrator(config).run_all()
+        manifest = EvalOrchestrator(config, **hooks).run_all()
     except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1)
@@ -1729,12 +1780,30 @@ def eval_resume_command(
         Path,
         typer.Option("--out", help="Existing evaluation directory containing checkpoint.json."),
     ],
+    sessions_dir: Annotated[
+        Path,
+        typer.Option("--sessions-dir", help="Directory for persistent quota, cache, and encrypted vault."),
+    ] = Path(".reqhq_sessions"),
 ) -> None:
-    """Resume an interrupted Phase 4 evaluation run with zero duplicate records."""
-    from reqhq.evaluation import EvalOrchestrator, LiveExecutionUnavailableError
+    """Resume an interrupted Phase 4/5 evaluation run with zero duplicate records."""
+    from reqhq.evaluation import (
+        EvalCheckpoint,
+        EvalOrchestrator,
+        LiveExecutionUnavailableError,
+        RunMode,
+    )
 
     try:
-        manifest = EvalOrchestrator.resume(out)
+        hooks: dict[str, Any] = {}
+        ckpt_path = out / "checkpoint.json"
+        if ckpt_path.is_file():
+            ckpt = EvalCheckpoint.model_validate_json(ckpt_path.read_text(encoding="utf-8"))
+            if ckpt.config.mode == RunMode.LIVE:
+                hooks = _build_live_eval_hooks(
+                    sessions_dir=sessions_dir,
+                    strict_local=ckpt.config.strict_local,
+                )
+        manifest = EvalOrchestrator.resume(out, **hooks)
     except (FileNotFoundError, ValueError, LiveExecutionUnavailableError) as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1)
