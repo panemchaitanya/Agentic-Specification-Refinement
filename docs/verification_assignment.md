@@ -27,3 +27,25 @@ pure-2007_-_central_trading_system,pure-2008_-_caiso,pure-2001_-_space_fractions
 ## Shared (both annotators, independent) — stratified by document length,
 ## 2 of the 18 LLM-truncated docs included; also the model cross-check sample
 pure-2001_-_ctc_network,pure-2003_-_pnnl,pure-2006_-_eirene_sys_15,pure-2007_-_puget_sound,pure-2007_-_water_use,pure-2009_-_peazip,pure-2010_-_home_1.3,pure-2011_-_opensg_0.1
+
+## Progress (updated 29 Nov 2026)
+
+Taken from the gold files after running `training/merge_verdicts.py --split dev`.
+3 of 61 dev docs are FROZEN; 6 are blocked; 52 are not reviewed yet.
+
+| Doc | Annotator | Status | What is left |
+| --- | --- | --- | --- |
+| pure-0000_-_cctns | a | FROZEN | - |
+| pure-0000_-_gamma_j | a | FROZEN | - |
+| pure-1999_-_dii | b | FROZEN | - |
+| pure-1998_-_themas | b | REVIEW-INCOMPLETE | skipped G22, G25 |
+| pure-1999_-_multi-mahjong | b | REVIEW-INCOMPLETE | skipped G19, G20 |
+| pure-0000_-_inventory | a | REVIEW-INCOMPLETE | skipped G19 |
+| pure-2000_-_nasa_x38 | a | REVIEW-INCOMPLETE | scope not fully read, G1-G40 skipped |
+| pure-2001_-_hats | a | REVIEW-INCOMPLETE | scope not fully read, G1-G26 skipped |
+| pure-2001_-_ctc_network | a (shared) | REVIEW-INCOMPLETE | scope not fully read; b not done yet |
+
+Remaining:
+- A: 22 unique docs not started, 7 shared docs not started (ctc_network started).
+- B: 23 unique docs not started, 8 shared docs not started.
+- Kappa on the shared list can only be computed once both of us finish those 8.
