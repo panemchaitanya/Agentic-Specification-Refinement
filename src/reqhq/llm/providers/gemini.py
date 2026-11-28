@@ -40,7 +40,7 @@ class GeminiFreeProvider:
         base_url: str = "https://generativelanguage.googleapis.com/v1beta",
         timeout: float = 60.0,
         client: httpx.Client | None = None,
-        max_transient_retries: int = 1,
+        max_transient_retries: int = 2,
         transient_retry_delay_seconds: float = 1.5,
     ) -> None:
         self._api_key = api_key
@@ -110,7 +110,7 @@ class GeminiFreeProvider:
 
             if resp.status_code == 503 and attempt < attempts - 1:
                 if self.transient_retry_delay_seconds > 0.0:
-                    time.sleep(self.transient_retry_delay_seconds)
+                    time.sleep(self.transient_retry_delay_seconds * (2**attempt))
                 continue
             break
 

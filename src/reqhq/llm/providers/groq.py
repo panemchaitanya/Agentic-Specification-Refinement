@@ -81,9 +81,25 @@ class GroqFreeProvider:
             "temperature": request.temperature,
             "max_tokens": request.max_tokens,
         }
+        if model.lower().startswith("openai/gpt-oss"):
+            payload["reasoning_effort"] = "low"
         if schema is not None:
             payload["response_format"] = {"type": "json_object"}
         return payload
+
+    def _post_json(
+        self, url: str, payload: dict[str, Any], headers: dict[str, str]
+    ) -> httpx.Response:
+        try:
+            if self._client is not None:
+                return self._client.post(url, json=payload, headers=headers)
+            with httpx.Client(timeout=self.timeout) as client:
+                return client.post(url, json=payload, headers=headers)
+        except httpx.HTTPError as exc:
+            raise ProviderError(
+                f"Groq request failed: {exc}",
+                provider=self.name,
+            ) from exc
 
     def generate(self, request: LLMRequest) -> LLMResponse:
         """Execute a Groq cloud request, raising RateLimitError on HTTP 429."""
@@ -96,17 +112,15 @@ class GroqFreeProvider:
         }
         start = time.perf_counter()
 
-        try:
-            if self._client is not None:
-                resp = self._client.post(url, json=payload, headers=headers)
-            else:
-                with httpx.Client(timeout=self.timeout) as client:
-                    resp = client.post(url, json=payload, headers=headers)
-        except httpx.HTTPError as exc:
-            raise ProviderError(
-                f"Groq request failed: {exc}",
-                provider=self.name,
-            ) from exc
+        resp = self._post_json(url, payload, headers)
+        if (
+            resp.status_code == 400
+            and "response_format" in payload
+            and "json_validate_failed" in resp.text
+        ):
+            fallback_payload = dict(payload)
+            fallback_payload.pop("response_format", None)
+            resp = self._post_json(url, fallback_payload, headers)
 
         latency_ms = (time.perf_counter() - start) * 1000.0
 

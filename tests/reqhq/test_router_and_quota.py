@@ -355,11 +355,12 @@ def test_gemini_and_groq_providers_offline_http_and_429(monkeypatch: pytest.Monk
             },
         )
 
+    assert GeminiFreeProvider(api_key="test-gemini-key").max_transient_retries == 2
     g_client = httpx.Client(transport=httpx.MockTransport(gemini_handler))
     gemini = GeminiFreeProvider(
         api_key="test-gemini-key",
         client=g_client,
-        max_transient_retries=1,
+        max_transient_retries=2,
         transient_retry_delay_seconds=0.001,
     )
     assert gemini.default_model == "gemini-3.1-flash-lite"
@@ -382,14 +383,22 @@ def test_gemini_and_groq_providers_offline_http_and_429(monkeypatch: pytest.Monk
     with pytest.raises(ProviderError):
         gemini.generate(LLMRequest(prompt="malformed"))
 
+    groq_captured: list[dict] = []
+
     def groq_handler(req: httpx.Request) -> httpx.Response:
         assert req.headers["Authorization"] == "Bearer test-groq-key"
         body = json.loads(req.content.decode("utf-8"))
+        groq_captured.append(body)
         user_msg = body["messages"][-1]["content"]
         if user_msg == "429":
             return httpx.Response(429, headers={"Retry-After": "bad"}, text="limit")
         if user_msg == "502":
             return httpx.Response(502, text="bad gateway")
+        if user_msg == "json-validate-fallback" and "response_format" in body:
+            return httpx.Response(
+                400,
+                text='{"error":{"code":"json_validate_failed","failed_generation":""}}',
+            )
         if user_msg == "malformed":
             return httpx.Response(200, json={"choices": []})
         return httpx.Response(
@@ -413,6 +422,18 @@ def test_gemini_and_groq_providers_offline_http_and_429(monkeypatch: pytest.Monk
     )
     assert q_resp.cloud_verified is True
     assert q_resp.total_tokens == 20
+    assert groq_captured[0]["reasoning_effort"] == "low"
+    assert groq_captured[0]["response_format"] == {"type": "json_object"}
+    fb_resp = groq.generate(
+        LLMRequest(
+            prompt="json-validate-fallback",
+            system_prompt="sys",
+            response_schema=_SampleSpec,
+        )
+    )
+    assert fb_resp.text == '{"title": "Q", "owner": "v"}'
+    assert "response_format" in groq_captured[1]
+    assert "response_format" not in groq_captured[2]
     with pytest.raises(RateLimitError) as q_rl:
         groq.generate(LLMRequest(prompt="429"))
     assert q_rl.value.retry_after is None

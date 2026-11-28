@@ -31,7 +31,7 @@ Run standalone (never overlap with `eval ablate` or full `pytest` on the same la
   --include-promise \
   --cross-domain-suite extended \
   --coding-suite extended \
-  --replicates 1 \
+  --replicates 2 \
   --seed 42 \
   --sessions-dir .reqhq_sessions_v5 \
   --out eval_live_v5_full
