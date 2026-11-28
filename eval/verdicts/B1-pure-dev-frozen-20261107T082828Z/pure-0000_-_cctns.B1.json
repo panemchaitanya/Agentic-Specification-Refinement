@@ -1,0 +1,91 @@
+{
+  "item_id": "pure-0000_-_cctns",
+  "run_id": "B1-pure-dev-frozen-20261107T082828Z:B1",
+  "pred_ids": [
+    "FR-1",
+    "FR-2",
+    "FR-3",
+    "FR-4",
+    "FR-5",
+    "FR-6",
+    "FR-7",
+    "FR-8",
+    "other-20",
+    "performance-13",
+    "performance-14",
+    "reliability-19",
+    "scalability-18",
+    "security-10",
+    "security-11",
+    "security-12",
+    "security-9",
+    "usability-15",
+    "usability-16",
+    "usability-17"
+  ],
+  "matches": [
+    [
+      "G1",
+      "FR-1"
+    ],
+    [
+      "G2",
+      "FR-2"
+    ],
+    [
+      "G3",
+      "FR-3"
+    ],
+    [
+      "G4",
+      "FR-4"
+    ],
+    [
+      "G7",
+      "FR-5"
+    ],
+    [
+      "G8",
+      "FR-6"
+    ],
+    [
+      "G10",
+      "security-9"
+    ],
+    [
+      "G13",
+      "security-10"
+    ],
+    [
+      "G15",
+      "security-11"
+    ],
+    [
+      "G17",
+      "security-12"
+    ],
+    [
+      "G18",
+      "performance-13"
+    ],
+    [
+      "G20",
+      "performance-14"
+    ],
+    [
+      "G22",
+      "usability-15"
+    ],
+    [
+      "G24",
+      "usability-17"
+    ]
+  ],
+  "audited": false,
+  "dropped_pairs": 6,
+  "matcher": {
+    "type": "llm-rubric",
+    "model": "gemini-3.1-flash-lite",
+    "matched_at": "2026-11-07T08:34:40Z"
+  }
+}

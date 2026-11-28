@@ -1,0 +1,19 @@
+{
+  "task_id": "loan_disbursement_gate",
+  "domain": "fintech_compliance",
+  "title": "Regulated Loan Disbursement KYC/Sanctions Compliance Gate",
+  "target_module": "loan_disbursement_gate",
+  "entry_symbol": "evaluate_disbursement_gate",
+  "required_invariants": [
+    "Principal amount must be positive and debt_to_income_ratio must be in [0.0, 1.0]; invalid inputs raise ValueError.",
+    "Sanctions match or unverified KYC must unconditionally block disbursement.",
+    "Debt-to-income ratio > 0.43 or principal_cents > 25000000 requires manual_underwriter_review.",
+    "Clean KYC, no sanctions match, DTI <= 0.43, and principal_cents <= 25000000 clears for disbursement."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

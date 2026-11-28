@@ -1,0 +1,19 @@
+{
+  "task_id": "cold_chain_inventory",
+  "domain": "inventory_logistics",
+  "title": "Cold-Chain Pharmaceutical Excursion Quarantine & Disposition Engine",
+  "target_module": "cold_chain_inventory",
+  "entry_symbol": "assess_cold_chain_lot",
+  "required_invariants": [
+    "excursion_minutes must be non-negative and lot_id non-empty; invalid inputs raise ValueError.",
+    "Temperatures within [2.0, 8.0] C with zero excursion minutes must be released.",
+    "Any temperature < 0.0 C or > 15.0 C or excursion_minutes > 60 must quarantine_lot immediately.",
+    "Mild excursions outside [2.0, 8.0] C within <= 60 minutes must route to qa_stability_review."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

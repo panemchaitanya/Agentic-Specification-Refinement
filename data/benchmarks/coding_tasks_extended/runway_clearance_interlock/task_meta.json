@@ -1,0 +1,19 @@
+{
+  "task_id": "runway_clearance_interlock",
+  "domain": "aviation_safety",
+  "title": "Runway Clearance Mutual-Exclusion Interlock",
+  "target_module": "runway_clearance_interlock",
+  "entry_symbol": "evaluate_runway_clearance",
+  "required_invariants": [
+    "visibility_m < 0 or crosswind_kt < 0 or blank flight_id must raise ValueError.",
+    "If runway_occupied is True, clearance must be 'hold_short' regardless of weather (unless emergency_override is True -> 'emergency_supervisor_review').",
+    "If visibility_m < 550 or crosswind_kt > 30, return 'hold_short' (or 'emergency_supervisor_review' if emergency_override).",
+    "Otherwise return 'cleared_for_takeoff'."
+  ],
+  "expected_routes": [
+    "software",
+    "process",
+    "training",
+    "hybrid"
+  ]
+}

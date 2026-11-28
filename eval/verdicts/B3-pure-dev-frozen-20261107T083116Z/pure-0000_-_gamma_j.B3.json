@@ -1,0 +1,86 @@
+{
+  "item_id": "pure-0000_-_gamma_j",
+  "run_id": "B3-pure-dev-frozen-20261107T083116Z:B3",
+  "pred_ids": [
+    "FR-1",
+    "FR-10",
+    "FR-11",
+    "FR-12",
+    "FR-13",
+    "FR-14",
+    "FR-15",
+    "FR-16",
+    "FR-17",
+    "FR-18",
+    "FR-19",
+    "FR-2",
+    "FR-3",
+    "FR-4",
+    "FR-5",
+    "FR-9",
+    "maintainability-24",
+    "performance-25",
+    "performance-26",
+    "performance-27",
+    "reliability-23",
+    "reliability-29",
+    "reliability-30",
+    "reliability-7",
+    "reliability-8",
+    "scalability-31",
+    "security-20",
+    "security-21",
+    "security-22",
+    "security-28",
+    "security-6"
+  ],
+  "matches": [
+    [
+      "G1",
+      "FR-11"
+    ],
+    [
+      "G3",
+      "FR-12"
+    ],
+    [
+      "G4",
+      "FR-14"
+    ],
+    [
+      "G5",
+      "FR-4"
+    ],
+    [
+      "G7",
+      "FR-17"
+    ],
+    [
+      "G8",
+      "FR-18"
+    ],
+    [
+      "G9",
+      "FR-19"
+    ],
+    [
+      "G10",
+      "security-6"
+    ],
+    [
+      "G21",
+      "reliability-8"
+    ],
+    [
+      "G17",
+      "performance-27"
+    ]
+  ],
+  "audited": false,
+  "dropped_pairs": 0,
+  "matcher": {
+    "type": "llm-rubric",
+    "model": "gemini-3.1-flash-lite",
+    "matched_at": "2026-11-07T08:35:00Z"
+  }
+}

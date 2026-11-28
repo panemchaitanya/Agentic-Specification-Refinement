@@ -1,0 +1,136 @@
+"""Configuration schema and environment loading for ReqHQ v2."""
+
+from __future__ import annotations
+
+import os
+from collections.abc import Mapping
+from pathlib import Path
+from typing import Literal
+from urllib.parse import urlparse
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+_TRUE_VALUES = {"1", "true", "yes", "on"}
+_FALSE_VALUES = {"0", "false", "no", "off"}
+
+
+def _parse_bool(raw: str, env_name: str) -> bool:
+    normalized = raw.strip().lower()
+    if normalized in _TRUE_VALUES:
+        return True
+    if normalized in _FALSE_VALUES:
+        return False
+    raise ValueError(f"Invalid boolean for {env_name}: {raw!r}")
+
+
+class ReqHQConfig(BaseModel):
+    """Strict runtime configuration for the ReqHQ v2 engine."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    sessions_dir: Path = Path(".reqhq_sessions")
+    adr_dir: Path = Path("docs/adr")
+    strict_local: bool = False
+    hardware_tier_override: int | None = Field(default=None, ge=0, le=3)
+    ollama_base_url: str = "http://127.0.0.1:11434"
+    ollama_timeout_seconds: float = Field(default=120.0, gt=0.0, allow_inf_nan=False)
+    quota_ceiling_ratio: float = Field(default=0.90, gt=0.0, le=1.0, allow_inf_nan=False)
+    quota_db_path: Path | None = None
+    cache_db_path: Path | None = None
+    vault_path: Path | None = None
+    auto_start_ollama: bool = True
+    gemini_model: str = "gemini-3.1-flash-lite"
+    groq_model: str = "openai/gpt-oss-20b"
+    alloy_jar_path: Path | None = None
+    alloy_compat: Literal["alloy6", "legacy"] = "alloy6"
+
+    @field_validator("hardware_tier_override", mode="before")
+    @classmethod
+    def _reject_bool_tier(cls, value: object) -> object:
+        if isinstance(value, bool):
+            raise ValueError("hardware_tier_override must be an integer 0..3, not a boolean")
+        return value
+
+    @field_validator("ollama_base_url")
+    @classmethod
+    def _validate_ollama_url(cls, value: str) -> str:
+        cleaned = value.strip().rstrip("/")
+        parsed = urlparse(cleaned)
+        if parsed.scheme not in ("http", "https") or not parsed.netloc:
+            raise ValueError("ollama_base_url must be a valid http:// or https:// URL with host")
+        return cleaned
+
+    def resolved_quota_db_path(self) -> Path:
+        """Return explicit quota DB path or default under sessions_dir."""
+        if self.quota_db_path is not None:
+            return self.quota_db_path
+        return self.sessions_dir / "quota_ledger.db"
+
+    def resolved_cache_db_path(self) -> Path:
+        """Return explicit prompt cache DB path or default under sessions_dir."""
+        if self.cache_db_path is not None:
+            return self.cache_db_path
+        return self.sessions_dir / "prompt_cache.db"
+
+    def resolved_vault_path(self) -> Path:
+        """Return explicit encrypted credential vault path or default under sessions_dir."""
+        if self.vault_path is not None:
+            return self.vault_path
+        return self.sessions_dir / "credentials.vault.enc"
+
+    @classmethod
+    def from_env(cls, env: Mapping[str, str] | None = None) -> ReqHQConfig:
+        """Load ReqHQConfig from environment variables (defaults to os.environ)."""
+        source = os.environ if env is None else env
+        kwargs: dict[str, object] = {}
+
+        if raw_sessions := source.get("REQHQ_SESSIONS_DIR", "").strip():
+            kwargs["sessions_dir"] = Path(raw_sessions)
+        if raw_adr := source.get("REQHQ_ADR_DIR", "").strip():
+            kwargs["adr_dir"] = Path(raw_adr)
+        if raw_strict := source.get("REQHQ_STRICT_LOCAL", "").strip():
+            kwargs["strict_local"] = _parse_bool(raw_strict, "REQHQ_STRICT_LOCAL")
+        if raw_tier := source.get("REQHQ_HARDWARE_TIER", "").strip():
+            try:
+                kwargs["hardware_tier_override"] = int(raw_tier)
+            except ValueError as exc:
+                raise ValueError(
+                    f"Invalid integer for REQHQ_HARDWARE_TIER: {raw_tier!r}"
+                ) from exc
+        if raw_ollama := source.get("OLLAMA_BASE_URL", "").strip():
+            kwargs["ollama_base_url"] = raw_ollama
+        if raw_ollama_timeout := source.get("REQHQ_OLLAMA_TIMEOUT", "").strip():
+            try:
+                kwargs["ollama_timeout_seconds"] = float(raw_ollama_timeout)
+            except ValueError as exc:
+                raise ValueError(
+                    f"Invalid float for REQHQ_OLLAMA_TIMEOUT: {raw_ollama_timeout!r}"
+                ) from exc
+        if raw_ratio := source.get("REQHQ_QUOTA_CEILING_RATIO", "").strip():
+            try:
+                kwargs["quota_ceiling_ratio"] = float(raw_ratio)
+            except ValueError as exc:
+                raise ValueError(
+                    f"Invalid float for REQHQ_QUOTA_CEILING_RATIO: {raw_ratio!r}"
+                ) from exc
+        if raw_quota_db := source.get("REQHQ_QUOTA_DB_PATH", "").strip():
+            kwargs["quota_db_path"] = Path(raw_quota_db)
+        if raw_cache_db := source.get("REQHQ_CACHE_DB_PATH", "").strip():
+            kwargs["cache_db_path"] = Path(raw_cache_db)
+        if raw_vault_path := source.get("REQHQ_VAULT_PATH", "").strip():
+            kwargs["vault_path"] = Path(raw_vault_path)
+        if raw_auto_start := source.get("REQHQ_AUTO_START_OLLAMA", "").strip():
+            kwargs["auto_start_ollama"] = _parse_bool(raw_auto_start, "REQHQ_AUTO_START_OLLAMA")
+        if raw_gemini_model := source.get("REQHQ_GEMINI_MODEL", "").strip():
+            kwargs["gemini_model"] = raw_gemini_model
+        if raw_groq_model := source.get("REQHQ_GROQ_MODEL", "").strip():
+            kwargs["groq_model"] = raw_groq_model
+        if raw_alloy_jar := source.get("REQHQ_ALLOY_JAR_PATH", "").strip():
+            kwargs["alloy_jar_path"] = Path(raw_alloy_jar)
+        if raw_alloy_compat := source.get("REQHQ_ALLOY_COMPAT", "").strip():
+            kwargs["alloy_compat"] = raw_alloy_compat.lower()
+
+        return cls.model_validate(kwargs)
+
+
+__all__ = ["ReqHQConfig"]

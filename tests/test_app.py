@@ -146,3 +146,17 @@ def test_auto_apply_note_when_questions_exist():
     at = analyze_to_questions(run_app())
     assert any("added automatically without your approval" in c.value
                for c in at.caption)
+
+
+def test_questions_come_before_the_evidence_and_show_progress():
+    at = run_app()
+    at.selectbox[0].select("Shopping app (demo)").run()
+    button(at, "Analyze").click().run()
+    assert not at.exception
+    headings = [s.value for s in at.subheader]
+    first_q = headings.index("Questions for you")
+    assert all(not h.startswith(("Draft requirements", "Critic findings"))
+               for h in headings[:first_q])
+    assert any("0 of" in c.value and "answered" in c.value for c in at.caption)
+    at.text_input[0].set_value("Encrypt at rest with AES-256").run()
+    assert any("1 of" in c.value and "answered" in c.value for c in at.caption)

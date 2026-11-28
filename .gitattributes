@@ -1,0 +1,7 @@
+docs/adr/**/*.md text eol=lf
+docs/adr/**/*.jsonl text eol=lf
+docs/final_report/**/*.md text eol=lf
+REPRODUCIBILITY.md text eol=lf
+data/benchmarks/**/*.json text eol=lf
+data/benchmarks/**/*.md text eol=lf
+data/benchmarks/**/*.py text eol=lf

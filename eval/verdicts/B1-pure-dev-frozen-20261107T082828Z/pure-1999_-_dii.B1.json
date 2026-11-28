@@ -1,0 +1,73 @@
+{
+  "item_id": "pure-1999_-_dii",
+  "run_id": "B1-pure-dev-frozen-20261107T082828Z:B1",
+  "pred_ids": [
+    "FR-1",
+    "FR-10",
+    "FR-2",
+    "FR-3",
+    "FR-4",
+    "FR-5",
+    "FR-6",
+    "FR-7",
+    "FR-8",
+    "FR-9",
+    "other-16",
+    "other-17",
+    "other-18",
+    "performance-11",
+    "performance-12",
+    "scalability-13",
+    "security-14",
+    "usability-15"
+  ],
+  "matches": [
+    [
+      "G1",
+      "FR-1"
+    ],
+    [
+      "G8",
+      "FR-4"
+    ],
+    [
+      "G15",
+      "FR-6"
+    ],
+    [
+      "G19",
+      "FR-7"
+    ],
+    [
+      "G20",
+      "FR-8"
+    ],
+    [
+      "G23",
+      "FR-9"
+    ],
+    [
+      "G24",
+      "FR-10"
+    ],
+    [
+      "G28",
+      "performance-11"
+    ],
+    [
+      "G29",
+      "performance-12"
+    ],
+    [
+      "G32",
+      "other-18"
+    ]
+  ],
+  "audited": false,
+  "dropped_pairs": 5,
+  "matcher": {
+    "type": "llm-rubric",
+    "model": "gemini-3.1-flash-lite",
+    "matched_at": "2026-11-07T08:34:45Z"
+  }
+}

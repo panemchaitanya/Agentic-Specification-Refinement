@@ -11,7 +11,65 @@ vague non-functional requirements; a gap-and-conflict check asks the user
 only the questions it cannot settle; the final spec shows where every line
 came from: a PRD sentence, a critic, or a human answer.
 
-## Status
+## ReqHQ v2 (current work)
+
+v2 lives in the `src/reqhq/` package (CLI `python -m reqhq.cli`) next to the v1
+mid-submission app (`src/specpipe/`, `app.py`), which is kept unchanged. v2 adds
+document ingestion, a five-critic elicitation loop with delta convergence, socio-technical
+triage, Alloy 6 specs with a vacuity check, property-based-test export with a tamper
+lock, and a four-layer evaluation harness. Design decisions are in `docs/adr/`.
+
+### Quick start (verified on Linux, Python 3.12)
+
+```bash
+python -m venv .venv && . .venv/bin/activate      # Python >= 3.11 required
+pip install -e . pytest hypothesis streamlit
+python -m reqhq.cli doctor                       # hardware tier, Ollama, vault, Java, Alloy
+python -m reqhq.cli --help                       # init, elicit, finalize, export, handoff, eval, ...
+```
+
+On Windows use `.venv\Scripts\python.exe` in place of `python`.
+
+### Tests
+
+```bash
+pytest tests                                     # legacy v1 + v2 suites
+```
+
+Two tests skip by design: the live Ollama test (needs a local server with `qwen3:4b`)
+and the Windows DPAPI round-trip (needs win32). The live Alloy test needs Java 21 and the
+Alloy 6.2 jar; set `REQHQ_ALLOY_JAR_PATH` to the jar. With both in place, a Linux run
+on 28 Nov 2026 gave 496 passed, 2 skipped.
+
+### Offline evaluation dry run (mock mode, no keys or network)
+
+```bash
+python -m reqhq.cli eval run --layers 1,2,3,4 --out artifacts/dry --mode mock --replicates 2 --seed 42
+python -m reqhq.cli eval analyze --in artifacts/dry --out artifacts/dry/analysis
+python -m reqhq.cli eval report --in artifacts/dry/analysis --out artifacts/dry/report --format both
+python -m reqhq.cli eval package --in artifacts/dry --out artifacts/dry_bundle
+python -m reqhq.cli eval verify-bundle artifacts/dry_bundle/artifacts_manifest.json
+```
+
+Mock runs are quarantined as `DRY_RUN_UNSCORED`. They check the plumbing only and are
+not evidence for any hypothesis. Full live-run instructions are in `REPRODUCIBILITY.md`.
+
+### What is and is not verified here
+
+- The raw outputs of the reported live run (`eval_manifest.json`, `layer1-4.jsonl`,
+  `analysis_summary.json`, `FINAL_REPORT.md`) were not found in the repository, its
+  history or its release assets. The report's headline numbers cannot be re-derived
+  from committed files yet.
+- The elicitation study used a deterministic simulator, not human participants. Sample
+  sizes are small (3 documents, 16 projects, 12 coding trials per condition).
+- The two `FREEZE.json` hashes in the report are the CRLF-checkout form of the committed
+  files; see `docs/final_report/FREEZE_HASH_NOTE.md`.
+
+---
+
+# v1 mid-submission snapshot
+
+## Status (v1, 6 Nov 2026)
 
 Mid-submission snapshot (6 Nov 2026). What exists and is measured today:
 
