@@ -17,14 +17,13 @@ from reqhq.benchmark.oracle_sim import FrozenOracleSimulator
 from reqhq.benchmark.pure_bridge import load_frozen_promise_nfr_gold, load_frozen_pure_gold
 from reqhq.elicitation.critics import (
     BaseCritic,
-    CriticPanel,
     FunctionalCompletenessCritic,
     LogicalConsistencyCritic,
     NonFunctionalQualityCritic,
     ProcessOperationalCritic,
     TrainingAdoptionCritic,
 )
-from reqhq.elicitation.models import FindingSeverity
+from reqhq.elicitation.models import CriticFinding, FindingSeverity
 from reqhq.evaluation.models import RunMode
 from reqhq.evaluation.runner import (
     LiveExecutionUnavailableError,
@@ -88,10 +87,15 @@ def _append_jsonl(path: Path, model: BaseModel) -> None:
         handle.write(line)
 
 
+def _critic_keys_for_arm(arm: AblationArmName) -> tuple[str, ...]:
+    excluded = arm.removeprefix("minus_") if arm.startswith("minus_") else ""
+    return tuple(key for key, _ in _ALL_CRITIC_CLASSES if key != excluded)
+
+
 def build_critics_for_arm(arm: AblationArmName) -> list[BaseCritic]:
     """Instantiate the exact specialist critic subset for a given ablation arm."""
-    excluded = arm.removeprefix("minus_") if arm.startswith("minus_") else ""
-    return [cls() for key, cls in _ALL_CRITIC_CLASSES if key != excluded]
+    wanted = set(_critic_keys_for_arm(arm))
+    return [cls() for key, cls in _ALL_CRITIC_CLASSES if key in wanted]
 
 
 def _graph_from_retained_clauses(doc: FrozenGoldDocument, clauses: list[GapClause]) -> RequirementGraph:
@@ -315,36 +319,66 @@ class AblationRunner:
         docs = self._load_gold_docs()
         existing = self._load_existing()
         completed_ids = {rec.record_id for rec in existing}
+        critics_by_key: dict[str, BaseCritic] = {key: cls() for key, cls in _ALL_CRITIC_CLASSES}
+        arm_critic_keys: dict[AblationArmName, tuple[str, ...]] = {
+            arm: _critic_keys_for_arm(arm) for arm in ABLATION_ARMS
+        }
         total_units = len(ABLATION_ARMS) * len(docs)
-        unit_idx = 0
+        unit_idx = sum(
+            1
+            for doc in docs
+            for arm in ABLATION_ARMS
+            if f"ABL:{arm}:{doc.item_id}" in completed_ids
+        )
 
-        for arm in ABLATION_ARMS:
-            critics = build_critics_for_arm(arm)
-            panel = CriticPanel(router, critics=critics)
-            for doc_idx, doc in enumerate(docs):
+        for doc_idx, doc in enumerate(docs):
+            pending_arms = [
+                arm for arm in ABLATION_ARMS if f"ABL:{arm}:{doc.item_id}" not in completed_ids
+            ]
+            if not pending_arms:
+                continue
+
+            clauses = [
+                GapClause(
+                    clause_id=f"{doc.item_id}-{req['id']}",
+                    category=_kind_to_gap_category(req["kind"]),
+                    text=req["text"],
+                    keywords=_extract_keywords(req["text"]),
+                )
+                for req in doc.requirements
+            ]
+            injected = GapInjector(seed=self.seed + doc_idx).inject(
+                spec_id=doc.item_id,
+                title=doc.item_id,
+                clauses=clauses,
+                drop_ratio=0.30,
+            )
+            graph = _graph_from_retained_clauses(doc, injected.manifest.retained_clauses)
+
+            # Evaluate each needed specialist critic ONCE per document (skipping unused
+            # disagreement arbitration and avoiding 6x redundant critic passes across arms).
+            needed_keys = {key for arm in pending_arms for key in arm_critic_keys[arm]}
+            findings_by_key: dict[str, list[CriticFinding]] = {}
+            elapsed_by_key: dict[str, float] = {}
+            for key, _ in _ALL_CRITIC_CLASSES:
+                if key not in needed_keys:
+                    continue
+                critic_started = time.perf_counter()
+                critic_findings, _conflicts = critics_by_key[key].evaluate(
+                    router,
+                    graph.nodes,
+                    graph=graph,
+                    glossary_header="",
+                )
+                findings_by_key[key] = critic_findings
+                elapsed_by_key[key] = max(0.0, time.perf_counter() - critic_started)
+
+            for arm in pending_arms:
                 unit_idx += 1
                 record_id = f"ABL:{arm}:{doc.item_id}"
-                if record_id in completed_ids:
-                    continue
-
-                started = time.perf_counter()
-                clauses = [
-                    GapClause(
-                        clause_id=f"{doc.item_id}-{req['id']}",
-                        category=_kind_to_gap_category(req["kind"]),
-                        text=req["text"],
-                        keywords=_extract_keywords(req["text"]),
-                    )
-                    for req in doc.requirements
-                ]
-                injected = GapInjector(seed=self.seed + doc_idx).inject(
-                    spec_id=doc.item_id,
-                    title=doc.item_id,
-                    clauses=clauses,
-                    drop_ratio=0.30,
-                )
-                graph = _graph_from_retained_clauses(doc, injected.manifest.retained_clauses)
-                findings, _disagreements = panel.run_on_nodes(graph)
+                keys = arm_critic_keys[arm]
+                oracle_started = time.perf_counter()
+                findings = [f for key in keys for f in findings_by_key[key]]
                 blocker_major = sum(
                     1
                     for f in findings
@@ -356,7 +390,11 @@ class AblationRunner:
                     for finding in findings:
                         oracle.answer_question(finding.suggested_question)
                 metrics = oracle.score_session()
-                elapsed = round(max(0.0, time.perf_counter() - started), 4)
+                oracle_elapsed = max(0.0, time.perf_counter() - oracle_started)
+                elapsed = round(
+                    sum(elapsed_by_key[key] for key in keys) + oracle_elapsed,
+                    4,
+                )
 
                 rec = AblationItemRecord(
                     record_id=record_id,
@@ -364,7 +402,7 @@ class AblationRunner:
                     item_id=doc.item_id,
                     split=doc.split,
                     run_mode=self.mode,
-                    active_critics=len(critics),
+                    active_critics=len(keys),
                     findings_count=len(findings),
                     blocker_major_count=blocker_major,
                     questions_asked=metrics.total_questions,

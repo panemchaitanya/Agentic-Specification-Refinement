@@ -27,8 +27,12 @@ ADR_0025_FILE = (
 ADR_0026_FILE = (
     "0026-cleaner-v2-refinements-srs-heading-promotion-section-role-triage-and-tf-idf-semantic-chunking.md"
 )
+ADR_0027_FILE = (
+    "0027-end-to-end-smart-ingestion-wiring-live-llm-runtime-hardening-and-per-document-ablation-memoization.md"
+)
 PHASE5_V2_BRANCH = "fix/p5-live-eval-paths-telemetry-progress"
 LARGE_SCALE_BRANCH = "feat/large-scale-eval-promise-corpus-ablations"
+PHASE5_LIVE_BRANCH = "feat/v2-phase5-live-evaluation"
 
 
 class TestPhase5NygardADRReadOnly:
@@ -269,3 +273,36 @@ class TestPhase5NygardADRReadOnly:
             "49.98%",
         ):
             assert token in content26, f"ADR-0026 missing required decision detail: {token}"
+
+    def test_adr_0027_smart_wiring_live_hardening_and_ablation_memoization_accepted(self) -> None:
+        mgr = ADRManager(REAL_ADR_DIR)
+        by_num = {rec.number: rec for rec in mgr.list_adrs(include_archived=True)}
+        assert "0027" in by_num
+        rec27 = by_num["0027"]
+        assert rec27.path.name == ADR_0027_FILE
+        assert rec27.status == "Accepted"
+        assert rec27.pr_branch == PHASE5_LIVE_BRANCH
+        assert rec27.archived is False
+
+        entries = mgr.audit.read_entries()
+        assert [e.action for e in entries if e.adr_number == "0027"] == ["created", "accepted"]
+
+        content27 = rec27.path.read_text(encoding="utf-8")
+        for token in (
+            "cluster_requirements_into_batches",
+            "deduplicate_requirements()",
+            "use_smart_frontend=True",
+            "--smart-frontend",
+            "DEF-P5-005",
+            '"think": False',
+            "SCHEMA_RETRY_EXHAUSTED",
+            "_CODEGEN_SYSTEM_PROMPT",
+            "openai/gpt-oss-20b",
+            "REQHQ_GROQ_MODEL",
+            "timeout=120.0",
+            "REQHQ_OLLAMA_TIMEOUT",
+            "AblationRunner.run()",
+            "_critic_keys_for_arm()",
+            "_arbitrate_disagreement()",
+        ):
+            assert token in content27, f"ADR-0027 missing required decision detail: {token}"

@@ -2,8 +2,8 @@
 
 > Auto-generated from the append-only [`audit_log.jsonl`](./audit_log.jsonl) ledger. Do not delete historical events; append new lifecycle transitions via `ADRManager` or `reqhq adr`.
 
-- **Total Audit Events:** 58
-- **Created:** 26 | **Accepted:** 26 | **Deprecated:** 1 | **Superseded:** 2 | **Archived:** 3
+- **Total Audit Events:** 60
+- **Created:** 27 | **Accepted:** 27 | **Deprecated:** 1 | **Superseded:** 2 | **Archived:** 3
 
 | Timestamp (UTC) | Action | ADR | Transition | Author | Related | Path | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -65,3 +65,5 @@
 | 2026-11-27T14:37:39Z | `accepted` | ADR-0025 | Proposed -> Accepted | research-lead | — | `0025-standalone-deterministic-pre-llm-pdf-srs-text-cleaner-and-human-verification-studio.md` | Accepted ADR-0025 after 15-doc PURE dev audit (-44.94% chars, 0 normative lines removed), 100%-coverage unit/PBT suite, and interactive Review Studio. |
 | 2026-11-27T16:11:01Z | `created` | ADR-0026 | Proposed | research-lead | — | `0026-cleaner-v2-refinements-srs-heading-promotion-section-role-triage-and-tf-idf-semantic-chunking.md` | Created ADR-0026: Cleaner v2 Refinements, SRS Heading Promotion, Section-Role Triage, and TF-IDF Semantic Chunking |
 | 2026-11-27T16:11:02Z | `accepted` | ADR-0026 | Proposed -> Accepted | research-lead | — | `0026-cleaner-v2-refinements-srs-heading-promotion-section-role-triage-and-tf-idf-semantic-chunking.md` | Accepted ADR-0026 after human-verified Cleaner v2 fixes, TF-IDF semantic chunking (-49.98% combined Raw->LLM reduction across 15 PURE dev SRS docs), and 100%-coverage unit + PBT suites. |
+| 2026-11-28T05:47:43Z | `created` | ADR-0027 | Proposed | reqhq-maintainer | — | `0027-end-to-end-smart-ingestion-wiring-live-llm-runtime-hardening-and-per-document-ablation-memoization.md` | Created ADR-0027: End-to-End Smart Ingestion Wiring, Live LLM Runtime Hardening, and Per-Document Ablation Memoization |
+| 2026-11-28T05:47:43Z | `accepted` | ADR-0027 | Proposed -> Accepted | reqhq-maintainer | — | `0027-end-to-end-smart-ingestion-wiring-live-llm-runtime-hardening-and-per-document-ablation-memoization.md` | Accepted on feat/v2-phase5-live-evaluation after 100% coverage and live provider verification |

@@ -535,6 +535,95 @@ class TestAblationRunnerAndPBT:
         assert report.total_records == 28
         assert report.split == "all"
 
+    def test_ablation_runner_evaluates_each_critic_once_per_doc_and_supports_partial_arm_resume(
+        self, tmp_path: Path
+    ) -> None:
+        from reqhq.elicitation.critics import CriticPanel
+        from reqhq.evaluation.ablations import _graph_from_retained_clauses
+        from reqhq.benchmark.gap_injector import GapInjector
+        from reqhq.benchmark.models import GapClause
+        from reqhq.evaluation.runner import _extract_keywords, _kind_to_gap_category
+
+        synth_root = _create_synthetic_frozen_root(
+            tmp_path / "synth_once", include_gold=True, include_promise=False
+        )
+        base_router = _build_offline_router()
+        routed_stages: list[tuple[str, str]] = []
+        orig_route = base_router.route
+
+        def _counting_route(request: Any, *args: Any, **kwargs: Any) -> Any:
+            routed_stages.append(
+                (str(request.metadata.get("stage", "")), str(request.metadata.get("critic", "")))
+            )
+            return orig_route(request, *args, **kwargs)
+
+        base_router.route = _counting_route  # type: ignore[method-assign]
+
+        out_dir = tmp_path / "ablate_once"
+        runner = AblationRunner(
+            out_dir,
+            mode=RunMode.LIVE,
+            split="dev",
+            include_promise=False,
+            frozen_root=synth_root,
+            seed=42,
+            live_router=base_router,
+        )
+        report = runner.run()
+        assert report.total_records == 7
+        # Exactly 5 critic evaluations for 1 doc across all 7 arms (0 arbitration calls, 0 redundant passes)
+        assert len(routed_stages) == 5
+        assert all(stage == "critic" for stage, _ in routed_stages)
+        assert len({critic for _, critic in routed_stages}) == 5
+
+        # Verify findings count matches direct CriticPanel.run_on_nodes for full_5_critics and minus_functional
+        doc = runner._load_gold_docs()[0]
+        clauses = [
+            GapClause(
+                clause_id=f"{doc.item_id}-{req['id']}",
+                category=_kind_to_gap_category(req["kind"]),
+                text=req["text"],
+                keywords=_extract_keywords(req["text"]),
+            )
+            for req in doc.requirements
+        ]
+        injected = GapInjector(seed=42).inject(
+            spec_id=doc.item_id,
+            title=doc.item_id,
+            clauses=clauses,
+            drop_ratio=0.30,
+        )
+        graph = _graph_from_retained_clauses(doc, injected.manifest.retained_clauses)
+        by_arm_rec = {rec.arm: rec for rec in runner._load_existing()}
+        for arm_name in ("full_5_critics", "minus_functional"):
+            panel_findings, _ = CriticPanel(
+                _build_offline_router(), critics=build_critics_for_arm(arm_name)
+            ).run_on_nodes(graph)
+            assert by_arm_rec[arm_name].findings_count == len(panel_findings)
+
+        # Partial per-arm resume: remove only minus_functional; functional critic must be skipped
+        kept_lines = [
+            ln
+            for ln in (out_dir / "ablation_records.jsonl").read_text(encoding="utf-8").splitlines()
+            if '"minus_functional"' not in ln
+        ]
+        (out_dir / "ablation_records.jsonl").write_text(
+            "\n".join(kept_lines) + "\n", encoding="utf-8", newline="\n"
+        )
+        routed_stages.clear()
+        resumed = AblationRunner(
+            out_dir,
+            mode=RunMode.LIVE,
+            split="dev",
+            include_promise=False,
+            frozen_root=synth_root,
+            seed=42,
+            live_router=base_router,
+        ).run()
+        assert resumed.total_records == 7
+        assert len(routed_stages) == 4
+        assert "functional_completeness" not in {critic for _, critic in routed_stages}
+
     @settings(derandomize=True, max_examples=50)
     @given(
         st.lists(
