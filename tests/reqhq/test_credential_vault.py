@@ -162,6 +162,7 @@ def test_is_valid_credential_value_rules() -> None:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.skipif(sys.platform != "win32", reason="Windows DPAPI is only available on win32")
 def test_windows_dpapi_protector_live_roundtrip_and_tamper() -> None:
     assert sys.platform == "win32"
     protector = WindowsDPAPIProtector()
@@ -252,7 +253,11 @@ def test_pbkdf2_fernet_protector_roundtrip_errors_and_default_selector(
         PBKDF2FernetProtector(b"")
 
     # default_secret_protector chooses DPAPI on win32 and PBKDF2 elsewhere
-    assert isinstance(default_secret_protector(), WindowsDPAPIProtector)
+    native_default = default_secret_protector()
+    if sys.platform == "win32":
+        assert isinstance(native_default, WindowsDPAPIProtector)
+    else:
+        assert isinstance(native_default, PBKDF2FernetProtector)
     monkeypatch.setattr(cv_mod.sys, "platform", "linux")
     assert isinstance(default_secret_protector(), PBKDF2FernetProtector)
 
@@ -301,7 +306,8 @@ def test_vault_crud_atomic_lf_zero_plaintext_and_posix_chmod(
     assert b"contoso-tenant" not in raw_bytes
     envelope = json.loads(raw_bytes.decode("utf-8"))
     assert envelope["version"] == VAULT_ENVELOPE_VERSION
-    assert envelope["backend"] == "windows-dpapi"
+    expected_backend = "windows-dpapi" if sys.platform == "win32" else "pbkdf2-fernet"
+    assert envelope["backend"] == expected_backend
     assert set(envelope.keys()) == {"version", "backend", "ciphertext", "master_key_blob"}
 
     # Validation errors on set/set_many do not corrupt existing vault

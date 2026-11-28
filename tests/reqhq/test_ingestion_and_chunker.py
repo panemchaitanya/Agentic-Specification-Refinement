@@ -751,8 +751,11 @@ def test_normalizer_default_parsers_md_txt_pdf_docx(tmp_path: Path) -> None:
     assert "plain_text_markdown" in active_names
     assert "pypdf" in active_names
     assert "python_docx" in active_names
-    # Docling is NOT installed on Python 3.15 — verify seamless fallback
-    assert "docling" not in active_names
+    # Docling is optional: it must be registered exactly when the package is importable,
+    # and the core parsers above must work either way.
+    import importlib.util
+
+    assert ("docling" in active_names) == (importlib.util.find_spec("docling") is not None)
     assert isinstance(PlainTextMarkdownParser(), DocumentParser)
 
     md_doc = normalize_file(md_path, registry=registry)
