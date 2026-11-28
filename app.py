@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from specpipe.llm import GeminiLLM, MockLLM, LLMError  # noqa: E402
 from specpipe.pipeline import analyze, finalize  # noqa: E402
+from specpipe.upload import decode_prd_upload  # noqa: E402
 from specpipe.schemas import (  # noqa: E402
     NFR_CATEGORIES, TRACE_CRITIC, TRACE_HUMAN, TRACE_PRD,
 )
@@ -230,6 +231,21 @@ def load_sample():
         st.session_state.prd_text = SAMPLES[choice]
 
 
+def load_upload():
+    """Copy an uploaded .txt/.md file into the PRD box (the user can still edit)."""
+    f = st.session_state.get("prd_upload")
+    if f is None:
+        st.session_state.pop("upload_error", None)
+        return
+    text, err = decode_prd_upload(f.getvalue(), f.name)
+    if err:
+        st.session_state.upload_error = err
+        return
+    st.session_state.pop("upload_error", None)
+    st.session_state.prd_text = text
+    st.session_state.sample_choice = ""
+
+
 def screen_input(mode):
     steps("input")
     st.title("ReqHQ: Agentic Specification Refinement")
@@ -243,6 +259,12 @@ def screen_input(mode):
                  key="sample_choice", on_change=load_sample,
                  help="Loads the sample into the box below; you can edit it "
                       "before analysing.")
+    st.file_uploader("Or upload a PRD file (.txt or .md)", type=["txt", "md"],
+                     key="prd_upload", on_change=load_upload,
+                     help="The text is copied into the box below, where you "
+                          "can still edit it before analysing.")
+    if st.session_state.get("upload_error"):
+        st.error(st.session_state.upload_error)
     st.text_area("Product description (PRD)", key="prd_text", height=180,
                  placeholder="Paste or write the product description...")
     prd = st.session_state.prd_text
@@ -318,19 +340,6 @@ def screen_questions(mode):
     c2.metric("Critic findings", len(findings))
     c3.metric("Questions for you", len(questions))
 
-    col_draft, col_find = st.columns(2, gap="large")
-    with col_draft:
-        st.subheader(f"Draft requirements ({len(draft)})")
-        st.caption("Each draft line traces to a verbatim PRD sentence.")
-        for r in draft:
-            requirement_card(r)
-    with col_find:
-        st.subheader(f"Critic findings ({len(findings)})")
-        escalated = {ref for q in questions for ref in q.finding_refs}
-        for f in findings:
-            finding_card(f, f.issue in escalated)
-
-    st.divider()
     st.subheader("Questions for you")
     escalated_issues = {ref for q in questions for ref in q.finding_refs}
     auto_count = sum(1 for f in findings if f.issue not in escalated_issues)
@@ -359,6 +368,11 @@ def screen_questions(mode):
                           label_visibility="collapsed",
                           placeholder="Your answer (optional)")
 
+    answered = sum(1 for q in questions
+                   if str(st.session_state.get(q.id, "")).strip())
+    if questions:
+        st.caption(f"{answered} of {len(questions)} answered. Unanswered "
+                   "questions stay in the spec as open items.")
     gen = st.button("Generate specification", type="primary")
     if st.button("Back to description"):
         go("input")
@@ -367,6 +381,20 @@ def screen_questions(mode):
         spec = finalize(title, draft, findings, questions, answers)
         st.session_state.spec = spec
         go("result")
+
+    st.divider()
+    st.markdown("#### Evidence behind these questions")
+    col_draft, col_find = st.columns(2, gap="large")
+    with col_draft:
+        st.subheader(f"Draft requirements ({len(draft)})")
+        st.caption("Each draft line traces to a verbatim PRD sentence.")
+        for r in draft:
+            requirement_card(r)
+    with col_find:
+        st.subheader(f"Critic findings ({len(findings)})")
+        escalated = {ref for q in questions for ref in q.finding_refs}
+        for f in findings:
+            finding_card(f, f.issue in escalated)
 
 
 def screen_result(mode):
@@ -433,7 +461,8 @@ def screen_result(mode):
     if st.button("Start over"):
         answer_keys = [q.id for q in st.session_state.get("questions", [])]
         for k in ("prd", "draft", "findings", "questions", "spec",
-                  "prd_text", "sample_choice", *answer_keys):
+                  "prd_text", "sample_choice", "prd_upload", "upload_error",
+                  *answer_keys):
             st.session_state.pop(k, None)
         go("input")
 
