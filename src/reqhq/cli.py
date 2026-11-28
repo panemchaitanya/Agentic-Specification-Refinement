@@ -82,10 +82,12 @@ def _build_router(
         sessions_dir=sessions_dir,
         strict_local=strict_local or cfg.strict_local,
         ollama_base_url=cfg.ollama_base_url,
+        ollama_timeout_seconds=cfg.ollama_timeout_seconds,
         quota_ceiling_ratio=cfg.quota_ceiling_ratio,
         quota_db_path=cfg.quota_db_path,
         cache_db_path=cfg.cache_db_path,
         gemini_model=cfg.gemini_model,
+        groq_model=cfg.groq_model,
         alloy_jar_path=cfg.alloy_jar_path,
         alloy_compat=cfg.alloy_compat,
     )
@@ -101,12 +103,18 @@ def _build_router(
             )
         groq_key = os.environ.get("GROQ_API_KEY", "").strip()
         if groq_key and is_valid_credential_value("GROQ_API_KEY", groq_key)[0]:
-            cloud_providers.append(GroqFreeProvider(api_key=groq_key))
+            cloud_providers.append(
+                GroqFreeProvider(
+                    api_key=groq_key,
+                    default_model=cfg_sessions.groq_model,
+                )
+            )
 
     return ProviderRouter(
         local_provider=OllamaLocalProvider(
             base_url=cfg_sessions.ollama_base_url,
             default_model=local_model,
+            timeout=cfg_sessions.ollama_timeout_seconds,
         ),
         cloud_providers=cloud_providers,
         quota_ledger=QuotaLedger(

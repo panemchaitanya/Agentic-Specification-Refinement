@@ -37,7 +37,7 @@ class GroqFreeProvider:
     def __init__(
         self,
         api_key: str | None = None,
-        default_model: str = "llama-3.3-70b-versatile",
+        default_model: str = "openai/gpt-oss-20b",
         base_url: str = "https://api.groq.com/openai/v1",
         timeout: float = 60.0,
         client: httpx.Client | None = None,

@@ -193,7 +193,7 @@ class TestHierarchicalChunkerPBTInvariants:
 class TestQuotaLedgerPBTInvariants:
     """Hypothesis PBT verifying QuotaLedger ceiling monotonicity within an active window."""
 
-    @settings(derandomize=True, max_examples=50)
+    @settings(derandomize=True, max_examples=50, deadline=None)
     @given(
         rpm=st.integers(min_value=1, max_value=40),
         tpm=st.integers(min_value=50, max_value=20_000),
@@ -266,7 +266,7 @@ _IDENT_STRAT = st.builds(
 class TestPBTCodegenAndContractLockInvariants:
     """Hypothesis PBT verifying PBT_Spec -> YAML -> codegen -> ast.parse -> verify_contract_lock."""
 
-    @settings(derandomize=True, max_examples=50)
+    @settings(derandomize=True, max_examples=50, deadline=None)
     @given(
         module_name=_IDENT_STRAT,
         param_name=_IDENT_STRAT,

@@ -25,7 +25,7 @@ class OllamaLocalProvider:
         self,
         base_url: str = "http://127.0.0.1:11434",
         default_model: str = "qwen3:8b",
-        timeout: float = 60.0,
+        timeout: float = 120.0,
         client: httpx.Client | None = None,
     ) -> None:
         self.base_url = base_url.rstrip("/")

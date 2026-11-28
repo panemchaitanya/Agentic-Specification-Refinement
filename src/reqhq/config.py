@@ -33,12 +33,14 @@ class ReqHQConfig(BaseModel):
     strict_local: bool = False
     hardware_tier_override: int | None = Field(default=None, ge=0, le=3)
     ollama_base_url: str = "http://127.0.0.1:11434"
+    ollama_timeout_seconds: float = Field(default=120.0, gt=0.0, allow_inf_nan=False)
     quota_ceiling_ratio: float = Field(default=0.90, gt=0.0, le=1.0, allow_inf_nan=False)
     quota_db_path: Path | None = None
     cache_db_path: Path | None = None
     vault_path: Path | None = None
     auto_start_ollama: bool = True
     gemini_model: str = "gemini-3.1-flash-lite"
+    groq_model: str = "openai/gpt-oss-20b"
     alloy_jar_path: Path | None = None
     alloy_compat: Literal["alloy6", "legacy"] = "alloy6"
 
@@ -97,6 +99,13 @@ class ReqHQConfig(BaseModel):
                 ) from exc
         if raw_ollama := source.get("OLLAMA_BASE_URL", "").strip():
             kwargs["ollama_base_url"] = raw_ollama
+        if raw_ollama_timeout := source.get("REQHQ_OLLAMA_TIMEOUT", "").strip():
+            try:
+                kwargs["ollama_timeout_seconds"] = float(raw_ollama_timeout)
+            except ValueError as exc:
+                raise ValueError(
+                    f"Invalid float for REQHQ_OLLAMA_TIMEOUT: {raw_ollama_timeout!r}"
+                ) from exc
         if raw_ratio := source.get("REQHQ_QUOTA_CEILING_RATIO", "").strip():
             try:
                 kwargs["quota_ceiling_ratio"] = float(raw_ratio)
@@ -114,6 +123,8 @@ class ReqHQConfig(BaseModel):
             kwargs["auto_start_ollama"] = _parse_bool(raw_auto_start, "REQHQ_AUTO_START_OLLAMA")
         if raw_gemini_model := source.get("REQHQ_GEMINI_MODEL", "").strip():
             kwargs["gemini_model"] = raw_gemini_model
+        if raw_groq_model := source.get("REQHQ_GROQ_MODEL", "").strip():
+            kwargs["groq_model"] = raw_groq_model
         if raw_alloy_jar := source.get("REQHQ_ALLOY_JAR_PATH", "").strip():
             kwargs["alloy_jar_path"] = Path(raw_alloy_jar)
         if raw_alloy_compat := source.get("REQHQ_ALLOY_COMPAT", "").strip():

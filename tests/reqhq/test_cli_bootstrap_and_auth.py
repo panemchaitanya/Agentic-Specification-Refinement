@@ -378,14 +378,23 @@ def test_build_router_wires_cloud_providers_quota_cache_and_respects_strict_loca
     monkeypatch.setenv("GEMINI_API_KEY", "AIzaSyLiveRouterTestKey12345")
     monkeypatch.setenv("GROQ_API_KEY", "gsk_LiveRouterTestKey67890")
     monkeypatch.setenv("REQHQ_GEMINI_MODEL", "gemini-3.8-flash")
+    monkeypatch.setenv("REQHQ_GROQ_MODEL", "openai/gpt-oss-120b")
+    monkeypatch.setenv("REQHQ_OLLAMA_TIMEOUT", "150.0")
     monkeypatch.delenv("REQHQ_STRICT_LOCAL", raising=False)
 
     live_router = cli_mod._build_router(sessions_dir=sessions_dir, strict_local=False, mock=False)
     assert [p.name for p in live_router.cloud_providers] == ["gemini", "groq"]
     assert live_router.cloud_providers[0].default_model == "gemini-3.8-flash"
+    assert live_router.cloud_providers[1].default_model == "openai/gpt-oss-120b"
+    assert live_router.local_provider.timeout == 150.0
     assert live_router.quota_ledger is not None
     assert live_router.prompt_cache is not None
     assert live_router.strict_local is False
+
+    from reqhq.config import ReqHQConfig
+
+    with pytest.raises(ValueError, match="REQHQ_OLLAMA_TIMEOUT"):
+        ReqHQConfig.from_env({"REQHQ_OLLAMA_TIMEOUT": "not-a-float"})
 
     # Placeholders are rejected and strict_local=True attaches zero cloud providers.
     strict_router = cli_mod._build_router(sessions_dir=sessions_dir, strict_local=True, mock=False)
